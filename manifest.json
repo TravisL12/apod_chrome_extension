@@ -1,0 +1,27 @@
+{
+  "manifest_version": 2,
+
+  "name": "APOD by The Trav",
+  "short_name": "APOD by The Trav",
+  "description": "This extension shows either today's or a random Astronomy Picture of the Day (APOD)",
+  "version": "1.0.3",
+
+  "browser_action": {
+    "default_title": "Astronomy Picture of the Day - New Tab",
+    "default_icon": "sun_128.png"
+  },
+
+  "icons": {
+    "128": "sun_128.png"
+  },
+
+  "chrome_url_overrides" : {
+    "newtab": "astronomy_picture_of_day.html"
+  },
+
+  "permissions": [
+    "management",
+    "https://ajax.googleapis.com/",
+    "https://api.nasa.gov/*"
+  ]
+}
