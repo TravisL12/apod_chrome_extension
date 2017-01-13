@@ -8,15 +8,15 @@
 
   "browser_action": {
     "default_title": "Astronomy Picture of the Day - New Tab",
-    "default_icon": "sun_128.png"
+    "default_icon": "public/images/sun_128.png"
   },
 
   "icons": {
-    "128": "sun_128.png"
+    "128": "public/images/sun_128.png"
   },
 
   "chrome_url_overrides" : {
-    "newtab": "astronomy_picture_of_day.html"
+    "newtab": "index.html"
   },
 
   "permissions": [

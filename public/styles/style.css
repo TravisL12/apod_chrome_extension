@@ -1,0 +1,94 @@
+body {
+    background: black;
+    margin: 0;
+}
+
+ul,
+ul li {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+.loading {
+    background: url('../images/ajax-loader.gif') center center no-repeat !important;
+    background-size: auto;
+    height: 32px;
+    width: 32px;
+}
+
+.body-image,
+.container { float: left; }
+
+.body-image {
+    position: relative;
+    background-position: center center;
+    background-repeat: no-repeat;
+    min-height: 95%;
+    width: 100%;
+}
+
+.body-image .fade-out {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    background: linear-gradient(transparent, black);
+}
+
+.container {
+    position: relative;
+    width: 100%;
+    height: 5%;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.container h1 {
+    display: inline-block;
+    margin: 0;
+}
+
+.container .nav-buttons {
+    position: absolute;
+    margin: 12px;
+    right: 0;
+}
+
+.container .nav-buttons button {
+    border-radius: 0;
+    background: white;
+    border: none;
+    cursor: pointer;
+}
+
+.container p#apod-copyright,
+.container .external-links {
+    margin: 0 5px;
+    color: white;
+}
+
+.container .description {
+    position: fixed;
+    bottom: 0;
+    height: 32px;
+    width: 1000px;
+    max-width: 100%;
+    color: white;
+    background-color: rgba(0,0,0,0);
+    margin: 0 0 7px 20px;
+    overflow-y: hidden;
+    transition: 0.75s ease-in-out all;
+}
+
+.container .description p {
+    font-size: 16px;
+}
+
+.container .description:hover {
+    height: 300px;
+    margin-left: 30px;
+    padding: 10px;
+    background-color: rgba(0,0,0,0.8);
+    overflow-y: scroll;
+}

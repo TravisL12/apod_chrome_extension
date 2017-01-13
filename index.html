@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <title>Astronomy Picture Of Day</title>
+        <link href='public/styles/style.css' rel='stylesheet'>
+    </head>
+
+    <body>
+
+        <div class='body-image' id='apod-image'>
+            <div class='fade-out'></div>
+        </div>
+
+        <div class='container'>
+
+            <div class='description'>
+                <h1 id='apod-title'></h1>
+                <p id='apod-description'></p>
+                <p>
+                    <a id='apod-origin' class='external-links' target='_blank'>View this APOD</a>
+                    <a id='apod-hires'  class='external-links' target='_blank'>Hi-res</a>
+                    <a id='apod-lowres' class='external-links' target='_blank'>Low-res</a>
+                </p>
+                <p id='apod-copyright'></p>
+            </div>
+
+            <div class='nav-buttons'>
+                <ul>
+                    <li><button id='apod-current'>Today's APOD</button></li>
+                    <li><button id='apod-random'>Random APOD</button></li>
+                </ul>
+            </div>
+
+        </div>
+    </body>
+
+    <script src="public/js/jquery-3.1.1.min.js"></script>
+    <script src="public/js/background.js"></script>
+</html>
