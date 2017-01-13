@@ -28,10 +28,6 @@ function fitToWindow (image) {
         windowW = window.innerWidth,
         windowH = window.innerHeight;
 
-    console.log('Image  - width: ' + imageW + ' height: ' + imageH);
-    console.log('Window - width: ' + windowW + ' height: ' + windowH);
-    console.log('------------------------------------');
-
     return (imageW > windowW || imageH > windowH);
 }
 
@@ -131,7 +127,7 @@ Apod.prototype = {
         apodLowRes.attr('href', this.url);
     },
 
-    // ap170111.html
+    // Build filename: ap170111.html
     apodSource: function () {
         const date = new Date(this.date);
         return 'ap' + date.getYear().toString().slice(-2) + addLeadingZero(date.getMonth() + 1) + addLeadingZero(date.getDate()) + '.html';
@@ -149,14 +145,14 @@ apodCurrent.on('click', function() {
     apod.getApod();
 });
 
-// Press 'r' for random APOD
-// Press 't' for today's APOD
 $(document).on('keydown', function(e) {
-    if (e.which === 82) { // 'r'
+    // Press 'r' for random APOD
+    if (e.which === 82) {
         apod.getApod(randomDate());
     }
 
-    if (e.which === 84) { // 't'
+    // Press 't' for today's APOD
+    if (e.which === 84) {
         apod.getApod();
     }
 })
