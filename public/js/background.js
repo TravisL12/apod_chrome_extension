@@ -22,16 +22,6 @@ const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodRandom      = $('.nav-buttons button#apod-random'),
     apodCurrent     = $('.nav-buttons button#apod-current');
 
-function Apod(date) {
-    this.date = date;
-    this.url;
-    this.hdurl;
-    this.title;
-    this.explanation;
-    this.date;
-    this.copyright;
-}
-
 function fitToWindow (image) {
     let imageW = image.width,
         imageH = image.height,
@@ -59,6 +49,16 @@ function randomDate () {
 
     let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+}
+
+function Apod(date) {
+    this.date = date;
+    this.url;
+    this.hdurl;
+    this.title;
+    this.explanation;
+    this.date;
+    this.copyright;
 }
 
 Apod.prototype = {
