@@ -155,4 +155,9 @@ $(document).on('keydown', function(e) {
     if (e.which === 84) {
         apod.getApod();
     }
+
+    // Press 'd' to toggle description
+    if (e.which === 68) {
+        $('.container .description').toggleClass('show-description');
+    }
 })
