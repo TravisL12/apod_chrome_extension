@@ -23,20 +23,11 @@ const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodCurrent     = $('.nav-buttons button#apod-current');
 
 function fitToWindow (image) {
-    let imageW = image.width,
-        imageH = image.height,
-        windowW = window.innerWidth,
-        windowH = window.innerHeight;
-
-    return (imageW > windowW || imageH > windowH);
+    return image.width > window.innerWidth || image.height > window.innerHeight;
 }
 
 function addLeadingZero (num) {
-    if (num < 10) {
-        return '0' + num.toString();
-    } else {
-        return num.toString();
-    }
+    return num < 10 ? '0' + num.toString() : num.toString();
 }
 
 function randomDate () {
@@ -45,6 +36,14 @@ function randomDate () {
 
     let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
     return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+}
+
+function setLoadingView () {
+    apodImage.addClass('loading');
+    apodTitle.text('Loading...');
+    apodDescription.text('');
+    apodCopyright.text('');
+    apodImage.css('background-image', 'none');
 }
 
 function Apod(date) {
@@ -60,9 +59,7 @@ function Apod(date) {
 Apod.prototype = {
 
     getApod: function (date) {
-        apodTitle.text('Loading...');
-        apodImage.addClass('loading');
-
+        setLoadingView();
         date = date || '';
 
         const _that = this,
@@ -92,8 +89,6 @@ Apod.prototype = {
                 }
             },
             error(error) {
-                console.log('Error!');
-                console.log(error);
                 _that.getApod(randomDate());
             }
         });
@@ -101,18 +96,37 @@ Apod.prototype = {
     },
 
     preLoadImage: function () {
-        let img = new Image();
-        img.src = this.hdurl;
-        img.onload = () => {
-            apodImage.removeClass('loading');
-            this.loadedImage = img;
+        let hdImg = new Image(),
+            sdImg = new Image(),
+            delayForHdLoad = 3000,
+            timeout;
+
+        hdImg.src = this.hdurl;
+        sdImg.src = this.url;
+
+        let startTime = new Date();
+
+        sdImg.onload = () => {
+            this.loadedImage = sdImg;
+
+            timeout = setTimeout((e) => {
+                hdImg.onload = null;
+                this.apodImage();
+            }, delayForHdLoad);
+        };
+
+        hdImg.onload = () => {
+            sdImg.onload = null;
+            clearTimeout(timeout);
+            this.loadedImage = hdImg;
             this.apodImage();
         };
     },
 
     apodImage: function () {
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
-        
+        apodImage.removeClass('loading');
+
         if (fitToWindow(this.loadedImage)) {
             apodImage.css('background-size', 'contain');
         } else {
@@ -146,18 +160,15 @@ apodCurrent.on('click', function() {
 });
 
 $(document).on('keydown', function(e) {
-    // Press 'r' for random APOD
-    if (e.which === 82) {
+    if (e.which === 82) { // Press 'r' for random APOD
         apod.getApod(randomDate());
     }
 
-    // Press 't' for today's APOD
-    if (e.which === 84) {
+    if (e.which === 84) { // Press 't' for today's APOD
         apod.getApod();
     }
 
-    // Press 'd' to toggle description
-    if (e.which === 68) {
+    if (e.which === 68) { // Press 'd' to toggle description
         $('.container .description').toggleClass('show-description');
     }
 })
