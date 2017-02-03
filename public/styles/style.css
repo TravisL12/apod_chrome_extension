@@ -85,7 +85,7 @@ ul, li {
   .container .nav-buttons {
     position: absolute;
     right: 10; }
-    .container .nav-buttons ul li:first-child {
+    .container .nav-buttons ul li:nth-child(2) {
       margin-right: 50px; }
     .container .nav-buttons a {
       border-radius: 0;

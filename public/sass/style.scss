@@ -117,7 +117,7 @@ ul, li {
     .nav-buttons {
         position: absolute;
         right: 10;
-        ul li:first-child {
+        ul li:nth-child(2) {
             margin-right: 50px;
         }
         a {
