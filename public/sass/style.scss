@@ -99,7 +99,7 @@ ul, li {
     position: relative;
     width: 100%;
     height: 5%;
-    max-width: 1400px;
+    max-width: 1600px;
     margin: 0 auto;
 
     h1 {
@@ -116,7 +116,10 @@ ul, li {
 
     .nav-buttons {
         position: absolute;
-        right: 0;
+        right: 10;
+        ul li:first-child {
+            margin-right: 50px;
+        }
         a {
             border-radius: 0;
             background: $gray;

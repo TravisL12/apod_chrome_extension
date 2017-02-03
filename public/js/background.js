@@ -21,6 +21,8 @@ const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodDescription = $('.container #apod-description'),
     apodDate        = $('.container #apod-date'),
     apodRandom      = $('.nav-buttons a#apod-random'),
+    apodPrevious    = $('.nav-buttons a#apod-previous'),
+    apodNext        = $('.nav-buttons a#apod-next'),
     apodCurrent     = $('.nav-buttons a#apod-current');
 
 const monthNames = [
@@ -30,8 +32,13 @@ const monthNames = [
   "November", "December"
 ];
 
-function formatDate (date) {
-    let thisDate = new Date(date);
+function actualDate (date) {
+    let split = date.split('-');
+    return new Date(split[0], split[1]-1, split[2]);
+}
+
+function prettyDateFormat (date) {
+    let thisDate = actualDate(date);
     return monthNames[thisDate.getMonth()] + ' ' + thisDate.getDate() + ', ' + thisDate.getFullYear();
 }
 
@@ -43,18 +50,42 @@ function addLeadingZero (num) {
     return num < 10 ? '0' + num.toString() : num.toString();
 }
 
+function hyphenDateFormat (date) {
+    date = date || new Date();
+    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'); 
+}
+
+function previousDate (dateString) {
+    let date = actualDate(dateString);
+    let yesterday = new Date(date.getTime());
+    yesterday = new Date(yesterday.setDate(yesterday.getDate() - 1));
+    return hyphenDateFormat(yesterday);
+}
+
+function nextDate (dateString) {
+    let date = actualDate(dateString);
+    let tomorrow = new Date(date.getTime());
+    tomorrow = new Date(tomorrow.setDate(tomorrow.getDate() + 1));
+    return hyphenDateFormat(tomorrow);
+}
+
 function randomDate () {
     let start = new Date(1995, 5, 16);
     let end = new Date();
 
     let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
-    return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+    return hyphenDateFormat(date);
 }
 
 function setLoadingView () {
     apodImage.addClass('loading');
     $('.description').addClass('hide');
     apodImage.css('background-image', 'none');
+}
+
+function checkDate (date) {
+    let today = actualDate(hyphenDateFormat());
+    return today >= actualDate(date);
 }
 
 function Apod() {
@@ -69,6 +100,13 @@ function Apod() {
 Apod.prototype = {
 
     getApod: function (date) {
+        if (date) {
+            if (!checkDate(date)) {
+                console.warn(date + ' is in the future!');
+                return;
+            }
+        }
+
         setLoadingView();
         date = date || '';
 
@@ -95,7 +133,7 @@ Apod.prototype = {
                         _that.preLoadImage();
                         break;
                     default:
-                        _that.getApod(randomDate()); // for now
+                        _that.errorImage();
                 }
             },
             error(error) {
@@ -103,6 +141,16 @@ Apod.prototype = {
             }
         });
 
+    },
+
+    errorImage: function () {
+        let errorImg = new Image();
+        errorImg.src = '/public/images/jupiter.jpg';
+        
+        errorImg.onload = () => {
+            this.loadedImage = errorImg;
+            this.apodImage();
+        }
     },
 
     preLoadImage: function () {
@@ -142,7 +190,7 @@ Apod.prototype = {
             apodImage.css('background-size', 'auto');
         }
 
-        apodDate.text(formatDate(this.date));
+        apodDate.text(prettyDateFormat(this.date));
         apodTitle.text(this.title);
         apodDescription.text(this.explanation);
         apodCopyright.text('Copyright: ' + this.copyright);
@@ -153,7 +201,7 @@ Apod.prototype = {
 
     // Build filename: ap170111.html
     apodSource: function () {
-        const date = new Date(this.date);
+        const date = actualDate(this.date);
         return 'ap' + date.getYear().toString().slice(-2) + addLeadingZero(date.getMonth() + 1) + addLeadingZero(date.getDate()) + '.html';
     }
 }
@@ -163,6 +211,14 @@ apod.getApod(randomDate());
 
 apodRandom.on('click', function() {
     apod.getApod(randomDate());
+});
+
+apodPrevious.on('click', function() {
+    apod.getApod(previousDate(apod.date));
+});
+
+apodNext.on('click', function() {
+    apod.getApod(nextDate(apod.date));
 });
 
 apodCurrent.on('click', function() {
@@ -176,6 +232,14 @@ $(document).on('keydown', function(e) {
 
     if (e.which === 84) { // Press 't' for today's APOD
         apod.getApod();
+    }
+
+    if (e.which === 37) { // left arrow for previous APOD
+        apod.getApod(previousDate(apod.date));
+    }
+
+    if (e.which === 39) { // right arrow for next APOD
+        apod.getApod(nextDate(apod.date));
     }
 
     if (e.which === 68) { // Press 'd' to toggle description
