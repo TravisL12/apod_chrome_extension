@@ -19,8 +19,21 @@ const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodHiRes       = $('.container a#apod-hires'),
     apodLowRes      = $('.container a#apod-lowres'),
     apodDescription = $('.container #apod-description'),
-    apodRandom      = $('.nav-buttons button#apod-random'),
-    apodCurrent     = $('.nav-buttons button#apod-current');
+    apodDate        = $('.container #apod-date'),
+    apodRandom      = $('.nav-buttons a#apod-random'),
+    apodCurrent     = $('.nav-buttons a#apod-current');
+
+const monthNames = [
+  "January", "February", "March",
+  "April", "May", "June", "July",
+  "August", "September", "October",
+  "November", "December"
+];
+
+function formatDate (date) {
+    let thisDate = new Date(date);
+    return monthNames[thisDate.getMonth()] + ' ' + thisDate.getDate() + ', ' + thisDate.getFullYear();
+}
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
@@ -40,19 +53,16 @@ function randomDate () {
 
 function setLoadingView () {
     apodImage.addClass('loading');
-    apodTitle.text('Loading...');
-    apodDescription.text('');
-    apodCopyright.text('');
+    $('.description').addClass('hide');
     apodImage.css('background-image', 'none');
 }
 
-function Apod(date) {
-    this.date = date;
+function Apod() {
+    this.date;
     this.url;
     this.hdurl;
     this.title;
     this.explanation;
-    this.date;
     this.copyright;
 }
 
@@ -123,6 +133,7 @@ Apod.prototype = {
 
     apodImage: function () {
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
+        $('.description').removeClass('hide');
         apodImage.removeClass('loading');
 
         if (fitToWindow(this.loadedImage)) {
@@ -131,7 +142,8 @@ Apod.prototype = {
             apodImage.css('background-size', 'auto');
         }
 
-        apodTitle.text(this.title + ' (' + this.date + ')');
+        apodDate.text(formatDate(this.date));
+        apodTitle.text(this.title);
         apodDescription.text(this.explanation);
         apodCopyright.text('Copyright: ' + this.copyright);
         apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
