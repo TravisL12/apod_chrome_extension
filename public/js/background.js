@@ -104,8 +104,6 @@ Apod.prototype = {
         hdImg.src = this.hdurl;
         sdImg.src = this.url;
 
-        let startTime = new Date();
-
         sdImg.onload = () => {
             this.loadedImage = sdImg;
 

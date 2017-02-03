@@ -10,6 +10,50 @@ ul li {
     display: inline-block;
 }
 
+.top-sites {
+    color: white;
+    position: fixed;
+    top: 10;
+    left: 10;
+    z-index: 1000;
+    opacity: 0.6;
+    transition: 0.2s linear all;
+}
+
+.top-sites:hover {
+    opacity: 1;
+}
+
+#typedUrl ul li + li {
+    margin-left: 10px;
+}
+
+#typedUrl ul li a {
+    display: inline-block;
+    background: #333333;
+    color: white;
+    padding: 15px;
+
+    transition: 0.2s linear all;
+
+    border-top-left-radius:     5px;
+    border-bottom-right-radius: 5px;
+
+    border-top-right-radius:    10px;
+    border-bottom-left-radius:  10px;
+}
+
+#typedUrl ul li a:hover {
+    background: #C7C7C7;
+    border-radius: 0;
+}
+
+#typedUrl ul li a .thumb-img{
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
 .loading {
     background: url('../images/ajax-loader.gif') center center no-repeat !important;
     background-size: auto;
