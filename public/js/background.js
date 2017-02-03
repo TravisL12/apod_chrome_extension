@@ -85,7 +85,17 @@ function setLoadingView () {
 
 function checkDate (date) {
     let today = actualDate(hyphenDateFormat());
-    return today >= actualDate(date);
+
+    if (actualDate(date) > today) {
+        apodNext.addClass('hide');
+        return false;
+    } else if (actualDate(date) >= today) {
+        apodNext.addClass('hide');
+    } else {
+        apodNext.removeClass('hide');
+    }
+
+    return true;
 }
 
 function Apod() {
@@ -105,6 +115,8 @@ Apod.prototype = {
                 console.warn(date + ' is in the future!');
                 return;
             }
+        } else {
+            apodNext.addClass('hide');
         }
 
         setLoadingView();
