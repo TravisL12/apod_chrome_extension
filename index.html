@@ -5,6 +5,9 @@
     </head>
 
     <body>
+        <div class='top-sites'>
+            <div id="typedUrl"></div>
+        </div>
 
         <div class='body-image' id='apod-image'>
             <div class='fade-out'></div>
@@ -12,7 +15,8 @@
 
         <div class='container'>
 
-            <div class='description'>
+            <div class='description hide'>
+                <h2 id='apod-date'></h2>
                 <h1 id='apod-title'></h1>
                 <p id='apod-description'></p>
                 <p>
@@ -25,8 +29,10 @@
 
             <div class='nav-buttons'>
                 <ul>
-                    <li><button id='apod-current'>Today's APOD</button></li>
-                    <li><button id='apod-random'>Random APOD</button></li>
+                    <li><a id='apod-random'>Random APOD</a></li>
+                    <li><a id='apod-previous'>Previous</a></li>
+                    <li><a id='apod-current'>Today's APOD</a></li>
+                    <li><a id='apod-next'>Next</a></li>
                 </ul>
             </div>
 
@@ -35,4 +41,5 @@
 
     <script src="public/js/jquery-3.1.1.min.js"></script>
     <script src="public/js/background.js"></script>
+    <script src="public/js/buildHistory.js"></script>
 </html>
