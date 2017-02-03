@@ -1,3 +1,5 @@
+'use strict';
+
 function Apod() {
     this.date;
     this.url;
@@ -5,51 +7,66 @@ function Apod() {
     this.title;
     this.explanation;
     this.copyright;
+    this.requestInProgress = false;
 }
 
 Apod.prototype = {
 
-    getApod: function (date) {
+    allowRequest: function (date) {
+        if (this.requestInProgress) {
+            console.log('Request in Progress!');
+            return false;
+        }
+
         if (date) {
             if (!DateManager.checkDate(date)) {
-                console.warn(date + ' is in the future!');
-                return;
+                console.log(date + ' is in the future!');
+                return false;
             }
         } else {
             apodNext.addClass('hide');
         }
 
+        this.requestInProgress = true;
+
+        return this.requestInProgress;
+    },
+
+    getApod: function (date) {
+        if (!this.allowRequest(date)) {
+            return;
+        }
+
         setLoadingView();
         date = date || '';
 
-        const _that = this,
-        data = {
-            api_key: api_key,
-            date: date
-        };
-
         $.ajax({
+            context: this,
             type: 'GET',
             url: apodApiUrl,
-            data: data,
+            data: {
+                api_key: api_key,
+                date: date,
+            },
             success(response) {
-                _that.title       = response.title;
-                _that.url         = response.url;
-                _that.hdurl       = response.hdurl;
-                _that.date        = response.date;
-                _that.explanation = response.explanation;
-                _that.copyright   = response.copyright;
+                this.title       = response.title;
+                this.url         = response.url;
+                this.hdurl       = response.hdurl;
+                this.date        = response.date;
+                this.explanation = response.explanation;
+                this.copyright   = response.copyright;
 
                 switch (response.media_type) {
                     case 'image':
-                        _that.preLoadImage();
+                        this.preLoadImage();
                         break;
                     default:
-                        _that.errorImage();
+                        this.errorImage();
                 }
             },
             error(error) {
-                _that.getApod(DateManager.randomDate());
+                this.requestInProgress = false;
+                this.getApod(DateManager.randomDate());
             }
         });
 
@@ -92,6 +109,8 @@ Apod.prototype = {
     },
 
     apodImage: function () {
+        this.requestInProgress = false;
+
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
         $('.description').removeClass('hide');
         apodImage.removeClass('loading');

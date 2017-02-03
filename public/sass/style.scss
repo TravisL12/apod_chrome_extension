@@ -85,14 +85,6 @@ ul, li {
     background-repeat: no-repeat;
     min-height: 95%;
     width: 100%;
-
-    .fade-out {
-        position: absolute;
-        bottom: 0;
-        width: 100%;
-        height: 50px;
-        background: linear-gradient(transparent, black);
-    }
 }
 
 .container {
@@ -117,18 +109,23 @@ ul, li {
     .nav-buttons {
         position: absolute;
         right: 10;
-        ul li:nth-child(2) {
-            margin-right: 50px;
+        ul li {
+            color: $gray;
+            text-align: center;
+            &:nth-child(2) {
+                margin-right: 50px;
+            }
         }
         a {
-            border-radius: 0;
+            display: block;
             background: $gray;
             color: $light-gray;
+            min-width: 65px;
             padding: 10px;
             cursor: pointer;
             @include border-radii(3px, 8px);
             transition: 0.2s linear all;
-            &:hover {
+            &.hover, &:hover {
                 background: $light-gray;
                 color: $gray;
                 @include border-radii(8px, 3px);

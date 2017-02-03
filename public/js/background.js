@@ -42,11 +42,34 @@ function setLoadingView () {
     apodImage.css('background-image', 'none');
 }
 
+function blipHoverState (element, fn) {
+    if (apod.requestInProgress) {
+        return;
+    }
+
+    let delay = 125;
+    element.addClass('hover');
+
+    setTimeout(() => {
+        element.removeClass('hover');
+    }, delay);
+
+    fn();
+}
+
 const apodActions = {
-    random   () { apod.getApod(DateManager.randomDate()); },
-    previous () { apod.getApod(DateManager.previousDate(apod.date)); },
-    next     () { apod.getApod(DateManager.nextDate(apod.date)); },
-    current  () { apod.getApod(); },
+    random   () {
+        apod.getApod(DateManager.randomDate());
+    },
+    previous () {
+        apod.getApod(DateManager.previousDate(apod.date));
+    },
+    next     () {
+        apod.getApod(DateManager.nextDate(apod.date));
+    },
+    current  () {
+        apod.getApod();
+    },
 }
 
 // initial page load is random APOD
@@ -72,25 +95,25 @@ apodNext.on('click', function() {
     apodActions.next();
 });
 
-$(document).on('keydown', function(e) {
+$(document).on('keyup', function(e) {
     // RANDOM (r)
     if (e.which === 82) {
-        apodActions.random();
+        blipHoverState(apodRandom, apodActions.random);
     }
 
     // CURRENT (t)
     if (e.which === 84) {
-        apodActions.current();
+        blipHoverState(apodCurrent, apodActions.current);
     }
 
     // PREVIOUS (left arrow)
     if (e.which === 37) {
-        apodActions.previous();
+        blipHoverState(apodPrevious, apodActions.previous);
     }
 
     // NEXT (right arrow)
     if (e.which === 39) {
-        apodActions.next();
+        blipHoverState(apodNext, apodActions.next);
     }
 
     // TOGGLE description (d)

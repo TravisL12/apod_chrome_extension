@@ -1,3 +1,5 @@
+'use strict';
+
 let DateManagement = function () {
 
     const _monthNames = [
