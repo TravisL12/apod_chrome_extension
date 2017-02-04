@@ -4,10 +4,10 @@
   "name": "APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "This extension shows either today's or a random Astronomy Picture of the Day (APOD)",
-  "version": "1.1",
+  "version": "1.1.1",
 
   "browser_action": {
-    "default_title": "Astronomy Picture of the Day - New Tab",
+    "default_title": "New Tab - APOD",
     "default_icon": "public/images/sun_128.png"
   },
 

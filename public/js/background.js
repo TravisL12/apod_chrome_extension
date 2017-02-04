@@ -95,7 +95,7 @@ apodNext.on('click', function() {
     apodActions.next();
 });
 
-$(document).on('keyup', function(e) {
+$(document).on('keydown', function(e) {
     // RANDOM (r)
     if (e.which === 82) {
         blipHoverState(apodRandom, apodActions.random);
