@@ -109,6 +109,7 @@ ul, li {
     .nav-buttons {
         position: absolute;
         right: 10;
+        bottom: 10;
         ul li {
             color: $gray;
             text-align: center;
@@ -128,7 +129,6 @@ ul, li {
             &.hover, &:hover {
                 background: $light-gray;
                 color: $gray;
-                @include border-radii(8px, 3px);
             }
         }
     }
@@ -146,7 +146,7 @@ ul, li {
         width: 1000px;
         max-width: 100%;
         color: white;
-        background-color: rgba(0,0,0,0);
+        background-color: rgba(0,0,0,0.25);
         margin: 0 0 7px 20px;
         overflow-y: hidden;
         transition: 0.6s ease-in-out all;
@@ -160,7 +160,6 @@ ul, li {
     .description:hover,
     .show-description {
         height: 300px;
-        margin-left: 30px;
         padding: 10px;
         background-color: rgba(0,0,0,0.8);
         overflow-y: scroll;

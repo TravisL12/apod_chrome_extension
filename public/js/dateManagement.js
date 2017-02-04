@@ -16,6 +16,10 @@ let DateManagement = function () {
 
     return {
 
+        get today () {
+            return _hyphenDateFormat(this.actualDate(_hyphenDateFormat()));
+        },
+
         actualDate (date) {
             let split = date.split('-');
             return new Date(split[0], split[1]-1, split[2]);
@@ -49,12 +53,10 @@ let DateManagement = function () {
         },
 
         checkDate (date) {
-            let today = this.actualDate(_hyphenDateFormat());
-
-            if (this.actualDate(date) > today) {
+            if (this.actualDate(date) > this.today) {
                 apodNext.addClass('hide');
                 return false;
-            } else if (this.actualDate(date) >= today) {
+            } else if (this.actualDate(date) >= this.today) {
                 apodNext.addClass('hide');
             } else {
                 apodNext.removeClass('hide');

@@ -58,17 +58,17 @@ function blipHoverState (element, fn) {
 }
 
 const apodActions = {
-    random   () {
+    random () {
         apod.getApod(DateManager.randomDate());
     },
     previous () {
         apod.getApod(DateManager.previousDate(apod.date));
     },
-    next     () {
+    next () {
         apod.getApod(DateManager.nextDate(apod.date));
     },
-    current  () {
-        apod.getApod();
+    current () {
+        apod.getApod(DateManager.today);
     },
 }
 

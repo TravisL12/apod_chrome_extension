@@ -7,13 +7,13 @@ function Apod() {
     this.title;
     this.explanation;
     this.copyright;
-    this.requestInProgress = false;
+    this.validRequest = false;
 }
 
 Apod.prototype = {
 
-    allowRequest: function (date) {
-        if (this.requestInProgress) {
+    isRequestValid: function (date) {
+        if (this.validRequest) {
             console.log('Request in Progress!');
             return false;
         }
@@ -27,18 +27,17 @@ Apod.prototype = {
             apodNext.addClass('hide');
         }
 
-        this.requestInProgress = true;
-
-        return this.requestInProgress;
+        return true;
     },
 
     getApod: function (date) {
-        if (!this.allowRequest(date)) {
+        this.validRequest = this.isRequestValid(date);
+
+        if (!this.validRequest) {
             return;
         }
 
         setLoadingView();
-        date = date || '';
 
         $.ajax({
             context: this,
@@ -65,7 +64,7 @@ Apod.prototype = {
                 }
             },
             error(error) {
-                this.requestInProgress = false;
+                this.validRequest = false;
                 this.getApod(DateManager.randomDate());
             }
         });
@@ -109,7 +108,7 @@ Apod.prototype = {
     },
 
     apodImage: function () {
-        this.requestInProgress = false;
+        this.validRequest = false;
 
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
         $('.description').removeClass('hide');
