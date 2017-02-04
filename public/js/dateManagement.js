@@ -53,10 +53,12 @@ let DateManagement = function () {
         },
 
         checkDate (date) {
-            if (this.actualDate(date) > this.today) {
+            let today = this.actualDate(_hyphenDateFormat());
+
+            if (this.actualDate(date) > today) {
                 apodNext.addClass('hide');
                 return false;
-            } else if (this.actualDate(date) >= this.today) {
+            } else if (this.actualDate(date) >= today) {
                 apodNext.addClass('hide');
             } else {
                 apodNext.removeClass('hide');

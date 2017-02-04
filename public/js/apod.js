@@ -38,6 +38,7 @@ Apod.prototype = {
         }
 
         setLoadingView();
+        date = date || DateManager.today;
 
         $.ajax({
             context: this,

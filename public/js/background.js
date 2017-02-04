@@ -68,7 +68,7 @@ const apodActions = {
         apod.getApod(DateManager.nextDate(apod.date));
     },
     current () {
-        apod.getApod(DateManager.today);
+        apod.getApod();
     },
 }
 
