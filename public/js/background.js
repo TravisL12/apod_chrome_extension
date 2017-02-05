@@ -32,10 +32,6 @@ function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
 }
 
-function addLeadingZero (num) {
-    return num < 10 ? '0' + num.toString() : num.toString();
-}
-
 function setLoadingView () {
     apodImage.addClass('loading');
     $('.description').addClass('hide');

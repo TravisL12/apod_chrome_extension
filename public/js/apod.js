@@ -17,6 +17,7 @@ Apod.prototype = {
             console.log('Request in Progress!');
             return false;
         }
+        this.validRequest = true;
 
         if (date) {
             if (!DateManager.checkDate(date)) {
@@ -31,9 +32,8 @@ Apod.prototype = {
     },
 
     getApod: function (date) {
-        this.validRequest = this.isRequestValid(date);
 
-        if (!this.validRequest) {
+        if (!this.isRequestValid(date)) {
             return;
         }
 
@@ -131,8 +131,9 @@ Apod.prototype = {
     },
 
     // Build filename: ap170111.html
+    // 2011-02-15
     apodSource: function () {
-        const date = DateManager.actualDate(this.date);
-        return 'ap' + date.getYear().toString().slice(-2) + addLeadingZero(date.getMonth() + 1) + addLeadingZero(date.getDate()) + '.html';
+        const date = this.date.split('-');
+        return 'ap' + date[0].slice(-2) + date[1] + date[2] + '.html';
     }
 }
