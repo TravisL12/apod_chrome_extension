@@ -104,6 +104,9 @@ ul, li {
   .container .external-links {
     margin: 0 5px;
     color: white; }
+    .container p#apod-copyright.highlight,
+    .container .external-links.highlight {
+      font-weight: bold; }
   .container .description {
     position: fixed;
     bottom: 0;

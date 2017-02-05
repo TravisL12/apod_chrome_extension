@@ -137,6 +137,9 @@ ul, li {
     .external-links {
         margin: 0 5px;
         color: white;
+        &.highlight {
+            font-weight: bold;
+        }
     }
 
     .description {

@@ -35,6 +35,9 @@ function fitToWindow (image) {
 function setLoadingView () {
     apodImage.addClass('loading');
     $('.description').addClass('hide');
+    $('#apod-hires').removeClass('highlight');
+    $('#apod-lowres').removeClass('highlight');
+    apodCopyright.text('');
     apodImage.css('background-image', 'none');
 }
 

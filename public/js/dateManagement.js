@@ -38,8 +38,8 @@ let DateManagement = function () {
         },
 
         prettyDateFormat (date) {
-            let thisDate = _actualDate(date);
-            return _monthNames[thisDate.getMonth()] + ' ' + thisDate.getDate() + ', ' + thisDate.getFullYear();
+            date = _actualDate(date);
+            return _monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
         },
 
         previousDate (dateString) {
