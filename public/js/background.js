@@ -40,7 +40,7 @@ function setLoadingView () {
     apodImage.css('background-image', 'none');
 }
 
-function blipHoverState (element, fn) {
+function blipHoverState (element, apodFn) {
     if (apod.requestInProgress) {
         return;
     }
@@ -52,7 +52,7 @@ function blipHoverState (element, fn) {
         element.removeClass('hover');
     }, delay);
 
-    fn();
+    apodFn();
 }
 
 const apodActions = {

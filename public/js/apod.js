@@ -12,7 +12,7 @@ function Apod() {
 
 Apod.prototype = {
 
-    isRequestValid: function () {
+    isRequestValid () {
         if (this.validRequest) {
             console.log('Request in Progress!');
             return false;
@@ -22,11 +22,15 @@ Apod.prototype = {
         return this.validRequest;
     },
 
-    getApod: function (date) {
+    getApod (date) {
 
         date = date || DateManager.today;
 
-        if (!this.isRequestValid() || !DateManager.isDateValid(date)) {
+        if (!this.isRequestValid()) {
+            return;
+        }
+
+        if (!DateManager.isDateValid(date)) {
             this.validRequest = false;
             return;
         }
@@ -65,7 +69,7 @@ Apod.prototype = {
 
     },
 
-    errorImage: function () {
+    errorImage () {
         let errorImg = new Image();
         errorImg.src = '/public/images/jupiter.jpg';
         
@@ -75,7 +79,7 @@ Apod.prototype = {
         }
     },
 
-    preLoadImage: function () {
+    preLoadImage () {
         let Img = new Image(),
             delayForHdLoad = 3000,
             quality = 'hires',
@@ -97,7 +101,7 @@ Apod.prototype = {
         }, delayForHdLoad);
     },
 
-    apodImage: function (imgQuality) {
+    apodImage (imgQuality) {
         this.validRequest = false;
 
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
@@ -124,7 +128,7 @@ Apod.prototype = {
 
     // Build filename: ap170111.html
     // 2011-02-15
-    apodSource: function () {
+    apodSource () {
         const date = this.date.split('-');
         return 'ap' + date[0].slice(-2) + date[1] + date[2] + '.html';
     }

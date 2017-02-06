@@ -68,12 +68,20 @@ let DateManagement = function () {
             if (!date) {
                 return true;
             }
-            let isDateGreater = new Date(this.today) >  _actualDate(date);
-            let isDateEqual   = new Date(this.today) == _actualDate(date);
-            
-            isDateGreater || isDateEqual ? apodNext.addClass('hide') : apodNext.removeClass('hide');
 
-            return isDateGreater || isDateEqual;
+            let isTodayGreater = new Date(this.today).getTime() >= _actualDate(date).getTime();
+            let isDateEqual    = new Date(this.today).getTime() === _actualDate(date).getTime();
+            
+            if (!isTodayGreater) {
+                console.log(date + ' is in the future!');
+                apodNext.addClass('hide');
+            } else if (isDateEqual) {
+                apodNext.addClass('hide');
+            } else {
+                apodNext.removeClass('hide');
+            }
+
+            return isTodayGreater;
         },
 
     }
