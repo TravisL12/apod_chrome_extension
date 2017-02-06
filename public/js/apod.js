@@ -12,33 +12,26 @@ function Apod() {
 
 Apod.prototype = {
 
-    isRequestValid: function (date) {
+    isRequestValid: function () {
         if (this.validRequest) {
             console.log('Request in Progress!');
             return false;
         }
         this.validRequest = true;
 
-        if (date) {
-            if (!DateManager.checkDate(date)) {
-                console.log(date + ' is in the future!');
-                return false;
-            }
-        } else {
-            apodNext.addClass('hide');
-        }
-
-        return true;
+        return this.validRequest;
     },
 
     getApod: function (date) {
 
-        if (!this.isRequestValid(date)) {
+        date = date || DateManager.today;
+
+        if (!this.isRequestValid() || !DateManager.isDateValid(date)) {
+            this.validRequest = false;
             return;
         }
 
         setLoadingView();
-        date = date || DateManager.today;
 
         $.ajax({
             context: this,

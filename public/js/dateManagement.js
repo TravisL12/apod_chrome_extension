@@ -64,19 +64,16 @@ let DateManagement = function () {
             return _hyphenDateFormat(date);
         },
 
-        checkDate (date) {
-            let today = _actualDate(_hyphenDateFormat());
-
-            if (_actualDate(date) > today) {
-                apodNext.addClass('hide');
-                return false;
-            } else if (_actualDate(date) >= today) {
-                apodNext.addClass('hide');
-            } else {
-                apodNext.removeClass('hide');
+        isDateValid (date) {
+            if (!date) {
+                return true;
             }
+            let isDateGreater = new Date(this.today) >  _actualDate(date);
+            let isDateEqual   = new Date(this.today) == _actualDate(date);
+            
+            isDateGreater || isDateEqual ? apodNext.addClass('hide') : apodNext.removeClass('hide');
 
-            return true;
+            return isDateGreater || isDateEqual;
         },
 
     }
