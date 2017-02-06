@@ -119,7 +119,7 @@ Apod.prototype = {
 
         apodDate.text(DateManager.prettyDateFormat(this.date));
         apodTitle.text(this.title);
-        $('#apod-'+imgQuality).addClass('highlight');
+        $('#apod-'+imgQuality).addClass('highlight-resolution');
         apodDescription.text(this.explanation);
         apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
         apodHiRes.attr('href', this.hdurl);
