@@ -148,9 +148,6 @@ ul, li {
     .external-links {
         margin: 0 5px;
         color: white;
-        &.highlight-resolution {
-            font-weight: bold;
-        }
     }
 
     .description {
@@ -168,6 +165,16 @@ ul, li {
         @include helvetica-neue-light;
         p {
             font-size: 16px;
+        }
+        p#img-quality {
+            display: inline-block;
+            margin: 0;
+            font-weight: bold;
+            background: $gray;
+            color: black;
+            margin-left: 10px;
+            padding: 0 5px;
+            border-radius: 5px;
         }
     }
 

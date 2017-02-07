@@ -16,6 +16,22 @@ function Apod() {
 
 Apod.prototype = {
 
+    random () {
+        this.getApod(DateManager.randomDate());
+    },
+
+    previous () {
+        this.getApod(DateManager.adjacentDate(this.date, -1));
+    },
+
+    next () {
+        this.getApod(DateManager.adjacentDate(this.date, 1));
+    },
+
+    current () {
+        this.getApod();
+    },
+
     isRequestValid () {
         if (this.validRequest) {
             console.log('Request in Progress!');
@@ -60,13 +76,13 @@ Apod.prototype = {
                 switch (response.media_type) {
                     case 'image':
                         apodImage.css('display', 'block');
-                        apodVideo.css('display', 'none');
+                        $('#apod-video').css('display', 'none');
                         this.preLoadImage();
                         break;
                     case 'video':
                         this.validRequest = false;
                         apodImage.css('display', 'none');
-                        apodVideo.css('display', 'inline-block');
+                        $('#apod-video').css('display', 'inline-block');
                         this.apodVideo();
                         break;
                     default:
@@ -94,7 +110,7 @@ Apod.prototype = {
     preLoadImage () {
         let Img = new Image(),
             delayForHdLoad = 3000,
-            quality = 'hires',
+            quality = 'HD',
             timeout;
 
         Img.src = this.hdurl;
@@ -108,7 +124,7 @@ Apod.prototype = {
         timeout = setTimeout(() => {
             if (!Img.complete) {
                 Img.src = this.url;
-                quality = 'lowres';
+                quality = 'SD';
             }
         }, delayForHdLoad);
     },
@@ -125,7 +141,7 @@ Apod.prototype = {
             apodImage.css('background-size', 'auto');
         }
 
-        $('#apod-'+imgQuality).addClass('highlight-resolution');
+        $('#img-quality').text(imgQuality);
         apodHiRes.attr('href', this.hdurl);
         apodLowRes.attr('href', this.url);
 

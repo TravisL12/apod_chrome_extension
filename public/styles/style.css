@@ -113,9 +113,6 @@ ul, li {
   .container .external-links {
     margin: 0 5px;
     color: white; }
-    .container p#apod-copyright.highlight-resolution,
-    .container .external-links.highlight-resolution {
-      font-weight: bold; }
   .container .description {
     position: fixed;
     bottom: 0;
@@ -131,6 +128,15 @@ ul, li {
     font-weight: 300; }
     .container .description p {
       font-size: 16px; }
+    .container .description p#img-quality {
+      display: inline-block;
+      margin: 0;
+      font-weight: bold;
+      background: #333333;
+      color: black;
+      margin-left: 10px;
+      padding: 0 5px;
+      border-radius: 5px; }
   .container .description:hover,
   .container .show-description {
     height: 300px;
