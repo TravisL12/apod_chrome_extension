@@ -77,14 +77,25 @@ ul, li {
 }
 
 .body-image,
+.body-video,
 .container { float: left; }
+
+.body-image,
+.body-video {
+    min-height: 95%;
+    width: 100%;
+}
+
+.body-video {
+    text-align: center;
+    padding-top: 20vh;
+    box-sizing: border-box;
+}
 
 .body-image {
     position: relative;
     background-position: center center;
     background-repeat: no-repeat;
-    min-height: 95%;
-    width: 100%;
 }
 
 .container {
@@ -137,9 +148,6 @@ ul, li {
     .external-links {
         margin: 0 5px;
         color: white;
-        &.highlight-resolution {
-            font-weight: bold;
-        }
     }
 
     .description {
@@ -157,6 +165,15 @@ ul, li {
         @include helvetica-neue-light;
         p {
             font-size: 16px;
+        }
+        #img-quality {
+            display: inline-block;
+            font-size: 13px;
+            background: $gray;
+            color: black;
+            margin-left: 10px;
+            padding: 0 5px;
+            border-radius: 3px;
         }
     }
 

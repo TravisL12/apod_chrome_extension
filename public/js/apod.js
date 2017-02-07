@@ -1,5 +1,9 @@
 'use strict';
 
+function addLeadingZero (num) {
+    return num < 10 ? '0' + num.toString() : num.toString();
+}
+
 function Apod() {
     this.date;
     this.url;
@@ -11,6 +15,22 @@ function Apod() {
 }
 
 Apod.prototype = {
+
+    random () {
+        this.getApod(DateManager.randomDate());
+    },
+
+    previous () {
+        this.getApod(DateManager.adjacentDate(this.date, -1));
+    },
+
+    next () {
+        this.getApod(DateManager.adjacentDate(this.date, 1));
+    },
+
+    current () {
+        this.getApod();
+    },
 
     isRequestValid () {
         if (this.validRequest) {
@@ -55,7 +75,15 @@ Apod.prototype = {
 
                 switch (response.media_type) {
                     case 'image':
+                        apodImage.css('display', 'block');
+                        $('#apod-video').css('display', 'none');
                         this.preLoadImage();
+                        break;
+                    case 'video':
+                        this.validRequest = false;
+                        apodImage.css('display', 'none');
+                        $('#apod-video').css('display', 'inline-block');
+                        this.apodVideo();
                         break;
                     default:
                         this.errorImage();
@@ -82,7 +110,7 @@ Apod.prototype = {
     preLoadImage () {
         let Img = new Image(),
             delayForHdLoad = 3000,
-            quality = 'hires',
+            quality = 'HD',
             timeout;
 
         Img.src = this.hdurl;
@@ -96,7 +124,7 @@ Apod.prototype = {
         timeout = setTimeout(() => {
             if (!Img.complete) {
                 Img.src = this.url;
-                quality = 'lowres';
+                quality = 'SD';
             }
         }, delayForHdLoad);
     },
@@ -105,7 +133,6 @@ Apod.prototype = {
         this.validRequest = false;
 
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
-        $('.description').removeClass('hide');
         apodImage.removeClass('loading');
 
         if (fitToWindow(this.loadedImage)) {
@@ -114,13 +141,26 @@ Apod.prototype = {
             apodImage.css('background-size', 'auto');
         }
 
-        apodDate.text(DateManager.prettyDateFormat(this.date));
-        apodTitle.text(this.title);
-        $('#apod-'+imgQuality).addClass('highlight-resolution');
-        apodDescription.text(this.explanation);
-        apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+        $('#img-quality').text(imgQuality);
         apodHiRes.attr('href', this.hdurl);
         apodLowRes.attr('href', this.url);
+
+        this.apodDescription();
+    },
+
+    apodVideo () {
+        apodVideo[0].src = this.url;
+        apodImage.removeClass('loading');
+
+        this.apodDescription();
+    },
+
+    apodDescription () {
+        $('.description').removeClass('hide');
+        apodDate.text(DateManager.prettyDateFormat(this.date));
+        apodTitle.text(this.title);
+        apodDescription.text(this.explanation);
+        apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
         if (this.copyright) {
             apodCopyright.text('Copyright: ' + this.copyright);
         }
@@ -130,6 +170,6 @@ Apod.prototype = {
     // 2011-02-15
     apodSource () {
         const date = this.date.split('-');
-        return 'ap' + date[0].slice(-2) + date[1] + date[2] + '.html';
+        return 'ap' + date[0].slice(-2) + addLeadingZero(date[1]) + addLeadingZero(date[2]) + '.html';
     }
 }

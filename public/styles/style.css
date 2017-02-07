@@ -50,15 +50,24 @@ ul, li {
   width: 32px; }
 
 .body-image,
+.body-video,
 .container {
   float: left; }
+
+.body-image,
+.body-video {
+  min-height: 95%;
+  width: 100%; }
+
+.body-video {
+  text-align: center;
+  padding-top: 20vh;
+  box-sizing: border-box; }
 
 .body-image {
   position: relative;
   background-position: center center;
-  background-repeat: no-repeat;
-  min-height: 95%;
-  width: 100%; }
+  background-repeat: no-repeat; }
 
 .container {
   position: relative;
@@ -104,9 +113,6 @@ ul, li {
   .container .external-links {
     margin: 0 5px;
     color: white; }
-    .container p#apod-copyright.highlight-resolution,
-    .container .external-links.highlight-resolution {
-      font-weight: bold; }
   .container .description {
     position: fixed;
     bottom: 0;
@@ -122,6 +128,14 @@ ul, li {
     font-weight: 300; }
     .container .description p {
       font-size: 16px; }
+    .container .description #img-quality {
+      display: inline-block;
+      font-size: 13px;
+      background: #333333;
+      color: black;
+      margin-left: 10px;
+      padding: 0 5px;
+      border-radius: 3px; }
   .container .description:hover,
   .container .show-description {
     height: 300px;

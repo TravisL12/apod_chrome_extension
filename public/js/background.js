@@ -12,6 +12,7 @@
 
 const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodImage       = $('#apod-image'),
+    apodVideo       = $('#apod-video iframe'),
     apodTitle       = $('.container #apod-title'),
     apodDate        = $('.container #apod-date'),
     apodDescription = $('.container #apod-description'),
@@ -34,7 +35,6 @@ function fitToWindow (image) {
 function setLoadingView () {
     apodImage.addClass('loading');
     $('.description').addClass('hide');
-    $('.external-links').removeClass('highlight-resolution');
     apodCopyright.text('');
     apodImage.css('background-image', 'none');
 }
@@ -51,44 +51,29 @@ function blipHoverState (element, apodFn) {
         element.removeClass('hover');
     }, delay);
 
-    apodFn();
-}
-
-const apodActions = {
-    random () {
-        apod.getApod(DateManager.randomDate());
-    },
-    previous () {
-        apod.getApod(DateManager.adjacentDate(apod.date, -1));
-    },
-    next () {
-        apod.getApod(DateManager.adjacentDate(apod.date, 1));
-    },
-    current () {
-        apod.getApod();
-    },
+    apodFn.call(apod);
 }
 
 // initial page load is random APOD
-apodActions.random();
+apod.random();
 
 $('.nav-buttons').on('click', (e) => {
-    apodActions[e.target.id.slice(5)]();
+    apod[e.target.id.slice(5)]();
 });
 
 $(document).on('keydown', function(e) {
     switch (e.which) {
         case 82:
-            blipHoverState(apodRandom, apodActions.random);
+            blipHoverState(apodRandom, apod.random);
             break;
         case 84:
-            blipHoverState(apodCurrent, apodActions.current);
+            blipHoverState(apodCurrent, apod.current);
             break;
         case 37:
-            blipHoverState(apodPrevious, apodActions.previous);
+            blipHoverState(apodPrevious, apod.previous);
             break;
         case 39:
-            blipHoverState(apodNext, apodActions.next);
+            blipHoverState(apodNext, apod.next);
             break;
         case 68:
             $('.container .description').toggleClass('show-description');
