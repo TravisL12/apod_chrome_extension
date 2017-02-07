@@ -42,35 +42,27 @@ let DateManagement = function () {
             return _monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
         },
 
-        previousDate (dateString) {
-            let date = _actualDate(dateString);
-            let yesterday = new Date(date.getTime());
-            yesterday = new Date(yesterday.setDate(yesterday.getDate() - 1));
-            return _hyphenDateFormat(yesterday);
-        },
+        adjacentDate (dateString, direction) {
+            let date = _actualDate(dateString),
+                adjDate = new Date(date.getTime());
 
-        nextDate (dateString) {
-            let date = _actualDate(dateString);
-            let tomorrow = new Date(date.getTime());
-            tomorrow = new Date(tomorrow.setDate(tomorrow.getDate() + 1));
-            return _hyphenDateFormat(tomorrow);
+            adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
+            return _hyphenDateFormat(adjDate);
         },
 
         randomDate () {
-            let start = new Date(1995, 5, 16);
-            let end = new Date();
+            let start = new Date(1995, 5, 16),
+                end   = new Date(),
+                date  = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
 
-            let date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
             return _hyphenDateFormat(date);
         },
 
         isDateValid (date) {
-            if (!date) {
-                return true;
-            }
+            date = date || this.today;
 
-            let isTodayGreater = new Date(this.today).getTime() >= _actualDate(date).getTime();
-            let isDateEqual    = new Date(this.today).getTime() === _actualDate(date).getTime();
+            let isTodayGreater = new Date(this.today).getTime() >=  _actualDate(date).getTime(),
+                isDateEqual    = new Date(this.today).getTime() === _actualDate(date).getTime();
             
             if (!isTodayGreater) {
                 console.log(date + ' is in the future!');

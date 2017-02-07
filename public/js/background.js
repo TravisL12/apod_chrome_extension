@@ -60,10 +60,10 @@ const apodActions = {
         apod.getApod(DateManager.randomDate());
     },
     previous () {
-        apod.getApod(DateManager.previousDate(apod.date));
+        apod.getApod(DateManager.adjacentDate(apod.date, -1));
     },
     next () {
-        apod.getApod(DateManager.nextDate(apod.date));
+        apod.getApod(DateManager.adjacentDate(apod.date, 1));
     },
     current () {
         apod.getApod();
