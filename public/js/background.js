@@ -11,19 +11,18 @@
 'use strict';
 
 const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
-    apodApiUrl      = 'https://api.nasa.gov/planetary/apod',
     apodImage       = $('#apod-image'),
     apodTitle       = $('.container #apod-title'),
+    apodDate        = $('.container #apod-date'),
+    apodDescription = $('.container #apod-description'),
     apodCopyright   = $('.container #apod-copyright'),
     apodOrigin      = $('.container a#apod-origin'),
     apodHiRes       = $('.container a#apod-hires'),
     apodLowRes      = $('.container a#apod-lowres'),
-    apodDescription = $('.container #apod-description'),
-    apodDate        = $('.container #apod-date'),
-    apodRandom      = $('.nav-buttons a#apod-random'),
     apodPrevious    = $('.nav-buttons a#apod-previous'),
     apodNext        = $('.nav-buttons a#apod-next'),
     apodCurrent     = $('.nav-buttons a#apod-current'),
+    apodRandom      = $('.nav-buttons a#apod-random'),
     DateManager     = new DateManagement();
 
 let apod = new Apod();
@@ -73,24 +72,8 @@ const apodActions = {
 // initial page load is random APOD
 apodActions.random();
 
-// RANDOM
-apodRandom.on('click', function() {
-    apodActions.random();
-});
-
-// CURRENT
-apodCurrent.on('click', function() {
-    apodActions.current();
-});
-
-// PREVIOUS
-apodPrevious.on('click', function() {
-    apodActions.previous();
-});
-
-// NEXT
-apodNext.on('click', function() {
-    apodActions.next();
+$('.nav-buttons').on('click', (e) => {
+    apodActions[e.target.id.slice(5)]();
 });
 
 $(document).on('keydown', function(e) {
@@ -98,22 +81,18 @@ $(document).on('keydown', function(e) {
     if (e.which === 82) {
         blipHoverState(apodRandom, apodActions.random);
     }
-
     // CURRENT (t)
     if (e.which === 84) {
         blipHoverState(apodCurrent, apodActions.current);
     }
-
     // PREVIOUS (left arrow)
     if (e.which === 37) {
         blipHoverState(apodPrevious, apodActions.previous);
     }
-
     // NEXT (right arrow)
     if (e.which === 39) {
         blipHoverState(apodNext, apodActions.next);
     }
-
     // TOGGLE description (d)
     if (e.which === 68) {
         $('.container .description').toggleClass('show-description');

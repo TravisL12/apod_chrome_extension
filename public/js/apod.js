@@ -40,7 +40,7 @@ Apod.prototype = {
         $.ajax({
             context: this,
             type: 'GET',
-            url: apodApiUrl,
+            url: 'https://api.nasa.gov/planetary/apod',
             data: {
                 api_key: api_key,
                 date: date,
