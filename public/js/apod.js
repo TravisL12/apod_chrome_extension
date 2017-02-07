@@ -24,7 +24,7 @@ Apod.prototype = {
 
     getApod (date) {
 
-        date = date || DateManager.today;
+        date = '2017-02-01';//date || DateManager.today;
 
         if (!this.isRequestValid()) {
             return;
@@ -56,6 +56,9 @@ Apod.prototype = {
                 switch (response.media_type) {
                     case 'image':
                         this.preLoadImage();
+                        break;
+                    case 'video':
+                        this.apodVideo();
                         break;
                     default:
                         this.errorImage();
@@ -105,7 +108,6 @@ Apod.prototype = {
         this.validRequest = false;
 
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
-        $('.description').removeClass('hide');
         apodImage.removeClass('loading');
 
         if (fitToWindow(this.loadedImage)) {
@@ -114,13 +116,28 @@ Apod.prototype = {
             apodImage.css('background-size', 'auto');
         }
 
-        apodDate.text(DateManager.prettyDateFormat(this.date));
-        apodTitle.text(this.title);
         $('#apod-'+imgQuality).addClass('highlight-resolution');
-        apodDescription.text(this.explanation);
-        apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
         apodHiRes.attr('href', this.hdurl);
         apodLowRes.attr('href', this.url);
+
+        this.apodDescription();
+    },
+
+    apodVideo () {
+        let iFrame = document.createElement('iframe');
+        iFrame.src = this.url;
+        apodVideo.append(iFrame);
+        apodImage.removeClass('loading');
+
+        this.apodDescription();
+    },
+
+    apodDescription () {
+        $('.description').removeClass('hide');
+        apodDate.text(DateManager.prettyDateFormat(this.date));
+        apodTitle.text(this.title);
+        apodDescription.text(this.explanation);
+        apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
         if (this.copyright) {
             apodCopyright.text('Copyright: ' + this.copyright);
         }
