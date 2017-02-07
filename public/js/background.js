@@ -77,24 +77,21 @@ $('.nav-buttons').on('click', (e) => {
 });
 
 $(document).on('keydown', function(e) {
-    // RANDOM (r)
-    if (e.which === 82) {
-        blipHoverState(apodRandom, apodActions.random);
-    }
-    // CURRENT (t)
-    if (e.which === 84) {
-        blipHoverState(apodCurrent, apodActions.current);
-    }
-    // PREVIOUS (left arrow)
-    if (e.which === 37) {
-        blipHoverState(apodPrevious, apodActions.previous);
-    }
-    // NEXT (right arrow)
-    if (e.which === 39) {
-        blipHoverState(apodNext, apodActions.next);
-    }
-    // TOGGLE description (d)
-    if (e.which === 68) {
-        $('.container .description').toggleClass('show-description');
+    switch (e.which) {
+        case 82:
+            blipHoverState(apodRandom, apodActions.random);
+            break;
+        case 84:
+            blipHoverState(apodCurrent, apodActions.current);
+            break;
+        case 37:
+            blipHoverState(apodPrevious, apodActions.previous);
+            break;
+        case 39:
+            blipHoverState(apodNext, apodActions.next);
+            break;
+        case 68:
+            $('.container .description').toggleClass('show-description');
+            break;
     }
 })
