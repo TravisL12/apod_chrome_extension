@@ -1,5 +1,9 @@
 'use strict';
 
+function addLeadingZero (num) {
+    return num < 10 ? '0' + num.toString() : num.toString();
+}
+
 function Apod() {
     this.date;
     this.url;
@@ -24,7 +28,7 @@ Apod.prototype = {
 
     getApod (date) {
 
-        date = '2017-02-01';//date || DateManager.today;
+        date = date || DateManager.today;
 
         if (!this.isRequestValid()) {
             return;
@@ -55,9 +59,14 @@ Apod.prototype = {
 
                 switch (response.media_type) {
                     case 'image':
+                        apodImage.css('display', 'block');
+                        apodVideo.css('display', 'none');
                         this.preLoadImage();
                         break;
                     case 'video':
+                        this.validRequest = false;
+                        apodImage.css('display', 'none');
+                        apodVideo.css('display', 'inline-block');
                         this.apodVideo();
                         break;
                     default:
@@ -124,15 +133,8 @@ Apod.prototype = {
     },
 
     apodVideo () {
-        let iFrame = document.createElement('iframe');
-        iFrame.src = this.url;
-        iFrame.width = 960;
-        iFrame.height = 540;
-        iFrame.frameBorder = 0;
-
-        apodVideo.append(iFrame);
+        apodVideo[0].src = this.url;
         apodImage.removeClass('loading');
-        apodImage.css('display', 'none');
 
         this.apodDescription();
     },
@@ -152,6 +154,6 @@ Apod.prototype = {
     // 2011-02-15
     apodSource () {
         const date = this.date.split('-');
-        return 'ap' + date[0].slice(-2) + date[1] + date[2] + '.html';
+        return 'ap' + date[0].slice(-2) + addLeadingZero(date[1]) + addLeadingZero(date[2]) + '.html';
     }
 }

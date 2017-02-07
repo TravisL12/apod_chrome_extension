@@ -12,7 +12,7 @@
 
 const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodImage       = $('#apod-image'),
-    apodVideo       = $('#apod-video'),
+    apodVideo       = $('#apod-video iframe'),
     apodTitle       = $('.container #apod-title'),
     apodDate        = $('.container #apod-date'),
     apodDescription = $('.container #apod-description'),
