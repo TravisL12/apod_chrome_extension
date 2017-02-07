@@ -77,14 +77,25 @@ ul, li {
 }
 
 .body-image,
+.body-video,
 .container { float: left; }
+
+.body-image,
+.body-video {
+    min-height: 95%;
+    width: 100%;
+}
+
+.body-video {
+    text-align: center;
+    padding-top: 20vh;
+    box-sizing: border-box;
+}
 
 .body-image {
     position: relative;
     background-position: center center;
     background-repeat: no-repeat;
-    min-height: 95%;
-    width: 100%;
 }
 
 .container {

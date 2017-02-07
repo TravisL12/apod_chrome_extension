@@ -126,8 +126,13 @@ Apod.prototype = {
     apodVideo () {
         let iFrame = document.createElement('iframe');
         iFrame.src = this.url;
+        iFrame.width = 960;
+        iFrame.height = 540;
+        iFrame.frameBorder = 0;
+
         apodVideo.append(iFrame);
         apodImage.removeClass('loading');
+        apodImage.css('display', 'none');
 
         this.apodDescription();
     },
