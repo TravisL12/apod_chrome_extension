@@ -128,15 +128,14 @@ ul, li {
     font-weight: 300; }
     .container .description p {
       font-size: 16px; }
-    .container .description p#img-quality {
+    .container .description #img-quality {
       display: inline-block;
-      margin: 0;
-      font-weight: bold;
+      font-size: 13px;
       background: #333333;
       color: black;
       margin-left: 10px;
       padding: 0 5px;
-      border-radius: 5px; }
+      border-radius: 3px; }
   .container .description:hover,
   .container .show-description {
     height: 300px;
