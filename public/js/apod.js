@@ -131,15 +131,10 @@ Apod.prototype = {
 
     apodImage (imgQuality) {
         this.validRequest = false;
-
         apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
-        apodImage.removeClass('loading');
 
-        if (fitToWindow(this.loadedImage)) {
-            apodImage.css('background-size', 'contain');
-        } else {
-            apodImage.css('background-size', 'auto');
-        }
+        let bgSize = fitToWindow(this.loadedImage) ? 'contain' : 'auto';
+        apodImage.css('background-size', bgSize);
 
         $('#img-quality').text(imgQuality);
         apodHiRes.attr('href', this.hdurl);
@@ -150,17 +145,18 @@ Apod.prototype = {
 
     apodVideo () {
         apodVideo[0].src = this.url;
-        apodImage.removeClass('loading');
-
         this.apodDescription();
     },
 
     apodDescription () {
+        apodImage.removeClass('loading');
         $('.description').removeClass('hide');
-        apodDate.text(DateManager.prettyDateFormat(this.date));
+
         apodTitle.text(this.title);
+        apodDate.text(DateManager.prettyDateFormat(this.date));
         apodDescription.text(this.explanation);
         apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+
         if (this.copyright) {
             apodCopyright.text('Copyright: ' + this.copyright);
         }
