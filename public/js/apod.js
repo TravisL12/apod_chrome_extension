@@ -12,20 +12,23 @@ function Apod() {
     this.explanation;
     this.copyright;
     this.validRequest = false;
+    this.DateManager = new DateManagement();
+
+    this.random();
 }
 
 Apod.prototype = {
 
     random () {
-        this.getApod(DateManager.randomDate());
+        this.getApod(this.DateManager.randomDate());
     },
 
     previous () {
-        this.getApod(DateManager.adjacentDate(this.date, -1));
+        this.getApod(this.DateManager.adjacentDate(this.date, -1));
     },
 
     next () {
-        this.getApod(DateManager.adjacentDate(this.date, 1));
+        this.getApod(this.DateManager.adjacentDate(this.date, 1));
     },
 
     current () {
@@ -44,13 +47,13 @@ Apod.prototype = {
 
     getApod (date) {
 
-        date = date || DateManager.today;
+        date = date || this.DateManager.today;
 
         if (!this.isRequestValid()) {
             return;
         }
 
-        if (!DateManager.isDateValid(date)) {
+        if (!this.DateManager.isDateValid(date)) {
             this.validRequest = false;
             return;
         }
@@ -66,6 +69,7 @@ Apod.prototype = {
                 date: date,
             },
             success(response) {
+                ga('send', 'event', 'APOD', 'viewed', response.date);
                 this.title       = response.title;
                 this.url         = response.url;
                 this.hdurl       = response.hdurl;
@@ -91,7 +95,7 @@ Apod.prototype = {
             },
             error(error) {
                 this.validRequest = false;
-                this.getApod(DateManager.randomDate());
+                this.getApod(this.DateManager.randomDate());
             }
         });
 
@@ -153,7 +157,7 @@ Apod.prototype = {
         $('.description').removeClass('hide');
 
         apodTitle.text(this.title);
-        apodDate.text(DateManager.prettyDateFormat(this.date));
+        apodDate.text(this.DateManager.prettyDateFormat(this.date));
         apodDescription.text(this.explanation);
         apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
 
@@ -162,8 +166,11 @@ Apod.prototype = {
         }
     },
 
-    // Build filename: ap170111.html
-    // 2011-02-15
+    /**
+     * Build filename for APOD site: ap170111.html
+     *
+     * @return {String} "2011-02-15"
+     */
     apodSource () {
         const date = this.date.split('-');
         return 'ap' + date[0].slice(-2) + addLeadingZero(date[1]) + addLeadingZero(date[2]) + '.html';

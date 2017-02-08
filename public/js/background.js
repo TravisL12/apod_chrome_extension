@@ -23,10 +23,7 @@ const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodPrevious    = $('.nav-buttons a#apod-previous'),
     apodNext        = $('.nav-buttons a#apod-next'),
     apodCurrent     = $('.nav-buttons a#apod-current'),
-    apodRandom      = $('.nav-buttons a#apod-random'),
-    DateManager     = new DateManagement();
-
-let apod = new Apod();
+    apodRandom      = $('.nav-buttons a#apod-random');
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
@@ -43,7 +40,7 @@ function blipHoverState (element, apodFn) {
     if (apod.requestInProgress) {
         return;
     }
-
+    ga('send', 'event', 'Keydown', 'pressed', element.id);
     let delay = 125;
     element.addClass('hover');
 
@@ -54,11 +51,18 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-// initial page load is random APOD
-apod.random();
-
 $('.nav-buttons').on('click', (e) => {
+    ga('send', 'event', 'Button', 'clicked', e.target.id);
     apod[e.target.id.slice(5)]();
+});
+
+$('.external-links').on('click', (e) => {
+    ga('send', 'event', {
+        eventCategory: 'Outbound Link',
+        eventAction: 'click',
+        eventLabel: event.target.id,
+        transport: 'beacon'
+    });
 });
 
 $(document).on('keydown', function(e) {
