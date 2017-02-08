@@ -59,7 +59,7 @@ $('.nav-buttons').on('click', (e) => {
 $('.external-links').on('click', (e) => {
     ga('send', 'event', {
         eventCategory: 'Outbound Link',
-        eventAction: 'click',
+        eventAction: 'clicked',
         eventLabel: event.target.id,
         transport: 'beacon'
     });
