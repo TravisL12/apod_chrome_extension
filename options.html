@@ -1,15 +1,35 @@
 <html>
     <head>
         <title>APOD - Options</title>
-        <link href='public/styles/options.css' rel='stylesheet'>
+        <link href='public/styles/style.css' rel='stylesheet'>
+        <style>
+            body {
+                background: #C7C7C7;
+                padding: 10px;
+            }
+        </style>
     </head>
 
     <body>
         <div class='apod-options'>
+            <h3>Select which APOD type you would like to see on the new tab screen.</h3>
             <form id='choose-apod'>
-                <label>Today <input name='choose-apod' id='today' value='today' type='radio'></label>
-                <label>Random <input name='choose-apod' id='random' value='random' type='radio'></label>
-                <button type='submit'>Save</button>
+
+                <div class='option'>
+                    <div class='info'>Display the most recent APOD</div>
+                    <div class='inputs'>
+                        <input name='choose-apod' id='today' value='today' type='radio'>
+                        <label for='today'>Today</label>
+                    </div>
+                </div>
+
+                <div class='option'>
+                    <div class='info'>Display a random APOD</div>
+                    <div class='inputs'>
+                        <input name='choose-apod' id='random' value='random' type='radio'>
+                        <label for='random'>Random</label>
+                    </div>
+                </div>
             </form>
         </div>
     </body>

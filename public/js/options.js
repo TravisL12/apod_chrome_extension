@@ -3,10 +3,8 @@ function save_options() {
   let value = form[0].checked ? form[0].value : form[1].value;
   chrome.storage.sync.set({
     apodType: value
-  }, function() {
-    console.log('updated stats!');
   });
-  window.close();
+  setTimeout(window.close, 350);
 }
 
 function restoreOptions () {
@@ -14,7 +12,8 @@ function restoreOptions () {
     let type = items.apodType || 'today';
     let form = document.forms['choose-apod'];
     form[type].checked = true;
-    form.getElementsByTagName('button')[0].addEventListener('click', save_options);
+    form[0].addEventListener('change', save_options);
+    form[1].addEventListener('change', save_options);
   });
 }
 

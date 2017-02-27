@@ -1,0 +1,44 @@
+.apod-options {
+    @include helvetica-neue-light;
+    width: 275px;
+    color: $gray;
+
+    #choose-apod {
+        .info,
+        .inputs {
+            display: inline-block;
+        }
+
+        .info {
+            width: 200px;
+            margin: 10px 0;
+        }
+
+        .inputs {
+            input[type='radio'] {
+                display: none;
+            }
+            label {
+                // unchecked case
+                @include border-radii(3px, 8px);
+                width: 60px;
+                box-sizing: border-box;
+                display: block;
+                text-align: center;
+                background: darken($light-gray, 5%);
+                color: darken($light-gray, 25%);
+                padding: 5px;
+                transition: 0.2s linear all;
+                cursor: pointer;
+                &:hover {
+                    color: $gray;
+                }
+            }
+            input[type='radio']:checked + label {
+                cursor: default;
+                background: lighten(yellow, 10%);
+                color: $gray;
+            }
+        }
+    }
+}

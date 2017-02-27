@@ -1,3 +1,37 @@
+.apod-options {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  width: 275px;
+  color: #333333; }
+  .apod-options #choose-apod .info,
+  .apod-options #choose-apod .inputs {
+    display: inline-block; }
+  .apod-options #choose-apod .info {
+    width: 200px;
+    margin: 10px 0; }
+  .apod-options #choose-apod .inputs input[type='radio'] {
+    display: none; }
+  .apod-options #choose-apod .inputs label {
+    border-top-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 8px;
+    width: 60px;
+    box-sizing: border-box;
+    display: block;
+    text-align: center;
+    background: #bababa;
+    color: #878787;
+    padding: 5px;
+    transition: 0.2s linear all;
+    cursor: pointer; }
+    .apod-options #choose-apod .inputs label:hover {
+      color: #333333; }
+  .apod-options #choose-apod .inputs input[type='radio']:checked + label {
+    cursor: default;
+    background: #ffff33;
+    color: #333333; }
+
 body {
   background: black;
   margin: 0; }
