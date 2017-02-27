@@ -84,3 +84,9 @@ $(document).on('keydown', function(e) {
             break;
     }
 })
+
+let apod = new Apod();
+chrome.storage.sync.get(['apodType'], (items) => {
+    let apodOptionType = items.apodType || 'today';
+    apodOptionType == 'today' ? apod.current() : apod.random();
+});

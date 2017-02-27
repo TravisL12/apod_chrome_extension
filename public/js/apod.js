@@ -13,8 +13,6 @@ function Apod() {
     this.copyright;
     this.validRequest = false;
     this.DateManager = new DateManagement();
-
-    this.random();
 }
 
 Apod.prototype = {
