@@ -9,7 +9,13 @@ function save_options() {
 
 function restoreOptions () {
   chrome.storage.sync.get(['apodType'], function(items) {
-    let type = items.apodType || 'today';
+    let type = items.apodType;
+    if (!type) {
+        type = 'today';
+        chrome.storage.sync.set({
+          apodType: type
+        });
+    };
     let form = document.forms['choose-apod'];
     form[type].checked = true;
     form[0].addEventListener('change', save_options);
