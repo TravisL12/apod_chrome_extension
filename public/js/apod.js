@@ -55,11 +55,11 @@ Apod.prototype = {
             this.validRequest = false;
             return;
         }
-
         setLoadingView();
 
-        $.ajax({
-            context: this,
+        let _that = this;
+
+        reqwest({
             type: 'GET',
             url: 'https://api.nasa.gov/planetary/apod',
             data: {
@@ -67,33 +67,34 @@ Apod.prototype = {
                 date: date,
             },
             success(response) {
+                response = JSON.parse(response.response);
                 ga('send', 'event', 'APOD', 'viewed', response.date);
-                this.title       = response.title;
-                this.url         = response.url;
-                this.hdurl       = response.hdurl;
-                this.date        = response.date;
-                this.explanation = response.explanation;
-                this.copyright   = response.copyright;
+                _that.title       = response.title;
+                _that.url         = response.url;
+                _that.hdurl       = response.hdurl;
+                _that.date        = response.date;
+                _that.explanation = response.explanation;
+                _that.copyright   = response.copyright;
 
                 switch (response.media_type) {
                     case 'image':
-                        apodImage.css('display', 'block');
-                        $('#apod-video').css('display', 'none');
-                        this.preLoadImage();
+                        apodImage.style.display = 'block';
+                        $('#apod-video').style.display = 'none';
+                        _that.preLoadImage();
                         break;
                     case 'video':
-                        this.validRequest = false;
-                        apodImage.css('display', 'none');
-                        $('#apod-video').css('display', 'inline-block');
-                        this.apodVideo();
+                        _that.validRequest = false;
+                        apodImage.style.display = 'none';
+                        $('#apod-video').style.display = 'inline-block';
+                        _that.apodVideo();
                         break;
                     default:
-                        this.errorImage();
+                        _that.errorImage();
                 }
             },
             error(error) {
-                this.validRequest = false;
-                this.getApod(this.DateManager.randomDate());
+                _that.validRequest = false;
+                _that.getApod(this.DateManager.randomDate());
             }
         });
 
@@ -133,14 +134,14 @@ Apod.prototype = {
 
     apodImage (imgQuality) {
         this.validRequest = false;
-        apodImage.css('background-image', 'url(' + this.loadedImage.src + ')');
+        apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
         let bgSize = fitToWindow(this.loadedImage) ? 'contain' : 'auto';
-        apodImage.css('background-size', bgSize);
+        apodImage.style['background-size'] = bgSize;
 
-        $('#img-quality').text(imgQuality);
-        apodHiRes.attr('href', this.hdurl);
-        apodLowRes.attr('href', this.url);
+        $('#img-quality').textContent = imgQuality;
+        apodHiRes.setAttribute('href', this.hdurl);
+        apodLowRes.setAttribute('href', this.url);
 
         this.apodDescription();
     },
@@ -151,16 +152,16 @@ Apod.prototype = {
     },
 
     apodDescription () {
-        apodImage.removeClass('loading');
-        $('.description').removeClass('hide');
+        apodImage.classList.remove('loading');
+        $('.description').classList.remove('hide');
 
-        apodTitle.text(this.title);
-        apodDate.text(this.DateManager.prettyDateFormat(this.date));
-        apodDescription.text(this.explanation);
-        apodOrigin.attr('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+        apodTitle.textContent = this.title;
+        apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
+        apodDescription.textContent = this.explanation;
+        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
 
         if (this.copyright) {
-            apodCopyright.text('Copyright: ' + this.copyright);
+            apodCopyright.textContent = 'Copyright: ' + this.copyright;
         }
     },
 

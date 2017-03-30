@@ -64,11 +64,11 @@ let DateManagement = function () {
             
             if (!isTodayGreater) {
                 console.log(date + ' is in the future!');
-                apodNext.addClass('hide');
+                apodNext.classList.add('hide');
             } else if (isDateEqual) {
-                apodNext.addClass('hide');
+                apodNext.classList.add('hide');
             } else {
-                apodNext.removeClass('hide');
+                apodNext.classList.remove('hide');
             }
 
             return isTodayGreater;

@@ -10,6 +10,10 @@
 
 'use strict';
 
+const $ = (el) => {
+    return document.querySelector(el);
+}
+
 const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
     apodImage       = $('#apod-image'),
     apodVideo       = $('#apod-video iframe'),
@@ -30,10 +34,10 @@ function fitToWindow (image) {
 }
 
 function setLoadingView () {
-    apodImage.addClass('loading');
-    $('.description').addClass('hide');
-    apodCopyright.text('');
-    apodImage.css('background-image', 'none');
+    apodImage.classList.add('loading');
+    $('.description').classList.add('hide');
+    apodCopyright.textContent = '';
+    apodImage.style['background-image'] = 'none';
 }
 
 function blipHoverState (element, apodFn) {
@@ -42,21 +46,21 @@ function blipHoverState (element, apodFn) {
     }
     ga('send', 'event', 'Keydown', 'pressed', element.id);
     let delay = 125;
-    element.addClass('hover');
+    element.classList.add('hover');
 
     setTimeout(() => {
-        element.removeClass('hover');
+        element.classList.remove('hover');
     }, delay);
 
     apodFn.call(apod);
 }
 
-$('.nav-buttons').on('click', (e) => {
+document.querySelector('.nav-buttons').addEventListener('click', (e) => {
     ga('send', 'event', 'Button', 'clicked', e.target.id);
     apod[e.target.id.slice(5)]();
 });
 
-$('.external-links').on('click', (e) => {
+document.querySelector('.external-links').addEventListener('click', (e) => {
     ga('send', 'event', {
         eventCategory: 'Outbound Link',
         eventAction: 'clicked',
@@ -65,7 +69,7 @@ $('.external-links').on('click', (e) => {
     });
 });
 
-$(document).on('keydown', function(e) {
+document.addEventListener('keydown', function(e) {
     switch (e.which) {
         case 82:
             blipHoverState(apodRandom, apod.random);
