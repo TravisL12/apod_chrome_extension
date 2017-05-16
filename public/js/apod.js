@@ -147,7 +147,7 @@ Apod.prototype = {
     },
 
     apodVideo () {
-        apodVideo[0].src = this.url;
+        apodVideo.src = this.url;
         this.apodDescription();
     },
 

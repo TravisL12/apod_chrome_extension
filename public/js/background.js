@@ -84,7 +84,7 @@ document.addEventListener('keydown', function(e) {
             blipHoverState(apodNext, apod.next);
             break;
         case 68:
-            $('.container .description').toggleClass('show-description');
+            $('.container .description').classList.toggle('show-description');
             break;
     }
 })
