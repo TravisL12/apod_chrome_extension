@@ -1,7 +1,13 @@
 'use strict';
 
-function addLeadingZero (num) {
-    return num < 10 ? '0' + num.toString() : num.toString();
+function _zeroPad (num) {
+    num = '0' + num.toString();
+    return num.slice(-2);
+}
+
+function setLoadingView () {
+    apodImage.classList.add('loading');
+    $('.description').classList.add('hide');
 }
 
 function Apod() {
@@ -36,18 +42,18 @@ Apod.prototype = {
     isRequestValid () {
         if (this.validRequest) {
             console.log('Request in Progress!');
-            return false;
+            this.validRequest = false;
         }
         this.validRequest = true;
-
-        return this.validRequest;
     },
 
     getApod (date) {
 
         date = date || this.DateManager.today;
 
-        if (!this.isRequestValid()) {
+        this.isRequestValid();
+
+        if (!this.validRequest) {
             return;
         }
 
@@ -55,49 +61,47 @@ Apod.prototype = {
             this.validRequest = false;
             return;
         }
-        setLoadingView();
 
-        let _that = this;
+        setLoadingView();
 
         reqwest({
             type: 'GET',
             url: 'https://api.nasa.gov/planetary/apod',
             data: {
-                api_key: api_key,
+                api_key: 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
                 date: date,
             },
-            success(response) {
+        }).then((response) => {
                 response = JSON.parse(response.response);
                 ga('send', 'event', 'APOD', 'viewed', response.date);
-                _that.title       = response.title;
-                _that.url         = response.url;
-                _that.hdurl       = response.hdurl;
-                _that.date        = response.date;
-                _that.explanation = response.explanation;
-                _that.copyright   = response.copyright;
+                this.title       = response.title;
+                this.url         = response.url;
+                this.hdurl       = response.hdurl;
+                this.date        = response.date;
+                this.explanation = response.explanation;
+                this.copyright   = response.copyright;
 
                 switch (response.media_type) {
                     case 'image':
                         apodImage.style.display = 'block';
                         $('#apod-video').style.display = 'none';
-                        _that.preLoadImage();
+                        this.preLoadImage();
                         break;
                     case 'video':
-                        _that.validRequest = false;
+                        this.validRequest = false;
                         apodImage.style.display = 'none';
                         $('#apod-video').style.display = 'inline-block';
-                        _that.apodVideo();
+                        this.apodVideo();
                         break;
                     default:
-                        _that.errorImage();
+                        this.errorImage();
                 }
             },
-            error(error) {
-                _that.validRequest = false;
-                _that.getApod(this.DateManager.randomDate());
+            (error) => {
+                this.validRequest = false;
+                this.getApod(this.DateManager.randomDate());
             }
-        });
-
+        );
     },
 
     errorImage () {
@@ -160,9 +164,7 @@ Apod.prototype = {
         apodDescription.textContent = this.explanation;
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
 
-        if (this.copyright) {
-            apodCopyright.textContent = 'Copyright: ' + this.copyright;
-        }
+        apodCopyright.textContent = this.copyright ? 'Copyright: ' + this.copyright : '';
     },
 
     /**
@@ -172,6 +174,6 @@ Apod.prototype = {
      */
     apodSource () {
         const date = this.date.split('-');
-        return 'ap' + date[0].slice(-2) + addLeadingZero(date[1]) + addLeadingZero(date[2]) + '.html';
+        return 'ap' + date[0].slice(-2) + _zeroPad(date[1]) + _zeroPad(date[2]) + '.html';
     }
 }

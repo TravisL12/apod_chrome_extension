@@ -14,30 +14,22 @@ const $ = (el) => {
     return document.querySelector(el);
 }
 
-const api_key = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
-    apodImage       = $('#apod-image'),
-    apodVideo       = $('#apod-video iframe'),
-    apodTitle       = $('.container #apod-title'),
-    apodDate        = $('.container #apod-date'),
-    apodDescription = $('.container #apod-description'),
-    apodCopyright   = $('.container #apod-copyright'),
-    apodOrigin      = $('.container a#apod-origin'),
-    apodHiRes       = $('.container a#apod-hires'),
-    apodLowRes      = $('.container a#apod-lowres'),
-    apodPrevious    = $('.nav-buttons a#apod-previous'),
-    apodNext        = $('.nav-buttons a#apod-next'),
-    apodCurrent     = $('.nav-buttons a#apod-current'),
-    apodRandom      = $('.nav-buttons a#apod-random');
+const apodImage       = $('#apod-image'),
+      apodVideo       = $('#apod-video iframe'),
+      apodTitle       = $('#apod-title'),
+      apodDate        = $('#apod-date'),
+      apodDescription = $('#apod-description'),
+      apodCopyright   = $('#apod-copyright'),
+      apodOrigin      = $('#apod-origin'),
+      apodHiRes       = $('#apod-hires'),
+      apodLowRes      = $('#apod-lowres'),
+      apodPrevious    = $('#apod-previous'),
+      apodNext        = $('#apod-next'),
+      apodCurrent     = $('#apod-current'),
+      apodRandom      = $('#apod-random');
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
-}
-
-function setLoadingView () {
-    apodImage.classList.add('loading');
-    $('.description').classList.add('hide');
-    apodCopyright.textContent = '';
-    apodImage.style['background-image'] = 'none';
 }
 
 function blipHoverState (element, apodFn) {
@@ -71,25 +63,28 @@ document.querySelector('.external-links').addEventListener('click', (e) => {
 
 document.addEventListener('keydown', function(e) {
     switch (e.which) {
-        case 82:
+        case 82: // Press 'r'
             blipHoverState(apodRandom, apod.random);
             break;
-        case 84:
+        case 84: // Press 't'
             blipHoverState(apodCurrent, apod.current);
             break;
-        case 37:
+        case 74: // Press 'J'
+        case 37: // Press '<-'
             blipHoverState(apodPrevious, apod.previous);
             break;
-        case 39:
+        case 75: // Press 'K'
+        case 39: // Press '->'
             blipHoverState(apodNext, apod.next);
             break;
-        case 68:
+        case 68: // Press 'D'
             $('.container .description').classList.toggle('show-description');
             break;
     }
 })
 
 let apod = new Apod();
+
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
     apodOptionType == 'today' ? apod.current() : apod.random();
