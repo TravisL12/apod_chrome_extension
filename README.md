@@ -12,8 +12,8 @@ __Shortcut Keys__
 
 `K`, `-> (right arrow)` - Goes forward one day
 
-'R' - shows a random APOD
+`R` - shows a random APOD
 
-'T' - shows today's APOD
+`T` - shows today's APOD
 
-'D' - toggles the description shelf (also displays if you hover over the APOD title).
+`D` - toggles the description shelf (also displays if you hover over the APOD title).
