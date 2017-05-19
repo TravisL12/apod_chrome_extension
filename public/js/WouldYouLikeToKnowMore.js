@@ -1,13 +1,12 @@
 'use strict';
 
-function Parser (type, text) {
-    this.type = type;
+function KnowMore (text) {
     this.galaxies = this.galaxies(text);
     this.celestialObjects = this.celestialObjects(text);
     this.newGeneralCatalog = this.ngc(text);
 }
 
-Parser.prototype = {
+KnowMore.prototype = {
     galaxies (text) {
         return text.match(/M+\d{1,3}\b/g) || [];
     },
@@ -21,6 +20,29 @@ Parser.prototype = {
             const re = new RegExp("\\b" + constellation + "\\b");
             return text.toLowerCase().match(re);
         })
+    },
+
+    uniqueResults (value, index, self) {
+        return self.indexOf(value) === index;
+    },
+
+    results () {
+        let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
+        return results.filter(this.uniqueResults).slice(0,3);
+    },
+
+    search (query) {
+        console.log(query);
+
+        return reqwest({
+            type: 'GET',
+            url: 'https://www.googleapis.com/customsearch/v1',
+            data: {
+                key: 'AIzaSyAoX7Ec50Nuh8hScDw05App_8XQb2YR-Ts',
+                cx: '012134705583441818934:js43us2h5ua',
+                q: query,
+            },
+        });
     },
 }
 

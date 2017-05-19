@@ -81,8 +81,7 @@ Apod.prototype = {
                 this.description = response.explanation;
                 this.copyright   = response.copyright;
 
-                this.likeToKnowMoreDescription();
-                this.likeToKnowMoreTitle();
+                this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
                 switch (response.media_type) {
                     case 'image':
@@ -105,12 +104,17 @@ Apod.prototype = {
         );
     },
 
-    likeToKnowMoreTitle () {
-        console.log(new Parser('Title', this.title));
-    },
+    wouldYouLikeToKnowMore (text) {
+        const knowMore = new KnowMore(text);
+        const results = knowMore.results();
 
-    likeToKnowMoreDescription () {
-        console.log(new Parser('Description', this.description));
+        if (results.length) {
+            for (let i in results) {
+                knowMore.search(results[i]).then((data) => {
+                    console.log(JSON.parse(data.response));
+                });
+            }
+        }
     },
 
     errorImage () {
