@@ -33,11 +33,11 @@ function fitToWindow (image) {
 }
 
 function blipHoverState (element, apodFn) {
-    if (apod.requestInProgress) {
+    if (apod.isRequestInProgress) {
         return;
     }
     ga('send', 'event', 'Keydown', 'pressed', element.id);
-    let delay = 125;
+    const delay = 125;
     element.classList.add('hover');
 
     setTimeout(() => {
@@ -47,12 +47,12 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-document.querySelector('.nav-buttons').addEventListener('click', (e) => {
+$('.nav-buttons').addEventListener('click', (e) => {
     ga('send', 'event', 'Button', 'clicked', e.target.id);
     apod[e.target.id.slice(5)]();
 });
 
-document.querySelector('.external-links').addEventListener('click', (e) => {
+$('.external-links').addEventListener('click', (e) => {
     ga('send', 'event', {
         eventCategory: 'Outbound Link',
         eventAction: 'clicked',

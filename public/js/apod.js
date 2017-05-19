@@ -15,9 +15,8 @@ function Apod() {
     this.url;
     this.hdurl;
     this.title;
-    this.explanation;
+    this.description;
     this.copyright;
-    this.validRequest = false;
     this.DateManager = new DateManagement();
 }
 
@@ -40,25 +39,26 @@ Apod.prototype = {
     },
 
     isRequestValid () {
-        if (this.validRequest) {
-            console.log('Request in Progress!');
-            this.validRequest = false;
+        if (this.isRequestInProgress) {
+            return false;
         }
-        this.validRequest = true;
+
+        this.isRequestInProgress = true;
+
+        return this.isRequestInProgress;
     },
 
     getApod (date) {
 
         date = date || this.DateManager.today;
 
-        this.isRequestValid();
-
-        if (!this.validRequest) {
+        if (!this.isRequestValid()) {
+            console.log('Request in Progress!');
             return;
         }
 
         if (!this.DateManager.isDateValid(date)) {
-            this.validRequest = false;
+            this.isRequestInProgress = false;
             return;
         }
 
@@ -78,8 +78,11 @@ Apod.prototype = {
                 this.url         = response.url;
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
-                this.explanation = response.explanation;
+                this.description = response.explanation;
                 this.copyright   = response.copyright;
+
+                this.likeToKnowMoreDescription();
+                this.likeToKnowMoreTitle();
 
                 switch (response.media_type) {
                     case 'image':
@@ -88,7 +91,6 @@ Apod.prototype = {
                         this.preLoadImage();
                         break;
                     case 'video':
-                        this.validRequest = false;
                         apodImage.style.display = 'none';
                         $('#apod-video').style.display = 'inline-block';
                         this.apodVideo();
@@ -96,12 +98,19 @@ Apod.prototype = {
                     default:
                         this.errorImage();
                 }
-            },
-            (error) => {
-                this.validRequest = false;
+            }, (error) => {
+                this.isRequestInProgress = false;
                 this.getApod(this.DateManager.randomDate());
             }
         );
+    },
+
+    likeToKnowMoreTitle () {
+        console.log(new Parser('Title', this.title));
+    },
+
+    likeToKnowMoreDescription () {
+        console.log(new Parser('Description', this.description));
     },
 
     errorImage () {
@@ -115,29 +124,28 @@ Apod.prototype = {
     },
 
     preLoadImage () {
-        let Img = new Image(),
-            delayForHdLoad = 3000,
-            quality = 'HD',
-            timeout;
+        let Img = new Image();
+        let quality = 'HD';
+        const delayForHdLoad = 3000;
 
         Img.src = this.hdurl;
+
+        let timeout = setTimeout(() => {
+            if (!Img.complete) {
+                Img.src = this.url;
+                quality = 'SD';
+            }
+        }, delayForHdLoad);
 
         Img.onload = () => {
             clearTimeout(timeout);
             this.loadedImage = Img;
             this.apodImage(quality);
         };
-
-        timeout = setTimeout(() => {
-            if (!Img.complete) {
-                Img.src = this.url;
-                quality = 'SD';
-            }
-        }, delayForHdLoad);
     },
 
     apodImage (imgQuality) {
-        this.validRequest = false;
+        this.isRequestInProgress = false;
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
         let bgSize = fitToWindow(this.loadedImage) ? 'contain' : 'auto';
@@ -151,6 +159,7 @@ Apod.prototype = {
     },
 
     apodVideo () {
+        this.isRequestInProgress = false;
         apodVideo.src = this.url;
         this.apodDescription();
     },
@@ -161,7 +170,7 @@ Apod.prototype = {
 
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
-        apodDescription.textContent = this.explanation;
+        apodDescription.textContent = this.description;
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
 
         apodCopyright.textContent = this.copyright ? 'Copyright: ' + this.copyright : '';
