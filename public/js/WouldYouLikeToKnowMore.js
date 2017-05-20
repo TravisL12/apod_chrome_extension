@@ -1,5 +1,15 @@
 'use strict';
 
+function addKeyword (keyword, collection) {
+    return collection.map((item) => {
+        return item + ' ' + keyword;
+    });
+}
+
+function uniqueResults (value, index, self) {
+    return self.indexOf(value) === index;
+};
+
 function KnowMore (text) {
     this.galaxies = this.galaxies(text);
     this.celestialObjects = this.celestialObjects(text);
@@ -22,13 +32,9 @@ KnowMore.prototype = {
         })
     },
 
-    uniqueResults (value, index, self) {
-        return self.indexOf(value) === index;
-    },
-
     results () {
-        let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
-        return results.filter(this.uniqueResults).slice(0,3);
+        let results = [].concat(addKeyword('galaxy', this.galaxies), addKeyword('constellation', this.celestialObjects), this.newGeneralCatalog);
+        return results.filter(uniqueResults).slice(0,3);
     },
 
     search (query) {
@@ -47,29 +53,29 @@ KnowMore.prototype = {
 }
 
 const planets = [
-    "mercury",
-    "venus",
-    "earth",
-    "mars",
-    "jupiter",
-    "saturn",
-    "uranus",
-    "neptune",
-    "pluto",
+    'mercury',
+    'venus',
+    'earth',
+    'mars',
+    'jupiter',
+    'saturn',
+    'uranus',
+    'neptune',
+    'pluto',
 ];
 
 const moons = [
-    "Moon",
-    "ganymede",
-    "europa",
-    "titan",
-    "io",
-    "callisto",
+    'Moon',
+    'ganymede',
+    'europa',
+    'titan',
+    'io',
+    'callisto',
 ];
 
-const constellationDictionary = {
+let celestialDictionary = {
     "andromeda":           ["princess of ethiopia"],
-    "antlia":              ["air pump", "airpump"],
+    "antlia":              ["air pump"],
     "apus":                ["bird of paradise"],
     "aquarius":            ["water bearer"],
     "aquila":              ["eagle"],
@@ -159,14 +165,9 @@ const constellationDictionary = {
     "vulpecula":           ["fox"],
 }
 
-let celestialDictionary = constellationDictionary;
-
 // Extends dictionary with keys of added descriptions
 Object.keys(celestialDictionary).reduce((acc, propName) =>
   celestialDictionary[propName].reduce((a, num) => {
     a[num] = propName;
     return a;
 }, acc), celestialDictionary);
-
-
-// console.log(celestialDictionary);

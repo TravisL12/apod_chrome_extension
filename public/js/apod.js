@@ -8,6 +8,12 @@ function _zeroPad (num) {
 function setLoadingView () {
     apodImage.classList.add('loading');
     $('.description').classList.add('hide');
+
+    let knowList = apodKnowMore.getElementsByTagName('li')
+    for (let i = 0; i < 3; i++) {
+        knowList[i].classList.add('hide');
+        knowList[i].textContent = '';
+    }
 }
 
 function Apod() {
@@ -109,9 +115,14 @@ Apod.prototype = {
         const results = knowMore.results();
 
         if (results.length) {
+            let list = apodKnowMore.getElementsByTagName('li');
             for (let i in results) {
                 knowMore.search(results[i]).then((data) => {
-                    console.log(JSON.parse(data.response));
+                    let response = JSON.parse(data.response);
+                    list[i].textContent = response.items[0].title;
+                    list[i].classList.toggle('hide');
+                }, (error) => {
+                    console.log(JSON.parse(error.response).error.errors[0].message);
                 });
             }
         }

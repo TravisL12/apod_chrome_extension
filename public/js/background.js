@@ -26,6 +26,7 @@ const apodImage       = $('#apod-image'),
       apodPrevious    = $('#apod-previous'),
       apodNext        = $('#apod-next'),
       apodCurrent     = $('#apod-current'),
+      apodKnowMore    = $('#want-to-know-more'),
       apodRandom      = $('#apod-random');
 
 function fitToWindow (image) {
