@@ -34,12 +34,32 @@ KnowMore.prototype = {
 
     results () {
         let results = [].concat(addKeyword('galaxy', this.galaxies), addKeyword('constellation', this.celestialObjects), this.newGeneralCatalog);
-        return results.filter(uniqueResults).slice(0,3);
+        return results.filter(uniqueResults).slice(0,3).sort((a,b) => {
+            return a > b;
+        });
+    },
+
+    createLink (el, keyword) {
+        const googleSearch = (e) => {
+            el.removeEventListener('click', googleSearch); // No clicking twice!
+
+            this.search(keyword).then((data) => {
+                let response = JSON.parse(data.response);
+                let url = response.items[0].formattedUrl;
+                let title = response.items[0].htmlTitle;
+                el.innerHTML = el.innerHTML + '<a href="' + url + '" target="_blank">' + title + '</a>';
+                console.log(response.items);
+            }, (error) => {
+                console.log(JSON.parse(error.response).error.errors[0].message);
+            });
+        }
+
+        el.innerHTML = '<p>' + keyword + '</p>';
+        el.classList.toggle('hide');
+        el.addEventListener('click', googleSearch);
     },
 
     search (query) {
-        console.log(query);
-
         return reqwest({
             type: 'GET',
             url: 'https://www.googleapis.com/customsearch/v1',
@@ -120,10 +140,10 @@ let celestialDictionary = {
     "indus":               ["indian"],
     "lacerta":             ["lizard"],
     "leo minor":           ["little lion"],
-    "leo":                 ["lion"],
+    "leo":                 ["leo"],
     "lepus":               ["hare"],
     "libra":               ["balance", "scales"],
-    "lupus":               ["wolf"],
+    "lupus":               ["lupus"],
     "lynx":                ["lynx"],
     "lyra":                ["lyre", "harp"],
     "mensa":               ["mensa"],

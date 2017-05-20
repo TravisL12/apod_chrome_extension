@@ -30,6 +30,8 @@ ul, li {
 
 .hide {
     opacity: 0;
+    height: 0;
+    width: 0;
 }
 
 .top-sites {
@@ -109,6 +111,7 @@ ul, li {
 
     ul li {
         display: block;
+        cursor: pointer;
         color: $light-gray;
         width: 300px;
         min-height: 90px;
@@ -123,6 +126,10 @@ ul, li {
         &:hover {
             background-color: lighten($know-more-list-bg-color, 15%);
             @include border-radii(0,0);
+        }
+        a {
+            color: white;
+            font-weight: bold;
         }
     }
 }

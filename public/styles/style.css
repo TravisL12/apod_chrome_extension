@@ -42,7 +42,9 @@ ul, li {
   display: inline-block; }
 
 .hide {
-  opacity: 0; }
+  opacity: 0;
+  height: 0;
+  width: 0; }
 
 .top-sites {
   color: white;
@@ -110,6 +112,7 @@ ul, li {
   height: 300px; }
   #want-to-know-more ul li {
     display: block;
+    cursor: pointer;
     color: #C7C7C7;
     width: 300px;
     min-height: 90px;
@@ -128,6 +131,9 @@ ul, li {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       border-bottom-left-radius: 0; }
+    #want-to-know-more ul li a {
+      color: white;
+      font-weight: bold; }
 
 .container {
   position: relative;
