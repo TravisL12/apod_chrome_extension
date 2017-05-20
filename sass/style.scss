@@ -13,6 +13,7 @@
 
 $gray: #333333;
 $light-gray: #C7C7C7;
+$know-more-list-bg-color: rgba(51, 51, 51, 0.8);
 
 @import 'options';
 
@@ -103,16 +104,26 @@ ul, li {
 #want-to-know-more {
     position: absolute;
     top: 30vh;
-    right: 0;
-    width: 300px;
+    right: 10px;
     height: 300px;
 
     ul li {
-        width: 100%;
-        height: 30%;
+        display: block;
+        color: $light-gray;
+        width: 300px;
+        min-height: 90px;
         margin-bottom: 10px;
-        background-color: lightblue;
-        transition: 0.5s opacity linear;
+        background-color: $know-more-list-bg-color;
+        transition: 0.5s opacity linear,
+            0.2s background-color linear,
+            0.2s border-radius linear;
+        padding: 10px;
+        box-sizing: border-box;
+        @include border-radii(3px, 8px);
+        &:hover {
+            background-color: lighten($know-more-list-bg-color, 15%);
+            @include border-radii(0,0);
+        }
     }
 }
 
