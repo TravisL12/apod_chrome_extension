@@ -114,22 +114,30 @@ ul, li {
         cursor: pointer;
         color: $light-gray;
         width: 300px;
-        min-height: 90px;
+        min-height: 60px;
         margin-bottom: 10px;
         background-color: $know-more-list-bg-color;
         transition: 0.5s opacity linear,
             0.2s background-color linear,
-            0.2s border-radius linear;
+            0.2s border-radius linear,
+            0.2s height linear;
         padding: 10px;
         box-sizing: border-box;
         @include border-radii(3px, 8px);
+
         &:hover {
             background-color: lighten($know-more-list-bg-color, 15%);
             @include border-radii(0,0);
         }
+
         a {
             color: white;
             font-weight: bold;
+            display: block;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            line-height: 2;
         }
     }
 }

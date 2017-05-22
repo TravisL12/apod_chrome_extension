@@ -1,65 +1,102 @@
 'use strict';
 
-function addKeyword (keyword, collection) {
-    return collection.map((item) => {
-        return item + ' ' + keyword;
-    });
-}
-
 function uniqueResults (value, index, self) {
-    return self.indexOf(value) === index;
+    return self.findIndex((v) => {
+        return v.title === value.title;
+    }) === index;
 };
 
+function Keyword (text, category) {
+    this.title = text[0].toUpperCase() + text.slice(1);
+    this.query = `${text} ${category}`;
+}
+
 function KnowMore (text) {
-    this.galaxies = this.galaxies(text);
-    this.celestialObjects = this.celestialObjects(text);
-    this.newGeneralCatalog = this.ngc(text);
+    this.galaxies = this.findGalaxies(text);
+    this.celestialObjects = this.findCelestialObjects(text);
+    this.newGeneralCatalog = this.findNgc(text);
+    this.results = this.buildResults();
 }
 
 KnowMore.prototype = {
-    galaxies (text) {
-        return text.match(/M+\d{1,3}\b/g) || [];
+    findGalaxies (text) {
+        let match = text.match(/M+\d{1,3}\b/g) || [];
+        if (match.length) {
+            match = this.createKeywords(match, 'galaxy');
+        }
+
+        return match;
     },
 
-    ngc (text) {
-        return text.match(/NGC(-|\s)\d{1,7}/g) || [];
+    findNgc (text) {
+        let match = text.match(/NGC(-|\s)?\d{1,7}/g) || [];
+        if (match.length) {
+            match = this.createKeywords(match, 'NGC');
+        }
+
+        return match;
     },
 
-    celestialObjects (text) {
-        return Object.keys(celestialDictionary).filter((constellation) => {
-            const re = new RegExp("\\b" + constellation + "\\b");
-            return text.toLowerCase().match(re);
-        })
+    findCelestialObjects (text) {
+        let matches = [];
+        for (let i in celestialDictionary) {
+            let match = celestialDictionary[i].filter((constellation) => {
+                const re = new RegExp("\\b" + constellation + "\\b");
+                return text.toLowerCase().match(re);
+            });
+
+            if (match.length) {
+                match = this.createKeywords(match, i);
+            }
+
+            matches = matches.concat(match);
+        }
+        return matches;
     },
 
-    results () {
-        let results = [].concat(addKeyword('galaxy', this.galaxies), addKeyword('constellation', this.celestialObjects), this.newGeneralCatalog);
-        return results.filter(uniqueResults).slice(0,3).sort((a,b) => {
-            return a > b;
+    createKeywords (match, category) {
+        return match.map((name) => {
+            return new Keyword(name, category);
         });
     },
 
-    createLink (el, keyword) {
+    buildResults () {
+        let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
+        return results.filter(uniqueResults).slice(0,3).sort((a,b) => {
+            return a.title > b.title;
+        });
+    },
+
+    createLink (result) {
+        const el = document.createElement('li');
+        console.log(result.title);
+
         const googleSearch = (e) => {
             el.removeEventListener('click', googleSearch); // No clicking twice!
 
-            this.search(keyword).then((data) => {
+            this.search(result.query).then((data) => {
                 let response = JSON.parse(data.response);
+                let items = response.items;
                 let url = response.items[0].formattedUrl;
                 let title = response.items[0].htmlTitle;
-                el.innerHTML = el.innerHTML + '<a href="' + url + '" target="_blank">' + title + '</a>';
-                console.log(response.items);
+                el.innerHTML = `
+                    <a href="${items[0].formattedUrl}" target="_blank">${items[0].htmlTitle}</a>
+                    <a href="${items[1].formattedUrl}" target="_blank">${items[1].htmlTitle}</a>
+                    <a href="${items[2].formattedUrl}" target="_blank">${items[2].htmlTitle}</a>
+                `;
             }, (error) => {
                 console.log(JSON.parse(error.response).error.errors[0].message);
             });
         }
 
-        el.innerHTML = '<p>' + keyword + '</p>';
-        el.classList.toggle('hide');
+        el.innerHTML = '<p>' + result.title + '</p>';
         el.addEventListener('click', googleSearch);
+
+        return el;
     },
 
     search (query) {
+        console.log(query);
         return reqwest({
             type: 'GET',
             url: 'https://www.googleapis.com/customsearch/v1',
@@ -72,122 +109,232 @@ KnowMore.prototype = {
     },
 }
 
-const planets = [
-    'mercury',
-    'venus',
-    'earth',
-    'mars',
-    'jupiter',
-    'saturn',
-    'uranus',
-    'neptune',
-    'pluto',
-];
+const celestialDictionary = {
+    planet: [
+        'mercury',
+        'venus',
+        'mars',
+        'jupiter',
+        'saturn',
+        'uranus',
+        'neptune',
+        'pluto',
+    ],
 
-const moons = [
-    'Moon',
-    'ganymede',
-    'europa',
-    'titan',
-    'io',
-    'callisto',
-];
+    moon: [
+        'ganymede',
+        'europa',
+        'titan',
+        'io',
+        'callisto',
+    ],
 
-let celestialDictionary = {
-    "andromeda":           ["princess of ethiopia"],
-    "antlia":              ["air pump"],
-    "apus":                ["bird of paradise"],
-    "aquarius":            ["water bearer"],
-    "aquila":              ["eagle"],
-    "ara":                 ["altar"],
-    "aries":               ["ram"],
-    "auriga":              ["charioteer"],
-    "bootes":              ["herdsman"],
-    "caelum":              ["graving tool", "sculptor's tool"],
-    "camelopardalis":      ["giraffe"],
-    "camelopardus":        ["giraffe"],
-    "cancer":              ["crab"],
-    "canes venatici":      ["hunting dogs"],
-    "canis major":         ["big dog", "great dog"],
-    "canis minor":         ["little dog"],
-    "capricornus":         ["goat", "sea goat"],
-    "carina":              ["keel of argonauts' ship"],
-    "cassiopeia":          ["cassiopeia", "queen of ethiopia"],
-    "centaurus":           ["centaur"],
-    "cepheus":             ["cepheus"],
-    "cephus":              ["king of ethiopia"],
-    "cetus":               ["sea monster", "whale"],
-    "chameleon":           ["chameleon"],
-    "circinus":            ["compasses"],
-    "columba":             ["dove"],
-    "coma berenices":      ["berenice's hair"],
-    "corona australis":    ["southern crown"],
-    "corona borealis":     ["northern crown"],
-    "corvus":              ["crow", "raven"],
-    "crux":                ["cross", "southern cross"],
-    "cygnus":              ["swan"],
-    "delphinus":           ["dolphin", "porpoise"],
-    "dorado":              ["swordfish", "goldfish"],
-    "draco":               ["draco"],
-    "equuleus":            ["filly", "little horse"],
-    "eridanus":            ["eridanus"],
-    "fornax":              ["furnace"],
-    "gemini":              ["twins"],
-    "grus":                ["crane"],
-    "hercules":            ["hercules", "son of zeus"],
-    "horologium":          ["clock"],
-    "hydra":               ["sea serpent", "water snake"],
-    "indus":               ["indian"],
-    "lacerta":             ["lizard"],
-    "leo minor":           ["little lion"],
-    "leo":                 ["leo"],
-    "lepus":               ["hare"],
-    "libra":               ["balance", "scales"],
-    "lupus":               ["lupus"],
-    "lynx":                ["lynx"],
-    "lyra":                ["lyre", "harp"],
-    "mensa":               ["mensa"],
-    "microscopium":        ["microscope"],
-    "monoceros":           ["unicorn"],
-    "musca":               ["southern fly", "fly"],
-    "norma":               ["carpenter's level", "rule", "straightedge"],
-    "octans":              ["octant"],
-    "ophiuchus":           ["serpent-bearer", "holder of serpent"],
-    "orion":               ["orion", "the hunter"],
-    "pavo":                ["peacock"],
-    "pegasus":             ["pegasus", "winged horse"],
-    "perseus":             ["perseus"],
-    "phoenix":             ["phoenix"],
-    "pictor":              ["easel", "painter"],
-    "pisces":              ["fishes"],
-    "piscis austrinis":    ["southern fish"],
-    "piscis austrinus":    ["southern fish"],
-    "puppis":              ["poop", "stern of the argonauts"],
-    "pyxis":               ["mariner's compass"],
-    "reticulum":           ["net"],
-    "sagitta":             ["arrow"],
-    "sagittarius":         ["archer"],
-    "scorpius":            ["scorpion"],
-    "sculptor":            ["sculptor"],
-    "scutum":              ["shield"],
-    "serpens":             ["serpent"],
-    "sextans":             ["sextant"],
-    "taurus":              ["bull"],
-    "telescopium":         ["telescopium"],
-    "triangulum australe": ["southern triangle"],
-    "triangulum":          ["triangulum"],
-    "tucana":              ["toucan"],
-    "ursa major":          ["big bear", "big dipper"],
-    "ursa minor":          ["little bear", "little dipper"],
-    "vela":                ["sail"],
-    "virgo":               ["virgin"],
-    "volans":              ["flying fish"],
-    "vulpecula":           ["fox"],
-}
-
+    constellation: [
+        "air pump",
+        "altar",
+        "andromeda",
+        "antlia",
+        "apus",
+        "aquarius",
+        "aquila",
+        "ara",
+        "archer",
+        "aries",
+        "arrow",
+        "auriga",
+        "balance",
+        "berenice's hair",
+        "big bear",
+        "big dipper",
+        "big dog",
+        "bird of paradise",
+        "bootes",
+        "bull",
+        "caelum",
+        "camelopardalis",
+        "camelopardus",
+        "cancer",
+        "canes venatici",
+        "canis major",
+        "canis minor",
+        "capricornus",
+        "carina",
+        "carpenter's level",
+        "cassiopeia",
+        "cassiopeia",
+        "centaur",
+        "centaurus",
+        "cepheus",
+        "cepheus",
+        "cephus",
+        "cetus",
+        "chameleon",
+        "chameleon",
+        "charioteer",
+        "circinus",
+        "clock",
+        "columba",
+        "coma berenices",
+        "compasses",
+        "corona australis",
+        "corona borealis",
+        "corvus",
+        "crab",
+        "crane",
+        "cross",
+        "crow",
+        "crux",
+        "cygnus",
+        "delphinus",
+        "dolphin",
+        "dorado",
+        "dove",
+        "draco",
+        "draco",
+        "eagle",
+        "easel",
+        "equuleus",
+        "eridanus",
+        "eridanus",
+        "filly",
+        "fishes",
+        "fly",
+        "flying fish",
+        "fornax",
+        "fox",
+        "furnace",
+        "gemini",
+        "giraffe",
+        "giraffe",
+        "goat",
+        "goldfish",
+        "graving tool",
+        "great dog",
+        "grus",
+        "hare",
+        "harp",
+        "hercules",
+        "hercules",
+        "herdsman",
+        "holder of serpent",
+        "horologium",
+        "hunting dogs",
+        "hydra",
+        "indian",
+        "indus",
+        "keel of argonauts' ship",
+        "king of ethiopia",
+        "lacerta",
+        "leo minor",
+        "leo",
+        "leo",
+        "lepus",
+        "libra",
+        "little bear",
+        "little dipper",
+        "little dog",
+        "little horse",
+        "little lion",
+        "lizard",
+        "lupus",
+        "lupus",
+        "lynx",
+        "lynx",
+        "lyra",
+        "lyre",
+        "mariner's compass",
+        "mensa",
+        "mensa",
+        "microscope",
+        "microscopium",
+        "monoceros",
+        "musca",
+        "norma",
+        "northern crown",
+        "octans",
+        "octant",
+        "ophiuchus",
+        "orion",
+        "orion",
+        "painter",
+        "pavo",
+        "peacock",
+        "pegasus",
+        "pegasus",
+        "perseus",
+        "phoenix",
+        "phoenix",
+        "pictor",
+        "pisces",
+        "piscis austrinis",
+        "piscis austrinus",
+        "poop",
+        "porpoise",
+        "princess of ethiopia",
+        "puppis",
+        "pyxis",
+        "queen of ethiopia",
+        "ram",
+        "raven",
+        "reticulum",
+        "rule",
+        "sagitta",
+        "sagittarius",
+        "sail",
+        "scales",
+        "scorpion",
+        "scorpius",
+        "sculptor",
+        "sculptor",
+        "sculptor's tool",
+        "scutum",
+        "sea goat",
+        "sea monster",
+        "sea serpent",
+        "serpens",
+        "serpent",
+        "serpent-bearer",
+        "sextans",
+        "sextant",
+        "shield",
+        "son of zeus",
+        "southern cross",
+        "southern crown",
+        "southern fish",
+        "southern fish",
+        "southern fly",
+        "southern triangle",
+        "stern of the argonauts",
+        "straightedge",
+        "swan",
+        "swordfish",
+        "taurus",
+        "telescopium",
+        "telescopium",
+        "the hunter",
+        "toucan",
+        "triangulum australe",
+        "triangulum",
+        "triangulum",
+        "tucana",
+        "twins",
+        "unicorn",
+        "ursa major",
+        "ursa minor",
+        "vela",
+        "virgin",
+        "virgo",
+        "volans",
+        "vulpecula",
+        "water bearer",
+        "water snake",
+        "whale",
+        "winged horse",
+    ]
+};
 // Extends dictionary with keys of added descriptions
-Object.keys(celestialDictionary).reduce((acc, propName) =>
-  celestialDictionary[propName].reduce((a, num) => {
-    a[num] = propName;
-    return a;
-}, acc), celestialDictionary);
+// Object.keys(celestialDictionary).reduce((acc, propName) =>
+//   celestialDictionary[propName].reduce((a, num) => {
+//     a[num] = propName;
+//     return a;
+// }, acc), celestialDictionary);

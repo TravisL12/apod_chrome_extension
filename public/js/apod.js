@@ -9,11 +9,8 @@ function setLoadingView () {
     apodImage.classList.add('loading');
     $('.description').classList.add('hide');
 
-    let knowList = apodKnowMore.getElementsByTagName('li')
-    for (let i = 0; i < 3; i++) {
-        knowList[i].classList.add('hide');
-        knowList[i].textContent = '';
-    }
+    let knowList = apodKnowMore.querySelector('ul');
+    knowList.innerHTML = '';
 }
 
 function Apod() {
@@ -112,12 +109,13 @@ Apod.prototype = {
 
     wouldYouLikeToKnowMore (text) {
         const knowMore = new KnowMore(text);
-        const results = knowMore.results();
+        const results = knowMore.results;
 
         if (results.length) {
-            let list = apodKnowMore.getElementsByTagName('li');
+            let knowList = apodKnowMore.querySelector('ul');
             for (let i in results) {
-                knowMore.createLink(list[i], results[i]);
+                const listItem = knowMore.createLink(results[i]);
+                knowList.appendChild(listItem);
             }
         }
     },
