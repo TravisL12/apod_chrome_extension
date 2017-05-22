@@ -119,7 +119,6 @@ ul, li {
     display: block;
     cursor: pointer;
     width: 300px;
-    min-height: 60px;
     margin-bottom: 10px;
     background-color: rgba(51, 51, 51, 0.8);
     transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s border-radius linear, 0.2s height linear;
@@ -131,10 +130,10 @@ ul, li {
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       border-bottom-left-radius: 0; }
-    #want-to-know-more ul li a {
-      color: inherit;
-      font-weight: bold;
+    #want-to-know-more ul li h4, #want-to-know-more ul li a {
       display: block;
+      margin: 0;
+      color: inherit;
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;

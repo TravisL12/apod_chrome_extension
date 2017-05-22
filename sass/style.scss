@@ -117,7 +117,6 @@ ul, li {
         display: block;
         cursor: pointer;
         width: 300px;
-        min-height: 60px;
         margin-bottom: 10px;
         background-color: $know-more-list-bg-color;
         transition: 0.5s opacity linear,
@@ -127,10 +126,10 @@ ul, li {
         padding: 10px;
         box-sizing: border-box;
 
-        a {
-            color: inherit;
-            font-weight: bold;
+        h4, a {
             display: block;
+            margin: 0;
+            color: inherit;
             text-overflow: ellipsis;
             white-space: nowrap;
             overflow: hidden;
