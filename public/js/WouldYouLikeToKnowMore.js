@@ -21,7 +21,7 @@ function KnowMore (text) {
 
 KnowMore.prototype = {
     findGalaxies () {
-        let match = this.text.match(/M+\d{1,3}\b/g) || [];
+        let match = this.text.match(/M+\d{1,3}\b/gi) || [];
         if (match.length) {
             match = this.createKeywords(match, 'galaxy');
         }
@@ -30,7 +30,7 @@ KnowMore.prototype = {
     },
 
     findNgc () {
-        let match = this.text.match(/NGC(-|\s)?\d{1,7}/g) || [];
+        let match = this.text.match(/NGC(-|\s)?\d{1,7}/gi) || [];
         if (match.length) {
             match = this.createKeywords(match, 'NGC');
         }
@@ -42,8 +42,8 @@ KnowMore.prototype = {
         let matches = [];
         for (let i in celestialDictionary) {
             let match = celestialDictionary[i].filter((constellation) => {
-                const re = new RegExp("\\b" + constellation + "\\b");
-                return this.text.toLowerCase().match(re);
+                const re = new RegExp('\\b' + constellation + '\\b', 'gi');
+                return this.text.match(re);
             });
 
             if (match.length) {
@@ -63,12 +63,14 @@ KnowMore.prototype = {
 
     buildResults () {
         let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
+        let frequency = {};
 
-        const frequency = results.reduce((p,c,i,a) => {
-            p.hasOwnProperty(c.title) ? p[c.title] += 1 : p[c.title] = 1;
-            return p;
-        }, {});
+        for (let i in results) {
+            const re = new RegExp('\\b' + results[i].title + '\\b', 'gi');
+            frequency[results[i].title] = this.text.match(re).length;
+        };
 
+        console.log(frequency);
 
         return results.filter(uniqueResults).sort((a,b) => {
             return frequency[b.title] > frequency[a.title];
