@@ -31,5 +31,5 @@ function buildTypedUrlList(divName) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-  buildTypedUrlList("typedUrl");
+  buildTypedUrlList('topSites');
 });

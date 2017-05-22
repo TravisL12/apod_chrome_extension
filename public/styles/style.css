@@ -56,7 +56,7 @@ ul, li {
   transition: 0.2s linear all; }
   .top-sites:hover {
     opacity: 1; }
-  .top-sites #typedUrl ul li a {
+  .top-sites #topSites ul li a {
     background: #333333;
     color: white;
     border-top-left-radius: 3px;
@@ -66,17 +66,17 @@ ul, li {
     display: inline-block;
     padding: 15px;
     transition: 0.2s linear all; }
-    .top-sites #typedUrl ul li a:hover {
+    .top-sites #topSites ul li a:hover {
       background: #C7C7C7;
       border-top-left-radius: 0;
       border-bottom-right-radius: 0;
       border-top-right-radius: 0;
       border-bottom-left-radius: 0; }
-    .top-sites #typedUrl ul li a .thumb-img {
+    .top-sites #topSites ul li a .thumb-img {
       width: 16px;
       height: 16px;
       display: block; }
-  .top-sites #typedUrl ul li + li {
+  .top-sites #topSites ul li + li {
     margin-left: 10px; }
 
 .loading {

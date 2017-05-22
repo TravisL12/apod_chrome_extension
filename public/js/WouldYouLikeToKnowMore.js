@@ -13,21 +13,12 @@ function Keyword (name, category) {
 
 function KnowMore (text) {
     this.text = text;
-    this.messierObjects = this.findMessierObjects();
     this.celestialObjects = this.findCelestialObjects();
     this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
     this.results = this.buildResults();
 }
 
 KnowMore.prototype = {
-    findMessierObjects () {
-        let match = this.text.match(/M+\d{1,3}\b/gi) || [];
-        if (match.length) {
-            match = this.createKeywords(match, 'galaxy');
-        }
-
-        return match;
-    },
 
     findNewGeneralCatalogObjects () {
         let match = this.text.match(/NGC(-|\s)?\d{1,7}/gi) || [];
@@ -62,7 +53,8 @@ KnowMore.prototype = {
     },
 
     buildResults () {
-        let results = [].concat(this.messierObjects, this.celestialObjects, this.newGeneralCatalog);
+        const results = [].concat(this.celestialObjects, this.newGeneralCatalog);
+        const resultsToDisplay = 5;
         let frequency = {};
 
         for (let i in results) {
@@ -70,11 +62,9 @@ KnowMore.prototype = {
             frequency[results[i].title] = this.text.match(re).length;
         };
 
-        console.log(frequency);
-
         return results.filter(uniqueResults).sort((a,b) => {
             return frequency[b.title] > frequency[a.title];
-        }).slice(0,5);
+        }).slice(0,resultsToDisplay);
     },
 
     createLink (result) {
@@ -177,3 +167,8 @@ const celestialDictionary = {
         "ursa major","ursa minor","vela","virgin","virgo","volans","vulpecula","water bearer","water snake","whale","winged horse",
     ],
 };
+
+// Add Messier Objects (110 total)
+for (let i = 1; i <= 110; i++) {
+    celestialDictionary.galaxy.push('M' + i);
+}
