@@ -62,13 +62,18 @@ KnowMore.prototype = {
 
     buildResults () {
         let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
-        return results.filter(uniqueResults).slice(0,3).sort((a,b) => {
-            return a.title > b.title;
-        });
+
+        const frequency = results.reduce((p,c,i,a) => {
+            p.hasOwnProperty(c.title) ? p[c.title] += 1 : p[c.title] = 1;
+            return p;
+        }, {});
+
+        return results.filter(uniqueResults).sort((a,b) => {
+            return frequency[b.title] > frequency[a.title];
+        }).slice(0,3);
     },
 
     createLink (result) {
-        console.log(result.title);
         const el = document.createElement('li');
 
         const googleSearch = (e) => {
@@ -96,7 +101,6 @@ KnowMore.prototype = {
     },
 
     search (query) {
-        console.log(query);
         return reqwest({
             type: 'GET',
             url: 'https://www.googleapis.com/customsearch/v1',
