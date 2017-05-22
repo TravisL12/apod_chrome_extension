@@ -182,25 +182,26 @@ ul, li {
 
     p#apod-copyright,
     .external-links {
-        margin: 0 5px;
+        margin-right: 5px;
         color: white;
     }
 
     .description {
         position: fixed;
         bottom: 0;
-        height: 65px;
-        width: 1000px;
+        padding: 0 10px;
+        height: 60px;
+        width: 750px;
         max-width: 100%;
         color: white;
         background-color: rgba(0,0,0,0);
-        margin: 0 0 7px 20px;
         overflow-y: hidden;
-        transition: 0.6s ease-in-out all;
+        transition: 0.6s all ease-in-out;
 
         @include helvetica-neue-light;
         p {
-            font-size: 16px;
+            font-size: 13px;
+            margin: 10px 0 0 0;
         }
         #img-quality {
             display: inline-block;
@@ -215,7 +216,7 @@ ul, li {
 
     .description:hover,
     .show-description {
-        height: 300px;
+        height: 230px;
         padding: 10px;
         background-color: rgba(0,0,0,0.8);
         overflow-y: scroll;

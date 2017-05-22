@@ -19,7 +19,6 @@ function Apod() {
     this.hdurl;
     this.title;
     this.description;
-    this.copyright;
     this.DateManager = new DateManagement();
 }
 
@@ -82,7 +81,6 @@ Apod.prototype = {
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
                 this.description = response.explanation;
-                this.copyright   = response.copyright;
 
                 switch (response.media_type) {
                     case 'image':
@@ -179,8 +177,6 @@ Apod.prototype = {
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
         apodDescription.textContent = this.description;
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
-
-        apodCopyright.textContent = this.copyright ? 'Copyright: ' + this.copyright : '';
     },
 
     /**

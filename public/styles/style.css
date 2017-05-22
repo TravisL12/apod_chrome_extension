@@ -186,23 +186,24 @@ ul, li {
         border-bottom-left-radius: 0; }
   .container p#apod-copyright,
   .container .external-links {
-    margin: 0 5px;
+    margin-right: 5px;
     color: white; }
   .container .description {
     position: fixed;
     bottom: 0;
-    height: 65px;
-    width: 1000px;
+    padding: 0 10px;
+    height: 60px;
+    width: 750px;
     max-width: 100%;
     color: white;
     background-color: transparent;
-    margin: 0 0 7px 20px;
     overflow-y: hidden;
-    transition: 0.6s ease-in-out all;
+    transition: 0.6s all ease-in-out;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300; }
     .container .description p {
-      font-size: 16px; }
+      font-size: 13px;
+      margin: 10px 0 0 0; }
     .container .description #img-quality {
       display: inline-block;
       font-size: 13px;
@@ -213,7 +214,7 @@ ul, li {
       border-radius: 3px; }
   .container .description:hover,
   .container .show-description {
-    height: 300px;
+    height: 230px;
     padding: 10px;
     background-color: rgba(0, 0, 0, 0.8);
     overflow-y: scroll; }
