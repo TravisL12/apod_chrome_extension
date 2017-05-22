@@ -13,14 +13,14 @@ function Keyword (name, category) {
 
 function KnowMore (text) {
     this.text = text;
-    this.galaxies = this.findGalaxies();
+    this.messierObjects = this.findMessierObjects();
     this.celestialObjects = this.findCelestialObjects();
-    this.newGeneralCatalog = this.findNgc();
+    this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
     this.results = this.buildResults();
 }
 
 KnowMore.prototype = {
-    findGalaxies () {
+    findMessierObjects () {
         let match = this.text.match(/M+\d{1,3}\b/gi) || [];
         if (match.length) {
             match = this.createKeywords(match, 'galaxy');
@@ -29,7 +29,7 @@ KnowMore.prototype = {
         return match;
     },
 
-    findNgc () {
+    findNewGeneralCatalogObjects () {
         let match = this.text.match(/NGC(-|\s)?\d{1,7}/gi) || [];
         if (match.length) {
             match = this.createKeywords(match, 'NGC');
@@ -62,7 +62,7 @@ KnowMore.prototype = {
     },
 
     buildResults () {
-        let results = [].concat(this.galaxies, this.celestialObjects, this.newGeneralCatalog);
+        let results = [].concat(this.messierObjects, this.celestialObjects, this.newGeneralCatalog);
         let frequency = {};
 
         for (let i in results) {
@@ -146,6 +146,11 @@ const celestialDictionary = {
         'phoebe','polydeuces','portia','praxidike','prometheus','prospero','proteus','psamathe','puck','rhea','rosalind',
         'sao','setebos','siarnaq','sinope','skathi','sponde','stephano','suttungr','sycorax','tarvos','taygete','telesto',
         'tethys','thalassa','thebe','thelxinoe','themisto','thrymr','thyone','titan','titania','trinculo','triton','umbriel','ymir',
+    ],
+
+    galaxy: [
+        "andromeda","black eye","bode's","cartwheel","cigar","cosmos redshift 7","hoag's object","large magellanic cloud",
+        "mayall's object","milky way","pinwheel","small magellanic cloud","sombrero","sunflower","tadpole","whirlpool",
     ],
 
     constellation: [
