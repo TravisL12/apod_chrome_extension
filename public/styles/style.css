@@ -108,8 +108,7 @@ ul, li {
 #want-to-know-more {
   position: absolute;
   top: 30vh;
-  right: 10px;
-  height: 300px; }
+  right: 10px; }
   #want-to-know-more ul li {
     background: #333333;
     color: white;

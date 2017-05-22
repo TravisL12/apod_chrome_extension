@@ -84,8 +84,6 @@ Apod.prototype = {
                 this.description = response.explanation;
                 this.copyright   = response.copyright;
 
-                this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
-
                 switch (response.media_type) {
                     case 'image':
                         apodImage.style.display = 'block';
@@ -172,6 +170,8 @@ Apod.prototype = {
     },
 
     apodDescription () {
+        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+
         apodImage.classList.remove('loading');
         $('.description').classList.remove('hide');
 
