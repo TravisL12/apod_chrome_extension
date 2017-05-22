@@ -28,6 +28,17 @@ ul, li {
     display: inline-block;
 }
 
+@mixin apod-button {
+    background: $gray;
+    color: white;
+    @include border-radii(3px, 8px);
+
+    &:hover {
+        background: $light-gray;
+        @include border-radii(0,0);
+    }
+}
+
 .hide {
     opacity: 0;
     height: 0;
@@ -49,12 +60,9 @@ ul, li {
 
     #typedUrl {
         ul li a {
+            @include apod-button;
             display: inline-block;
-            background: $gray;
-            color: white;
             padding: 15px;
-            @include border-radii(3px, 8px);
-
             transition: 0.2s linear all;
 
             .thumb-img{
@@ -63,10 +71,6 @@ ul, li {
                 display: block;
             }
 
-            &:hover {
-                background: $light-gray;
-                @include border-radii(0,0);
-            }
         }
         ul li + li {
             margin-left: 10px;
@@ -110,9 +114,9 @@ ul, li {
     height: 300px;
 
     ul li {
+        @include apod-button;
         display: block;
         cursor: pointer;
-        color: $light-gray;
         width: 300px;
         min-height: 60px;
         margin-bottom: 10px;
@@ -123,15 +127,9 @@ ul, li {
             0.2s height linear;
         padding: 10px;
         box-sizing: border-box;
-        @include border-radii(3px, 8px);
-
-        &:hover {
-            background-color: lighten($know-more-list-bg-color, 15%);
-            @include border-radii(0,0);
-        }
 
         a {
-            color: white;
+            color: inherit;
             font-weight: bold;
             display: block;
             text-overflow: ellipsis;
@@ -173,18 +171,14 @@ ul, li {
             }
         }
         a {
+            @include apod-button;
+            transition: 0.2s linear all;
             display: block;
             background: $gray;
             color: $light-gray;
             min-width: 65px;
             padding: 10px;
             cursor: pointer;
-            @include border-radii(3px, 8px);
-            transition: 0.2s linear all;
-            &.hover, &:hover {
-                background: $light-gray;
-                color: $gray;
-            }
         }
     }
 

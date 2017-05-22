@@ -68,8 +68,8 @@ KnowMore.prototype = {
     },
 
     createLink (result) {
-        const el = document.createElement('li');
         console.log(result.title);
+        const el = document.createElement('li');
 
         const googleSearch = (e) => {
             el.removeEventListener('click', googleSearch); // No clicking twice!
