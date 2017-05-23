@@ -1,11 +1,27 @@
 'use strict';
 
+/**
+ * uniqueResults
+ * Callback for the filter() function to get
+ * unique values in results object
+ *
+ * @param  value
+ * @param  index
+ * @param  self
+ *
+ * @return {array}
+ */
 function uniqueResults (value, index, self) {
     return self.findIndex((v) => {
         return v.title === value.title;
     }) === index;
 };
 
+/**
+ * Keyword
+ * @param {string} name
+ * @param {string} category
+ */
 function Keyword (name, category) {
     this.title = name[0].toUpperCase() + name.slice(1);
     this.query = `${name} ${category}`;

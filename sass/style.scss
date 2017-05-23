@@ -11,11 +11,31 @@
     border-bottom-left-radius:  $end;
 }
 
+@mixin apod-button {
+    background: $gray;
+    color: white;
+    @include border-radii(3px, 8px);
+
+    &:hover {
+        background: $light-gray;
+        @include border-radii(0,0);
+    }
+}
+
 $gray: #333333;
 $light-gray: #C7C7C7;
 $know-more-list-bg-color: rgba(51, 51, 51, 0.8);
 
 @import 'options';
+
+@keyframes fade {
+    0% {
+        -webkit-filter: grayscale(1);
+    }
+    100% {
+        -webkit-filter: none;
+    }
+}
 
 body {
     background: black;
@@ -28,14 +48,20 @@ ul, li {
     display: inline-block;
 }
 
-@mixin apod-button {
-    background: $gray;
-    color: white;
-    @include border-radii(3px, 8px);
+.loading {
+    height: 100%;
+    width: 100%;
 
-    &:hover {
-        background: $light-gray;
-        @include border-radii(0,0);
+    .image {
+        background: url('../images/Crab_Nebula.jpg') center center no-repeat;
+        background-size: 15%;
+        height: 100%;
+        width: 100%;
+        animation: fade 1s infinite alternate ease-in-out;
+    }
+
+    .filter {
+        -webkit-filter: grayscale(1);
     }
 }
 
@@ -78,21 +104,17 @@ ul, li {
     }
 }
 
-.loading {
-    background: url('../images/ajax-loader.gif') center center no-repeat !important;
-    background-size: auto;
-    height: 32px;
-    width: 32px;
-}
-
 .body-image,
 .body-video,
-.container { float: left; }
+.loading {
+    float: left;
+}
 
 .body-image,
 .body-video {
     min-height: 95%;
     width: 100%;
+    display: none;
 }
 
 .body-video {
@@ -139,7 +161,8 @@ ul, li {
 }
 
 .container {
-    position: relative;
+    position: fixed;
+    bottom: 0;
     width: 100%;
     height: 5%;
     max-width: 1600px;
@@ -187,10 +210,10 @@ ul, li {
     }
 
     .description {
-        position: fixed;
+        position: absolute;
         bottom: 0;
         padding: 0 10px;
-        height: 60px;
+        height: 100%;
         width: 750px;
         max-width: 100%;
         color: white;

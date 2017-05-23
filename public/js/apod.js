@@ -6,7 +6,9 @@ function _zeroPad (num) {
 }
 
 function setLoadingView () {
-    apodImage.classList.add('loading');
+    apodImage.style['background-image'] = '';
+    apodImage.style['background-size'] = '';
+    apodLoading.classList.remove('hide');
     $('.description').classList.add('hide');
 
     let knowList = apodKnowMore.querySelector('ul');
@@ -97,6 +99,7 @@ Apod.prototype = {
                         this.errorImage();
                 }
             }, (error) => {
+                console.log('Error: getting new random');
                 this.isRequestInProgress = false;
                 this.getApod(this.DateManager.randomDate());
             }
@@ -170,7 +173,7 @@ Apod.prototype = {
     apodDescription () {
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
-        apodImage.classList.remove('loading');
+        apodLoading.classList.add('hide');
         $('.description').classList.remove('hide');
 
         apodTitle.textContent = this.title;

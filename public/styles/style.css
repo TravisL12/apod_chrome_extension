@@ -32,6 +32,11 @@
     background: #ffff33;
     color: #333333; }
 
+@keyframes fade {
+  0% {
+    -webkit-filter: grayscale(1); }
+  100% {
+    -webkit-filter: none; } }
 body {
   background: black;
   margin: 0; }
@@ -40,6 +45,18 @@ ul, li {
   margin: 0;
   padding: 0;
   display: inline-block; }
+
+.loading {
+  height: 100%;
+  width: 100%; }
+  .loading .image {
+    background: url("../images/Crab_Nebula.jpg") center center no-repeat;
+    background-size: 15%;
+    height: 100%;
+    width: 100%;
+    animation: fade 1s infinite alternate ease-in-out; }
+  .loading .filter {
+    -webkit-filter: grayscale(1); }
 
 .hide {
   opacity: 0;
@@ -79,21 +96,16 @@ ul, li {
   .top-sites #topSites ul li + li {
     margin-left: 10px; }
 
-.loading {
-  background: url("../images/ajax-loader.gif") center center no-repeat !important;
-  background-size: auto;
-  height: 32px;
-  width: 32px; }
-
 .body-image,
 .body-video,
-.container {
+.loading {
   float: left; }
 
 .body-image,
 .body-video {
   min-height: 95%;
-  width: 100%; }
+  width: 100%;
+  display: none; }
 
 .body-video {
   text-align: center;
@@ -140,7 +152,8 @@ ul, li {
       line-height: 2; }
 
 .container {
-  position: relative;
+  position: fixed;
+  bottom: 0;
   width: 100%;
   height: 5%;
   max-width: 1600px;
@@ -189,10 +202,10 @@ ul, li {
     margin-right: 5px;
     color: white; }
   .container .description {
-    position: fixed;
+    position: absolute;
     bottom: 0;
     padding: 0 10px;
-    height: 60px;
+    height: 100%;
     width: 750px;
     max-width: 100%;
     color: white;
