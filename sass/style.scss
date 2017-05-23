@@ -1,3 +1,7 @@
+$gray: #333333;
+$light-gray: #C7C7C7;
+$know-more-list-bg-color: rgba(51, 51, 51, 0.8);
+
 @mixin helvetica-neue-light($weight:300) {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
     font-weight: $weight;
@@ -13,24 +17,19 @@
 
 @mixin apod-button {
     background: $gray;
-    color: white;
-    @include border-radii(3px, 8px);
+    color: $light-gray;
 
     &:hover {
-        background: $light-gray;
-        @include border-radii(0,0);
+        background: lighten($gray, 30%);
     }
 }
-
-$gray: #333333;
-$light-gray: #C7C7C7;
-$know-more-list-bg-color: rgba(51, 51, 51, 0.8);
 
 @import 'options';
 
 @keyframes fade {
     0% {
         -webkit-filter: grayscale(1);
+        opacity: 0.5;
     }
     100% {
         -webkit-filter: none;
@@ -49,6 +48,8 @@ ul, li {
 }
 
 .loading {
+    position: fixed;
+    top: 0;
     height: 100%;
     width: 100%;
 
@@ -77,8 +78,8 @@ ul, li {
     top: 10;
     left: 10;
     z-index: 1000;
-    opacity: 0.6;
-    transition: 0.2s linear all;
+    opacity: 0.8;
+    transition: 0.1s linear all;
 
     &:hover {
         opacity: 1;
@@ -88,7 +89,7 @@ ul, li {
         ul li a {
             @include apod-button;
             display: inline-block;
-            padding: 15px;
+            padding: 10px;
             transition: 0.2s linear all;
 
             .thumb-img{
@@ -105,14 +106,8 @@ ul, li {
 }
 
 .body-image,
-.body-video,
-.loading {
-    float: left;
-}
-
-.body-image,
 .body-video {
-    min-height: 95%;
+    height: 100%;
     width: 100%;
     display: none;
 }
@@ -164,7 +159,7 @@ ul, li {
     position: fixed;
     bottom: 0;
     width: 100%;
-    height: 5%;
+    height: 60px;
     max-width: 1600px;
     margin: 0 auto;
 
@@ -190,16 +185,14 @@ ul, li {
             &:nth-child(2) {
                 margin-right: 50px;
             }
-        }
-        a {
-            @include apod-button;
-            transition: 0.2s linear all;
-            display: block;
-            background: $gray;
-            color: $light-gray;
-            min-width: 65px;
-            padding: 10px;
-            cursor: pointer;
+            a {
+                @include apod-button;
+                transition: 0.2s linear all;
+                display: block;
+                min-width: 65px;
+                padding: 10px;
+                cursor: pointer;
+            }
         }
     }
 
@@ -210,6 +203,7 @@ ul, li {
     }
 
     .description {
+        @include helvetica-neue-light;
         position: absolute;
         bottom: 0;
         padding: 0 10px;
@@ -221,11 +215,11 @@ ul, li {
         overflow-y: hidden;
         transition: 0.6s all ease-in-out;
 
-        @include helvetica-neue-light;
-        p {
+        div {
             font-size: 13px;
             margin: 10px 0 0 0;
         }
+
         #img-quality {
             display: inline-block;
             font-size: 13px;

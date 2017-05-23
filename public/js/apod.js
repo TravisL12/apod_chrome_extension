@@ -8,11 +8,10 @@ function _zeroPad (num) {
 function setLoadingView () {
     apodImage.style['background-image'] = '';
     apodImage.style['background-size'] = '';
+    apodVideo.src = '';
+    $('.container').classList.add('hide');
     apodLoading.classList.remove('hide');
-    $('.description').classList.add('hide');
-
-    let knowList = apodKnowMore.querySelector('ul');
-    knowList.innerHTML = '';
+    apodKnowMore.querySelector('ul').innerHTML = '';
 }
 
 function Apod() {
@@ -174,7 +173,7 @@ Apod.prototype = {
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');
-        $('.description').classList.remove('hide');
+        $('.container').classList.remove('hide');
 
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
