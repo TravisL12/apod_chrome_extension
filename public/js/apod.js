@@ -9,9 +9,9 @@ function setLoadingView () {
     apodImage.style['background-image'] = '';
     apodImage.style['background-size'] = '';
     apodVideo.src = '';
-    $('.container').classList.add('hide');
+    $('.description-container').classList.add('hide');
     apodLoading.classList.remove('hide');
-    apodKnowMore.querySelector('ul').innerHTML = '';
+    apodKnowMore.innerHTML = '';
 }
 
 function Apod() {
@@ -110,10 +110,9 @@ Apod.prototype = {
         const results = knowMore.results;
 
         if (results.length) {
-            let knowList = apodKnowMore.querySelector('ul');
             for (let i in results) {
                 const listItem = knowMore.createLink(results[i]);
-                knowList.appendChild(listItem);
+                apodKnowMore.appendChild(listItem);
             }
         }
     },
@@ -173,7 +172,7 @@ Apod.prototype = {
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');
-        $('.container').classList.remove('hide');
+        $('.description-container').classList.remove('hide');
 
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);

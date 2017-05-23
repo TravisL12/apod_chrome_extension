@@ -26,7 +26,7 @@ const apodImage       = $('#apod-image'),
       apodPrevious    = $('#apod-previous'),
       apodNext        = $('#apod-next'),
       apodCurrent     = $('#apod-current'),
-      apodKnowMore    = $('#want-to-know-more'),
+      apodKnowMore    = $('#want-to-know-more ul'),
       apodRandom      = $('#apod-random');
 
 function fitToWindow (image) {
@@ -79,7 +79,7 @@ document.addEventListener('keydown', function(e) {
             blipHoverState(apodNext, apod.next);
             break;
         case 68: // Press 'D'
-            $('.container .description').classList.toggle('show-description');
+            $('.description-container .description').classList.toggle('show-description');
             break;
     }
 })

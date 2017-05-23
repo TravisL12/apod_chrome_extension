@@ -5,53 +5,50 @@
     </head>
 
     <body>
-        <div class='top-sites'>
-            <div id='topSites'></div>
-        </div>
 
-        <div id='apod-loading' class='loading'>
-            <div class='filter'></div>
-            <div class='image'></div>
-        </div>
+        <div class='container'>
 
-        <div class='body-image' id='apod-image'></div>
-        <div class='body-video' id='apod-video'>
-            <iframe width='960' height='540' frameborder='0'></iframe>
-        </div>
+            <div id='topSites' class='top-sites'></div>
 
-        <div id='want-to-know-more'>
-            <ul>
-                <li class='hide'></li>
-                <li class='hide'></li>
-                <li class='hide'></li>
-            </ul>
-        </div>
+            <div id='apod-loading' class='loading'></div>
 
-        <div class='container hide'>
+            <div class='body-image' id='apod-image'></div>
 
-            <div class='description'>
-                <h2 id='apod-date'></h2>
-                <h1 id='apod-title'></h1><span id='img-quality'></span>
+            <div class='body-video' id='apod-video'>
+                <iframe width='960' height='540' frameborder='0'></iframe>
+            </div>
 
-                <div>
-                    <a id='apod-origin' class='external-links' target='_blank'>View this APOD</a>
-                    <a id='apod-hires'  class='external-links' target='_blank'>Hi-res</a>
-                    <a id='apod-lowres' class='external-links' target='_blank'>Low-res</a>
+            <div id='want-to-know-more'>
+                <ul></ul>
+            </div>
+
+            <div class='description-container hide'>
+
+                <div class='description'>
+                    <h2 id='apod-date'></h2>
+                    <h1 id='apod-title'></h1><span id='img-quality'></span>
+
+                    <div>
+                        <a id='apod-origin' class='external-links' target='_blank'>View this APOD</a>
+                        <a id='apod-hires'  class='external-links' target='_blank'>Hi-res</a>
+                        <a id='apod-lowres' class='external-links' target='_blank'>Low-res</a>
+                    </div>
+
+                    <div id='apod-description'></div>
                 </div>
 
-                <div id='apod-description'></div>
-            </div>
+                <div class='nav-buttons'>
+                    <ul>
+                        <li><a id='apod-previous'>Previous</a></li>
+                        <li><a id='apod-next'>Next</a></li>
+                        <li><a id='apod-random'>Random</a></li>
+                        <li><a id='apod-current'>Today</a></li>
+                    </ul>
+                </div>
 
-            <div class='nav-buttons'>
-                <ul>
-                    <li><a id='apod-previous'>Previous</a></li>
-                    <li><a id='apod-next'>Next</a></li>
-                    <li><a id='apod-random'>Random</a></li>
-                    <li><a id='apod-current'>Today</a></li>
-                </ul>
             </div>
-
         </div>
+
     </body>
 
     <script src='public/js/reqwest.min.js'></script>
