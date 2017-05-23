@@ -9,7 +9,7 @@ function setLoadingView () {
     apodImage.style['background-image'] = '';
     apodImage.style['background-size'] = '';
     apodVideo.src = '';
-    $('.description-container').classList.add('hide');
+    $('.apod__description').classList.add('hide');
     apodLoading.classList.remove('hide');
     apodKnowMore.innerHTML = '';
 }
@@ -172,7 +172,7 @@ Apod.prototype = {
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');
-        $('.description-container').classList.remove('hide');
+        $('.apod__description').classList.remove('hide');
 
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);

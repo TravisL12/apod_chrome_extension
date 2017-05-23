@@ -47,12 +47,12 @@ ul, li {
   padding: 0;
   display: inline-block; }
 
-.container {
+.apod {
   width: 100%;
   height: 100%;
   position: relative; }
 
-.loading {
+.apod__loading {
   height: 100%;
   width: 100%;
   background: url("../images/Crab_Nebula.jpg") center center no-repeat;
@@ -64,7 +64,7 @@ ul, li {
   height: 0;
   width: 0; }
 
-.top-sites {
+.apod__top-sites {
   position: absolute;
   color: white;
   top: 10;
@@ -72,37 +72,37 @@ ul, li {
   z-index: 1000;
   opacity: 0.8;
   transition: 0.1s linear all; }
-  .top-sites:hover {
+  .apod__top-sites:hover {
     opacity: 1; }
-  .top-sites ul li a {
+  .apod__top-sites ul li a {
     background: #333333;
     color: #C7C7C7;
     display: inline-block;
     padding: 10px;
     transition: 0.2s linear all; }
-    .top-sites ul li a:hover {
+    .apod__top-sites ul li a:hover {
       background: gray; }
-    .top-sites ul li a .thumb-img {
+    .apod__top-sites ul li a .thumb-img {
       width: 16px;
       height: 16px;
       display: block; }
-  .top-sites ul li + li {
+  .apod__top-sites ul li + li {
     margin-left: 10px; }
 
-.body-image,
-.body-video {
+.apod__image,
+.apod__video {
   position: absolute;
   top: 0;
   height: 100%;
   width: 100%;
   display: none; }
 
-.body-video {
+.apod__video {
   text-align: center;
   padding-top: 20vh;
   box-sizing: border-box; }
 
-.body-image {
+.apod__image {
   background-position: center center;
   background-repeat: no-repeat; }
 
@@ -132,33 +132,33 @@ ul, li {
       overflow: hidden;
       line-height: 2; }
 
-.description-container {
+.apod__description {
   position: absolute;
   bottom: 0;
   width: 100%;
-  height: 60px;
+  height: 70px;
   max-width: 1600px;
   margin: 0 auto; }
-  .description-container h1 {
+  .apod__description h1 {
     display: inline-block;
     margin: 0;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 100; }
-  .description-container h2 {
+  .apod__description h2 {
     margin: 0;
     color: #757575;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300; }
-  .description-container .nav-buttons {
+  .apod__description .nav-buttons {
     position: absolute;
     right: 10;
     bottom: 10; }
-    .description-container .nav-buttons ul li {
+    .apod__description .nav-buttons ul li {
       color: #333333;
       text-align: center; }
-      .description-container .nav-buttons ul li:nth-child(2) {
+      .apod__description .nav-buttons ul li:nth-child(2) {
         margin-right: 50px; }
-      .description-container .nav-buttons ul li a {
+      .apod__description .nav-buttons ul li a {
         background: #333333;
         color: #C7C7C7;
         transition: 0.2s linear all;
@@ -166,18 +166,15 @@ ul, li {
         min-width: 65px;
         padding: 10px;
         cursor: pointer; }
-        .description-container .nav-buttons ul li a:hover {
+        .apod__description .nav-buttons ul li a:hover {
           background: gray; }
-  .description-container p#apod-copyright,
-  .description-container .external-links {
-    margin-right: 5px;
-    color: white; }
-  .description-container .description {
+  .apod__description .description {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     position: absolute;
     bottom: 0;
-    padding: 0 10px;
+    padding: 10px;
+    box-sizing: border-box;
     height: 100%;
     width: 750px;
     max-width: 100%;
@@ -185,10 +182,15 @@ ul, li {
     background-color: transparent;
     overflow-y: hidden;
     transition: 0.6s all ease-in-out; }
-    .description-container .description div {
+    .apod__description .description .external-links,
+    .apod__description .description #apod-description {
       font-size: 13px;
       margin: 10px 0 0 0; }
-    .description-container .description #img-quality {
+      .apod__description .description .external-links a,
+      .apod__description .description #apod-description a {
+        margin-right: 5px;
+        color: white; }
+    .apod__description .description #img-quality {
       display: inline-block;
       font-size: 13px;
       background: #333333;
@@ -196,11 +198,10 @@ ul, li {
       margin-left: 10px;
       padding: 0 5px;
       border-radius: 3px; }
-  .description-container .description:hover,
-  .description-container .show-description {
-    height: 230px;
-    padding: 10px;
+  .apod__description .description:hover,
+  .apod__description .show-description {
+    height: 250px;
     background-color: rgba(0, 0, 0, 0.8);
-    overflow-y: scroll; }
+    overflow: hidden; }
 
 /*# sourceMappingURL=style.css.map */

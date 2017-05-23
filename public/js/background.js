@@ -79,7 +79,7 @@ document.addEventListener('keydown', function(e) {
             blipHoverState(apodNext, apod.next);
             break;
         case 68: // Press 'D'
-            $('.description-container .description').classList.toggle('show-description');
+            $('.apod__description .description').classList.toggle('show-description');
             break;
     }
 })

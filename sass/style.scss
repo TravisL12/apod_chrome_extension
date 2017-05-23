@@ -47,13 +47,13 @@ ul, li {
     display: inline-block;
 }
 
-.container {
+.apod {
     width: 100%;
     height: 100%;
     position: relative;
 }
 
-.loading {
+.apod__loading {
     height: 100%;
     width: 100%;
     background: url('../images/Crab_Nebula.jpg') center center no-repeat;
@@ -67,7 +67,7 @@ ul, li {
     width: 0;
 }
 
-.top-sites {
+.apod__top-sites {
     position: absolute;
     color: white;
     top: 10;
@@ -98,8 +98,8 @@ ul, li {
     }
 }
 
-.body-image,
-.body-video {
+.apod__image,
+.apod__video {
     position: absolute;
     top: 0;
     height: 100%;
@@ -107,13 +107,13 @@ ul, li {
     display: none;
 }
 
-.body-video {
+.apod__video {
     text-align: center;
     padding-top: 20vh;
     box-sizing: border-box;
 }
 
-.body-image {
+.apod__image {
     background-position: center center;
     background-repeat: no-repeat;
 }
@@ -149,11 +149,11 @@ ul, li {
     }
 }
 
-.description-container {
+.apod__description {
     position: absolute;
     bottom: 0;
     width: 100%;
-    height: 60px;
+    height: 70px;
     max-width: 1600px;
     margin: 0 auto;
 
@@ -190,17 +190,12 @@ ul, li {
         }
     }
 
-    p#apod-copyright,
-    .external-links {
-        margin-right: 5px;
-        color: white;
-    }
-
     .description {
         @include helvetica-neue-light;
         position: absolute;
         bottom: 0;
-        padding: 0 10px;
+        padding: 10px;
+        box-sizing: border-box;
         height: 100%;
         width: 750px;
         max-width: 100%;
@@ -209,9 +204,15 @@ ul, li {
         overflow-y: hidden;
         transition: 0.6s all ease-in-out;
 
-        div {
+        .external-links,
+        #apod-description {
             font-size: 13px;
             margin: 10px 0 0 0;
+
+            a {
+                margin-right: 5px;
+                color: white;
+            }
         }
 
         #img-quality {
@@ -227,9 +228,8 @@ ul, li {
 
     .description:hover,
     .show-description {
-        height: 230px;
-        padding: 10px;
+        height: 250px;
         background-color: rgba(0,0,0,0.8);
-        overflow-y: scroll;
+        overflow: hidden;
     }
 }

@@ -6,32 +6,32 @@
 
     <body>
 
-        <div class='container'>
+        <div class='apod'>
 
-            <div id='topSites' class='top-sites'></div>
+            <div class='apod__top-sites' id='topSites'></div>
 
-            <div id='apod-loading' class='loading'></div>
+            <div class='apod__loading' id='apod-loading'></div>
 
-            <div class='body-image' id='apod-image'></div>
+            <div class='apod__image' id='apod-image'></div>
 
-            <div class='body-video' id='apod-video'>
+            <div class='apod__video' id='apod-video'>
                 <iframe width='960' height='540' frameborder='0'></iframe>
             </div>
 
-            <div id='want-to-know-more'>
+            <div class='apod__know-more' id='want-to-know-more'>
                 <ul></ul>
             </div>
 
-            <div class='description-container hide'>
+            <div class='apod__description hide'>
 
                 <div class='description'>
                     <h2 id='apod-date'></h2>
                     <h1 id='apod-title'></h1><span id='img-quality'></span>
 
-                    <div>
-                        <a id='apod-origin' class='external-links' target='_blank'>View this APOD</a>
-                        <a id='apod-hires'  class='external-links' target='_blank'>Hi-res</a>
-                        <a id='apod-lowres' class='external-links' target='_blank'>Low-res</a>
+                    <div class='external-links'>
+                        <a id='apod-origin' target='_blank'>View this APOD</a>
+                        <a id='apod-hires'  target='_blank'>Hi-res</a>
+                        <a id='apod-lowres' target='_blank'>Low-res</a>
                     </div>
 
                     <div id='apod-description'></div>
