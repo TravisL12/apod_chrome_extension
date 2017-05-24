@@ -95,7 +95,7 @@ Apod.prototype = {
                         this.apodVideo();
                         break;
                     default:
-                        this.errorImage();
+                        this.random();
                 }
             }, (error) => {
                 console.log('Error: APOD API response');
@@ -123,16 +123,6 @@ Apod.prototype = {
 
         }
 
-    },
-
-    errorImage () {
-        let errorImg = new Image();
-        errorImg.src = '/public/images/jupiter.jpg';
-        
-        errorImg.onload = () => {
-            this.loadedImage = errorImg;
-            this.apodImage();
-        }
     },
 
     preLoadImage () {

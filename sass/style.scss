@@ -50,9 +50,9 @@ ul, li {
 .apod__loading {
     height: 100%;
     width: 100%;
-    background: url('../images/Crab_Nebula.jpg') center center no-repeat;
-    background-size: 350px;
-    animation: fade-opacity 1s infinite alternate ease-in-out;
+    background: url('../images/fast_sun_rotate.webp') center center no-repeat;
+    background-size: 150px;
+    // animation: fade-opacity 1s infinite alternate ease-in-out;
  
     &.hide {
         @extend .hide;
