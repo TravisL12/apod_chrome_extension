@@ -40,6 +40,10 @@ ul, li {
     background: url('../images/Crab_Nebula.jpg') center center no-repeat;
     background-size: 15%;
     animation: fade-opacity 1s infinite alternate ease-in-out;
+ 
+    &.hide {
+        @extend .hide;
+    }
 }
 
 .apod__top-sites {
@@ -127,6 +131,10 @@ ul, li {
     }
 }
 
+.keyword {
+    font-weight: bold;
+}
+
 .apod__description {
     position: absolute;
     bottom: 0;
@@ -175,14 +183,13 @@ ul, li {
         width: 750px;
         max-width: 100%;
         color: white;
-        overflow: hidden;
         background-color: rgba(0,0,0,0);
         transform: translate3d(0,0,0);
         transition: all 0.4s ease-out;
 
         .external-links,
         #apod-description {
-            font-size: 13px;
+            font-size: 14px;
             margin: 10px 0 0 0;
 
             a {
@@ -191,9 +198,14 @@ ul, li {
             }
         }
 
+        #apod-description {
+            height: 150px;
+            overflow-y: scroll;
+        }
+
         #img-quality {
             display: inline-block;
-            font-size: 13px;
+            font-size: 14px;
             background: $gray;
             color: black;
             margin-left: 10px;

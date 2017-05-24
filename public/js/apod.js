@@ -105,16 +105,24 @@ Apod.prototype = {
         );
     },
 
+    highlightResults (result) {
+        const re = new RegExp('\\b(' + result + ')\\b', 'gi');
+        this.description = this.description.replace(re, '<span class="keyword">"$1"</span>');
+        apodDescription.innerHTML = this.description;
+    },
+
     wouldYouLikeToKnowMore (text) {
         const knowMore = new KnowMore(text);
         const results = knowMore.results;
 
         if (results.length) {
             for (let i in results) {
-                const listItem = knowMore.createLink(results[i]);
-                apodKnowMore.appendChild(listItem);
+                this.highlightResults(results[i].title);
+                apodKnowMore.appendChild(knowMore.createLink(results[i]));
             }
+
         }
+
     },
 
     errorImage () {
@@ -146,6 +154,13 @@ Apod.prototype = {
             this.loadedImage = Img;
             this.apodImage(quality);
         };
+
+        Img.onerror = () => {
+            clearTimeout(timeout);
+            console.log('Error: image load');
+            this.isRequestInProgress = false;
+            this.random();
+        };
     },
 
     apodImage (imgQuality) {
@@ -169,15 +184,14 @@ Apod.prototype = {
     },
 
     apodDescription () {
-        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
-
-        apodLoading.classList.add('hide');
-        $('.apod__description .description').classList.remove('hide');
-
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
         apodDescription.textContent = this.description;
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+
+        apodLoading.classList.add('hide');
+        $('.apod__description .description').classList.remove('hide');
     },
 
     /**

@@ -46,7 +46,7 @@ ul, li {
   padding: 0;
   display: inline-block; }
 
-.hide {
+.hide, .apod__loading.hide {
   opacity: 0;
   height: 0;
   width: 0; }
@@ -132,6 +132,9 @@ ul, li {
       overflow: hidden;
       line-height: 2; }
 
+.keyword {
+  font-weight: bold; }
+
 .apod__description {
   position: absolute;
   bottom: 0;
@@ -177,21 +180,23 @@ ul, li {
     width: 750px;
     max-width: 100%;
     color: white;
-    overflow: hidden;
     background-color: transparent;
     transform: translate3d(0, 0, 0);
     transition: all 0.4s ease-out; }
     .apod__description .description .external-links,
     .apod__description .description #apod-description {
-      font-size: 13px;
+      font-size: 14px;
       margin: 10px 0 0 0; }
       .apod__description .description .external-links a,
       .apod__description .description #apod-description a {
         margin-right: 5px;
         color: white; }
+    .apod__description .description #apod-description {
+      height: 150px;
+      overflow-y: scroll; }
     .apod__description .description #img-quality {
       display: inline-block;
-      font-size: 13px;
+      font-size: 14px;
       background: #333333;
       color: black;
       margin-left: 10px;
