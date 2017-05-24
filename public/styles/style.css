@@ -199,7 +199,8 @@ ul, li {
     .apod__description .description .external-links,
     .apod__description .description #apod-description {
       font-size: 14px;
-      margin: 10px 0 0 0; }
+      margin: 10px 0 0 0;
+      text-rendering: optimizeLegibility; }
       .apod__description .description .external-links a,
       .apod__description .description #apod-description a {
         margin-right: 5px;
