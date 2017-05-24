@@ -89,20 +89,27 @@ KnowMore.prototype = {
 
     createLink (result) {
         const el = document.createElement('li');
+        const loadImg = document.createElement('span');
+        loadImg.className = 'loading-spinner hide';
 
         const googleSearch = (e) => {
             el.removeEventListener('click', googleSearch); // No clicking twice!
+            loadImg.classList.remove('hide'); // show spinner
 
             this.search(result.query).then((data) => {
+                loadImg.classList.add('hide'); // hide spinner
+
                 let response = JSON.parse(data.response);
                 let items = response.items;
                 let url = response.items[0].formattedUrl;
                 let title = response.items[0].htmlTitle;
                 el.innerHTML = `
                     ${el.innerHTML}
-                    <a href="${items[0].formattedUrl}" target="_blank">${items[0].htmlTitle}</a>
-                    <a href="${items[1].formattedUrl}" target="_blank">${items[1].htmlTitle}</a>
-                    <a href="${items[2].formattedUrl}" target="_blank">${items[2].htmlTitle}</a>
+                    <div class='know-links'>
+                        <a href="${items[0].formattedUrl}" target="_blank">${items[0].htmlTitle}</a>
+                        <a href="${items[1].formattedUrl}" target="_blank">${items[1].htmlTitle}</a>
+                        <a href="${items[2].formattedUrl}" target="_blank">${items[2].htmlTitle}</a>
+                    </div>
                 `;
             }, (error) => {
                 console.log(JSON.parse(error.response).error.errors[0].message);
@@ -110,6 +117,7 @@ KnowMore.prototype = {
         }
 
         el.innerHTML = '<h4>' + result.title + '</h4>';
+        el.appendChild(loadImg);
         el.addEventListener('click', googleSearch);
 
         return el;

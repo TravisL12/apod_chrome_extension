@@ -51,6 +51,16 @@ ul, li {
   height: 0;
   width: 0; }
 
+.loading-spinner {
+  height: 24px;
+  width: 24px;
+  display: inline-block;
+  background: url("../images/ajax-loader-white.gif") center center no-repeat;
+  background-size: 70%;
+  margin-left: 5px; }
+  .loading-spinner.hide {
+    display: none; }
+
 .apod {
   width: 100%;
   height: 100%;
@@ -123,7 +133,7 @@ ul, li {
     box-sizing: border-box; }
     .apod__know-more ul li.hover, .apod__know-more ul li:hover {
       background: gray; }
-    .apod__know-more ul li h4, .apod__know-more ul li a {
+    .apod__know-more ul li h4, .apod__know-more ul li .know-links a {
       display: block;
       margin: 0;
       color: inherit;
@@ -131,6 +141,8 @@ ul, li {
       white-space: nowrap;
       overflow: hidden;
       line-height: 2; }
+    .apod__know-more ul li h4 {
+      display: inline-block; }
 
 .keyword {
   color: lightblue;
