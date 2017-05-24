@@ -32,12 +32,11 @@
     background: #ffff33;
     color: #333333; }
 
-@keyframes fade {
+@keyframes fade-opacity {
   0% {
-    -webkit-filter: grayscale(1);
     opacity: 0.5; }
   100% {
-    -webkit-filter: none; } }
+    opacity: 1; } }
 body {
   background: black;
   margin: 0; }
@@ -47,22 +46,23 @@ ul, li {
   padding: 0;
   display: inline-block; }
 
+.hide {
+  opacity: 0;
+  height: 0;
+  width: 0; }
+
 .apod {
   width: 100%;
   height: 100%;
-  position: relative; }
+  position: relative;
+  overflow: hidden; }
 
 .apod__loading {
   height: 100%;
   width: 100%;
   background: url("../images/Crab_Nebula.jpg") center center no-repeat;
   background-size: 15%;
-  animation: fade 1s infinite alternate ease-in-out; }
-
-.hide {
-  opacity: 0;
-  height: 0;
-  width: 0; }
+  animation: fade-opacity 1s infinite alternate ease-in-out; }
 
 .apod__top-sites {
   position: absolute;
@@ -106,11 +106,11 @@ ul, li {
   background-position: center center;
   background-repeat: no-repeat; }
 
-#want-to-know-more {
+.apod__know-more {
   position: absolute;
   top: 30vh;
   right: 10px; }
-  #want-to-know-more ul li {
+  .apod__know-more ul li {
     background: #333333;
     color: #C7C7C7;
     display: block;
@@ -121,9 +121,9 @@ ul, li {
     transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s border-radius linear, 0.2s height linear;
     padding: 10px;
     box-sizing: border-box; }
-    #want-to-know-more ul li:hover {
+    .apod__know-more ul li:hover {
       background: gray; }
-    #want-to-know-more ul li h4, #want-to-know-more ul li a {
+    .apod__know-more ul li h4, .apod__know-more ul li a {
       display: block;
       margin: 0;
       color: inherit;
@@ -137,7 +137,6 @@ ul, li {
   bottom: 0;
   width: 100%;
   height: 70px;
-  max-width: 1600px;
   margin: 0 auto; }
   .apod__description h1 {
     display: inline-block;
@@ -151,13 +150,13 @@ ul, li {
     font-weight: 300; }
   .apod__description .nav-buttons {
     position: absolute;
-    right: 10;
-    bottom: 10; }
+    bottom: 10;
+    right: 0; }
     .apod__description .nav-buttons ul li {
       color: #333333;
-      text-align: center; }
-      .apod__description .nav-buttons ul li:nth-child(2) {
-        margin-right: 50px; }
+      text-align: center;
+      margin-right: 15px;
+      float: left; }
       .apod__description .nav-buttons ul li a {
         background: #333333;
         color: #C7C7C7;
@@ -172,16 +171,16 @@ ul, li {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     position: absolute;
-    bottom: 0;
     padding: 10px;
     box-sizing: border-box;
-    height: 100%;
+    height: 250px;
     width: 750px;
     max-width: 100%;
     color: white;
+    overflow: hidden;
     background-color: transparent;
-    overflow-y: hidden;
-    transition: 0.6s all ease-in-out; }
+    transform: translate3d(0, 0, 0);
+    transition: all 0.4s ease-out; }
     .apod__description .description .external-links,
     .apod__description .description #apod-description {
       font-size: 13px;
@@ -200,8 +199,7 @@ ul, li {
       border-radius: 3px; }
   .apod__description .description:hover,
   .apod__description .show-description {
-    height: 250px;
-    background-color: rgba(0, 0, 0, 0.8);
-    overflow: hidden; }
+    transform: translate3d(0, -180px, 0);
+    background-color: rgba(0, 0, 0, 0.8); }
 
 /*# sourceMappingURL=style.css.map */

@@ -1,38 +1,12 @@
-$gray: #333333;
-$light-gray: #C7C7C7;
-$know-more-list-bg-color: rgba(51, 51, 51, 0.8);
-
-@mixin helvetica-neue-light($weight:300) {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
-    font-weight: $weight;
-}
-
-@mixin border-radii($start, $end) {
-    border-top-left-radius:     $start;
-    border-bottom-right-radius: $start;
-
-    border-top-right-radius:    $end;
-    border-bottom-left-radius:  $end;
-}
-
-@mixin apod-button {
-    background: $gray;
-    color: $light-gray;
-
-    &:hover {
-        background: lighten($gray, 30%);
-    }
-}
-
+@import 'variables';
 @import 'options';
 
-@keyframes fade {
+@keyframes fade-opacity {
     0% {
-        -webkit-filter: grayscale(1);
         opacity: 0.5;
     }
     100% {
-        -webkit-filter: none;
+        opacity: 1;
     }
 }
 
@@ -47,10 +21,17 @@ ul, li {
     display: inline-block;
 }
 
+.hide {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}
+
 .apod {
     width: 100%;
     height: 100%;
     position: relative;
+    overflow: hidden;
 }
 
 .apod__loading {
@@ -58,13 +39,7 @@ ul, li {
     width: 100%;
     background: url('../images/Crab_Nebula.jpg') center center no-repeat;
     background-size: 15%;
-    animation: fade 1s infinite alternate ease-in-out;
-}
-
-.hide {
-    opacity: 0;
-    height: 0;
-    width: 0;
+    animation: fade-opacity 1s infinite alternate ease-in-out;
 }
 
 .apod__top-sites {
@@ -80,21 +55,24 @@ ul, li {
         opacity: 1;
     }
 
-    ul li a {
-        @include apod-button;
-        display: inline-block;
-        padding: 10px;
-        transition: 0.2s linear all;
+    ul li {
+        a {
+            @include apod-button;
+            display: inline-block;
+            padding: 10px;
+            transition: 0.2s linear all;
 
-        .thumb-img{
-            width: 16px;
-            height: 16px;
-            display: block;
+            .thumb-img{
+                width: 16px;
+                height: 16px;
+                display: block;
+            }
+
         }
 
-    }
-    ul li + li {
-        margin-left: 10px;
+        & + li {
+            margin-left: 10px;
+        }
     }
 }
 
@@ -118,7 +96,7 @@ ul, li {
     background-repeat: no-repeat;
 }
 
-#want-to-know-more {
+.apod__know-more {
     position: absolute;
     top: 30vh;
     right: 10px;
@@ -131,9 +109,9 @@ ul, li {
         margin-bottom: 10px;
         background-color: $know-more-list-bg-color;
         transition: 0.5s opacity linear,
-            0.2s background-color linear,
-            0.2s border-radius linear,
-            0.2s height linear;
+        0.2s background-color linear,
+        0.2s border-radius linear,
+        0.2s height linear;
         padding: 10px;
         box-sizing: border-box;
 
@@ -154,7 +132,6 @@ ul, li {
     bottom: 0;
     width: 100%;
     height: 70px;
-    max-width: 1600px;
     margin: 0 auto;
 
     h1 {
@@ -171,14 +148,13 @@ ul, li {
 
     .nav-buttons {
         position: absolute;
-        right: 10;
         bottom: 10;
+        right: 0;
         ul li {
             color: $gray;
             text-align: center;
-            &:nth-child(2) {
-                margin-right: 50px;
-            }
+            margin-right: 15px;
+            float: left;
             a {
                 @include apod-button;
                 transition: 0.2s linear all;
@@ -193,16 +169,16 @@ ul, li {
     .description {
         @include helvetica-neue-light;
         position: absolute;
-        bottom: 0;
         padding: 10px;
         box-sizing: border-box;
-        height: 100%;
+        height: 250px;
         width: 750px;
         max-width: 100%;
         color: white;
+        overflow: hidden;
         background-color: rgba(0,0,0,0);
-        overflow-y: hidden;
-        transition: 0.6s all ease-in-out;
+        transform: translate3d(0,0,0);
+        transition: all 0.4s ease-out;
 
         .external-links,
         #apod-description {
@@ -228,8 +204,7 @@ ul, li {
 
     .description:hover,
     .show-description {
-        height: 250px;
+        transform: translate3d(0,-180px,0);
         background-color: rgba(0,0,0,0.8);
-        overflow: hidden;
     }
 }

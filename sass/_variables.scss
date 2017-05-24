@@ -1,0 +1,25 @@
+$gray: #333333;
+$light-gray: #C7C7C7;
+$know-more-list-bg-color: rgba(51, 51, 51, 0.8);
+
+@mixin helvetica-neue-light($weight:300) {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+    font-weight: $weight;
+}
+
+@mixin border-radii($start, $end) {
+    border-top-left-radius:     $start;
+    border-bottom-right-radius: $start;
+
+    border-top-right-radius:    $end;
+    border-bottom-left-radius:  $end;
+}
+
+@mixin apod-button {
+    background: $gray;
+    color: $light-gray;
+
+    &:hover {
+        background: lighten($gray, 30%);
+    }
+}
