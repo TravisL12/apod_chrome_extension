@@ -100,7 +100,7 @@ Apod.prototype = {
             }, (error) => {
                 console.log('Error: APOD API response');
                 this.isRequestInProgress = false;
-                this.getApod(this.DateManager.randomDate());
+                this.random();
             }
         );
     },
