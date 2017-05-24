@@ -27,6 +27,10 @@ function Keyword (name, category) {
     this.query = `${name} ${category}`;
 }
 
+/**
+ * KnowMore
+ * @param {string} text
+ */
 function KnowMore (text) {
     this.text = text;
     this.celestialObjects = this.findCelestialObjects();

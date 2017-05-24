@@ -80,7 +80,7 @@ ul, li {
     display: inline-block;
     padding: 10px;
     transition: 0.2s linear all; }
-    .apod__top-sites ul li a:hover {
+    .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
       background: gray; }
     .apod__top-sites ul li a .thumb-img {
       width: 16px;
@@ -121,7 +121,7 @@ ul, li {
     transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s border-radius linear, 0.2s height linear;
     padding: 10px;
     box-sizing: border-box; }
-    .apod__know-more ul li:hover {
+    .apod__know-more ul li.hover, .apod__know-more ul li:hover {
       background: gray; }
     .apod__know-more ul li h4, .apod__know-more ul li a {
       display: block;
@@ -169,7 +169,7 @@ ul, li {
         min-width: 65px;
         padding: 10px;
         cursor: pointer; }
-        .apod__description .nav-buttons ul li a:hover {
+        .apod__description .nav-buttons ul li a.hover, .apod__description .nav-buttons ul li a:hover {
           background: gray; }
   .apod__description .description {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
