@@ -133,6 +133,7 @@ ul, li {
       line-height: 2; }
 
 .keyword {
+  color: lightblue;
   font-weight: bold; }
 
 .apod__description {

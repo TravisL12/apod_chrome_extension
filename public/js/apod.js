@@ -98,7 +98,7 @@ Apod.prototype = {
                         this.errorImage();
                 }
             }, (error) => {
-                console.log('Error: getting new random');
+                console.log('Error: APOD API response');
                 this.isRequestInProgress = false;
                 this.getApod(this.DateManager.randomDate());
             }
@@ -107,7 +107,7 @@ Apod.prototype = {
 
     highlightResults (result) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.description = this.description.replace(re, '<span class="keyword">"$1"</span>');
+        this.description = this.description.replace(re, '<span class="keyword">$1</span>');
         apodDescription.innerHTML = this.description;
     },
 
