@@ -2,7 +2,7 @@
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
   width: 275px;
-  color: #333333; }
+  color: rgba(51, 51, 51, 0.8); }
   .apod-options #choose-apod .info,
   .apod-options #choose-apod .inputs {
     display: inline-block; }
@@ -16,21 +16,22 @@
     border-bottom-right-radius: 3px;
     border-top-right-radius: 8px;
     border-bottom-left-radius: 8px;
+    transition: 0.4s border-radius linear;
     width: 60px;
     box-sizing: border-box;
     display: block;
     text-align: center;
-    background: #bababa;
-    color: #878787;
+    background: rgba(186, 186, 186, 0.8);
+    color: rgba(135, 135, 135, 0.8);
     padding: 5px;
     transition: 0.2s linear all;
     cursor: pointer; }
     .apod-options #choose-apod .inputs label:hover {
-      color: #333333; }
+      color: rgba(51, 51, 51, 0.8); }
   .apod-options #choose-apod .inputs input[type='radio']:checked + label {
     cursor: default;
     background: #ffff33;
-    color: #333333; }
+    color: rgba(51, 51, 51, 0.8); }
 
 @keyframes fade-opacity {
   0% {
@@ -71,7 +72,7 @@ ul, li {
   height: 100%;
   width: 100%;
   background: url("../images/Crab_Nebula.jpg") center center no-repeat;
-  background-size: 15%;
+  background-size: 350px;
   animation: fade-opacity 1s infinite alternate ease-in-out; }
 
 .apod__top-sites {
@@ -85,13 +86,23 @@ ul, li {
   .apod__top-sites:hover {
     opacity: 1; }
   .apod__top-sites ul li a {
-    background: #333333;
-    color: #C7C7C7;
+    background-color: rgba(51, 51, 51, 0.8);
+    color: rgba(199, 199, 199, 0.8);
+    border-top-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    transition: 0.4s border-radius linear;
     display: inline-block;
     padding: 10px;
     transition: 0.2s linear all; }
     .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
-      background: gray; }
+      background-color: rgba(102, 102, 102, 0.8);
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 0;
+      transition: 0.4s border-radius linear; }
     .apod__top-sites ul li a .thumb-img {
       width: 16px;
       height: 16px;
@@ -121,18 +132,27 @@ ul, li {
   top: 30vh;
   right: 10px; }
   .apod__know-more ul li {
-    background: #333333;
-    color: #C7C7C7;
+    background-color: rgba(51, 51, 51, 0.8);
+    color: rgba(199, 199, 199, 0.8);
+    border-top-left-radius: 2px;
+    border-bottom-right-radius: 2px;
+    border-top-right-radius: 2px;
+    border-bottom-left-radius: 2px;
+    transition: 0.4s border-radius linear;
     display: block;
     cursor: pointer;
     width: 300px;
     margin-bottom: 10px;
-    background-color: rgba(51, 51, 51, 0.8);
-    transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s border-radius linear, 0.2s height linear;
     padding: 10px;
-    box-sizing: border-box; }
+    box-sizing: border-box;
+    transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s height linear; }
     .apod__know-more ul li.hover, .apod__know-more ul li:hover {
-      background: gray; }
+      background-color: rgba(102, 102, 102, 0.8);
+      border-top-left-radius: 0;
+      border-bottom-right-radius: 0;
+      border-top-right-radius: 0;
+      border-bottom-left-radius: 0;
+      transition: 0.4s border-radius linear; }
     .apod__know-more ul li h4, .apod__know-more ul li .know-links a {
       display: block;
       margin: 0;
@@ -169,20 +189,30 @@ ul, li {
     bottom: 10;
     right: 0; }
     .apod__description .nav-buttons ul li {
-      color: #333333;
+      color: rgba(51, 51, 51, 0.8);
       text-align: center;
       margin-right: 15px;
       float: left; }
       .apod__description .nav-buttons ul li a {
-        background: #333333;
-        color: #C7C7C7;
+        background-color: rgba(51, 51, 51, 0.8);
+        color: rgba(199, 199, 199, 0.8);
+        border-top-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        transition: 0.4s border-radius linear;
         transition: 0.2s linear all;
         display: block;
         min-width: 65px;
         padding: 10px;
         cursor: pointer; }
         .apod__description .nav-buttons ul li a.hover, .apod__description .nav-buttons ul li a:hover {
-          background: gray; }
+          background-color: rgba(102, 102, 102, 0.8);
+          border-top-left-radius: 0;
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border-bottom-left-radius: 0;
+          transition: 0.4s border-radius linear; }
   .apod__description .description {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
@@ -211,7 +241,7 @@ ul, li {
     .apod__description .description #img-quality {
       display: inline-block;
       font-size: 14px;
-      background: #333333;
+      background: rgba(51, 51, 51, 0.8);
       color: black;
       margin-left: 10px;
       padding: 0 5px;
