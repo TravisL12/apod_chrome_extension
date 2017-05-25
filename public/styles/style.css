@@ -1,3 +1,8 @@
+.apod__loading.hide, .hide {
+  opacity: 0;
+  height: 0;
+  width: 0; }
+
 .apod-options {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
@@ -33,7 +38,7 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading .sun-container, .apod__loading .sun-container .rays-big, .apod__loading .sun-container .rays-small, .apod__loading .sun-container .circle {
+.apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .circle {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -41,10 +46,10 @@
   right: 0;
   margin: auto; }
 
-.apod__loading .sun-container .rays-big .ray, .apod__loading .sun-container .rays-small .ray {
-  position: absolute;
+.apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
   width: 0;
   height: 0;
+  position: absolute;
   left: 0;
   right: 0;
   margin: auto; }
@@ -61,57 +66,101 @@
     transform: rotate3d(0, 0, 1, 0deg); } }
 .apod__loading {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  opacity: 0.4; }
   .apod__loading .sun-container {
-    width: 500px;
-    height: 500px; }
-    .apod__loading .sun-container .rays-big {
-      width: 100%;
-      height: 100%;
-      animation: clockwise-spin 20s infinite linear; }
-      .apod__loading .sun-container .rays-big .ray {
-        border-bottom: 250px solid orange;
-        border-top: 0 solid transparent;
-        border-left: 75px solid transparent;
-        border-right: 75px solid transparent; }
-        .apod__loading .sun-container .rays-big .ray:nth-child(1) {
-          transform: rotate3d(0, 0, 1, 0deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-big .ray:nth-child(2) {
-          transform: rotate3d(0, 0, 1, 90deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-big .ray:nth-child(3) {
-          transform: rotate3d(0, 0, 1, 180deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-big .ray:nth-child(4) {
-          transform: rotate3d(0, 0, 1, 270deg);
-          transform-origin: bottom; }
-    .apod__loading .sun-container .rays-small {
-      width: 400px;
-      height: 400px;
-      animation: counter-clockwise-spin 16s infinite linear; }
-      .apod__loading .sun-container .rays-small .ray {
-        border-bottom: 200px solid yellow;
-        border-top: 0 solid transparent;
-        border-left: 60px solid transparent;
-        border-right: 60px solid transparent; }
-        .apod__loading .sun-container .rays-small .ray:nth-child(1) {
-          transform: rotate3d(0, 0, 1, 45deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-small .ray:nth-child(2) {
-          transform: rotate3d(0, 0, 1, 135deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-small .ray:nth-child(3) {
-          transform: rotate3d(0, 0, 1, 225deg);
-          transform-origin: bottom; }
-        .apod__loading .sun-container .rays-small .ray:nth-child(4) {
-          transform: rotate3d(0, 0, 1, 315deg);
-          transform-origin: bottom; }
-    .apod__loading .sun-container .circle {
-      width: 225px;
-      height: 225px;
-      border-radius: 50%;
-      background-color: gold; }
+    width: 200px;
+    height: 200px; }
+  .apod__loading .ray {
+    border-top: 0 solid transparent;
+    transform-origin: bottom; }
+  .apod__loading .rays-big {
+    width: 160px;
+    height: 160px;
+    animation: clockwise-spin 20s infinite linear; }
+    .apod__loading .rays-big .ray {
+      border-bottom: 80px solid orange;
+      border-left: 24px solid transparent;
+      border-right: 24px solid transparent; }
+      .apod__loading .rays-big .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 0deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 30deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 60deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 120deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 150deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 210deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 240deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(10) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(11) {
+        transform: rotate3d(0, 0, 1, 300deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(12) {
+        transform: rotate3d(0, 0, 1, 330deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(13) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+  .apod__loading .rays-small {
+    width: 140px;
+    height: 140px;
+    animation: counter-clockwise-spin 15s infinite linear; }
+    .apod__loading .rays-small .ray {
+      border-bottom: 70px solid yellow;
+      border-left: 28px solid transparent;
+      border-right: 28px solid transparent; }
+      .apod__loading .rays-small .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 45deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 135deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 225deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 315deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 405deg);
+        transform-origin: bottom; }
+  .apod__loading .circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: gold; }
 
 @keyframes fade-opacity {
   0% {
@@ -126,11 +175,6 @@ ul, li {
   margin: 0;
   padding: 0;
   display: inline-block; }
-
-.hide {
-  opacity: 0;
-  height: 0;
-  width: 0; }
 
 .loading-spinner {
   height: 24px;

@@ -27,3 +27,9 @@ $light-gray: rgba(#C7C7C7, 0.8);
         @include border-radii(0);
     }
 }
+
+%hide {
+    opacity: 0;
+    height: 0;
+    width: 0;
+}

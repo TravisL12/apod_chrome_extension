@@ -8,12 +8,39 @@
 }
 
 %ray {
-    position: absolute;
     width: 0;
     height: 0;
+    position: absolute;
     left: 0;
     right: 0;
     margin: auto;    
+}
+
+$container-dimension: 200px;
+
+$big-ray-count: 12;
+$big-ray-container: $container-dimension * 0.8;
+$big-ray-width: $big-ray-container * 0.15;
+$big-ray-color: orange;
+$big-ray-animation: clockwise-spin 20s infinite linear;
+
+$small-ray-count: 8;
+$small-ray-container: $container-dimension * 0.7;
+$small-ray-width: $small-ray-container * 0.2;
+$small-ray-color: yellow;
+$small-ray-animation: counter-clockwise-spin 15s infinite linear;
+
+@mixin calculate-ray-angles($count, $offset:0) {
+
+    @for $i from 0 through $count {
+        $angle: $i * 360/$count + $offset;
+
+        &:nth-child(#{$i + 1})  {
+            transform: rotate3d(0, 0, 1, #{$angle}deg);
+            transform-origin: bottom;
+        }
+    }
+
 }
 
 @keyframes clockwise-spin {
@@ -34,92 +61,65 @@
     }
 }
 
-$container-dimension: 500px;
-
 .apod__loading {
     height: 100%;
     width: 100%;
+    opacity: 0.4;
+
+    &.hide {
+        @extend %hide;
+    }
+
     .sun-container {
         @extend %center-div;
         width: $container-dimension;
         height: $container-dimension;
+    }
 
-        .rays-big {
-            @extend %center-div;
-            width: 100%;
-            height: 100%;
-            animation: clockwise-spin 20s infinite linear;
+    .ray {
+        border-top: 0 solid transparent;
+        transform-origin: bottom;
+    }
 
-            $big-ray-container: $container-dimension;
-            $big-ray-width: $big-ray-container * 0.15;
-            .ray {
-                @extend %ray;
-                border-bottom: $big-ray-container/2 solid orange;
-                border-top: 0 solid transparent;
-                border-left: $big-ray-width solid transparent;
-                border-right: $big-ray-width solid transparent;
+    .rays-big {
+        @extend %center-div;
+        width: $big-ray-container;
+        height: $big-ray-container;
+        animation: $big-ray-animation;
 
-                &:nth-child(1) {
-                    transform: rotate3d(0, 0, 1, 0deg);
-                    transform-origin: bottom;
-                }
+        .ray {
+            @extend %ray;
+            border-bottom: $big-ray-container/2 solid $big-ray-color;
+            border-left: $big-ray-width solid transparent;
+            border-right: $big-ray-width solid transparent;
 
-                &:nth-child(2) {
-                    transform: rotate3d(0, 0, 1, 90deg);
-                    transform-origin: bottom;
-                }
-                &:nth-child(3) {
-                    transform: rotate3d(0, 0, 1, 180deg);
-                    transform-origin: bottom;
-                }
-                &:nth-child(4) {
-                    transform: rotate3d(0, 0, 1, 270deg);
-                    transform-origin: bottom;
-                }
-            }
+            @include calculate-ray-angles($big-ray-count);
         }
+    }
 
-        $small-ray-container: $container-dimension * 0.8;
-        $small-ray-width: $small-ray-container * 0.15;
-        .rays-small {
-            @extend %center-div;
-            width: $small-ray-container;
-            height: $small-ray-container;
-            animation: counter-clockwise-spin 16s infinite linear;
+    .rays-small {
+        @extend %center-div;
+        width: $small-ray-container;
+        height: $small-ray-container;
+        animation: $small-ray-animation;
 
-            .ray {
-                @extend %ray;
-                border-bottom: $small-ray-container/2 solid yellow;
-                border-top: 0 solid transparent;
-                border-left: $small-ray-width solid transparent;
-                border-right: $small-ray-width solid transparent;
+        .ray {
+            @extend %ray;
+            border-bottom: $small-ray-container/2 solid $small-ray-color;
+            border-left: $small-ray-width solid transparent;
+            border-right: $small-ray-width solid transparent;
 
-                &:nth-child(1) {
-                    transform: rotate3d(0, 0, 1, 45deg);
-                    transform-origin: bottom;
-                }
-
-                &:nth-child(2) {
-                    transform: rotate3d(0, 0, 1, 135deg);
-                    transform-origin: bottom;
-                }
-                &:nth-child(3) {
-                    transform: rotate3d(0, 0, 1, 225deg);
-                    transform-origin: bottom;
-                }
-                &:nth-child(4) {
-                    transform: rotate3d(0, 0, 1, 315deg);
-                    transform-origin: bottom;
-                }
-            }
+            @include calculate-ray-angles($small-ray-count, 45);
         }
-        .circle {
-            @extend %center-div;
-            width: $container-dimension * 0.45;
-            height: $container-dimension * 0.45;
-            border-radius: 50%;
-            background-color: gold;
-            // opacity: 0.5;
-        }
+    }
+    .circle {
+        @extend %center-div;
+        width: $container-dimension * 0.4;
+        height: $container-dimension * 0.4;
+        border-radius: 50%;
+        background-color: gold;
+
+        // background: #fefcea;
+        // background: radial-gradient(ellipse at center, #fefcea 0%,#f1da36 100%);
     }
 }

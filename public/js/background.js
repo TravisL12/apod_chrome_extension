@@ -29,6 +29,17 @@ const apodImage       = $('#apod-image'),
       apodKnowMore    = $('#want-to-know-more ul'),
       apodRandom      = $('#apod-random');
 
+function buildRays(num) {
+  let rays = '';
+  for(let i = 0; i < num; i++) {
+    rays += "<div class='ray'></div>";
+  }
+  return rays;
+}
+
+$('#big-rays').innerHTML   = buildRays(12);
+$('#small-rays').innerHTML = buildRays(8);
+
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
 }
@@ -88,5 +99,5 @@ let apod = new Apod();
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
-    // apodOptionType == 'today' ? apod.current() : apod.random();
+    apodOptionType == 'today' ? apod.current() : apod.random();
 });
