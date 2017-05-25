@@ -1,0 +1,125 @@
+%center-div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+%ray {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    right: 0;
+    margin: auto;    
+}
+
+@keyframes clockwise-spin {
+    0% {
+        transform: rotate3d(0,0,1,0deg);
+    }
+    100% {
+        transform: rotate3d(0,0,1,360deg);
+    }
+}
+
+@keyframes counter-clockwise-spin {
+    0% {
+        transform: rotate3d(0,0,1,360deg);
+    }
+    100% {
+        transform: rotate3d(0,0,1,0deg);
+    }
+}
+
+$container-dimension: 500px;
+
+.apod__loading {
+    height: 100%;
+    width: 100%;
+    .sun-container {
+        @extend %center-div;
+        width: $container-dimension;
+        height: $container-dimension;
+
+        .rays-big {
+            @extend %center-div;
+            width: 100%;
+            height: 100%;
+            animation: clockwise-spin 20s infinite linear;
+
+            $big-ray-container: $container-dimension;
+            $big-ray-width: $big-ray-container * 0.15;
+            .ray {
+                @extend %ray;
+                border-bottom: $big-ray-container/2 solid orange;
+                border-top: 0 solid transparent;
+                border-left: $big-ray-width solid transparent;
+                border-right: $big-ray-width solid transparent;
+
+                &:nth-child(1) {
+                    transform: rotate3d(0, 0, 1, 0deg);
+                    transform-origin: bottom;
+                }
+
+                &:nth-child(2) {
+                    transform: rotate3d(0, 0, 1, 90deg);
+                    transform-origin: bottom;
+                }
+                &:nth-child(3) {
+                    transform: rotate3d(0, 0, 1, 180deg);
+                    transform-origin: bottom;
+                }
+                &:nth-child(4) {
+                    transform: rotate3d(0, 0, 1, 270deg);
+                    transform-origin: bottom;
+                }
+            }
+        }
+
+        $small-ray-container: $container-dimension * 0.8;
+        $small-ray-width: $small-ray-container * 0.15;
+        .rays-small {
+            @extend %center-div;
+            width: $small-ray-container;
+            height: $small-ray-container;
+            animation: counter-clockwise-spin 16s infinite linear;
+
+            .ray {
+                @extend %ray;
+                border-bottom: $small-ray-container/2 solid yellow;
+                border-top: 0 solid transparent;
+                border-left: $small-ray-width solid transparent;
+                border-right: $small-ray-width solid transparent;
+
+                &:nth-child(1) {
+                    transform: rotate3d(0, 0, 1, 45deg);
+                    transform-origin: bottom;
+                }
+
+                &:nth-child(2) {
+                    transform: rotate3d(0, 0, 1, 135deg);
+                    transform-origin: bottom;
+                }
+                &:nth-child(3) {
+                    transform: rotate3d(0, 0, 1, 225deg);
+                    transform-origin: bottom;
+                }
+                &:nth-child(4) {
+                    transform: rotate3d(0, 0, 1, 315deg);
+                    transform-origin: bottom;
+                }
+            }
+        }
+        .circle {
+            @extend %center-div;
+            width: $container-dimension * 0.45;
+            height: $container-dimension * 0.45;
+            border-radius: 50%;
+            background-color: gold;
+            // opacity: 0.5;
+        }
+    }
+}

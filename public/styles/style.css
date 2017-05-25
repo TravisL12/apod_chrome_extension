@@ -33,6 +33,86 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
+.apod__loading .sun-container, .apod__loading .sun-container .rays-big, .apod__loading .sun-container .rays-small, .apod__loading .sun-container .circle {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.apod__loading .sun-container .rays-big .ray, .apod__loading .sun-container .rays-small .ray {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+@keyframes clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 360deg); } }
+@keyframes counter-clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 360deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg); } }
+.apod__loading {
+  height: 100%;
+  width: 100%; }
+  .apod__loading .sun-container {
+    width: 500px;
+    height: 500px; }
+    .apod__loading .sun-container .rays-big {
+      width: 100%;
+      height: 100%;
+      animation: clockwise-spin 20s infinite linear; }
+      .apod__loading .sun-container .rays-big .ray {
+        border-bottom: 250px solid orange;
+        border-top: 0 solid transparent;
+        border-left: 75px solid transparent;
+        border-right: 75px solid transparent; }
+        .apod__loading .sun-container .rays-big .ray:nth-child(1) {
+          transform: rotate3d(0, 0, 1, 0deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-big .ray:nth-child(2) {
+          transform: rotate3d(0, 0, 1, 90deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-big .ray:nth-child(3) {
+          transform: rotate3d(0, 0, 1, 180deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-big .ray:nth-child(4) {
+          transform: rotate3d(0, 0, 1, 270deg);
+          transform-origin: bottom; }
+    .apod__loading .sun-container .rays-small {
+      width: 400px;
+      height: 400px;
+      animation: counter-clockwise-spin 16s infinite linear; }
+      .apod__loading .sun-container .rays-small .ray {
+        border-bottom: 200px solid yellow;
+        border-top: 0 solid transparent;
+        border-left: 60px solid transparent;
+        border-right: 60px solid transparent; }
+        .apod__loading .sun-container .rays-small .ray:nth-child(1) {
+          transform: rotate3d(0, 0, 1, 45deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-small .ray:nth-child(2) {
+          transform: rotate3d(0, 0, 1, 135deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-small .ray:nth-child(3) {
+          transform: rotate3d(0, 0, 1, 225deg);
+          transform-origin: bottom; }
+        .apod__loading .sun-container .rays-small .ray:nth-child(4) {
+          transform: rotate3d(0, 0, 1, 315deg);
+          transform-origin: bottom; }
+    .apod__loading .sun-container .circle {
+      width: 225px;
+      height: 225px;
+      border-radius: 50%;
+      background-color: gold; }
+
 @keyframes fade-opacity {
   0% {
     opacity: 0.5; }
@@ -47,7 +127,7 @@ ul, li {
   padding: 0;
   display: inline-block; }
 
-.hide, .apod__loading.hide {
+.hide {
   opacity: 0;
   height: 0;
   width: 0; }
@@ -67,12 +147,6 @@ ul, li {
   height: 100%;
   position: relative;
   overflow: hidden; }
-
-.apod__loading {
-  height: 100%;
-  width: 100%;
-  background: url("../images/fast_sun_rotate.webp") center center no-repeat;
-  background-size: 150px; }
 
 .apod__top-sites {
   position: absolute;
