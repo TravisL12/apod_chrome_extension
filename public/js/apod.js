@@ -53,7 +53,7 @@ Apod.prototype = {
 
     getApod (date) {
 
-        date = date || this.DateManager.today;
+        date = '1997-05-12';//date || this.DateManager.today;
 
         if (!this.isRequestValid()) {
             console.log('Request in Progress!');

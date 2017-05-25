@@ -129,31 +129,31 @@
       border-left: 28px solid transparent;
       border-right: 28px solid transparent; }
       .apod__loading .rays-small .ray:nth-child(1) {
-        transform: rotate3d(0, 0, 1, 45deg);
+        transform: rotate3d(0, 0, 1, 0deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(2) {
-        transform: rotate3d(0, 0, 1, 90deg);
+        transform: rotate3d(0, 0, 1, 45deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(3) {
-        transform: rotate3d(0, 0, 1, 135deg);
+        transform: rotate3d(0, 0, 1, 90deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(4) {
-        transform: rotate3d(0, 0, 1, 180deg);
+        transform: rotate3d(0, 0, 1, 135deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(5) {
-        transform: rotate3d(0, 0, 1, 225deg);
+        transform: rotate3d(0, 0, 1, 180deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(6) {
-        transform: rotate3d(0, 0, 1, 270deg);
+        transform: rotate3d(0, 0, 1, 225deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(7) {
-        transform: rotate3d(0, 0, 1, 315deg);
+        transform: rotate3d(0, 0, 1, 270deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(8) {
-        transform: rotate3d(0, 0, 1, 360deg);
+        transform: rotate3d(0, 0, 1, 315deg);
         transform-origin: bottom; }
       .apod__loading .rays-small .ray:nth-child(9) {
-        transform: rotate3d(0, 0, 1, 405deg);
+        transform: rotate3d(0, 0, 1, 360deg);
         transform-origin: bottom; }
   .apod__loading .circle {
     width: 80px;
@@ -246,40 +246,44 @@ ul, li {
 
 .apod__know-more {
   position: absolute;
-  top: 30vh;
-  right: 10px; }
-  .apod__know-more ul li {
-    background-color: rgba(51, 51, 51, 0.8);
-    color: rgba(199, 199, 199, 0.8);
-    border-top-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    transition: 0.4s border-radius linear;
-    display: block;
-    cursor: pointer;
-    width: 300px;
-    margin-bottom: 10px;
-    padding: 10px;
-    box-sizing: border-box;
-    transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s height linear; }
-    .apod__know-more ul li.hover, .apod__know-more ul li:hover {
-      background-color: rgba(102, 102, 102, 0.8);
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      border-bottom-left-radius: 0;
-      transition: 0.4s border-radius linear; }
-    .apod__know-more ul li h4, .apod__know-more ul li .know-links a {
-      display: block;
-      margin: 0;
-      color: inherit;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      line-height: 2; }
-    .apod__know-more ul li h4 {
-      display: inline-block; }
+  top: -40px;
+  left: 0;
+  width: 100%; }
+  .apod__know-more ul {
+    display: flex;
+    justify-content: space-between; }
+    .apod__know-more ul li {
+      background-color: rgba(51, 51, 51, 0.8);
+      color: rgba(199, 199, 199, 0.8);
+      border-top-left-radius: 2px;
+      border-bottom-right-radius: 2px;
+      border-top-right-radius: 2px;
+      border-bottom-left-radius: 2px;
+      transition: 0.4s border-radius linear;
+      display: inline-block;
+      cursor: pointer;
+      width: 130px;
+      height: 40px;
+      padding: 5px 10px;
+      box-sizing: border-box;
+      transition: 0.5s opacity linear, 0.2s background-color linear, 0.2s height linear; }
+      .apod__know-more ul li.hover, .apod__know-more ul li:hover {
+        background-color: rgba(102, 102, 102, 0.8);
+        border-top-left-radius: 0;
+        border-bottom-right-radius: 0;
+        border-top-right-radius: 0;
+        border-bottom-left-radius: 0;
+        transition: 0.4s border-radius linear; }
+      .apod__know-more ul li h4, .apod__know-more ul li .know-links a {
+        display: block;
+        margin: 0;
+        color: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        line-height: 2; }
+      .apod__know-more ul li h4 {
+        display: inline-block; }
 
 .keyword {
   color: lightblue;

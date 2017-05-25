@@ -102,34 +102,39 @@ ul, li {
 
 .apod__know-more {
     position: absolute;
-    top: 30vh;
-    right: 10px;
+    top: -40px;
+    left: 0;
+    width: 100%;
 
-    ul li {
-        @include apod-button;
-        display: block;
-        cursor: pointer;
-        width: 300px;
-        margin-bottom: 10px;
-        padding: 10px;
-        box-sizing: border-box;
-
-        transition: 0.5s opacity linear,
-        0.2s background-color linear,
-        0.2s height linear;
-
-        h4, .know-links a {
-            display: block;
-            margin: 0;
-            color: inherit;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            line-height: 2;
-        }
-
-        h4 {
+    ul {
+        display: flex;
+        justify-content: space-between;
+        li {
+            @include apod-button;
             display: inline-block;
+            cursor: pointer;
+            width: 130px;
+            height: 40px;
+            padding: 5px 10px;
+            box-sizing: border-box;
+
+            transition: 0.5s opacity linear,
+            0.2s background-color linear,
+            0.2s height linear;
+
+            h4, .know-links a {
+                display: block;
+                margin: 0;
+                color: inherit;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                line-height: 2;
+            }
+
+            h4 {
+                display: inline-block;
+            }
         }
     }
 }

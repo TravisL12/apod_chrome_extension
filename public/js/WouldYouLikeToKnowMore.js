@@ -101,14 +101,13 @@ KnowMore.prototype = {
 
                 let response = JSON.parse(data.response);
                 let items = response.items;
-                let url = response.items[0].formattedUrl;
-                let title = response.items[0].htmlTitle;
+
                 el.innerHTML = `
                     ${el.innerHTML}
                     <div class='know-links'>
-                        <a href="${items[0].formattedUrl}" target="_blank">${items[0].htmlTitle}</a>
-                        <a href="${items[1].formattedUrl}" target="_blank">${items[1].htmlTitle}</a>
-                        <a href="${items[2].formattedUrl}" target="_blank">${items[2].htmlTitle}</a>
+                        <a href="${items[0].link}" target="_blank">${items[0].htmlTitle}</a>
+                        <a href="${items[1].link}" target="_blank">${items[1].htmlTitle}</a>
+                        <a href="${items[2].link}" target="_blank">${items[2].htmlTitle}</a>
                     </div>
                 `;
             }, (error) => {

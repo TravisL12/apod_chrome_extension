@@ -22,15 +22,18 @@ $sun-container-dimension: 200px;
 $sun-color: gold;
 
 $big-ray-count: 12;
-$big-ray-container: $sun-container-dimension * 0.8;
-$big-ray-width: $big-ray-container * 0.15;
-$big-ray-color: orange;
-$big-ray-animation: clockwise-spin 20s infinite linear;
-
 $small-ray-count: 8;
+
+$big-ray-container: $sun-container-dimension * 0.8;
 $small-ray-container: $sun-container-dimension * 0.7;
+
+$big-ray-width: $big-ray-container * 0.15;
 $small-ray-width: $small-ray-container * 0.2;
+
+$big-ray-color: orange;
 $small-ray-color: yellow;
+
+$big-ray-animation: clockwise-spin 20s infinite linear;
 $small-ray-animation: counter-clockwise-spin 15s infinite linear;
 
 @mixin calculate-ray-angles($count, $offset:0) {
@@ -107,7 +110,7 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
             border-left: $small-ray-width solid transparent;
             border-right: $small-ray-width solid transparent;
 
-            @include calculate-ray-angles($small-ray-count, 45);
+            @include calculate-ray-angles($small-ray-count);
         }
     }
     .circle {
