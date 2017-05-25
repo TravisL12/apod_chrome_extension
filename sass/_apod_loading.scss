@@ -8,6 +8,8 @@
 }
 
 %ray {
+    border-top: 0 solid transparent;
+    transform-origin: bottom;
     width: 0;
     height: 0;
     position: absolute;
@@ -16,16 +18,17 @@
     margin: auto;    
 }
 
-$container-dimension: 200px;
+$sun-container-dimension: 200px;
+$sun-color: gold;
 
 $big-ray-count: 12;
-$big-ray-container: $container-dimension * 0.8;
+$big-ray-container: $sun-container-dimension * 0.8;
 $big-ray-width: $big-ray-container * 0.15;
 $big-ray-color: orange;
 $big-ray-animation: clockwise-spin 20s infinite linear;
 
 $small-ray-count: 8;
-$small-ray-container: $container-dimension * 0.7;
+$small-ray-container: $sun-container-dimension * 0.7;
 $small-ray-width: $small-ray-container * 0.2;
 $small-ray-color: yellow;
 $small-ray-animation: counter-clockwise-spin 15s infinite linear;
@@ -72,13 +75,8 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
 
     .sun-container {
         @extend %center-div;
-        width: $container-dimension;
-        height: $container-dimension;
-    }
-
-    .ray {
-        border-top: 0 solid transparent;
-        transform-origin: bottom;
+        width: $sun-container-dimension;
+        height: $sun-container-dimension;
     }
 
     .rays-big {
@@ -114,12 +112,10 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
     }
     .circle {
         @extend %center-div;
-        width: $container-dimension * 0.4;
-        height: $container-dimension * 0.4;
+        width: $sun-container-dimension * 0.4;
+        height: $sun-container-dimension * 0.4;
         border-radius: 50%;
-        background-color: gold;
-
-        // background: #fefcea;
-        // background: radial-gradient(ellipse at center, #fefcea 0%,#f1da36 100%);
+        background: $sun-color;
+        background: radial-gradient(ellipse at center, #fefcea 0%,$sun-color 60%);
     }
 }

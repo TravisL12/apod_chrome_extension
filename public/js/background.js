@@ -37,8 +37,8 @@ function buildRays(num) {
   return rays;
 }
 
-$('#big-rays').innerHTML   = buildRays(12);
-$('#small-rays').innerHTML = buildRays(8);
+$('#big-rays').innerHTML   = buildRays(20);
+$('#small-rays').innerHTML = buildRays(20);
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
@@ -99,5 +99,5 @@ let apod = new Apod();
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
-    apodOptionType == 'today' ? apod.current() : apod.random();
+    // apodOptionType == 'today' ? apod.current() : apod.random();
 });
