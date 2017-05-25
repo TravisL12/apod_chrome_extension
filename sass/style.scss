@@ -102,25 +102,27 @@ ul, li {
 
 .apod__know-more {
     position: absolute;
-    top: -40px;
-    left: 0;
-    width: 100%;
+    top: 10px;
+    right: 10px;
+    width: 750px;
+    z-index: 1000;
 
     ul {
         display: flex;
         justify-content: space-between;
+        align-items: flex-start;
+
         li {
             @include apod-button;
+            text-align: center;
             display: inline-block;
             cursor: pointer;
-            width: 130px;
-            height: 40px;
+            width: 140px;
             padding: 5px 10px;
             box-sizing: border-box;
 
             transition: 0.5s opacity linear,
-            0.2s background-color linear,
-            0.2s height linear;
+                0.2s background-color linear;
 
             h4, .know-links a {
                 display: block;
