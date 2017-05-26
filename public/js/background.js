@@ -99,5 +99,5 @@ let apod = new Apod();
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
-    // apodOptionType == 'today' ? apod.current() : apod.random();
+    apodOptionType == 'today' ? apod.current() : apod.random();
 });

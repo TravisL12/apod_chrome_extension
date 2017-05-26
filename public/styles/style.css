@@ -38,7 +38,7 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading .loading-container, .apod__loading .circle, .apod__loading .moon-shade {
+.apod__loading .loading-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .circle {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -46,56 +46,121 @@
   right: 0;
   margin: auto; }
 
-@keyframes shadow-left-start {
-  0%, 50% {
-    left: 100%;
-    width: 0; }
+.apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
+  border-top: 0 solid transparent;
+  transform-origin: bottom;
+  width: 0;
+  height: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+@keyframes clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg); }
   100% {
-    left: 0;
-    width: 200px; } }
-@keyframes shadow-right-start {
-  50%, 100% {
-    right: 100%;
-    width: 0; } }
+    transform: rotate3d(0, 0, 1, 360deg); } }
+@keyframes counter-clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 360deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg); } }
 .apod__loading {
   height: 100%;
-  width: 100%; }
+  width: 100%;
+  opacity: 0.4; }
   .apod__loading .loading-container {
     width: 200px;
     height: 200px; }
-  .apod__loading .circle, .apod__loading .moon-shade {
-    width: 200px;
-    height: 200px;
+  .apod__loading .rays-big {
+    width: 160px;
+    height: 160px;
+    animation: clockwise-spin 20s infinite linear; }
+    .apod__loading .rays-big .ray {
+      border-bottom: 80px solid orange;
+      border-left: 24px solid transparent;
+      border-right: 24px solid transparent; }
+      .apod__loading .rays-big .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 0deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 30deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 60deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 120deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 150deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 210deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 240deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(10) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(11) {
+        transform: rotate3d(0, 0, 1, 300deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(12) {
+        transform: rotate3d(0, 0, 1, 330deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(13) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+  .apod__loading .rays-small {
+    width: 140px;
+    height: 140px;
+    animation: counter-clockwise-spin 15s infinite linear; }
+    .apod__loading .rays-small .ray {
+      border-bottom: 70px solid yellow;
+      border-left: 28px solid transparent;
+      border-right: 28px solid transparent; }
+      .apod__loading .rays-small .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 0deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 45deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 135deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 225deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 315deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+  .apod__loading .circle {
+    width: 80px;
+    height: 80px;
     border-radius: 50%;
-    background: blue; }
-  .apod__loading .moon-shade .shade-left,
-  .apod__loading .moon-shade .shade-right {
-    position: absolute;
-    border-radius: 50%;
-    width: 200px;
-    height: 200px;
-    animation-fill-mode: forwards; }
-  .apod__loading .moon-shade .mask-left,
-  .apod__loading .moon-shade .mask-right {
-    position: absolute;
-    width: 100px;
-    height: 200px;
-    overflow: hidden; }
-  .apod__loading .moon-shade .mask-left,
-  .apod__loading .moon-shade .shade-left {
-    left: 0; }
-  .apod__loading .moon-shade .mask-right,
-  .apod__loading .moon-shade .shade-right {
-    right: 0; }
-  .apod__loading .moon-shade .shade-right,
-  .apod__loading .moon-shade .mask-left {
-    background: black;
-    opacity: 0.4; }
-  .apod__loading .moon-shade .shade-left {
-    background: blue;
-    animation: shadow-left-start 5s infinite linear; }
-  .apod__loading .moon-shade .shade-right {
-    animation: shadow-right-start 5s infinite linear; }
+    background: gold;
+    background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
 
 @keyframes fade-opacity {
   0% {
