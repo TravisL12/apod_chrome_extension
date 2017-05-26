@@ -38,7 +38,7 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .circle {
+.apod__loading .moon-container, .apod__loading .circle, .apod__loading .moon-shade {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -46,121 +46,68 @@
   right: 0;
   margin: auto; }
 
-.apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
-  border-top: 0 solid transparent;
-  transform-origin: bottom;
-  width: 0;
-  height: 0;
-  position: absolute;
-  left: 0;
-  right: 0;
-  margin: auto; }
-
-@keyframes clockwise-spin {
+@keyframes shadow-left-start {
+  50%, 100% {
+    left: 100%;
+    width: 0; } }
+@keyframes shadow-left-end {
   0% {
-    transform: rotate3d(0, 0, 1, 0deg); }
+    background: blue;
+    opacity: 1;
+    width: 200px;
+    left: 0; }
   100% {
-    transform: rotate3d(0, 0, 1, 360deg); } }
-@keyframes counter-clockwise-spin {
-  0% {
-    transform: rotate3d(0, 0, 1, 360deg); }
+    background: black;
+    opacity: 0.3;
+    left: 100%;
+    width: 0; } }
+@keyframes shadow-right-start {
+  0%, 50% {
+    right: 100%;
+    width: 0; }
   100% {
-    transform: rotate3d(0, 0, 1, 0deg); } }
+    right: 0;
+    width: 200px; } }
 .apod__loading {
   height: 100%;
-  width: 100%;
-  opacity: 0.4; }
-  .apod__loading .sun-container {
+  width: 100%; }
+  .apod__loading .moon-container {
     width: 200px;
     height: 200px; }
-  .apod__loading .rays-big {
-    width: 160px;
-    height: 160px;
-    animation: clockwise-spin 20s infinite linear; }
-    .apod__loading .rays-big .ray {
-      border-bottom: 80px solid orange;
-      border-left: 24px solid transparent;
-      border-right: 24px solid transparent; }
-      .apod__loading .rays-big .ray:nth-child(1) {
-        transform: rotate3d(0, 0, 1, 0deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(2) {
-        transform: rotate3d(0, 0, 1, 30deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(3) {
-        transform: rotate3d(0, 0, 1, 60deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(4) {
-        transform: rotate3d(0, 0, 1, 90deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(5) {
-        transform: rotate3d(0, 0, 1, 120deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(6) {
-        transform: rotate3d(0, 0, 1, 150deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(7) {
-        transform: rotate3d(0, 0, 1, 180deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(8) {
-        transform: rotate3d(0, 0, 1, 210deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(9) {
-        transform: rotate3d(0, 0, 1, 240deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(10) {
-        transform: rotate3d(0, 0, 1, 270deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(11) {
-        transform: rotate3d(0, 0, 1, 300deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(12) {
-        transform: rotate3d(0, 0, 1, 330deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(13) {
-        transform: rotate3d(0, 0, 1, 360deg);
-        transform-origin: bottom; }
-  .apod__loading .rays-small {
-    width: 140px;
-    height: 140px;
-    animation: counter-clockwise-spin 15s infinite linear; }
-    .apod__loading .rays-small .ray {
-      border-bottom: 70px solid yellow;
-      border-left: 28px solid transparent;
-      border-right: 28px solid transparent; }
-      .apod__loading .rays-small .ray:nth-child(1) {
-        transform: rotate3d(0, 0, 1, 0deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(2) {
-        transform: rotate3d(0, 0, 1, 45deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(3) {
-        transform: rotate3d(0, 0, 1, 90deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(4) {
-        transform: rotate3d(0, 0, 1, 135deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(5) {
-        transform: rotate3d(0, 0, 1, 180deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(6) {
-        transform: rotate3d(0, 0, 1, 225deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(7) {
-        transform: rotate3d(0, 0, 1, 270deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(8) {
-        transform: rotate3d(0, 0, 1, 315deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(9) {
-        transform: rotate3d(0, 0, 1, 360deg);
-        transform-origin: bottom; }
-  .apod__loading .circle {
-    width: 80px;
-    height: 80px;
+  .apod__loading .circle, .apod__loading .moon-shade {
+    width: 200px;
+    height: 200px;
     border-radius: 50%;
-    background: gold;
-    background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
+    background: blue; }
+  .apod__loading .moon-shade .shade-left,
+  .apod__loading .moon-shade .shade-right {
+    position: absolute;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px; }
+  .apod__loading .moon-shade .mask-left,
+  .apod__loading .moon-shade .mask-right {
+    position: absolute;
+    width: 100px;
+    height: 200px;
+    overflow: hidden; }
+  .apod__loading .moon-shade .mask-left,
+  .apod__loading .moon-shade .shade-left {
+    left: 0; }
+  .apod__loading .moon-shade .mask-right,
+  .apod__loading .moon-shade .shade-right {
+    right: 0; }
+  .apod__loading .moon-shade .shade-left,
+  .apod__loading .moon-shade .mask-right {
+    background: black;
+    opacity: 0.3; }
+  .apod__loading .moon-shade .shade-left {
+    animation: shadow-left-start 5s infinite linear; }
+  .apod__loading .moon-shade .shade-right {
+    background: blue;
+    border-top-right-radius: 50%;
+    border-bottom-right-radius: 50%;
+    animation: shadow-right-start 5s infinite linear; }
 
 @keyframes fade-opacity {
   0% {
@@ -192,67 +139,62 @@ ul, li {
   position: relative;
   overflow: hidden; }
 
-.apod__top-sites {
+.apod__header {
   position: absolute;
-  color: white;
-  top: 10;
-  left: 10;
   z-index: 1000;
+  top: 0;
+  width: 100%;
+  height: 60px;
+  padding: 10px;
+  box-sizing: border-box; }
+
+.apod__top-sites {
+  float: left;
+  width: 40%;
+  color: white;
   opacity: 0.8;
   transition: 0.1s linear all; }
   .apod__top-sites:hover {
     opacity: 1; }
-  .apod__top-sites ul li a {
-    background-color: rgba(51, 51, 51, 0.8);
-    color: rgba(199, 199, 199, 0.8);
-    border-top-left-radius: 2px;
-    border-bottom-right-radius: 2px;
-    border-top-right-radius: 2px;
-    border-bottom-left-radius: 2px;
-    transition: 0.4s border-radius linear;
-    display: inline-block;
-    padding: 10px;
-    transition: 0.2s linear all; }
-    .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
-      background-color: rgba(102, 102, 102, 0.8);
-      border-top-left-radius: 0;
-      border-bottom-right-radius: 0;
-      border-top-right-radius: 0;
-      border-bottom-left-radius: 0;
-      transition: 0.4s border-radius linear; }
-    .apod__top-sites ul li a .thumb-img {
-      width: 16px;
-      height: 16px;
-      display: block; }
-  .apod__top-sites ul li + li {
-    margin-left: 10px; }
-
-.apod__image,
-.apod__video {
-  position: absolute;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  display: none; }
-
-.apod__video {
-  text-align: center;
-  padding-top: 20vh;
-  box-sizing: border-box; }
-
-.apod__image {
-  background-position: center center;
-  background-repeat: no-repeat; }
+  .apod__top-sites ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
+    align-items: flex-start; }
+    .apod__top-sites ul li {
+      margin-bottom: 10px; }
+      .apod__top-sites ul li a {
+        background-color: rgba(51, 51, 51, 0.8);
+        color: rgba(199, 199, 199, 0.8);
+        border-top-left-radius: 2px;
+        border-bottom-right-radius: 2px;
+        border-top-right-radius: 2px;
+        border-bottom-left-radius: 2px;
+        transition: 0.4s border-radius linear;
+        display: inline-block;
+        padding: 10px;
+        transition: 0.2s linear all; }
+        .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
+          background-color: rgba(102, 102, 102, 0.8);
+          border-top-left-radius: 0;
+          border-bottom-right-radius: 0;
+          border-top-right-radius: 0;
+          border-bottom-left-radius: 0;
+          transition: 0.4s border-radius linear; }
+        .apod__top-sites ul li a .thumb-img {
+          width: 16px;
+          height: 16px;
+          display: block; }
 
 .apod__know-more {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  width: 750px;
-  z-index: 1000; }
+  float: right;
+  width: 60%; }
   .apod__know-more ul {
     display: flex;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: flex-start;
     align-items: flex-start; }
     .apod__know-more ul li {
       background-color: rgba(51, 51, 51, 0.8);
@@ -265,9 +207,11 @@ ul, li {
       text-align: center;
       display: inline-block;
       cursor: pointer;
-      width: 140px;
-      padding: 5px 10px;
+      min-width: 110px;
+      max-width: 140px;
+      padding: 6px 10px;
       box-sizing: border-box;
+      margin-bottom: 10px;
       transition: 0.5s opacity linear, 0.2s background-color linear; }
       .apod__know-more ul li.hover, .apod__know-more ul li:hover {
         background-color: rgba(102, 102, 102, 0.8);
@@ -286,6 +230,23 @@ ul, li {
         line-height: 2; }
       .apod__know-more ul li h4 {
         display: inline-block; }
+
+.apod__image,
+.apod__video {
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  display: none; }
+
+.apod__video {
+  text-align: center;
+  padding-top: 20vh;
+  box-sizing: border-box; }
+
+.apod__image {
+  background-position: center center;
+  background-repeat: no-repeat; }
 
 .keyword {
   color: lightblue;

@@ -1,0 +1,134 @@
+%center-div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+$moon-container-dimension: 200px;
+$moon-color: blue;
+$opacity: 0.3;
+$time-length: 5s;
+
+@keyframes shadow-left-start {
+    50%, 100% {
+        left: 100%;
+        width: 0;
+    }
+}
+
+@keyframes shadow-left-end {
+    0% {
+        background: $moon-color;
+        opacity: 1;
+        width: $moon-container-dimension;
+        left: 0;
+    }
+    100% {
+        background: black;
+        opacity: $opacity;
+        left: 100%;
+        width: 0;
+    }
+}
+
+@keyframes shadow-right-start {
+    0%, 50% {
+        right: 100%;
+        width: 0;
+    }
+    100% {
+        right: 0;
+        width: $moon-container-dimension;
+    }
+}
+
+@keyframes shadow-right-end {
+    // 0%, 50% {
+    //     right: 100%;
+    //     width: 0;
+    // }
+    // 100% {
+    //     right: 0;
+    //     width: $moon-container-dimension;
+    // }
+}
+
+.apod__loading {
+    height: 100%;
+    width: 100%;
+
+    &.hide {
+        @extend %hide;
+    }
+
+    .moon-container {
+        @extend %center-div;
+        width: $moon-container-dimension;
+        height: $moon-container-dimension;
+    }
+
+    .circle {
+        @extend %center-div;
+        width: $moon-container-dimension;
+        height: $moon-container-dimension;
+        border-radius: 50%;
+        background: $moon-color;
+        // background: radial-gradient(ellipse at center, #fefcea 0%,$moon-color 60%);
+    }
+
+    .moon-shade {
+        @extend .circle;
+
+        // Shades
+        .shade-left,
+        .shade-right {
+            position: absolute;
+            border-radius: 50%;
+            width: $moon-container-dimension;
+            height: $moon-container-dimension;
+        }
+
+        // Masks
+        .mask-left,
+        .mask-right {
+            position: absolute;
+            width: $moon-container-dimension/2;
+            height: $moon-container-dimension;
+            overflow: hidden;
+        }
+
+        // Left Side
+        .mask-left,
+        .shade-left {
+            left: 0;
+        }
+
+        // Right Side
+        .mask-right,
+        .shade-right {
+            right: 0;
+        }
+
+        .shade-left,
+        .mask-right {
+            background: black;
+            opacity: $opacity;
+        }
+
+        .shade-left {
+            animation: shadow-left-start $time-length infinite linear;
+                       // shadow-left-end $time-length infinite linear;
+        }
+
+        .shade-right {
+            background: $moon-color;
+            border-top-right-radius: 50%;
+            border-bottom-right-radius: 50%;
+            animation: shadow-right-start $time-length infinite linear;
+                       // shadow-right-end $time-length infinite linear;
+        }
+    }
+}

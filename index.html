@@ -1,17 +1,19 @@
 <html>
-    <head>
-        <title>New Tab - APOD</title>
-        <link href='public/styles/style.css' rel='stylesheet'>
-    </head>
+<head>
+    <title>New Tab - APOD</title>
+    <link href='public/styles/style.css' rel='stylesheet'>
+</head>
 
     <body>
 
         <div class='apod'>
 
-            <div class='apod__top-sites' id='topSites'></div>
+            <div class='apod__header'>
+                <div class='apod__top-sites' id='topSites'></div>
 
-            <div class='apod__know-more' id='want-to-know-more'>
-                <ul></ul>
+                <div class='apod__know-more' id='want-to-know-more'>
+                    <ul></ul>
+                </div>
             </div>
 
             <div class='apod__loading' id='apod-loading'>
@@ -19,6 +21,15 @@
                     <div class='rays-big' id='big-rays'></div>
                     <div class='rays-small' id='small-rays'></div>
                     <div class='circle'></div>
+                    <div class='moon-shade'>
+                        <div class='mask-left'>
+                            <div class='shade-left'></div>
+                        </div>
+
+                        <div class='mask-right'>
+                            <div class='shade-right'></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -64,4 +75,5 @@
     <script src='public/js/Apod.js'></script>
     <script src='public/js/ga.js'></script>
     <script src='public/js/background.js'></script>
+
 </html>

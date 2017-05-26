@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'options';
-@import 'apod_loading';
+// @import 'apod_loading';
+@import 'apod_loading_moon';
 
 @keyframes fade-opacity {
     0% {
@@ -46,12 +47,20 @@ ul, li {
     overflow: hidden;
 }
 
-.apod__top-sites {
+.apod__header {
     position: absolute;
-    color: white;
-    top: 10;
-    left: 10;
     z-index: 1000;
+    top: 0;
+    width: 100%;
+    height: 60px;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+.apod__top-sites {
+    float: left;
+    width: 40%;
+    color: white;
     opacity: 0.8;
     transition: 0.1s linear all;
 
@@ -59,23 +68,69 @@ ul, li {
         opacity: 1;
     }
 
-    ul li {
-        a {
-            @include apod-button;
-            display: inline-block;
-            padding: 10px;
-            transition: 0.2s linear all;
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: flex-start;
+        align-items: flex-start;
 
-            .thumb-img{
-                width: 16px;
-                height: 16px;
+        li {
+            margin-bottom: 10px;
+            a {
+                @include apod-button;
+                display: inline-block;
+                padding: 10px;
+                transition: 0.2s linear all;
+
+                .thumb-img{
+                    width: 16px;
+                    height: 16px;
+                    display: block;
+                }
+            }
+        }
+    }
+}
+
+.apod__know-more {
+    float: right;
+    width: 60%;
+
+    ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        align-content: flex-start;
+        align-items: flex-start;
+
+        li {
+            @include apod-button;
+            text-align: center;
+            display: inline-block;
+            cursor: pointer;
+            min-width: 110px;
+            max-width: 140px;
+            padding: 6px 10px;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+
+            transition: 0.5s opacity linear,
+            0.2s background-color linear;
+
+            h4, .know-links a {
                 display: block;
+                margin: 0;
+                color: inherit;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                line-height: 2;
             }
 
-        }
-
-        & + li {
-            margin-left: 10px;
+            h4 {
+                display: inline-block;
+            }
         }
     }
 }
@@ -100,46 +155,6 @@ ul, li {
     background-repeat: no-repeat;
 }
 
-.apod__know-more {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 750px;
-    z-index: 1000;
-
-    ul {
-        display: flex;
-        justify-content: space-between;
-        align-items: flex-start;
-
-        li {
-            @include apod-button;
-            text-align: center;
-            display: inline-block;
-            cursor: pointer;
-            width: 140px;
-            padding: 5px 10px;
-            box-sizing: border-box;
-
-            transition: 0.5s opacity linear,
-                0.2s background-color linear;
-
-            h4, .know-links a {
-                display: block;
-                margin: 0;
-                color: inherit;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                line-height: 2;
-            }
-
-            h4 {
-                display: inline-block;
-            }
-        }
-    }
-}
 
 .keyword {
     color: lightblue;
