@@ -13,22 +13,22 @@ $shadow-opacity: 0.4;
 $shadow-time-length: 5s;
 
 @keyframes shadow-left-start {
-    50%, 100% {
+    0%, 50% {
         left: 100%;
         width: 0;
+    }
+    100% {
+        left: 0;
+        width: $moon-container-dimension;
     }
 }
 
 @keyframes shadow-left-end {}
 
 @keyframes shadow-right-start {
-    0%, 50% {
+    50%, 100% {
         right: 100%;
         width: 0;
-    }
-    100% {
-        right: 0;
-        width: $moon-container-dimension;
     }
 }
 
@@ -90,18 +90,18 @@ $shadow-time-length: 5s;
             right: 0;
         }
 
-        .shade-left,
-        .mask-right {
+        .shade-right,
+        .mask-left {
             background: black;
             opacity: $shadow-opacity;
         }
 
         .shade-left {
+            background: $moon-color;
             animation: shadow-left-start $shadow-time-length infinite linear;
         }
 
         .shade-right {
-            background: $moon-color;
             animation: shadow-right-start $shadow-time-length infinite linear;
         }
     }
