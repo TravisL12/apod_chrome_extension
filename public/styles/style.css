@@ -38,7 +38,7 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading .moon-container, .apod__loading .circle, .apod__loading .moon-shade {
+.apod__loading .loading-container, .apod__loading .circle, .apod__loading .moon-shade {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -48,17 +48,6 @@
 
 @keyframes shadow-left-start {
   50%, 100% {
-    left: 100%;
-    width: 0; } }
-@keyframes shadow-left-end {
-  0% {
-    background: blue;
-    opacity: 1;
-    width: 200px;
-    left: 0; }
-  100% {
-    background: black;
-    opacity: 0.3;
     left: 100%;
     width: 0; } }
 @keyframes shadow-right-start {
@@ -71,7 +60,7 @@
 .apod__loading {
   height: 100%;
   width: 100%; }
-  .apod__loading .moon-container {
+  .apod__loading .loading-container {
     width: 200px;
     height: 200px; }
   .apod__loading .circle, .apod__loading .moon-shade {
@@ -84,7 +73,8 @@
     position: absolute;
     border-radius: 50%;
     width: 200px;
-    height: 200px; }
+    height: 200px;
+    animation-fill-mode: forwards; }
   .apod__loading .moon-shade .mask-left,
   .apod__loading .moon-shade .mask-right {
     position: absolute;
@@ -100,13 +90,11 @@
   .apod__loading .moon-shade .shade-left,
   .apod__loading .moon-shade .mask-right {
     background: black;
-    opacity: 0.3; }
+    opacity: 0.4; }
   .apod__loading .moon-shade .shade-left {
     animation: shadow-left-start 5s infinite linear; }
   .apod__loading .moon-shade .shade-right {
     background: blue;
-    border-top-right-radius: 50%;
-    border-bottom-right-radius: 50%;
     animation: shadow-right-start 5s infinite linear; }
 
 @keyframes fade-opacity {

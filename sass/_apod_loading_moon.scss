@@ -9,8 +9,8 @@
 
 $moon-container-dimension: 200px;
 $moon-color: blue;
-$opacity: 0.3;
-$time-length: 5s;
+$shadow-opacity: 0.4;
+$shadow-time-length: 5s;
 
 @keyframes shadow-left-start {
     50%, 100% {
@@ -19,20 +19,7 @@ $time-length: 5s;
     }
 }
 
-@keyframes shadow-left-end {
-    0% {
-        background: $moon-color;
-        opacity: 1;
-        width: $moon-container-dimension;
-        left: 0;
-    }
-    100% {
-        background: black;
-        opacity: $opacity;
-        left: 100%;
-        width: 0;
-    }
-}
+@keyframes shadow-left-end {}
 
 @keyframes shadow-right-start {
     0%, 50% {
@@ -45,16 +32,7 @@ $time-length: 5s;
     }
 }
 
-@keyframes shadow-right-end {
-    // 0%, 50% {
-    //     right: 100%;
-    //     width: 0;
-    // }
-    // 100% {
-    //     right: 0;
-    //     width: $moon-container-dimension;
-    // }
-}
+@keyframes shadow-right-end {}
 
 .apod__loading {
     height: 100%;
@@ -64,7 +42,7 @@ $time-length: 5s;
         @extend %hide;
     }
 
-    .moon-container {
+    .loading-container {
         @extend %center-div;
         width: $moon-container-dimension;
         height: $moon-container-dimension;
@@ -76,7 +54,6 @@ $time-length: 5s;
         height: $moon-container-dimension;
         border-radius: 50%;
         background: $moon-color;
-        // background: radial-gradient(ellipse at center, #fefcea 0%,$moon-color 60%);
     }
 
     .moon-shade {
@@ -89,6 +66,7 @@ $time-length: 5s;
             border-radius: 50%;
             width: $moon-container-dimension;
             height: $moon-container-dimension;
+            animation-fill-mode: forwards;
         }
 
         // Masks
@@ -115,20 +93,16 @@ $time-length: 5s;
         .shade-left,
         .mask-right {
             background: black;
-            opacity: $opacity;
+            opacity: $shadow-opacity;
         }
 
         .shade-left {
-            animation: shadow-left-start $time-length infinite linear;
-                       // shadow-left-end $time-length infinite linear;
+            animation: shadow-left-start $shadow-time-length infinite linear;
         }
 
         .shade-right {
             background: $moon-color;
-            border-top-right-radius: 50%;
-            border-bottom-right-radius: 50%;
-            animation: shadow-right-start $time-length infinite linear;
-                       // shadow-right-end $time-length infinite linear;
+            animation: shadow-right-start $shadow-time-length infinite linear;
         }
     }
 }

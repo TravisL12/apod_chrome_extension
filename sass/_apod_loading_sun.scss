@@ -76,7 +76,7 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
         @extend %hide;
     }
 
-    .sun-container {
+    .loading-container {
         @extend %center-div;
         width: $sun-container-dimension;
         height: $sun-container-dimension;
