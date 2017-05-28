@@ -28,8 +28,39 @@ $light-gray: rgba(#C7C7C7, 0.8);
     }
 }
 
+@mixin calculate-ray-angles($count, $offset:0) {
+    @for $i from 0 through $count {
+        $angle: $i * 360/$count + $offset;
+
+        &:nth-child(#{$i + 1})  {
+            transform: rotate3d(0, 0, 1, #{$angle}deg);
+            transform-origin: bottom;
+        }
+    }
+}
+
 %hide {
     opacity: 0;
     height: 0;
     width: 0;
+}
+
+%center-div {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+}
+
+%ray {
+    position: absolute;
+    width: 0;
+    height: 0;
+    left: 0;
+    right: 0;
+    margin: auto;    
+    border-top: 0 solid transparent;
+    transform-origin: bottom;
 }

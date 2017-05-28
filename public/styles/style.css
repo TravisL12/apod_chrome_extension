@@ -3,6 +3,24 @@
   height: 0;
   width: 0; }
 
+.stars-container, .star {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto; }
+
+.star .ray {
+  position: absolute;
+  width: 0;
+  height: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border-top: 0 solid transparent;
+  transform-origin: bottom; }
+
 .apod-options {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
@@ -38,133 +56,60 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading {
-  height: 100%;
-  width: 100%;
-  opacity: 0.6; }
-  .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    margin: auto; }
-  .apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
-    border-top: 0 solid transparent;
-    transform-origin: bottom;
-    width: 0;
-    height: 0;
-    position: absolute;
-    left: 0;
-    right: 0;
-    margin: auto; }
-@keyframes clockwise-spin {
+@keyframes twinkle {
   0% {
-    transform: rotate3d(0, 0, 1, 0deg); }
-  100% {
-    transform: rotate3d(0, 0, 1, 360deg); } }
-@keyframes counter-clockwise-spin {
-  0% {
-    transform: rotate3d(0, 0, 1, 360deg); }
-  100% {
-    transform: rotate3d(0, 0, 1, 0deg); } }
-  .apod__loading .sun-container {
-    width: 300px;
-    height: 300px; }
-  .apod__loading .rays-big {
-    width: 240px;
-    height: 240px;
-    animation: clockwise-spin 20s infinite linear; }
-    .apod__loading .rays-big .ray {
-      border-bottom: 120px solid orange;
-      border-left: 36px solid transparent;
-      border-right: 36px solid transparent; }
-      .apod__loading .rays-big .ray:nth-child(1) {
-        transform: rotate3d(0, 0, 1, 0deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(2) {
-        transform: rotate3d(0, 0, 1, 30deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(3) {
-        transform: rotate3d(0, 0, 1, 60deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(4) {
-        transform: rotate3d(0, 0, 1, 90deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(5) {
-        transform: rotate3d(0, 0, 1, 120deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(6) {
-        transform: rotate3d(0, 0, 1, 150deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(7) {
-        transform: rotate3d(0, 0, 1, 180deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(8) {
-        transform: rotate3d(0, 0, 1, 210deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(9) {
-        transform: rotate3d(0, 0, 1, 240deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(10) {
-        transform: rotate3d(0, 0, 1, 270deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(11) {
-        transform: rotate3d(0, 0, 1, 300deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(12) {
-        transform: rotate3d(0, 0, 1, 330deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-big .ray:nth-child(13) {
-        transform: rotate3d(0, 0, 1, 360deg);
-        transform-origin: bottom; }
-  .apod__loading .rays-small {
-    width: 210px;
-    height: 210px;
-    animation: counter-clockwise-spin 15s infinite linear; }
-    .apod__loading .rays-small .ray {
-      border-bottom: 105px solid yellow;
-      border-left: 42px solid transparent;
-      border-right: 42px solid transparent; }
-      .apod__loading .rays-small .ray:nth-child(1) {
-        transform: rotate3d(0, 0, 1, 0deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(2) {
-        transform: rotate3d(0, 0, 1, 45deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(3) {
-        transform: rotate3d(0, 0, 1, 90deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(4) {
-        transform: rotate3d(0, 0, 1, 135deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(5) {
-        transform: rotate3d(0, 0, 1, 180deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(6) {
-        transform: rotate3d(0, 0, 1, 225deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(7) {
-        transform: rotate3d(0, 0, 1, 270deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(8) {
-        transform: rotate3d(0, 0, 1, 315deg);
-        transform-origin: bottom; }
-      .apod__loading .rays-small .ray:nth-child(9) {
-        transform: rotate3d(0, 0, 1, 360deg);
-        transform-origin: bottom; }
-  .apod__loading .sun-light {
-    width: 120px;
-    height: 120px;
-    border-radius: 50%;
-    background: gold;
-    background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
-
-@keyframes fade-opacity {
-  0% {
-    opacity: 0.5; }
+    opacity: 0.8; }
   100% {
     opacity: 1; } }
+@keyframes spin {
+  0%, 95% {
+    transform: rotate3d(0, 1, 0, 0deg); }
+  100% {
+    transform: rotate3d(0, 1, 0, 180deg); } }
+.stars-container {
+  width: 25px;
+  height: 25px; }
+
+.star {
+  width: 20px;
+  height: 20px;
+  animation: twinkle 5s infinite linear alternate, spin 5s infinite linear; }
+  .star .ray {
+    border-bottom: 10px solid;
+    border-left: 3px solid transparent;
+    border-right: 3px solid transparent; }
+    .star .ray:nth-child(1) {
+      transform: rotate3d(0, 0, 1, 0deg);
+      transform-origin: bottom; }
+    .star .ray:nth-child(2) {
+      transform: rotate3d(0, 0, 1, 72deg);
+      transform-origin: bottom; }
+    .star .ray:nth-child(3) {
+      transform: rotate3d(0, 0, 1, 144deg);
+      transform-origin: bottom; }
+    .star .ray:nth-child(4) {
+      transform: rotate3d(0, 0, 1, 216deg);
+      transform-origin: bottom; }
+    .star .ray:nth-child(5) {
+      transform: rotate3d(0, 0, 1, 288deg);
+      transform-origin: bottom; }
+    .star .ray:nth-child(6) {
+      transform: rotate3d(0, 0, 1, 360deg);
+      transform-origin: bottom; }
+
+.star-1 {
+  color: lightblue; }
+
+.star-2 {
+  color: aqua; }
+
+.star-3 {
+  color: yellow; }
+
+.apod__loading {
+  height: 100%;
+  width: 100%; }
+
 body {
   background: black;
   margin: 0; }

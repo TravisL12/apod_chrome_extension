@@ -1,0 +1,59 @@
+$star-container-dimension: 25px;
+$star-ray-count: 5;
+$star-ray-container: $star-container-dimension * 0.8;
+$star-ray-width: $star-ray-container * 0.15;
+$star-ray-color: lightblue, aqua, yellow;
+$star-ray-animation: twinkle 5s infinite linear alternate,
+                     spin 5s infinite linear;
+
+@keyframes twinkle {
+    0% {
+        opacity: 0.8;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes spin {
+    0%, 95% {
+        transform: rotate3d(0,1,0,0deg);
+    }
+    100% {
+        transform: rotate3d(0,1,0,180deg);
+    }
+}
+
+.stars-container {
+    @extend %center-div;
+    width: $star-container-dimension;
+    height: $star-container-dimension;
+}
+
+.star {
+    @extend %center-div;
+    width: $star-ray-container;
+    height: $star-ray-container;
+    animation: $star-ray-animation;
+
+    .ray {
+        @extend %ray;
+        border-bottom: $star-ray-container/2 solid;
+        border-left: $star-ray-width solid transparent;
+        border-right: $star-ray-width solid transparent;
+
+        @include calculate-ray-angles($star-ray-count);
+    }
+}
+
+.star-1 {
+    color: nth($star-ray-color, 1);
+}
+
+.star-2 {
+    color: nth($star-ray-color, 2);
+}
+
+.star-3 {
+    color: nth($star-ray-color, 3);
+}
