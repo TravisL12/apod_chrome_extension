@@ -113,7 +113,7 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
             @include calculate-ray-angles($small-ray-count);
         }
     }
-    .circle {
+    .sun-light {
         @extend %center-div;
         width: $sun-container-dimension * 0.4;
         height: $sun-container-dimension * 0.4;
