@@ -9,7 +9,7 @@
 
 $moon-container-dimension: 200px;
 $moon-color: #949494;
-$shadow-opacity: 0.8;
+$shadow-opacity: 0.85;
 $shadow-time-length: 5s;
 
 @mixin right-start {
@@ -65,85 +65,72 @@ $shadow-time-length: 5s;
     }
 }
 
-.apod__loading {
-    height: 100%;
-    width: 100%;
+.moon-container {
+    @extend %center-div;
+    width: $moon-container-dimension;
+    height: $moon-container-dimension;
+    transform: rotate3d(0,0,1,-5deg);
+    border-radius: 50%;
+    background: $moon-color;
+    box-shadow: 4px 0px 15px 0px grey;
 
-    &.hide {
-        @extend %hide;
-    }
-
-    .loading-container {
-        @extend %center-div;
+    .moon {
+        position: absolute;
+        border-radius: 50%;
         width: $moon-container-dimension;
         height: $moon-container-dimension;
-        transform: rotate3d(0,0,1,-5deg);
+
+        &.light-to-shade {
+            background: $moon-color;
+        }
+        &.shade-to-light {
+            background: black;
+            opacity: $shadow-opacity;
+        }
     }
 
-    .moon-container {
-        @extend %center-div;
-        border-radius: 50%;
-        background: $moon-color;
-        box-shadow: 4px 0px 15px 0px grey;
+    // Masks
+    .mask-right,
+    .mask-left {
+        position: absolute;
+        width: $moon-container-dimension/2;
+        height: $moon-container-dimension;
+        overflow: hidden;
+    }
 
-        .moon {
-            position: absolute;
-            border-radius: 50%;
-            width: $moon-container-dimension;
-            height: $moon-container-dimension;
+    // Right Side
+    .mask-right,
+    .mask-right .moon {
+        right: 0;
+    }
 
-            &.light-to-shade {
-                background: $moon-color;
-            }
-            &.shade-to-light {
-                background: black;
-                opacity: $shadow-opacity;
-            }
+    // Left Side
+    .mask-left,
+    .mask-left .moon {
+        left: 0;
+    }
+
+    .mask-right {
+        // 1st Phase
+        .light-to-shade {
+            animation: $shadow-time-length linear light-to-shadow-right infinite;
         }
 
-        // Masks
-        .mask-right,
-        .mask-left {
-            position: absolute;
-            width: $moon-container-dimension/2;
-            height: $moon-container-dimension;
-            overflow: hidden;
+        // 3rd Phase
+        .shade-to-light {
+            animation: $shadow-time-length linear shadow-to-light-right infinite;
+        }
+    }
+
+    .mask-left {
+        // 2nd Phase
+        .shade-to-light {
+            animation: $shadow-time-length linear light-to-shadow-left infinite;
         }
 
-        // Right Side
-        .mask-right,
-        .mask-right .moon {
-            right: 0;
-        }
-
-        // Left Side
-        .mask-left,
-        .mask-left .moon {
-            left: 0;
-        }
-
-        .mask-right {
-            // 1st
-            .light-to-shade {
-                animation: $shadow-time-length linear light-to-shadow-right infinite;
-            }
-
-            // 3rd
-            .shade-to-light {
-                animation: $shadow-time-length linear shadow-to-light-right infinite;
-            }
-        }
-
-        .mask-left {
-            // 2nd
-            .shade-to-light {
-                animation: $shadow-time-length linear light-to-shadow-left infinite;
-            }
-
-            //4th
-            .light-to-shade {
-                animation: $shadow-time-length linear shadow-to-light-left infinite;
-            }
+        //4th Phase
+        .light-to-shade {
+            animation: $shadow-time-length linear shadow-to-light-left infinite;
         }
     }
 }

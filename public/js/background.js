@@ -30,11 +30,13 @@ const apodImage       = $('#apod-image'),
       apodRandom      = $('#apod-random');
 
 function buildRays(num) {
-  let rays = '';
-  for(let i = 0; i < num; i++) {
-    rays += "<div class='ray'></div>";
-  }
-  return rays;
+    let rays = '';
+
+    for(let i = 0; i < num; i++) {
+        rays += "<div class='ray'></div>";
+    }
+
+    return rays;
 }
 
 $('#big-rays').innerHTML   = buildRays(20);
@@ -99,5 +101,5 @@ let apod = new Apod();
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
-    // apodOptionType == 'today' ? apod.current() : apod.random();
+    apodOptionType == 'today' ? apod.current() : apod.random();
 });

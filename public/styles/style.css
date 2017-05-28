@@ -38,80 +38,127 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__loading .loading-container, .apod__loading .moon-container {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: auto; }
-
-@keyframes light-to-shadow-right {
-  25%, 100% {
-    right: 100%;
-    width: 0; } }
-@keyframes light-to-shadow-left {
-  0%, 25% {
-    left: 100%;
-    width: 0; }
-  50%, 100% {
-    left: 0;
-    width: 200px; } }
-@keyframes shadow-to-light-right {
-  0%, 50% {
-    width: 200px;
-    right: 0; }
-  75%, 100% {
-    right: 100%;
-    width: 0; } }
-@keyframes shadow-to-light-left {
-  0%, 75% {
-    left: 100%;
-    width: 0; }
-  100% {
-    left: 0;
-    width: 200px; } }
 .apod__loading {
   height: 100%;
-  width: 100%; }
-  .apod__loading .loading-container {
-    width: 200px;
-    height: 200px;
-    transform: rotate3d(0, 0, 1, -5deg); }
-  .apod__loading .moon-container {
+  width: 100%;
+  opacity: 0.6; }
+  .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto; }
+  .apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
+    border-top: 0 solid transparent;
+    transform-origin: bottom;
+    width: 0;
+    height: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: auto; }
+@keyframes clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 360deg); } }
+@keyframes counter-clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 360deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg); } }
+  .apod__loading .sun-container {
+    width: 300px;
+    height: 300px; }
+  .apod__loading .rays-big {
+    width: 240px;
+    height: 240px;
+    animation: clockwise-spin 20s infinite linear; }
+    .apod__loading .rays-big .ray {
+      border-bottom: 120px solid orange;
+      border-left: 36px solid transparent;
+      border-right: 36px solid transparent; }
+      .apod__loading .rays-big .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 0deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 30deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 60deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 120deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 150deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 210deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 240deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(10) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(11) {
+        transform: rotate3d(0, 0, 1, 300deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(12) {
+        transform: rotate3d(0, 0, 1, 330deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-big .ray:nth-child(13) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+  .apod__loading .rays-small {
+    width: 210px;
+    height: 210px;
+    animation: counter-clockwise-spin 15s infinite linear; }
+    .apod__loading .rays-small .ray {
+      border-bottom: 105px solid yellow;
+      border-left: 42px solid transparent;
+      border-right: 42px solid transparent; }
+      .apod__loading .rays-small .ray:nth-child(1) {
+        transform: rotate3d(0, 0, 1, 0deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(2) {
+        transform: rotate3d(0, 0, 1, 45deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(3) {
+        transform: rotate3d(0, 0, 1, 90deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(4) {
+        transform: rotate3d(0, 0, 1, 135deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(5) {
+        transform: rotate3d(0, 0, 1, 180deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(6) {
+        transform: rotate3d(0, 0, 1, 225deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(7) {
+        transform: rotate3d(0, 0, 1, 270deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(8) {
+        transform: rotate3d(0, 0, 1, 315deg);
+        transform-origin: bottom; }
+      .apod__loading .rays-small .ray:nth-child(9) {
+        transform: rotate3d(0, 0, 1, 360deg);
+        transform-origin: bottom; }
+  .apod__loading .sun-light {
+    width: 120px;
+    height: 120px;
     border-radius: 50%;
-    background: #949494;
-    box-shadow: 4px 0px 15px 0px grey; }
-    .apod__loading .moon-container .moon {
-      position: absolute;
-      border-radius: 50%;
-      width: 200px;
-      height: 200px; }
-      .apod__loading .moon-container .moon.light-to-shade {
-        background: #949494; }
-      .apod__loading .moon-container .moon.shade-to-light {
-        background: black;
-        opacity: 0.8; }
-    .apod__loading .moon-container .mask-right,
-    .apod__loading .moon-container .mask-left {
-      position: absolute;
-      width: 100px;
-      height: 200px;
-      overflow: hidden; }
-    .apod__loading .moon-container .mask-right,
-    .apod__loading .moon-container .mask-right .moon {
-      right: 0; }
-    .apod__loading .moon-container .mask-left,
-    .apod__loading .moon-container .mask-left .moon {
-      left: 0; }
-    .apod__loading .moon-container .mask-right .light-to-shade {
-      animation: 5s linear light-to-shadow-right infinite; }
-    .apod__loading .moon-container .mask-right .shade-to-light {
-      animation: 5s linear shadow-to-light-right infinite; }
-    .apod__loading .moon-container .mask-left .shade-to-light {
-      animation: 5s linear light-to-shadow-left infinite; }
-    .apod__loading .moon-container .mask-left .light-to-shade {
-      animation: 5s linear shadow-to-light-left infinite; }
+    background: gold;
+    background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
 
 @keyframes fade-opacity {
   0% {

@@ -18,7 +18,7 @@
     margin: auto;    
 }
 
-$sun-container-dimension: 200px;
+$sun-container-dimension: 300px;
 $sun-color: gold;
 
 $big-ray-count: 12;
@@ -67,58 +67,52 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
     }
 }
 
-.apod__loading {
-    height: 100%;
-    width: 100%;
-    opacity: 0.6;
+&.hide {
+    @extend %hide;
+}
 
-    &.hide {
-        @extend %hide;
+.sun-container {
+    @extend %center-div;
+    width: $sun-container-dimension;
+    height: $sun-container-dimension;
+}
+
+.rays-big {
+    @extend %center-div;
+    width: $big-ray-container;
+    height: $big-ray-container;
+    animation: $big-ray-animation;
+
+    .ray {
+        @extend %ray;
+        border-bottom: $big-ray-container/2 solid $big-ray-color;
+        border-left: $big-ray-width solid transparent;
+        border-right: $big-ray-width solid transparent;
+
+        @include calculate-ray-angles($big-ray-count);
     }
+}
 
-    .loading-container {
-        @extend %center-div;
-        width: $sun-container-dimension;
-        height: $sun-container-dimension;
+.rays-small {
+    @extend %center-div;
+    width: $small-ray-container;
+    height: $small-ray-container;
+    animation: $small-ray-animation;
+
+    .ray {
+        @extend %ray;
+        border-bottom: $small-ray-container/2 solid $small-ray-color;
+        border-left: $small-ray-width solid transparent;
+        border-right: $small-ray-width solid transparent;
+
+        @include calculate-ray-angles($small-ray-count);
     }
-
-    .rays-big {
-        @extend %center-div;
-        width: $big-ray-container;
-        height: $big-ray-container;
-        animation: $big-ray-animation;
-
-        .ray {
-            @extend %ray;
-            border-bottom: $big-ray-container/2 solid $big-ray-color;
-            border-left: $big-ray-width solid transparent;
-            border-right: $big-ray-width solid transparent;
-
-            @include calculate-ray-angles($big-ray-count);
-        }
-    }
-
-    .rays-small {
-        @extend %center-div;
-        width: $small-ray-container;
-        height: $small-ray-container;
-        animation: $small-ray-animation;
-
-        .ray {
-            @extend %ray;
-            border-bottom: $small-ray-container/2 solid $small-ray-color;
-            border-left: $small-ray-width solid transparent;
-            border-right: $small-ray-width solid transparent;
-
-            @include calculate-ray-angles($small-ray-count);
-        }
-    }
-    .sun-light {
-        @extend %center-div;
-        width: $sun-container-dimension * 0.4;
-        height: $sun-container-dimension * 0.4;
-        border-radius: 50%;
-        background: $sun-color;
-        background: radial-gradient(ellipse at center, #fefcea 0%,$sun-color 60%);
-    }
+}
+.sun-light {
+    @extend %center-div;
+    width: $sun-container-dimension * 0.4;
+    height: $sun-container-dimension * 0.4;
+    border-radius: 50%;
+    background: $sun-color;
+    background: radial-gradient(ellipse at center, #fefcea 0%,$sun-color 60%);
 }

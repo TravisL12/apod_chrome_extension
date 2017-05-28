@@ -1,7 +1,18 @@
 @import 'variables';
 @import 'options';
-// @import 'apod_loading_sun';
-@import 'apod_loading_moon';
+
+.apod__loading {
+    height: 100%;
+    width: 100%;
+    opacity: 0.6;
+
+    &.hide {
+        @extend %hide;
+    }
+
+    @import 'apod_loading_sun';
+    // @import 'apod_loading_moon';
+}
 
 @keyframes fade-opacity {
     0% {
