@@ -7,46 +7,61 @@
     margin: auto;
 }
 
+@mixin right-start {
+    width: $moon-container-dimension;
+    right: 0;
+}
+
+@mixin right-end {
+    right: 100%;
+    width: 0;
+}
+
+@mixin left-start {
+    left: 100%;
+    width: 0;
+}
+
+@mixin left-end {
+    left: 0;
+    width: $moon-container-dimension;
+}
+
 $moon-container-dimension: 200px;
 $moon-color: cornsilk;
-$shadow-opacity: 0.6;
-$shadow-time-length: 2s;
+$shadow-opacity: 0.8;
+$shadow-time-length: 5s;
 
-@mixin animate-moon($name, $duration, $timing:linear, $delay:0s, $iteration:1, $fill:forwards) {
-    animation-name: $name;
-    animation-duration: $duration;
-    animation-timing-function: $timing;
-    animation-delay: $delay;
-    animation-iteration-count: $iteration;
-    animation-fill-mode: $fill;
-}
-
-@keyframes shadow-right-start {
-    50%, 100% {
-        right: 100%;
-        width: 0;
+@keyframes light-to-shadow-right {
+    25%, 100% {
+        @include right-end;
     }
 }
 
-@keyframes shadow-left-start {
+@keyframes shadow-to-light-right {
     0%, 50% {
-        left: 100%;
-        width: 0;
+        @include right-start;
     }
-    100% {
-        left: 0;
-        width: $moon-container-dimension;
+    75%, 100% {
+        @include right-end;
     }
 }
 
-@keyframes shadow-left-end {
-    0% {
-        left: 100%;
-        width: 0;
+@keyframes light-to-shadow-left {
+    0%, 25% {
+        @include left-start;
+    }
+    50%, 100% {
+        @include left-end;
+    }
+}
+
+@keyframes shadow-to-light-left {
+    0%, 75% {
+        @include left-start;
     }
     100% {
-        left: 0;
-        width: $moon-container-dimension;
+        @include left-end;
     }
 }
 
@@ -75,54 +90,64 @@ $shadow-time-length: 2s;
     .moon-shade {
         @extend .circle;
 
-            // Shades
-            .shade-right,
-            .shade-left {
-                position: absolute;
-                border-radius: 50%;
-                width: $moon-container-dimension;
-                height: $moon-container-dimension;
+        // Shades
+        .moon {
+            position: absolute;
+            border-radius: 50%;
+            width: $moon-container-dimension;
+            height: $moon-container-dimension;
+
+            &.light {
+                background: $moon-color;
             }
-
-            // Masks
-            .mask-right,
-            .mask-left {
-                position: absolute;
-                width: $moon-container-dimension/2;
-                height: $moon-container-dimension;
-                overflow: hidden;
-            }
-
-            // Right Side
-            .mask-right,
-            .shade-right {
-                right: 0;
-            }
-
-            // Left Side
-            .mask-left,
-            .shade-left {
-                left: 0;
-            }
-
-
-            .shade-right,
-            .mask-left {
+            &.shade {
                 background: black;
                 opacity: $shadow-opacity;
             }
+        }
 
-            /* @keyframes duration | timing-function | delay | iteration-count | direction | fill-mode | play-state | name */
-            /* @keyframes duration | timing-function | delay | name */
-            /* @keyframes duration | name */
+        // Masks
+        .mask-right,
+        .mask-left {
+            position: absolute;
+            width: $moon-container-dimension/2;
+            height: $moon-container-dimension;
+            overflow: hidden;
+        }
 
-            .shade-right {
-                animation: $shadow-time-length linear shadow-right-start infinite;
+        // Right Side
+        .mask-right {
+            right: 0;
+            .moon { right: 0; }
+
+            // 1st
+            .light {
+                animation: $shadow-time-length linear light-to-shadow-right infinite;
             }
 
-            .shade-left {
-                background: $moon-color;
-                animation: $shadow-time-length linear shadow-left-start infinite;
+            // 3rd
+            .shade {
+                animation: $shadow-time-length linear shadow-to-light-right infinite;
             }
+        }
+
+        // Left Side
+        .mask-left {
+            left: 0;
+            .moon {
+                left: 100%;
+                width: 0;
+            }
+
+            // 2nd
+            .shade {
+                animation: $shadow-time-length linear light-to-shadow-left infinite;
+            }
+
+            //4th
+            .light {
+                animation: $shadow-time-length linear shadow-to-light-left infinite;
+            }
+        }
     }
 }

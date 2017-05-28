@@ -70,7 +70,7 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
 .apod__loading {
     height: 100%;
     width: 100%;
-    opacity: 0.4;
+    opacity: 0.6;
 
     &.hide {
         @extend %hide;
