@@ -26,6 +26,8 @@ const apodImage       = $('#apod-image'),
       apodTitle       = $('#apod-title'),
       apodDate        = $('#apod-date'),
       apodDescription = $('#apod-description'),
+      apodDrawer      = $('#apod-drawer'),
+      apodDrawerBtn   = $('#apod-drawerToggle'),
       apodOrigin      = $('#apod-origin'),
       apodHiRes       = $('#apod-hires'),
       apodLowRes      = $('#apod-lowres'),
@@ -59,6 +61,10 @@ function blipHoverState (element, apodFn) {
 
     apodFn.call(apod);
 }
+
+apodDrawerBtn.addEventListener('click', function(e) {
+    apodDrawer.classList.toggle('show');
+});
 
 $('.nav-buttons').addEventListener('click', (e) => {
     ga('send', 'event', 'Button', 'clicked', e.target.id);

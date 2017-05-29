@@ -13,6 +13,7 @@
 body {
     background: black;
     margin: 0;
+    overflow: hidden;
 }
 
 ul, li {
@@ -49,6 +50,27 @@ ul, li {
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
+}
+
+.apod__drawer {
+    position: absolute;
+    padding: 10px;
+    box-sizing: border-box;
+    top: 60px;
+    right: 0;
+    background-color: red;
+    width: 400px;
+    height: 80vh;
+    transform: translate3d(400px,0px,0px);
+    transition: 0.5s transform linear;
+
+    h1 {
+        text-align: center;
+    }
+
+    &.show {
+        transform: translate3d(0px,0px,0px);
+    }
 }
 
 .apod__top-sites {
