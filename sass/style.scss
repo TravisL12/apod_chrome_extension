@@ -7,11 +7,8 @@
 }
 
 .apod__loading {
-    height: 100%;
-    width: 100%;
-
     @import 'apod_loading_sun';
-    // @import 'apod_loading_moon';
+    @import 'apod_loading_moon';
 }
 
 body {

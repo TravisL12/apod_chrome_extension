@@ -1,23 +1,48 @@
-function randomizer(max, min) {
-    min = min || 0;
-    max = max || 1;
-
-    return Math.round(Math.random() * (max - min) + min);
+function SunLoader() {
+    this.bigRayCount = 12;
+    this.littleRayCount = 8;
 }
 
-function buildRays(num) {
-    const rayEl = "<div class='ray'></div>";
-    let rays = '';
+SunLoader.prototype = {
+    buildRays (num) {
+        const rayEl = "<div class='ray'></div>";
+        let rays = '';
 
-    for(let i = 0; i < num; i++) {
-        rays += rayEl;
-    }
+        for(let i = 0; i < num; i++) {
+            rays += rayEl;
+        }
 
-    return rays;
+        return rays;
+    },
+
+    render () {
+        return `
+            <div class='sun-container'>
+                <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
+                <div class='rays-small' id='small-rays'>${this.buildRays(this.littleRayCount)}</div>
+                <div class='sun-light'></div>
+            </div>
+        `;
+    },
 }
 
-$('#big-rays').innerHTML   = buildRays(20);
-$('#small-rays').innerHTML = buildRays(20);
+function MoonLoader() {};
+
+MoonLoader.prototype.render = () => {
+    return `
+        <div class='moon-container'>
+            <div class='mask-left'>
+                <div class='moon shade-to-light'></div>
+                <div class='moon light-to-shade'></div>
+            </div>
+
+            <div class='mask-right'>
+                <div class='moon shade-to-light'></div>
+                <div class='moon light-to-shade'></div>
+            </div>
+        </div>
+    `
+}
 
 // function buildStars(num) {
 //     let starEl = '';

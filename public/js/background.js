@@ -10,6 +10,13 @@
 
 'use strict';
 
+function randomizer(max, min) {
+    min = min || 0;
+    max = max || 1;
+
+    return Math.round(Math.random() * (max - min) + min);
+}
+
 const $ = (el) => {
     return document.querySelector(el);
 }
@@ -28,6 +35,11 @@ const apodImage       = $('#apod-image'),
       apodCurrent     = $('#apod-current'),
       apodKnowMore    = $('#want-to-know-more ul'),
       apodRandom      = $('#apod-random');
+
+const loaders = [SunLoader, MoonLoader];
+const loader = new loaders[randomizer(1)];
+
+apodLoading.innerHTML = loader.render();
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;

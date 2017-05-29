@@ -6,25 +6,13 @@ $light-gray: rgba(#C7C7C7, 0.8);
     font-weight: $weight;
 }
 
-@mixin border-radii($start, $end:$start) {
-    border-top-left-radius:     $start;
-    border-bottom-right-radius: $start;
-
-    border-top-right-radius:    $end;
-    border-bottom-left-radius:  $end;
-
-    transition: 0.4s border-radius linear;
-}
-
 @mixin apod-button {
     background-color: $gray;
     color: $light-gray;
-    @include border-radii(2px);
 
     &.hover,
     &:hover {
         background-color: lighten($gray, 20%);
-        @include border-radii(0);
     }
 }
 
