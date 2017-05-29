@@ -1,40 +1,28 @@
-$star-container-dimension: 25px;
+$star-container-dimension: 10px;
 $star-ray-count: 5;
 $star-ray-container: $star-container-dimension * 0.8;
 $star-ray-width: $star-ray-container * 0.15;
-$star-ray-color: lightblue, aqua, yellow;
-$star-ray-animation: twinkle 5s infinite linear alternate,
-                     spin 5s infinite linear;
-
-@keyframes twinkle {
-    0% {
-        opacity: 0.8;
-    }
-    100% {
-        opacity: 1;
-    }
-}
-
-@keyframes spin {
-    0%, 95% {
-        transform: rotate3d(0,1,0,0deg);
-    }
-    100% {
-        transform: rotate3d(0,1,0,180deg);
-    }
-}
+$star-ray-color: lightblue, aqua, yellow, gold, cornsilk;
 
 .stars-container {
     @extend %center-div;
-    width: $star-container-dimension;
-    height: $star-container-dimension;
+}
+
+.star-grid {
+    position: relative;
+    display: inline-block;
+    width: 150px;
+    height: 200px;
+    // box-shadow: inset 0 0 1px 0 white;
 }
 
 .star {
-    @extend %center-div;
+    position: absolute;
+    left: 0%;
+    top: 0%;
     width: $star-ray-container;
     height: $star-ray-container;
-    animation: $star-ray-animation;
+    color: white;
 
     .ray {
         @extend %ray;
@@ -46,14 +34,9 @@ $star-ray-animation: twinkle 5s infinite linear alternate,
     }
 }
 
-.star-1 {
-    color: nth($star-ray-color, 1);
-}
-
-.star-2 {
-    color: nth($star-ray-color, 2);
-}
-
-.star-3 {
-    color: nth($star-ray-color, 3);
+// Create colored stars
+@for $i from 1 through length($star-ray-color) {
+    .star-#{$i} {
+        color: nth($star-ray-color, $i);
+    }
 }

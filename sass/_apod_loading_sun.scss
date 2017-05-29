@@ -34,10 +34,6 @@ $small-ray-animation: counter-clockwise-spin 15s infinite linear;
     }
 }
 
-&.hide {
-    @extend %hide;
-}
-
 .sun-container {
     @extend %center-div;
     width: $sun-container-dimension;

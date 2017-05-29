@@ -20,7 +20,6 @@
             }
             label {
                 // unchecked case
-                @include border-radii(3px, 8px);
                 width: 60px;
                 box-sizing: border-box;
                 display: block;

@@ -1,16 +1,16 @@
 @import 'variables';
 @import 'options';
-@import 'apod_loading_stars';
+// @import 'apod_loading_stars';
+
+.hide {
+    @extend %hide;
+}
 
 .apod__loading {
     height: 100%;
     width: 100%;
 
-    &.hide {
-        @extend %hide;
-    }
-
-    // @import 'apod_loading_sun';
+    @import 'apod_loading_sun';
     // @import 'apod_loading_moon';
 }
 
@@ -36,10 +36,6 @@ ul, li {
     &.hide {
         display: none;
     }
-}
-
-.hide {
-    @extend %hide;
 }
 
 .apod {
