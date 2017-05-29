@@ -1,0 +1,81 @@
+$sun-container-dimension: 300px;
+$sun-color: gold;
+
+$big-ray-count: 12;
+$small-ray-count: 8;
+
+$big-ray-container: $sun-container-dimension * 0.8;
+$small-ray-container: $sun-container-dimension * 0.7;
+
+$big-ray-width: $big-ray-container * 0.15;
+$small-ray-width: $small-ray-container * 0.2;
+
+$big-ray-color: orange;
+$small-ray-color: yellow;
+
+$big-ray-animation: clockwise-spin 20s infinite linear;
+$small-ray-animation: counter-clockwise-spin 15s infinite linear;
+
+@keyframes clockwise-spin {
+    0% {
+        transform: rotate3d(0,0,1,0deg);
+    }
+    100% {
+        transform: rotate3d(0,0,1,360deg);
+    }
+}
+
+@keyframes counter-clockwise-spin {
+    0% {
+        transform: rotate3d(0,0,1,360deg);
+    }
+    100% {
+        transform: rotate3d(0,0,1,0deg);
+    }
+}
+
+.sun-container {
+    @extend %center-div;
+    width: $sun-container-dimension;
+    height: $sun-container-dimension;
+}
+
+.rays-big {
+    @extend %center-div;
+    width: $big-ray-container;
+    height: $big-ray-container;
+    animation: $big-ray-animation;
+
+    .ray {
+        @extend %ray;
+        border-bottom: $big-ray-container/2 solid $big-ray-color;
+        border-left: $big-ray-width solid transparent;
+        border-right: $big-ray-width solid transparent;
+
+        @include calculate-ray-angles($big-ray-count);
+    }
+}
+
+.rays-small {
+    @extend %center-div;
+    width: $small-ray-container;
+    height: $small-ray-container;
+    animation: $small-ray-animation;
+
+    .ray {
+        @extend %ray;
+        border-bottom: $small-ray-container/2 solid $small-ray-color;
+        border-left: $small-ray-width solid transparent;
+        border-right: $small-ray-width solid transparent;
+
+        @include calculate-ray-angles($small-ray-count);
+    }
+}
+.sun-light {
+    @extend %center-div;
+    width: $sun-container-dimension * 0.4;
+    height: $sun-container-dimension * 0.4;
+    border-radius: 50%;
+    background: $sun-color;
+    background: radial-gradient(ellipse at center, #fefcea 0%,$sun-color 60%);
+}

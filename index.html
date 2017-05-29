@@ -1,49 +1,65 @@
 <html>
-    <head>
-        <title>New Tab - APOD</title>
-        <link href='public/styles/style.css' rel='stylesheet'>
-    </head>
+<head>
+    <title>New Tab - APOD</title>
+    <link href='public/styles/style.css' rel='stylesheet'>
+</head>
 
     <body>
-        <div class='top-sites'>
-            <div id="typedUrl"></div>
-        </div>
 
-        <div class='body-image' id='apod-image'></div>
-        <div class='body-video' id='apod-video'>
-            <iframe width="960" height="540" frameborder="0"></iframe>
-        </div>
+        <div class='apod'>
 
-        <div class='container'>
+            <div class='apod__header'>
+                <div class='apod__top-sites' id='topSites'></div>
 
-            <div class='description hide'>
-                <h2 id='apod-date'></h2>
-                <h1 id='apod-title'></h1><span id='img-quality'></span>
-                <p id='apod-description'></p>
-                <p>
-                    <a id='apod-origin' class='external-links' target='_blank'>View this APOD</a>
-                    <a id='apod-hires'  class='external-links' target='_blank'>Hi-res</a>
-                    <a id='apod-lowres' class='external-links' target='_blank'>Low-res</a>
-                </p>
-                <p id='apod-copyright'></p>
+                <div class='apod__know-more' id='want-to-know-more'>
+                    <ul></ul>
+                </div>
             </div>
 
-            <div class='nav-buttons'>
-                <ul>
-                    <li><a id='apod-previous'>Previous</a>(J)</li>
-                    <li><a id='apod-next'>Next</a>(K)</li>
-                    <li><a id='apod-random'>Random</a>(R)</li>
-                    <li><a id='apod-current'>Today</a>(T)</li>
-                </ul>
+            <div class='apod__loading' id='apod-loading'></div>
+
+            <div class='apod__image' id='apod-image'></div>
+
+            <div class='apod__video' id='apod-video'>
+                <iframe width='960' height='540' frameborder='0'></iframe>
             </div>
 
+
+            <div class='apod__description'>
+                <div class='description hide'>
+                    <h2 id='apod-date'></h2>
+                    <h1 id='apod-title'></h1><span id='img-quality'></span>
+
+                    <div class='external-links'>
+                        <a id='apod-origin' target='_blank'>View this APOD</a>
+                        <a id='apod-hires'  target='_blank'>Hi-res</a>
+                        <a id='apod-lowres' target='_blank'>Low-res</a>
+                    </div>
+
+                    <div id='apod-description'></div>
+                </div>
+
+                <div class='nav-buttons'>
+                    <ul>
+                        <li><a id='apod-previous'>Previous</a></li>
+                        <li><a id='apod-next'>Next</a></li>
+                        <li><a id='apod-random'>Random</a></li>
+                        <li><a id='apod-current'>Today</a></li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
+
     </body>
 
-    <script src="public/js/reqwest.min.js"></script>
-    <script src="public/js/buildTopSites.js"></script>
-    <script src="public/js/DateManagement.js"></script>
-    <script src="public/js/Apod.js"></script>
-    <script src="public/js/ga.js"></script>
-    <script src="public/js/background.js"></script>
+    <script src='public/js/reqwest.min.js'></script>
+    <script src='public/js/buildTopSites.js'></script>
+    <script src='public/js/DateManagement.js'></script>
+    <script src='public/js/WouldYouLikeToKnowMore.js'></script>
+    <script src='public/js/Apod.js'></script>
+    <script src='public/js/SetupLoading.js'></script>
+    <script src='public/js/ga.js'></script>
+    <script src='public/js/background.js'></script>
+
 </html>

@@ -10,6 +10,13 @@
 
 'use strict';
 
+function randomizer(max, min) {
+    min = min || 0;
+    max = max || 1;
+
+    return Math.round(Math.random() * (max - min) + min);
+}
+
 const $ = (el) => {
     return document.querySelector(el);
 }
@@ -19,25 +26,31 @@ const apodImage       = $('#apod-image'),
       apodTitle       = $('#apod-title'),
       apodDate        = $('#apod-date'),
       apodDescription = $('#apod-description'),
-      apodCopyright   = $('#apod-copyright'),
       apodOrigin      = $('#apod-origin'),
       apodHiRes       = $('#apod-hires'),
       apodLowRes      = $('#apod-lowres'),
+      apodLoading     = $('#apod-loading'),
       apodPrevious    = $('#apod-previous'),
       apodNext        = $('#apod-next'),
       apodCurrent     = $('#apod-current'),
+      apodKnowMore    = $('#want-to-know-more ul'),
       apodRandom      = $('#apod-random');
+
+const loaders = [SunLoader, MoonLoader];
+const loader = new loaders[randomizer(1)];
+
+apodLoading.innerHTML = loader.render();
 
 function fitToWindow (image) {
     return image.width > window.innerWidth || image.height > window.innerHeight;
 }
 
 function blipHoverState (element, apodFn) {
-    if (apod.requestInProgress) {
+    if (apod.isRequestInProgress) {
         return;
     }
     ga('send', 'event', 'Keydown', 'pressed', element.id);
-    let delay = 125;
+    const delay = 125;
     element.classList.add('hover');
 
     setTimeout(() => {
@@ -47,12 +60,12 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-document.querySelector('.nav-buttons').addEventListener('click', (e) => {
+$('.nav-buttons').addEventListener('click', (e) => {
     ga('send', 'event', 'Button', 'clicked', e.target.id);
     apod[e.target.id.slice(5)]();
 });
 
-document.querySelector('.external-links').addEventListener('click', (e) => {
+$('.external-links').addEventListener('click', (e) => {
     ga('send', 'event', {
         eventCategory: 'Outbound Link',
         eventAction: 'clicked',
@@ -78,7 +91,7 @@ document.addEventListener('keydown', function(e) {
             blipHoverState(apodNext, apod.next);
             break;
         case 68: // Press 'D'
-            $('.container .description').classList.toggle('show-description');
+            $('.apod__description .description').classList.toggle('show-description');
             break;
     }
 })
