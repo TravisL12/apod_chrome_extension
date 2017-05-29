@@ -93,6 +93,8 @@ KnowMore.prototype = {
         loadImg.className = 'loading-spinner hide';
 
         const googleSearch = (e) => {
+            ga('send', 'event', 'Know More', 'clicked', result.query);
+
             el.removeEventListener('click', googleSearch); // No clicking twice!
             loadImg.classList.remove('hide'); // show spinner
 
