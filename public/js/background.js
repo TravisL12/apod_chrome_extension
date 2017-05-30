@@ -62,9 +62,11 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-apodDrawerBtn.addEventListener('click', function(e) {
+function toggleDrawer(e) {
     apodDrawer.classList.toggle('show');
-});
+}
+
+apodDrawerBtn.addEventListener('click', toggleDrawer);
 
 $('.nav-buttons').addEventListener('click', (e) => {
     ga('send', 'event', 'Button', 'clicked', e.target.id);
@@ -96,8 +98,11 @@ document.addEventListener('keydown', function(e) {
         case 39: // Press '->'
             blipHoverState(apodNext, apod.next);
             break;
+        // case 68: // Press 'D'
+        //     $('.apod__description .description').classList.toggle('show-description');
+        //     break;
         case 68: // Press 'D'
-            $('.apod__description .description').classList.toggle('show-description');
+            toggleDrawer(e);
             break;
     }
 })

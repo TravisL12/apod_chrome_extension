@@ -54,6 +54,7 @@ ul, li {
 
 .apod__drawer {
     position: absolute;
+    z-index: 1000;
     padding: 10px;
     box-sizing: border-box;
     top: 60px;
@@ -62,7 +63,32 @@ ul, li {
     width: 400px;
     height: 80vh;
     transform: translate3d(400px,0px,0px);
-    transition: 0.5s transform linear;
+    transition: 0.25s transform ease-out;
+
+    .apod__drawer-tabs {
+        position: absolute;
+        top: 97px;
+        left: -133px;
+        width: 230px;
+        height: 35px;
+        text-align: right;
+        box-sizing: border-box;
+        transform: rotate3d(0,0,1,-90deg);
+        .tab {
+            // @include apod-button;
+            float: right;
+            margin-left: 2px;
+            background-color: yellow;
+            width: 100px;
+            height: 100%;
+            cursor: pointer;
+            text-align: center;
+            padding-top: 11px;
+            border-top-left-radius: 6px;
+            border-top-right-radius: 6px;
+            box-sizing: border-box;
+        }
+    }
 
     h1 {
         text-align: center;
@@ -78,7 +104,7 @@ ul, li {
     width: 40%;
     color: white;
     opacity: 0.6;
-    transition: 0.1s linear all;
+    transition: 0.1s opacity linear;
 
     &:hover {
         opacity: 1;
@@ -96,7 +122,6 @@ ul, li {
                 @include apod-button;
                 display: inline-block;
                 padding: 10px;
-                transition: 0.2s linear all;
 
                 .thumb-img{
                     width: 16px;
@@ -131,7 +156,7 @@ ul, li {
             box-sizing: border-box;
 
             transition: 0.5s opacity linear,
-            0.2s background-color linear;
+                        0.2s background-color linear;
 
             .know-links {
                 text-align: left;
@@ -210,7 +235,6 @@ ul, li {
             float: left;
             a {
                 @include apod-button;
-                transition: 0.2s linear all;
                 display: block;
                 min-width: 65px;
                 padding: 10px;

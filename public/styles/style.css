@@ -252,6 +252,7 @@ ul, li {
 
 .apod__drawer {
   position: absolute;
+  z-index: 1000;
   padding: 10px;
   box-sizing: border-box;
   top: 60px;
@@ -260,7 +261,28 @@ ul, li {
   width: 400px;
   height: 80vh;
   transform: translate3d(400px, 0px, 0px);
-  transition: 0.5s transform linear; }
+  transition: 0.25s transform ease-out; }
+  .apod__drawer .apod__drawer-tabs {
+    position: absolute;
+    top: 97px;
+    left: -133px;
+    width: 230px;
+    height: 35px;
+    text-align: right;
+    box-sizing: border-box;
+    transform: rotate3d(0, 0, 1, -90deg); }
+    .apod__drawer .apod__drawer-tabs .tab {
+      float: right;
+      margin-left: 2px;
+      background-color: yellow;
+      width: 100px;
+      height: 100%;
+      cursor: pointer;
+      text-align: center;
+      padding-top: 11px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      box-sizing: border-box; }
   .apod__drawer h1 {
     text-align: center; }
   .apod__drawer.show {
@@ -271,7 +293,7 @@ ul, li {
   width: 40%;
   color: white;
   opacity: 0.6;
-  transition: 0.1s linear all; }
+  transition: 0.1s opacity linear; }
   .apod__top-sites:hover {
     opacity: 1; }
   .apod__top-sites ul {
@@ -284,9 +306,9 @@ ul, li {
       .apod__top-sites ul li a {
         background-color: rgba(51, 51, 51, 0.8);
         color: rgba(199, 199, 199, 0.8);
+        transition: 0.2s linear background-color;
         display: inline-block;
-        padding: 10px;
-        transition: 0.2s linear all; }
+        padding: 10px; }
         .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
           background-color: rgba(102, 102, 102, 0.8); }
         .apod__top-sites ul li a .thumb-img {
@@ -306,6 +328,7 @@ ul, li {
     .apod__know-more ul li {
       background-color: rgba(51, 51, 51, 0.8);
       color: rgba(199, 199, 199, 0.8);
+      transition: 0.2s linear background-color;
       margin: 0 5px 10px;
       text-align: center;
       display: inline-block;
@@ -379,7 +402,7 @@ ul, li {
       .apod__description .nav-buttons ul li a {
         background-color: rgba(51, 51, 51, 0.8);
         color: rgba(199, 199, 199, 0.8);
-        transition: 0.2s linear all;
+        transition: 0.2s linear background-color;
         display: block;
         min-width: 65px;
         padding: 10px;
