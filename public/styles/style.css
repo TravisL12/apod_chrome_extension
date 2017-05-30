@@ -253,12 +253,8 @@ ul, li {
 .apod__drawer {
   position: absolute;
   z-index: 1000;
-  padding: 10px;
-  box-sizing: border-box;
   top: 60px;
   right: 0;
-  background-color: red;
-  width: 400px;
   height: 80vh;
   transform: translate3d(400px, 0px, 0px);
   transition: 0.25s transform ease-out; }
@@ -283,8 +279,15 @@ ul, li {
       border-top-left-radius: 6px;
       border-top-right-radius: 6px;
       box-sizing: border-box; }
+  .apod__drawer .apod__drawer-view {
+    padding: 10px;
+    background-color: red;
+    height: 100%;
+    width: 400px;
+    box-sizing: border-box; }
   .apod__drawer h1 {
-    text-align: center; }
+    text-align: center;
+    display: inline-block; }
   .apod__drawer.show {
     transform: translate3d(0px, 0px, 0px); }
 

@@ -53,16 +53,13 @@ ul, li {
 }
 
 .apod__drawer {
+    $drawer-width: 400px;
     position: absolute;
     z-index: 1000;
-    padding: 10px;
-    box-sizing: border-box;
     top: 60px;
     right: 0;
-    background-color: red;
-    width: 400px;
     height: 80vh;
-    transform: translate3d(400px,0px,0px);
+    transform: translate3d($drawer-width,0px,0px);
     transition: 0.25s transform ease-out;
 
     .apod__drawer-tabs {
@@ -90,8 +87,17 @@ ul, li {
         }
     }
 
+    .apod__drawer-view {
+        padding: 10px;
+        background-color: red;
+        height: 100%;
+        width: $drawer-width;
+        box-sizing: border-box;
+    }
+
     h1 {
         text-align: center;
+        display: inline-block;
     }
 
     &.show {
