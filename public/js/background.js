@@ -98,9 +98,9 @@ document.addEventListener('keydown', function(e) {
         case 39: // Press '->'
             blipHoverState(apodNext, apod.next);
             break;
-        // case 68: // Press 'D'
-        //     $('.apod__description .description').classList.toggle('show-description');
-        //     break;
+        case 69: // Press 'E'
+            $('.apod__description .description').classList.toggle('show-description');
+            break;
         case 68: // Press 'D'
             toggleDrawer(e);
             break;

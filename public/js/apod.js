@@ -5,7 +5,7 @@ function _zeroPad (num) {
     return num.slice(-2);
 }
 
-function setLoadingView () {
+function _setLoadingView () {
     apodImage.style['background-image'] = '';
     apodImage.style['background-size'] = '';
     apodVideo.src = '';
@@ -65,7 +65,7 @@ Apod.prototype = {
             return;
         }
 
-        setLoadingView();
+        _setLoadingView();
 
         reqwest({
             type: 'GET',
