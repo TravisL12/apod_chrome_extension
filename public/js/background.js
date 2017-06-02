@@ -62,15 +62,59 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-function toggleDrawer(e) {
-    apodDrawer.classList.toggle('show');
+function renderDrawer (apods) {
+    let favoritesEl = '';
+
+    for (let apod in apods) {
+        let backgroundImage = 'background-image: url("' + apods[apod].imgUrl + '")';
+
+        favoritesEl += `<li class='favorite'>
+            <div class='favorite__image' style='${backgroundImage}'></div>
+            <h4 class='favorite__title'>${apods[apod].title}</h4>
+        </li>`;
+    }
+
+    $('.apod__drawer-view #drawer-list').innerHTML = favoritesEl;
+}
+
+function toggleDrawer (e) {
+    getFavorites((favorites) => {
+        renderDrawer(favorites.apodFavorites);
+
+        apodDrawer.classList.toggle('show');
+    });
+}
+
+function getFavorites (callback) {
+    chrome.storage.sync.get(['apodFavorites'], callback);
+}
+
+function saveFavorite () {
+
+    getFavorites((favorites) => {
+        favorites = favorites.apodFavorites || {};
+
+        favorites[apod.date] = {
+            title: apod.title,
+            imgUrl: apod.url,
+        };
+
+        chrome.storage.sync.set({
+            apodFavorites: favorites,
+        });
+    });
+
 }
 
 apodDrawerBtn.addEventListener('click', toggleDrawer);
 
 $('.nav-buttons').addEventListener('click', (e) => {
-    ga('send', 'event', 'Button', 'clicked', e.target.id);
-    apod[e.target.id.slice(5)]();
+    if (e.target.id !== 'add-favorite') {
+        ga('send', 'event', 'Button', 'clicked', e.target.id);
+        apod[e.target.id.slice(5)]();
+    } else {
+        saveFavorite();
+    }
 });
 
 $('.external-links').addEventListener('click', (e) => {

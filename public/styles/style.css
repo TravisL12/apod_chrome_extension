@@ -51,6 +51,59 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
+.apod__drawer {
+  position: absolute;
+  z-index: 1000;
+  top: 60px;
+  right: 0;
+  height: 80vh;
+  transform: translate3d(400px, 0px, 0px);
+  transition: 0.25s transform ease-out; }
+  .apod__drawer .apod__drawer-tabs {
+    position: absolute;
+    top: 97px;
+    left: -133px;
+    width: 230px;
+    height: 35px;
+    text-align: right;
+    box-sizing: border-box;
+    transform: rotate3d(0, 0, 1, -90deg); }
+    .apod__drawer .apod__drawer-tabs .tab {
+      float: right;
+      margin-left: 2px;
+      background-color: yellow;
+      width: 100px;
+      height: 100%;
+      cursor: pointer;
+      text-align: center;
+      padding-top: 11px;
+      border-top-left-radius: 6px;
+      border-top-right-radius: 6px;
+      box-sizing: border-box; }
+  .apod__drawer .apod__drawer-view {
+    padding: 10px;
+    background-color: rgba(199, 199, 199, 0.8);
+    height: 100%;
+    width: 400px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+    overflow-y: scroll; }
+    .apod__drawer .apod__drawer-view ul#drawer-list {
+      display: block; }
+      .apod__drawer .apod__drawer-view ul#drawer-list .favorite {
+        display: block; }
+        .apod__drawer .apod__drawer-view ul#drawer-list .favorite .favorite__image {
+          width: 200px;
+          height: 100px;
+          background-size: contain;
+          background-repeat: no-repeat;
+          background-position: left center; }
+  .apod__drawer h1 {
+    text-align: center;
+    display: inline-block; }
+  .apod__drawer.show {
+    transform: translate3d(0px, 0px, 0px); }
+
 @keyframes clockwise-spin {
   0% {
     transform: rotate3d(0, 0, 1, 0deg); }
@@ -249,47 +302,6 @@ ul, li {
   height: 60px;
   padding: 10px;
   box-sizing: border-box; }
-
-.apod__drawer {
-  position: absolute;
-  z-index: 1000;
-  top: 60px;
-  right: 0;
-  height: 80vh;
-  transform: translate3d(400px, 0px, 0px);
-  transition: 0.25s transform ease-out; }
-  .apod__drawer .apod__drawer-tabs {
-    position: absolute;
-    top: 97px;
-    left: -133px;
-    width: 230px;
-    height: 35px;
-    text-align: right;
-    box-sizing: border-box;
-    transform: rotate3d(0, 0, 1, -90deg); }
-    .apod__drawer .apod__drawer-tabs .tab {
-      float: right;
-      margin-left: 2px;
-      background-color: yellow;
-      width: 100px;
-      height: 100%;
-      cursor: pointer;
-      text-align: center;
-      padding-top: 11px;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
-      box-sizing: border-box; }
-  .apod__drawer .apod__drawer-view {
-    padding: 10px;
-    background-color: red;
-    height: 100%;
-    width: 400px;
-    box-sizing: border-box; }
-  .apod__drawer h1 {
-    text-align: center;
-    display: inline-block; }
-  .apod__drawer.show {
-    transform: translate3d(0px, 0px, 0px); }
 
 .apod__top-sites {
   float: left;
