@@ -6,6 +6,8 @@ function Drawer (el, btnEl, apod) {
     this.apod = apod;
 
     btnEl.addEventListener('click', this.toggle.bind(this));
+    $('#clear-all-favorites').addEventListener('click', this.clearAll.bind(this));
+
     this.load();
 }
 
@@ -14,6 +16,7 @@ Drawer.prototype = {
     clearAll () {
         chrome.storage.sync.remove(['apodFavorites'], () => {
             console.log('all cleared!!!');
+            $('.apod__drawer-view #drawer-list').innerHTML = '';
             this.favorites = {};
             this.load();
         });

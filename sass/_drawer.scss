@@ -34,6 +34,7 @@
     }
 
     .apod__drawer-view {
+        position: relative;
         padding: 10px;
         background-color: $light-gray;
         height: 100%;
@@ -50,19 +51,31 @@
                 cursor: pointer;
                 &:hover {
                     background-color: #C7C7C7;
+                    .favorite__image {
+                        background-color: lighten(#C7C7C7, 5%);
+                    }
                 }
                 .favorite__image {
                     width: 200px;
                     height: 100px;
+                    margin: 0 auto;
+                    background-color: black;
                     background-size: contain;
                     background-repeat: no-repeat;
-                    background-position: left center;
+                    background-position: center;
                 }
                 .favorite__title {
-
+                    margin: 0;
                 }
             }
-        } 
+        }
+        .clear-all {
+            @include apod-button;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 10px
+        }
     }
 
     h1 {
