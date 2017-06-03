@@ -17,6 +17,7 @@ function randomizer(max, min) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
+
 const $ = (el) => {
     return document.querySelector(el);
 }
@@ -38,6 +39,8 @@ const apodImage       = $('#apod-image'),
       apodKnowMore    = $('#want-to-know-more ul'),
       apodRandom      = $('#apod-random');
 
+const apod = new Apod();
+const drawer = new Drawer(apodDrawer, apodDrawerBtn, apod);
 const loaders = [SunLoader, MoonLoader];
 const loader = new loaders[randomizer(1)];
 
@@ -62,58 +65,12 @@ function blipHoverState (element, apodFn) {
     apodFn.call(apod);
 }
 
-function renderDrawer (apods) {
-    let favoritesEl = '';
-
-    for (let apod in apods) {
-        let backgroundImage = 'background-image: url("' + apods[apod].imgUrl + '")';
-
-        favoritesEl += `<li class='favorite'>
-            <div class='favorite__image' style='${backgroundImage}'></div>
-            <h4 class='favorite__title'>${apods[apod].title}</h4>
-        </li>`;
-    }
-
-    $('.apod__drawer-view #drawer-list').innerHTML = favoritesEl;
-}
-
-function toggleDrawer (e) {
-    getFavorites((favorites) => {
-        renderDrawer(favorites.apodFavorites);
-
-        apodDrawer.classList.toggle('show');
-    });
-}
-
-function getFavorites (callback) {
-    chrome.storage.sync.get(['apodFavorites'], callback);
-}
-
-function saveFavorite () {
-
-    getFavorites((favorites) => {
-        favorites = favorites.apodFavorites || {};
-
-        favorites[apod.date] = {
-            title: apod.title,
-            imgUrl: apod.url,
-        };
-
-        chrome.storage.sync.set({
-            apodFavorites: favorites,
-        });
-    });
-
-}
-
-apodDrawerBtn.addEventListener('click', toggleDrawer);
-
 $('.nav-buttons').addEventListener('click', (e) => {
     if (e.target.id !== 'add-favorite') {
         ga('send', 'event', 'Button', 'clicked', e.target.id);
         apod[e.target.id.slice(5)]();
     } else {
-        saveFavorite();
+        drawer.save();
     }
 });
 
@@ -146,12 +103,10 @@ document.addEventListener('keydown', function(e) {
             $('.apod__description .description').classList.toggle('show-description');
             break;
         case 68: // Press 'D'
-            toggleDrawer(e);
+            drawer.toggle(e);
             break;
     }
 })
-
-let apod = new Apod();
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';

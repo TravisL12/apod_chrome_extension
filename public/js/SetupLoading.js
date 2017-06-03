@@ -21,8 +21,7 @@ SunLoader.prototype = {
                 <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
                 <div class='rays-small' id='small-rays'>${this.buildRays(this.littleRayCount)}</div>
                 <div class='sun-light'></div>
-            </div>
-        `;
+            </div>`;
     },
 }
 
@@ -40,6 +39,5 @@ MoonLoader.prototype.render = () => {
                 <div class='moon shade-to-light'></div>
                 <div class='moon light-to-shade'></div>
             </div>
-        </div>
-    `
+        </div>`;
 }

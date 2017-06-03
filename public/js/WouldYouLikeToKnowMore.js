@@ -110,8 +110,8 @@ KnowMore.prototype = {
                         <a href="${items[0].link}" target="_blank">${items[0].htmlTitle}</a>
                         <a href="${items[1].link}" target="_blank">${items[1].htmlTitle}</a>
                         <a href="${items[2].link}" target="_blank">${items[2].htmlTitle}</a>
-                    </div>
-                `;
+                    </div>`;
+
             }, (error) => {
                 console.log(JSON.parse(error.response).error.errors[0].message);
             });

@@ -47,6 +47,10 @@
 
             .favorite {
                 display: block;
+                cursor: pointer;
+                &:hover {
+                    background-color: #C7C7C7;
+                }
                 .favorite__image {
                     width: 200px;
                     height: 100px;

@@ -29,6 +29,10 @@ Apod.prototype = {
         this.getApod(this.DateManager.randomDate());
     },
 
+    specificDate (date) {
+        this.getApod(date);
+    },
+
     previous () {
         this.getApod(this.DateManager.adjacentDate(this.date, -1));
     },

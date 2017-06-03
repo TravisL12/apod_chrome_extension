@@ -91,7 +91,10 @@
     .apod__drawer .apod__drawer-view ul#drawer-list {
       display: block; }
       .apod__drawer .apod__drawer-view ul#drawer-list .favorite {
-        display: block; }
+        display: block;
+        cursor: pointer; }
+        .apod__drawer .apod__drawer-view ul#drawer-list .favorite:hover {
+          background-color: #C7C7C7; }
         .apod__drawer .apod__drawer-view ul#drawer-list .favorite .favorite__image {
           width: 200px;
           height: 100px;
