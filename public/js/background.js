@@ -17,32 +17,41 @@ function randomizer(max, min) {
     return Math.round(Math.random() * (max - min) + min);
 }
 
-
 const $ = (el) => {
     return document.querySelector(el);
 }
 
-const apodImage       = $('#apod-image'),
-      apodVideo       = $('#apod-video iframe'),
-      apodTitle       = $('#apod-title'),
-      apodDate        = $('#apod-date'),
-      apodDescription = $('#apod-description'),
-      apodDrawer      = $('#apod-drawer'),
-      apodDrawerBtn   = $('#apod-drawerToggle'),
-      apodOrigin      = $('#apod-origin'),
-      apodHiRes       = $('#apod-hires'),
-      apodLowRes      = $('#apod-lowres'),
-      apodLoading     = $('#apod-loading'),
-      apodPrevious    = $('#apod-previous'),
-      apodNext        = $('#apod-next'),
-      apodCurrent     = $('#apod-current'),
-      apodKnowMore    = $('#want-to-know-more ul'),
-      apodRandom      = $('#apod-random');
+const apodImage       = $('#apod-image');
+const apodVideo       = $('#apod-video iframe');
+
+const apodTitle       = $('#apod-title');
+const apodDate        = $('#apod-date');
+const apodDescription = $('#apod-description');
+
+const apodDrawer      = $('#apod-drawer');
+const favoritesBtn    = $('#tab-favorites');
+const explanationBtn  = $('#tab-explanation');
+const knowMoreBtn     = $('#tab-know-more');
+const apodKnowMore    = $('#want-to-know-more ul');
+
+const apodOrigin      = $('#apod-origin');
+const apodHiRes       = $('#apod-hires');
+const apodLowRes      = $('#apod-lowres');
+
+const apodLoading     = $('#apod-loading');
+const apodPrevious    = $('#apod-previous');
+const apodNext        = $('#apod-next');
+const apodCurrent     = $('#apod-current');
+const apodRandom      = $('#apod-random');
 
 const apod = new Apod();
-const drawer = new Drawer(apodDrawer, apodDrawerBtn, apod);
+const drawer = new Drawer(apodDrawer);
 const loaders = [SunLoader, MoonLoader];
 const loader = new loaders[randomizer(1)];
+
+const favoritesTab   = new FavoritesTab(favoritesBtn, apod, drawer);
+const explanationTab = new ExplanationTab(explanationBtn, apod, drawer);
+const knowMoreTab    = new KnowMoreTab(knowMoreBtn, apod, drawer);
 
 apodLoading.innerHTML = loader.render();
 
@@ -70,7 +79,7 @@ $('.nav-buttons').addEventListener('click', (e) => {
         ga('send', 'event', 'Button', 'clicked', e.target.id);
         apod[e.target.id.slice(5)]();
     } else {
-        drawer.save();
+        favoritesTab.save();
     }
 });
 
@@ -99,11 +108,8 @@ document.addEventListener('keydown', function(e) {
         case 39: // Press '->'
             blipHoverState(apodNext, apod.next);
             break;
-        case 69: // Press 'E'
-            $('.apod__footer .description').classList.toggle('show-description');
-            break;
         case 68: // Press 'D'
-            drawer.toggle(e);
+            $('.apod__footer .description').classList.toggle('show-description');
             break;
     }
 })
