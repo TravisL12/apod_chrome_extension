@@ -27,26 +27,20 @@ Drawer.prototype = {
         favoritesEl.innerHTML = '';
 
         for (let apod in this.favorites) {
-            let favorite = this.favorites[apod];
-            let backgroundImage = 'background-image: url("' + favorite.imgUrl + '")';
+            const favorite = this.favorites[apod];
+            const backgroundImage = 'background-image: url("' + favorite.imgUrl + '")';
 
-            let listEl = document.createElement('li');
+            const listEl = document.createElement('li');
             listEl.className = 'favorite';
 
-            let imageEl = document.createElement('div');
-            imageEl.className = 'favorite__image';
-            imageEl.setAttribute('style', backgroundImage);
-
-            let titleEl = document.createElement('h4');
-            titleEl.className = 'favorite__title';
-            titleEl.textContent = favorite.title;
+            listEl.innerHTML = `
+                <div class='favorite__image' style='${backgroundImage}'></div>
+                <h4 class='favorite__title'>${this.favorites[apod].title}</h4>
+            `;
 
             listEl.addEventListener('click', () => {
                 this.apod.specificDate(favorite.date);
             })
-
-            listEl.appendChild(imageEl);
-            listEl.appendChild(titleEl);
 
             favoritesEl.appendChild(listEl);
         }

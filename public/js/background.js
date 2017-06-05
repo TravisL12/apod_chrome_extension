@@ -100,7 +100,7 @@ document.addEventListener('keydown', function(e) {
             blipHoverState(apodNext, apod.next);
             break;
         case 69: // Press 'E'
-            $('.apod__description .description').classList.toggle('show-description');
+            $('.apod__footer .description').classList.toggle('show-description');
             break;
         case 68: // Press 'D'
             drawer.toggle(e);

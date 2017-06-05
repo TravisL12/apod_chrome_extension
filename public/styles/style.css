@@ -58,7 +58,7 @@
   right: 0;
   height: 80vh;
   transform: translate3d(400px, 0px, 0px);
-  transition: 0.25s transform ease-out; }
+  transition: 0.4s transform ease-out; }
   .apod__drawer .apod__drawer-tabs {
     position: absolute;
     top: 97px;
@@ -67,7 +67,7 @@
     height: 35px;
     text-align: right;
     box-sizing: border-box;
-    transform: rotate3d(0, 0, 1, -90deg); }
+    transform: rotate(-90deg); }
     .apod__drawer .apod__drawer-tabs .tab {
       float: right;
       margin-left: 2px;
@@ -82,6 +82,7 @@
       box-sizing: border-box; }
   .apod__drawer .apod__drawer-view {
     position: relative;
+    text-align: center;
     padding: 10px;
     background-color: rgba(199, 199, 199, 0.8);
     height: 100%;
@@ -93,11 +94,10 @@
       display: block; }
       .apod__drawer .apod__drawer-view ul#drawer-list .favorite {
         display: block;
-        cursor: pointer; }
-        .apod__drawer .apod__drawer-view ul#drawer-list .favorite:hover {
-          background-color: #C7C7C7; }
-          .apod__drawer .apod__drawer-view ul#drawer-list .favorite:hover .favorite__image {
-            background-color: #d4d4d4; }
+        cursor: pointer;
+        margin-bottom: 10px; }
+        .apod__drawer .apod__drawer-view ul#drawer-list .favorite:hover .favorite__title {
+          color: rgba(51, 51, 51, 0.8); }
         .apod__drawer .apod__drawer-view ul#drawer-list .favorite .favorite__image {
           width: 200px;
           height: 100px;
@@ -120,7 +120,8 @@
         background-color: rgba(102, 102, 102, 0.8); }
   .apod__drawer h1 {
     text-align: center;
-    display: inline-block; }
+    display: inline-block;
+    font-weight: 400; }
   .apod__drawer.show {
     transform: translate3d(0px, 0px, 0px); }
 
@@ -135,16 +136,16 @@
   100% {
     transform: rotate3d(0, 0, 1, 0deg); } }
 .apod__loading .sun-container {
-  width: 300px;
-  height: 300px; }
+  width: 100px;
+  height: 100px; }
 .apod__loading .rays-big {
-  width: 240px;
-  height: 240px;
+  width: 80px;
+  height: 80px;
   animation: clockwise-spin 20s infinite linear; }
   .apod__loading .rays-big .ray {
-    border-bottom: 120px solid orange;
-    border-left: 36px solid transparent;
-    border-right: 36px solid transparent; }
+    border-bottom: 40px solid orange;
+    border-left: 12px solid transparent;
+    border-right: 12px solid transparent; }
     .apod__loading .rays-big .ray:nth-child(1) {
       transform: rotate3d(0, 0, 1, 0deg);
       transform-origin: bottom; }
@@ -185,13 +186,13 @@
       transform: rotate3d(0, 0, 1, 360deg);
       transform-origin: bottom; }
 .apod__loading .rays-small {
-  width: 210px;
-  height: 210px;
+  width: 70px;
+  height: 70px;
   animation: counter-clockwise-spin 15s infinite linear; }
   .apod__loading .rays-small .ray {
-    border-bottom: 105px solid yellow;
-    border-left: 42px solid transparent;
-    border-right: 42px solid transparent; }
+    border-bottom: 35px solid yellow;
+    border-left: 14px solid transparent;
+    border-right: 14px solid transparent; }
     .apod__loading .rays-small .ray:nth-child(1) {
       transform: rotate3d(0, 0, 1, 0deg);
       transform-origin: bottom; }
@@ -220,8 +221,8 @@
       transform: rotate3d(0, 0, 1, 360deg);
       transform-origin: bottom; }
 .apod__loading .sun-light {
-  width: 120px;
-  height: 120px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background: gold;
   background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
@@ -235,10 +236,10 @@
     width: 0; }
   50%, 100% {
     left: 0;
-    width: 200px; } }
+    width: 70px; } }
 @keyframes shadow-to-light-right {
   0%, 50% {
-    width: 200px;
+    width: 70px;
     right: 0; }
   75%, 100% {
     right: 100%;
@@ -249,10 +250,10 @@
     width: 0; }
   100% {
     left: 0;
-    width: 200px; } }
+    width: 70px; } }
 .apod__loading .moon-container {
-  width: 200px;
-  height: 200px;
+  width: 70px;
+  height: 70px;
   transform: rotate3d(0, 0, 1, -5deg);
   border-radius: 50%;
   background: #949494;
@@ -260,8 +261,8 @@
   .apod__loading .moon-container .moon {
     position: absolute;
     border-radius: 50%;
-    width: 200px;
-    height: 200px; }
+    width: 70px;
+    height: 70px; }
     .apod__loading .moon-container .moon.light-to-shade {
       background: #949494; }
     .apod__loading .moon-container .moon.shade-to-light {
@@ -270,8 +271,8 @@
   .apod__loading .moon-container .mask-right,
   .apod__loading .moon-container .mask-left {
     position: absolute;
-    width: 100px;
-    height: 200px;
+    width: 35px;
+    height: 70px;
     overflow: hidden; }
   .apod__loading .moon-container .mask-right,
   .apod__loading .moon-container .mask-right .moon {
@@ -409,32 +410,32 @@ ul, li {
   color: lightblue;
   font-weight: bold; }
 
-.apod__description {
+.apod__footer {
   position: absolute;
   bottom: 0;
   width: 100%;
   height: 70px;
   margin: 0 auto; }
-  .apod__description h1 {
+  .apod__footer h1 {
     display: inline-block;
     margin: 0;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 100; }
-  .apod__description h2 {
+  .apod__footer h2 {
     margin: 0;
     color: #757575;
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300; }
-  .apod__description .nav-buttons {
+  .apod__footer .nav-buttons {
     position: absolute;
     bottom: 10;
     right: 0; }
-    .apod__description .nav-buttons ul li {
+    .apod__footer .nav-buttons ul li {
       color: rgba(51, 51, 51, 0.8);
       text-align: center;
       margin-right: 15px;
       float: left; }
-      .apod__description .nav-buttons ul li a {
+      .apod__footer .nav-buttons ul li a {
         background-color: rgba(51, 51, 51, 0.8);
         color: rgba(199, 199, 199, 0.8);
         transition: 0.2s linear background-color;
@@ -442,9 +443,9 @@ ul, li {
         min-width: 65px;
         padding: 10px;
         cursor: pointer; }
-        .apod__description .nav-buttons ul li a.hover, .apod__description .nav-buttons ul li a:hover {
+        .apod__footer .nav-buttons ul li a.hover, .apod__footer .nav-buttons ul li a:hover {
           background-color: rgba(102, 102, 102, 0.8); }
-  .apod__description .description {
+  .apod__footer .description {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     position: absolute;
@@ -457,19 +458,19 @@ ul, li {
     background-color: transparent;
     transform: translate3d(0, 0, 0);
     transition: all 0.4s ease-out; }
-    .apod__description .description .external-links,
-    .apod__description .description #apod-description {
+    .apod__footer .description .external-links,
+    .apod__footer .description #apod-description {
       font-size: 14px;
       margin: 10px 0 0 0;
       text-rendering: optimizeLegibility; }
-      .apod__description .description .external-links a,
-      .apod__description .description #apod-description a {
+      .apod__footer .description .external-links a,
+      .apod__footer .description #apod-description a {
         margin-right: 5px;
         color: white; }
-    .apod__description .description #apod-description {
+    .apod__footer .description #apod-description {
       height: 150px;
       overflow-y: scroll; }
-    .apod__description .description #img-quality {
+    .apod__footer .description #img-quality {
       display: inline-block;
       font-size: 14px;
       background: rgba(51, 51, 51, 0.8);
@@ -477,8 +478,8 @@ ul, li {
       margin-left: 10px;
       padding: 0 5px;
       border-radius: 3px; }
-  .apod__description .description:hover,
-  .apod__description .show-description {
+  .apod__footer .description:hover,
+  .apod__footer .show-description {
     transform: translate3d(0, -180px, 0);
     background-color: rgba(0, 0, 0, 0.8); }
 

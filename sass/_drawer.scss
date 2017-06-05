@@ -6,7 +6,7 @@
     right: 0;
     height: 80vh;
     transform: translate3d($drawer-width,0px,0px);
-    transition: 0.25s transform ease-out;
+    transition: 0.4s transform ease-out;
 
     .apod__drawer-tabs {
         position: absolute;
@@ -16,7 +16,7 @@
         height: 35px;
         text-align: right;
         box-sizing: border-box;
-        transform: rotate3d(0,0,1,-90deg);
+        transform: rotate(-90deg);
 
         .tab {
             float: right;
@@ -35,6 +35,7 @@
 
     .apod__drawer-view {
         position: relative;
+        text-align: center;
         padding: 10px;
         background-color: $light-gray;
         height: 100%;
@@ -49,12 +50,12 @@
             .favorite {
                 display: block;
                 cursor: pointer;
+                margin-bottom: 10px;
                 &:hover {
-                    background-color: #C7C7C7;
-                    .favorite__image {
-                        background-color: lighten(#C7C7C7, 5%);
+                    .favorite__title {
+                        color: $gray;
                     }
-                }
+               }
                 .favorite__image {
                     width: 200px;
                     height: 100px;
@@ -81,6 +82,7 @@
     h1 {
         text-align: center;
         display: inline-block;
+        font-weight: 400;
     }
 
     &.show {
