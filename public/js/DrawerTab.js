@@ -29,20 +29,24 @@ class DrawerTab {
     openTab () {
         this.render();
         this.drawer.setCurrentTabIdx(this.drawerIdx);
-        this.el.classList.add('is_open');
+        this.el.classList.add('is-open');
+    }
+
+    closeTab () {
+        this.el.classList.remove('is-open');
     }
 
     toggle () {
         if (!this.drawer.isOpen) {
             this.openTab();
-            this.drawer.toggle();
+            this.drawer.openDrawer();
         } else {
             if (this.drawer.currentTabIdx !== this.drawerIdx) {
-                this.drawer.tabs[this.drawer.currentTabIdx].el.classList.remove('is_open');
+                this.closeTab.call(this.drawer.tabs[this.drawer.currentTabIdx]);
                 this.openTab();
             } else {
-                this.el.classList.remove('is_open');
-                this.drawer.toggle();
+                this.closeTab();
+                this.drawer.closeDrawer();
             }
         }
     }

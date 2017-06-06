@@ -32,7 +32,7 @@
             padding-top: 11px;
             box-sizing: border-box;
 
-            &.is_open {
+            &.is-open {
                 background-color: $light-gray;
                 color: $gray;
             }
@@ -40,6 +40,7 @@
     }
 
     .apod__drawer-view {
+        @include helvetica-neue-light;
         position: relative;
         padding: 10px;
         background-color: $light-gray;
@@ -58,7 +59,6 @@
         }
 
         .explanation {
-            @include helvetica-neue-light;
             text-align: left;
 
             .external-links,
@@ -116,6 +116,7 @@
             }
             .clear-all {
                 @include apod-button;
+                cursor: pointer;
                 position: absolute;
                 bottom: 10px;
                 right: 10px;

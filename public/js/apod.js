@@ -12,6 +12,7 @@ function _setLoadingView () {
     $('.apod__footer .description').classList.add('hide');
     apodLoading.classList.remove('hide');
     apodKnowMore.innerHTML = '';
+    drawer.closeDrawer();
 }
 
 function fitToWindow (image) {

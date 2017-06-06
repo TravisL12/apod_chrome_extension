@@ -10,9 +10,18 @@ class Drawer {
         this.currentTabIdx;
     }
 
-    toggle () {
-        this.el.classList.toggle('show');
-        this.isOpen = this.el.classList.contains('show');
+    openDrawer () {
+        this.el.classList.add('show');
+        this.isOpen = true;
+    }
+
+    closeDrawer () {
+        this.el.classList.remove('show');
+        this.isOpen = false;
+
+        if (this.currentTabIdx >= 0) {
+            this.tabs[this.currentTabIdx].closeTab();
+        }
     }
 
     setCurrentTabIdx (idx) {

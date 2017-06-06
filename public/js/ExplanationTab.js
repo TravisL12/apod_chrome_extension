@@ -8,6 +8,7 @@ class ExplanationTab extends DrawerTab {
         this.keycode = 69;
         this.template = `
             <div class='explanation'>
+                <h2>APOD Explanation</h2>
 
                 <div id='apod-explanation'></div>
 
