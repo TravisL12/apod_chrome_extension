@@ -17,6 +17,29 @@ class FavoritesTab extends DrawerTab {
         this.load();
     }
 
+    get (callback) {
+       chrome.storage.sync.get(['apodFavorites'], callback);
+    }
+
+    load () {
+        this.get((favorites) => {
+            this.favorites = favorites.apodFavorites || {};
+        });
+    }
+
+    save () {
+        this.favorites[apod.date] = {
+            title: apod.title,
+            imgUrl: apod.url,
+        };
+
+        chrome.storage.sync.set({
+            apodFavorites: this.favorites,
+        });
+
+        this.load();
+    }
+
     deleteAllFavorites () {
         chrome.storage.sync.remove(['apodFavorites'], () => {
             console.log('all cleared!!!');
@@ -31,7 +54,16 @@ class FavoritesTab extends DrawerTab {
         $('#clear-all-favorites').addEventListener('click', this.deleteAllFavorites.bind(this));
 
         let favoritesEl = $('.apod__drawer-view #drawer-list');
-        favoritesEl.innerHTML = '';
+
+        if (Object.keys(this.favorites).length) {
+            favoritesEl.innerHTML = '';
+        } else {
+            favoritesEl.innerHTML = `
+                <li>
+                    <h4>You don't have any favorites yet!</h4>
+                    <h4>Click the "Save Favorite" button at the bottom of the page!</h4>
+                </li>`;
+        }
 
         for (let date in this.favorites) {
             const favorite = this.favorites[date];
@@ -56,29 +88,6 @@ class FavoritesTab extends DrawerTab {
 
             favoritesEl.appendChild(listEl);
         }
-    }
-
-    load () {
-        this.get((favorites) => {
-            this.favorites = favorites.apodFavorites || {};
-        });
-    }
-
-    get (callback) {
-       chrome.storage.sync.get(['apodFavorites'], callback);
-    }
-
-    save () {
-        this.favorites[apod.date] = {
-            title: apod.title,
-            imgUrl: apod.url,
-        };
-
-        chrome.storage.sync.set({
-            apodFavorites: this.favorites,
-        });
-
-        this.load();
     }
 
 };

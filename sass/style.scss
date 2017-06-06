@@ -194,6 +194,10 @@ ul, li {
                 padding: 10px;
                 cursor: pointer;
             }
+
+            &.save-favorite:active {
+                background-color: gold;
+            }
         }
     }
 

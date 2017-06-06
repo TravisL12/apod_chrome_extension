@@ -471,6 +471,8 @@ ul, li {
         cursor: pointer; }
         .apod__footer .nav-buttons ul li a.hover, .apod__footer .nav-buttons ul li a:hover {
           background-color: rgba(102, 102, 102, 0.8); }
+      .apod__footer .nav-buttons ul li.save-favorite:active {
+        background-color: gold; }
   .apod__footer .description {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
