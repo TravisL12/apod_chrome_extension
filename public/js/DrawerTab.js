@@ -26,18 +26,22 @@ class DrawerTab {
         this.baseView.innerHTML = this.template;
     }
 
+    openTab () {
+        this.render();
+        this.drawer.setCurrentTabIdx(this.drawerIdx);
+        this.el.classList.add('is_open');
+    }
+
     toggle () {
         if (!this.drawer.isOpen) {
-            this.render();
-            this.drawer.setCurrentTabIdx(this.drawerIdx);
-            // this.el.classList.add('is_open');
+            this.openTab();
             this.drawer.toggle();
         } else {
             if (this.drawer.currentTabIdx !== this.drawerIdx) {
-                this.render();
-                this.drawer.setCurrentTabIdx(this.drawerIdx);
+                this.drawer.tabs[this.drawer.currentTabIdx].el.classList.remove('is_open');
+                this.openTab();
             } else {
-                // this.el.classList.remove('is_open');
+                this.el.classList.remove('is_open');
                 this.drawer.toggle();
             }
         }
