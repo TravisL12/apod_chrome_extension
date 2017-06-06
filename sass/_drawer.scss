@@ -2,7 +2,7 @@
     $drawer-width: 400px;
     position: absolute;
     z-index: 1000;
-    top: 60px;
+    top: 130px;
     right: 0;
     transform: translate3d($drawer-width,0px,0px);
     transition: 0.4s transform ease-out;

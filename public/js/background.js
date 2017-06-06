@@ -44,10 +44,6 @@ const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
 
 apodLoading.innerHTML = loader.render();
 
-function fitToWindow (image) {
-    return image.width > window.innerWidth || image.height > window.innerHeight;
-}
-
 function blipHoverState (element, apodFn) {
     if (apod.isRequestInProgress) {
         return;

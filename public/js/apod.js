@@ -14,6 +14,10 @@ function _setLoadingView () {
     apodKnowMore.innerHTML = '';
 }
 
+function fitToWindow (image) {
+    return image.width > window.innerWidth || image.height > window.innerHeight;
+}
+
 class Apod {
 
     constructor () {
