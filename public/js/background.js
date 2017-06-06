@@ -26,6 +26,7 @@ const apodVideo       = $('#apod-video iframe');
 
 const apodTitle       = $('#apod-title');
 const apodDate        = $('#apod-date');
+const apodKnowMore    = $('#want-to-know-more ul');
 
 const apodLoading     = $('#apod-loading');
 const apodPrevious    = $('#apod-previous');
@@ -40,7 +41,6 @@ const loader      = new [SunLoader, MoonLoader][randomizer(1)];
 
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
 const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
-const knowMoreTab    = new KnowMoreTab('#tab-know-more', apod, drawer);
 
 apodLoading.innerHTML = loader.render();
 
