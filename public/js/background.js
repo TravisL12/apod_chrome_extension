@@ -36,17 +36,13 @@ const apodNext     = new NavigationButton('#apod-next', 75, 'next');
 
 const DateManager = DateManagement();
 const apod        = new Apod();
-const drawer      = new Drawer('#apod-drawer');
 const loader      = new [SunLoader, MoonLoader][randomizer(1)];
 
+const drawer = new Drawer('#apod-drawer');
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
 const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
 
 apodLoading.innerHTML = loader.render();
-
-$('#add-favorite').addEventListener('click', (e) => {
-    favoritesTab.save();
-});
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';

@@ -14,6 +14,8 @@ class FavoritesTab extends DrawerTab {
             </div>
         `;
 
+        $('#add-favorite').addEventListener('click', this.save.bind(this));
+
         this.load();
     }
 
