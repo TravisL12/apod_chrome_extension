@@ -44,8 +44,8 @@ const drawer = new Drawer(apodDrawer);
 const loaders = [SunLoader, MoonLoader];
 const loader = new loaders[randomizer(1)];
 
-const favoritesTab   = new FavoritesTab(favoritesBtn, apod, drawer);
 const explanationTab = new ExplanationTab(explanationBtn, apod, drawer);
+const favoritesTab   = new FavoritesTab(favoritesBtn, apod, drawer);
 const knowMoreTab    = new KnowMoreTab(knowMoreBtn, apod, drawer);
 
 apodLoading.innerHTML = loader.render();

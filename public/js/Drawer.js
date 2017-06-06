@@ -5,6 +5,7 @@ function Drawer (el) {
     this.tabsEl = el.querySelector('.apod__drawer-tabs');
     this.tabs = [];
     this.isOpen = false;
+    this.currentTabIdx;
 }
 
 Drawer.prototype = {
@@ -14,5 +15,9 @@ Drawer.prototype = {
 
         this.isOpen = this.el.classList.contains('show');
     },
+
+    setCurrentTabIdx (idx) {
+        this.currentTabIdx = idx;
+    }
 
 }

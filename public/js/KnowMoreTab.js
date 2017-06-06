@@ -2,7 +2,7 @@
 
 function KnowMoreTab (el, apod, drawer) {
     DrawerTab.call(this, el, apod, drawer);
-    this.title = 'Would you like to know more?';
+    this.title = 'Learn More';
     this.keycode = 76;
     this.template = `<h1>LEARN SOME SHIT</h1>`;
 };
@@ -10,5 +10,3 @@ function KnowMoreTab (el, apod, drawer) {
 KnowMoreTab.prototype = Object.create(DrawerTab.prototype, {
 
 });
-
-KnowMoreTab.prototype.constructor = KnowMoreTab;

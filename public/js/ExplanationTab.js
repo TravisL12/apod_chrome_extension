@@ -45,5 +45,3 @@ ExplanationTab.prototype = Object.create(DrawerTab.prototype, {
     }
 
 });
-
-ExplanationTab.prototype.constructor = ExplanationTab;
