@@ -7,9 +7,11 @@ class FavoritesTab extends DrawerTab {
         this.title = 'Favorites';
         this.keycode = 70;
         this.template = `
-            <h1>Favorite APOD's</h1>
-            <ul id='drawer-list'></ul>
-            <div class='clear-all' id='clear-all-favorites'>Clear All</div>
+            <div class='favorites'>
+                <h1>Favorite APOD's</h1>
+                <ul id='drawer-list'></ul>
+                <div class='clear-all' id='clear-all-favorites'>Clear All</div>
+            </div>
         `;
 
         this.load();

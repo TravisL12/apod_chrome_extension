@@ -4,9 +4,12 @@
     z-index: 1000;
     top: 60px;
     right: 0;
-    height: 80vh;
     transform: translate3d($drawer-width,0px,0px);
     transition: 0.4s transform ease-out;
+
+    &.show {
+        transform: translate3d(0px,0px,0px);
+    }
 
     .apod__drawer-tabs {
         position: absolute;
@@ -41,16 +44,23 @@
         text-align: center;
         padding: 10px;
         background-color: $light-gray;
-        height: 100%;
+        height: auto;
+        min-height: 400px;
+        max-height: 80vh;
         width: $drawer-width;
         box-sizing: border-box;
         overflow-x: hidden;
         overflow-y: scroll;
 
+        h1 {
+            text-align: center;
+            display: inline-block;
+            font-weight: 400;
+        }
+
         .explanation {
             @include helvetica-neue-light;
             text-align: left;
-            padding: 10px;
 
             .external-links,
             #apod-explanation {
@@ -67,50 +77,43 @@
             }
         }
 
-        ul#drawer-list {
-            display: block;
+        .favorites {
 
-            .favorite {
+            ul#drawer-list {
                 display: block;
-                cursor: pointer;
-                width: 300px;
-                margin: 0 auto;
-                margin-bottom: 10px;
-                &:hover {
+
+                .favorite {
+                    display: block;
+                    cursor: pointer;
+                    width: 300px;
+                    margin: 0 auto;
+                    margin-bottom: 10px;
+                    &:hover {
+                        .favorite__title {
+                            color: $gray;
+                        }
+                    }
+                    .favorite__image {
+                        width: 200px;
+                        height: 100px;
+                        margin: 0 auto;
+                        background-color: black;
+                        background-size: contain;
+                        background-repeat: no-repeat;
+                        background-position: center;
+                    }
                     .favorite__title {
-                        color: $gray;
+                        margin: 0;
                     }
                 }
-                .favorite__image {
-                    width: 200px;
-                    height: 100px;
-                    margin: 0 auto;
-                    background-color: black;
-                    background-size: contain;
-                    background-repeat: no-repeat;
-                    background-position: center;
-                }
-                .favorite__title {
-                    margin: 0;
-                }
+            }
+            .clear-all {
+                @include apod-button;
+                position: absolute;
+                bottom: 10px;
+                right: 10px;
+                padding: 5px 10px
             }
         }
-        .clear-all {
-            @include apod-button;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            padding: 5px 10px
-        }
-    }
-
-    h1 {
-        text-align: center;
-        display: inline-block;
-        font-weight: 400;
-    }
-
-    &.show {
-        transform: translate3d(0px,0px,0px);
     }
 }

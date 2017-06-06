@@ -123,9 +123,7 @@ class Apod {
                 this.highlightResults(results[i].title);
                 apodKnowMore.appendChild(knowMore.createLink(results[i]));
             }
-
         }
-
     }
 
     preLoadImage () {

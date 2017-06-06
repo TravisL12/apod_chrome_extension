@@ -167,15 +167,15 @@ ul, li {
     margin: 0 auto;
 
     h1 {
+        @include helvetica-neue-light(100);
         display: inline-block;
         margin: 0;
-        @include helvetica-neue-light(100);
     }
 
     h2 {
+        @include helvetica-neue-light;
         margin: 0;
         color: #757575;
-        @include helvetica-neue-light;
     }
 
     .nav-buttons {
@@ -211,10 +211,9 @@ ul, li {
         #img-quality {
             display: inline-block;
             font-size: 14px;
-            background: $gray;
-            color: black;
+            font-weight: bold;
+            color: $gray;
             margin-left: 10px;
-            padding: 0 5px;
             border-radius: 3px;
         }
     }
