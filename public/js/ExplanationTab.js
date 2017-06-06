@@ -3,6 +3,7 @@
 function ExplanationTab (el, apod, drawer) {
     DrawerTab.call(this, el, apod, drawer);
     this.title = 'Explanation';
+    this.keycode = 69;
     this.template = `
         <div class='explanation'>
 

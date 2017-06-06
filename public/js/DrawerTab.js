@@ -8,7 +8,13 @@ function DrawerTab (el, apod, drawer) {
     this.template = '';
     this.isOpen   = false;
     this.baseView = drawer.el.querySelector('.apod__drawer-view');
+
     this.el.addEventListener('click', this.toggle.bind(this));
+    document.addEventListener('keydown', function(e) {
+        if (e.which === this.keycode) {
+            this.toggle();
+        }
+    }.bind(this));
 }
 
 DrawerTab.prototype = {
@@ -19,7 +25,7 @@ DrawerTab.prototype = {
         console.log('default render me!!!!');
     },
 
-    toggle (e) {
+    toggle () {
         if (!this.drawer.isOpen) {
             this.render();
             this.el.classList.add('is_open');

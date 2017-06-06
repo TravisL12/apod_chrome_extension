@@ -3,6 +3,7 @@
 function FavoritesTab (el, apod, drawer) {
     DrawerTab.call(this, el, apod, drawer);
     this.title = 'Favorites';
+    this.keycode = 70;
     this.template = `
         <h1>Favorite APOD's</h1>
         <ul id='drawer-list'></ul>
