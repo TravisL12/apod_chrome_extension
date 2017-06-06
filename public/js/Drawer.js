@@ -3,8 +3,8 @@
 class Drawer {
 
     constructor (el) {
-        this.el = el;
-        this.tabsEl = el.querySelector('.apod__drawer-tabs');
+        this.el = $(el);
+        this.tabsEl = this.el.querySelector('.apod__drawer-tabs');
         this.tabs = [];
         this.isOpen = false;
         this.currentTabIdx;

@@ -11,7 +11,6 @@ function _setLoadingView () {
     apodVideo.src = '';
     $('.apod__footer .description').classList.add('hide');
     apodLoading.classList.remove('hide');
-    apodKnowMore.innerHTML = '';
 }
 
 class Apod {
@@ -114,14 +113,11 @@ class Apod {
     }
 
     wouldYouLikeToKnowMore (text) {
-        const knowMore = new KnowMore(text);
-        const results = knowMore.results;
+        this.knowMore = new KnowMore(text);
+        const results = this.knowMore.results;
 
-        if (results.length) {
-            for (let i in results) {
-                this.highlightResults(results[i].title);
-                apodKnowMore.appendChild(knowMore.createLink(results[i]));
-            }
+        for (let i in results) {
+            this.highlightResults(results[i].title);
         }
     }
 

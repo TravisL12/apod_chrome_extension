@@ -27,9 +27,6 @@ const apodVideo       = $('#apod-video iframe');
 const apodTitle       = $('#apod-title');
 const apodDate        = $('#apod-date');
 
-const apodDrawer      = $('#apod-drawer');
-const apodKnowMore    = $('#want-to-know-more ul');
-
 const apodLoading     = $('#apod-loading');
 const apodPrevious    = $('#apod-previous');
 const apodNext        = $('#apod-next');
@@ -38,7 +35,7 @@ const apodRandom      = $('#apod-random');
 
 const DateManager = DateManagement();
 const apod        = new Apod();
-const drawer      = new Drawer(apodDrawer);
+const drawer      = new Drawer('#apod-drawer');
 const loader      = new [SunLoader, MoonLoader][randomizer(1)];
 
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);

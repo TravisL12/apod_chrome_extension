@@ -30,12 +30,17 @@ class DrawerTab {
         if (!this.drawer.isOpen) {
             this.render();
             this.drawer.setCurrentTabIdx(this.drawerIdx);
-            this.el.classList.add('is_open');
+            // this.el.classList.add('is_open');
+            this.drawer.toggle();
         } else {
-            this.el.classList.remove('is_open');
+            if (this.drawer.currentTabIdx !== this.drawerIdx) {
+                this.render();
+                this.drawer.setCurrentTabIdx(this.drawerIdx);
+            } else {
+                // this.el.classList.remove('is_open');
+                this.drawer.toggle();
+            }
         }
-
-        this.drawer.toggle();
     }
 
 }
