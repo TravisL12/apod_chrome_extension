@@ -1,32 +1,32 @@
 'use strict';
 
-function DrawerTab (el, apod, drawer) {
-    this.el        = el;
-    this.apod      = apod;
-    this.drawer    = drawer;
-    this.title     = 'Tab Name';
-    this.isOpen    = false;
-    this.drawerIdx = this.drawer.tabs.length;
-    this.baseView  = drawer.el.querySelector('.apod__drawer-view');
-    this.drawer.tabs.push(this);
-    
-    this.el.addEventListener('click', this.toggle.bind(this));
-    document.addEventListener('keydown', this.setKeystroke.bind(this));
-}
+class DrawerTab {
 
-DrawerTab.prototype = {
+    constructor (el, apod, drawer) {
+        this.el        = el;
+        this.apod      = apod;
+        this.drawer    = drawer;
+        this.title     = 'Tab Name';
+        this.isOpen    = false;
+        this.drawerIdx = this.drawer.tabs.length;
+        this.baseView  = drawer.el.querySelector('.apod__drawer-view');
+        this.drawer.tabs.push(this);
+
+        this.el.addEventListener('click', this.toggle.bind(this));
+        document.addEventListener('keydown', this.setKeystroke.bind(this));
+    }
 
     setKeystroke (e) {
         if (e.which === this.keycode) {
             this.toggle();
         }
-    },
+    }
 
     render () {
         this.baseView.innerHTML = this.template;
 
         console.log('default render me!!!!');
-    },
+    }
 
     toggle () {
         if (!this.drawer.isOpen) {
@@ -38,6 +38,6 @@ DrawerTab.prototype = {
         }
 
         this.drawer.toggle();
-    },
+    }
 
 }

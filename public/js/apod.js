@@ -14,36 +14,36 @@ function _setLoadingView () {
     apodKnowMore.innerHTML = '';
 }
 
-function Apod() {
-    this.date;
-    this.url;
-    this.hdurl;
-    this.title;
-    this.description;
-    this.DateManager = new DateManagement();
-}
+class Apod {
 
-Apod.prototype = {
+    constructor () {
+        this.date;
+        this.url;
+        this.hdurl;
+        this.title;
+        this.description;
+        this.DateManager = new DateManagement();
+    }
 
     random () {
         this.getApod(this.DateManager.randomDate());
-    },
+    }
 
     specificDate (date) {
         this.getApod(date);
-    },
+    }
 
     previous () {
         this.getApod(this.DateManager.adjacentDate(this.date, -1));
-    },
+    }
 
     next () {
         this.getApod(this.DateManager.adjacentDate(this.date, 1));
-    },
+    }
 
     current () {
         this.getApod();
-    },
+    }
 
     isRequestValid () {
         if (this.isRequestInProgress) {
@@ -53,7 +53,7 @@ Apod.prototype = {
         this.isRequestInProgress = true;
 
         return this.isRequestInProgress;
-    },
+    }
 
     getApod (date) {
 
@@ -107,12 +107,12 @@ Apod.prototype = {
                 this.random();
             }
         );
-    },
+    }
 
     highlightResults (result) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
         this.description = this.description.replace(re, '<span class="keyword">$1</span>');
-    },
+    }
 
     wouldYouLikeToKnowMore (text) {
         const knowMore = new KnowMore(text);
@@ -126,7 +126,7 @@ Apod.prototype = {
 
         }
 
-    },
+    }
 
     preLoadImage () {
         let Img = new Image();
@@ -154,7 +154,7 @@ Apod.prototype = {
             this.isRequestInProgress = false;
             this.random();
         };
-    },
+    }
 
     apodImage (imgQuality) {
         this.isRequestInProgress = false;
@@ -166,13 +166,13 @@ Apod.prototype = {
         $('#img-quality').textContent = imgQuality;
 
         this.apodDescription();
-    },
+    }
 
     apodVideo () {
         this.isRequestInProgress = false;
         apodVideo.src = this.url;
         this.apodDescription();
-    },
+    }
 
     apodDescription () {
         apodTitle.textContent = this.title;
@@ -181,7 +181,7 @@ Apod.prototype = {
 
         apodLoading.classList.add('hide');
         $('.apod__footer .description').classList.remove('hide');
-    },
+    }
 
     /**
      * Build filename for APOD site: ap170111.html
