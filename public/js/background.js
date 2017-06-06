@@ -27,12 +27,12 @@ const apodVideo       = $('#apod-video iframe');
 const apodTitle       = $('#apod-title');
 const apodDate        = $('#apod-date');
 const apodKnowMore    = $('#want-to-know-more ul');
-
 const apodLoading     = $('#apod-loading');
-const apodPrevious    = $('#apod-previous');
-const apodNext        = $('#apod-next');
-const apodCurrent     = $('#apod-current');
-const apodRandom      = $('#apod-random');
+
+const apodRandom   = new NavigationButton('#apod-random', 82, 'random');
+const apodCurrent  = new NavigationButton('#apod-current', 84, 'current');
+const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
+const apodNext     = new NavigationButton('#apod-next', 75, 'next');
 
 const DateManager = DateManagement();
 const apod        = new Apod();
@@ -44,48 +44,9 @@ const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
 
 apodLoading.innerHTML = loader.render();
 
-function blipHoverState (element, apodFn) {
-    if (apod.isRequestInProgress) {
-        return;
-    }
-    ga('send', 'event', 'Keydown', 'pressed', element.id);
-    const delay = 125;
-    element.classList.add('hover');
-
-    setTimeout(() => {
-        element.classList.remove('hover');
-    }, delay);
-
-    apodFn.call(apod);
-}
-
-$('.nav-buttons').addEventListener('click', (e) => {
-    if (e.target.id !== 'add-favorite') {
-        ga('send', 'event', 'Button', 'clicked', e.target.id);
-        apod[e.target.id.slice(5)]();
-    } else {
-        favoritesTab.save();
-    }
+$('#add-favorite').addEventListener('click', (e) => {
+    favoritesTab.save();
 });
-
-document.addEventListener('keydown', function(e) {
-    switch (e.which) {
-        case 82: // Press 'r'
-            blipHoverState(apodRandom, apod.random);
-            break;
-        case 84: // Press 't'
-            blipHoverState(apodCurrent, apod.current);
-            break;
-        case 74: // Press 'J'
-        case 37: // Press '<-'
-            blipHoverState(apodPrevious, apod.previous);
-            break;
-        case 75: // Press 'K'
-        case 39: // Press '->'
-            blipHoverState(apodNext, apod.next);
-            break;
-    }
-})
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';
