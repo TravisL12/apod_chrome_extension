@@ -41,7 +41,6 @@
 
     .apod__drawer-view {
         position: relative;
-        text-align: center;
         padding: 10px;
         background-color: $light-gray;
         height: auto;
@@ -52,9 +51,9 @@
         overflow-x: hidden;
         overflow-y: scroll;
 
-        h1 {
+        h1, h2 {
             text-align: center;
-            display: inline-block;
+            margin: 0 0 5px 0;
             font-weight: 400;
         }
 
@@ -80,30 +79,38 @@
         .favorites {
 
             ul#drawer-list {
-                display: block;
+                clear: both;
 
                 .favorite {
-                    display: block;
                     cursor: pointer;
-                    width: 300px;
-                    margin: 0 auto;
+                    width: 100%;
                     margin-bottom: 10px;
+
                     &:hover {
                         .favorite__title {
                             color: $gray;
                         }
                     }
                     .favorite__image {
-                        width: 200px;
-                        height: 100px;
-                        margin: 0 auto;
-                        background-color: black;
-                        background-size: contain;
-                        background-repeat: no-repeat;
-                        background-position: center;
+                        float: left;
+                        margin-right: 10px;
+
+                        .favorite__image-image {
+                            width: 125px;
+                            height: 70px;
+                            background-color: black;
+                            background-size: contain;
+                            background-repeat: no-repeat;
+                            background-position: center;
+                        }
                     }
                     .favorite__title {
-                        margin: 0;
+                        float: left;
+
+                        .favorite__title-date,
+                        .favorite__title-title {
+                            margin: 0;
+                        }
                     }
                 }
             }

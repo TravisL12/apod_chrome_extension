@@ -28,9 +28,6 @@ const apodTitle       = $('#apod-title');
 const apodDate        = $('#apod-date');
 
 const apodDrawer      = $('#apod-drawer');
-const favoritesBtn    = $('#tab-favorites');
-const explanationBtn  = $('#tab-explanation');
-const knowMoreBtn     = $('#tab-know-more');
 const apodKnowMore    = $('#want-to-know-more ul');
 
 const apodLoading     = $('#apod-loading');
@@ -39,14 +36,14 @@ const apodNext        = $('#apod-next');
 const apodCurrent     = $('#apod-current');
 const apodRandom      = $('#apod-random');
 
-const apod = new Apod();
-const drawer = new Drawer(apodDrawer);
-const loaders = [SunLoader, MoonLoader];
-const loader = new loaders[randomizer(1)];
+const DateManager = DateManagement();
+const apod        = new Apod();
+const drawer      = new Drawer(apodDrawer);
+const loader      = new [SunLoader, MoonLoader][randomizer(1)];
 
-const explanationTab = new ExplanationTab(explanationBtn, apod, drawer);
-const favoritesTab   = new FavoritesTab(favoritesBtn, apod, drawer);
-const knowMoreTab    = new KnowMoreTab(knowMoreBtn, apod, drawer);
+const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
+const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
+const knowMoreTab    = new KnowMoreTab('#tab-know-more', apod, drawer);
 
 apodLoading.innerHTML = loader.render();
 

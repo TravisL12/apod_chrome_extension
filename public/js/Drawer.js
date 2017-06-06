@@ -12,7 +12,6 @@ class Drawer {
 
     toggle () {
         this.el.classList.toggle('show');
-
         this.isOpen = this.el.classList.contains('show');
     }
 

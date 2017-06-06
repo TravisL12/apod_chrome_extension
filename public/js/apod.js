@@ -22,11 +22,10 @@ class Apod {
         this.hdurl;
         this.title;
         this.description;
-        this.DateManager = new DateManagement();
     }
 
     random () {
-        this.getApod(this.DateManager.randomDate());
+        this.getApod(DateManager.randomDate());
     }
 
     specificDate (date) {
@@ -34,11 +33,11 @@ class Apod {
     }
 
     previous () {
-        this.getApod(this.DateManager.adjacentDate(this.date, -1));
+        this.getApod(DateManager.adjacentDate(this.date, -1));
     }
 
     next () {
-        this.getApod(this.DateManager.adjacentDate(this.date, 1));
+        this.getApod(DateManager.adjacentDate(this.date, 1));
     }
 
     current () {
@@ -57,14 +56,14 @@ class Apod {
 
     getApod (date) {
 
-        date = date || this.DateManager.today;
+        date = date || DateManager.today;
 
         if (!this.isRequestValid()) {
             console.log('Request in Progress!');
             return;
         }
 
-        if (!this.DateManager.isDateValid(date)) {
+        if (!DateManager.isDateValid(date)) {
             this.isRequestInProgress = false;
             return;
         }
@@ -174,7 +173,7 @@ class Apod {
 
     apodDescription () {
         apodTitle.textContent = this.title;
-        apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
+        apodDate.textContent = DateManager.prettyDateFormat(this.date);
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');

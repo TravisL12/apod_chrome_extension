@@ -1,6 +1,6 @@
 'use strict';
 
-function DateManagement () {
+const DateManagement = function () {
 
     const _monthNames = [
       "January", "February", "March", "April", "May", "June", "July",

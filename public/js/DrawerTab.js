@@ -3,7 +3,7 @@
 class DrawerTab {
 
     constructor (el, apod, drawer) {
-        this.el        = el;
+        this.el        = $(el);
         this.apod      = apod;
         this.drawer    = drawer;
         this.title     = 'Tab Name';
@@ -13,10 +13,10 @@ class DrawerTab {
         this.drawer.tabs.push(this);
 
         this.el.addEventListener('click', this.toggle.bind(this));
-        document.addEventListener('keydown', this.setKeystroke.bind(this));
+        document.addEventListener('keydown', this.setKeydownListener.bind(this));
     }
 
-    setKeystroke (e) {
+    setKeydownListener (e) {
         if (e.which === this.keycode) {
             this.toggle();
         }
@@ -24,8 +24,6 @@ class DrawerTab {
 
     render () {
         this.baseView.innerHTML = this.template;
-
-        console.log('default render me!!!!');
     }
 
     toggle () {
