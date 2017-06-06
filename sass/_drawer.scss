@@ -10,7 +10,7 @@
 
     .apod__drawer-tabs {
         position: absolute;
-        top: 160px;
+        top: 157px;
         left: -193px;
         width: 350px;
         height: 35px;
@@ -19,17 +19,20 @@
         transform: rotate(-90deg);
 
         .tab {
+            @include apod-button;
             float: right;
             margin-left: 2px;
-            background-color: yellow;
             width: 100px;
             height: 100%;
             cursor: pointer;
             text-align: center;
             padding-top: 11px;
-            border-top-left-radius: 6px;
-            border-top-right-radius: 6px;
             box-sizing: border-box;
+
+            &.is_open {
+                background-color: $light-gray;
+                color: $gray;
+            }
         }
     }
 
@@ -44,18 +47,40 @@
         overflow-x: hidden;
         overflow-y: scroll;
 
+        .explanation {
+            @include helvetica-neue-light;
+            text-align: left;
+            padding: 10px;
+
+            .external-links,
+            #apod-explanation {
+                font-size: 14px;
+                margin-bottom: 10px;
+                text-rendering: optimizeLegibility;
+
+                a {
+                    color: white;
+                    & + a {
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+
         ul#drawer-list {
             display: block;
 
             .favorite {
                 display: block;
                 cursor: pointer;
+                width: 300px;
+                margin: 0 auto;
                 margin-bottom: 10px;
                 &:hover {
                     .favorite__title {
                         color: $gray;
                     }
-               }
+                }
                 .favorite__image {
                     width: 200px;
                     height: 100px;

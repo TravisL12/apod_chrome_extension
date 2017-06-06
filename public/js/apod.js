@@ -112,7 +112,6 @@ Apod.prototype = {
     highlightResults (result) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
         this.description = this.description.replace(re, '<span class="keyword">$1</span>');
-        apodDescription.innerHTML = this.description;
     },
 
     wouldYouLikeToKnowMore (text) {
@@ -165,8 +164,6 @@ Apod.prototype = {
         apodImage.style['background-size'] = bgSize;
 
         $('#img-quality').textContent = imgQuality;
-        apodHiRes.setAttribute('href', this.hdurl);
-        apodLowRes.setAttribute('href', this.url);
 
         this.apodDescription();
     },
@@ -180,8 +177,6 @@ Apod.prototype = {
     apodDescription () {
         apodTitle.textContent = this.title;
         apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
-        apodDescription.textContent = this.description;
-        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');

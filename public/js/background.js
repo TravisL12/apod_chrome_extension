@@ -26,17 +26,12 @@ const apodVideo       = $('#apod-video iframe');
 
 const apodTitle       = $('#apod-title');
 const apodDate        = $('#apod-date');
-const apodDescription = $('#apod-description');
 
 const apodDrawer      = $('#apod-drawer');
 const favoritesBtn    = $('#tab-favorites');
 const explanationBtn  = $('#tab-explanation');
 const knowMoreBtn     = $('#tab-know-more');
 const apodKnowMore    = $('#want-to-know-more ul');
-
-const apodOrigin      = $('#apod-origin');
-const apodHiRes       = $('#apod-hires');
-const apodLowRes      = $('#apod-lowres');
 
 const apodLoading     = $('#apod-loading');
 const apodPrevious    = $('#apod-previous');
@@ -83,15 +78,6 @@ $('.nav-buttons').addEventListener('click', (e) => {
     }
 });
 
-$('.external-links').addEventListener('click', (e) => {
-    ga('send', 'event', {
-        eventCategory: 'Outbound Link',
-        eventAction: 'clicked',
-        eventLabel: event.target.id,
-        transport: 'beacon'
-    });
-});
-
 document.addEventListener('keydown', function(e) {
     switch (e.which) {
         case 82: // Press 'r'
@@ -107,9 +93,6 @@ document.addEventListener('keydown', function(e) {
         case 75: // Press 'K'
         case 39: // Press '->'
             blipHoverState(apodNext, apod.next);
-            break;
-        case 68: // Press 'D'
-            $('.apod__footer .description').classList.toggle('show-description');
             break;
     }
 })

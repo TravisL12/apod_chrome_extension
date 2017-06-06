@@ -27,7 +27,7 @@ FavoritesTab.prototype = Object.create(DrawerTab.prototype, {
 
     render: {
         value: function () {
-            this.preRender(); // render the template to build upon
+            this.baseView.innerHTML = this.template;
             $('#clear-all-favorites').addEventListener('click', this.clearAll.bind(this));
 
             let favoritesEl = $('.apod__drawer-view #drawer-list');
@@ -85,5 +85,3 @@ FavoritesTab.prototype = Object.create(DrawerTab.prototype, {
     },
 
 });
-
-FavoritesTab.prototype.constructor = FavoritesTab;

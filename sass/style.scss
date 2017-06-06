@@ -207,25 +207,6 @@ ul, li {
         max-width: 100%;
         color: white;
         background-color: rgba(0,0,0,0);
-        transform: translate3d(0,0,0);
-        transition: all 0.4s ease-out;
-
-        .external-links,
-        #apod-description {
-            font-size: 14px;
-            margin: 10px 0 0 0;
-            text-rendering: optimizeLegibility;
-
-            a {
-                margin-right: 5px;
-                color: white;
-            }
-        }
-
-        #apod-description {
-            height: 150px;
-            overflow-y: scroll;
-        }
 
         #img-quality {
             display: inline-block;
@@ -236,11 +217,5 @@ ul, li {
             padding: 0 5px;
             border-radius: 3px;
         }
-    }
-
-    .description:hover,
-    .show-description {
-        transform: translate3d(0,-180px,0);
-        background-color: rgba(0,0,0,0.8);
     }
 }

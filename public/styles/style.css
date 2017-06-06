@@ -61,7 +61,7 @@
   transition: 0.4s transform ease-out; }
   .apod__drawer .apod__drawer-tabs {
     position: absolute;
-    top: 160px;
+    top: 157px;
     left: -193px;
     width: 350px;
     height: 35px;
@@ -69,17 +69,22 @@
     box-sizing: border-box;
     transform: rotate(-90deg); }
     .apod__drawer .apod__drawer-tabs .tab {
+      background-color: rgba(51, 51, 51, 0.8);
+      color: rgba(199, 199, 199, 0.8);
+      transition: 0.2s linear background-color;
       float: right;
       margin-left: 2px;
-      background-color: yellow;
       width: 100px;
       height: 100%;
       cursor: pointer;
       text-align: center;
       padding-top: 11px;
-      border-top-left-radius: 6px;
-      border-top-right-radius: 6px;
       box-sizing: border-box; }
+      .apod__drawer .apod__drawer-tabs .tab.hover, .apod__drawer .apod__drawer-tabs .tab:hover {
+        background-color: rgba(102, 102, 102, 0.8); }
+      .apod__drawer .apod__drawer-tabs .tab.is_open {
+        background-color: rgba(199, 199, 199, 0.8);
+        color: rgba(51, 51, 51, 0.8); }
   .apod__drawer .apod__drawer-view {
     position: relative;
     text-align: center;
@@ -90,11 +95,29 @@
     box-sizing: border-box;
     overflow-x: hidden;
     overflow-y: scroll; }
+    .apod__drawer .apod__drawer-view .explanation {
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 300;
+      text-align: left;
+      padding: 10px; }
+      .apod__drawer .apod__drawer-view .explanation .external-links,
+      .apod__drawer .apod__drawer-view .explanation #apod-explanation {
+        font-size: 14px;
+        margin-bottom: 10px;
+        text-rendering: optimizeLegibility; }
+        .apod__drawer .apod__drawer-view .explanation .external-links a,
+        .apod__drawer .apod__drawer-view .explanation #apod-explanation a {
+          color: white; }
+          .apod__drawer .apod__drawer-view .explanation .external-links a + a,
+          .apod__drawer .apod__drawer-view .explanation #apod-explanation a + a {
+            margin-left: 5px; }
     .apod__drawer .apod__drawer-view ul#drawer-list {
       display: block; }
       .apod__drawer .apod__drawer-view ul#drawer-list .favorite {
         display: block;
         cursor: pointer;
+        width: 300px;
+        margin: 0 auto;
         margin-bottom: 10px; }
         .apod__drawer .apod__drawer-view ul#drawer-list .favorite:hover .favorite__title {
           color: rgba(51, 51, 51, 0.8); }
@@ -455,21 +478,7 @@ ul, li {
     width: 750px;
     max-width: 100%;
     color: white;
-    background-color: transparent;
-    transform: translate3d(0, 0, 0);
-    transition: all 0.4s ease-out; }
-    .apod__footer .description .external-links,
-    .apod__footer .description #apod-description {
-      font-size: 14px;
-      margin: 10px 0 0 0;
-      text-rendering: optimizeLegibility; }
-      .apod__footer .description .external-links a,
-      .apod__footer .description #apod-description a {
-        margin-right: 5px;
-        color: white; }
-    .apod__footer .description #apod-description {
-      height: 150px;
-      overflow-y: scroll; }
+    background-color: transparent; }
     .apod__footer .description #img-quality {
       display: inline-block;
       font-size: 14px;
@@ -478,9 +487,5 @@ ul, li {
       margin-left: 10px;
       padding: 0 5px;
       border-radius: 3px; }
-  .apod__footer .description:hover,
-  .apod__footer .show-description {
-    transform: translate3d(0, -180px, 0);
-    background-color: rgba(0, 0, 0, 0.8); }
 
 /*# sourceMappingURL=style.css.map */
