@@ -45,7 +45,7 @@ class FavoritesTab extends DrawerTab {
     deleteAllFavorites () {
         chrome.storage.sync.remove(['apodFavorites'], () => {
             console.log('all cleared!!!');
-            $('.apod__drawer-view #drawer-list').innerHTML = '';
+            this.baseView.querySelector('#drawer-list').innerHTML = '';
             this.favorites = {};
             this.load();
         });
@@ -55,7 +55,7 @@ class FavoritesTab extends DrawerTab {
         this.baseView.innerHTML = this.template;
         $('#clear-all-favorites').addEventListener('click', this.deleteAllFavorites.bind(this));
 
-        let favoritesEl = $('.apod__drawer-view #drawer-list');
+        let favoritesEl = this.baseView.querySelector('#drawer-list');
 
         if (Object.keys(this.favorites).length) {
             favoritesEl.innerHTML = '';
