@@ -40,6 +40,10 @@ class FavoritesTab extends DrawerTab {
         });
 
         this.load();
+
+        if (this.isOpen) {
+            this.render();
+        }
     }
 
     deleteAllFavorites () {
@@ -61,7 +65,7 @@ class FavoritesTab extends DrawerTab {
             favoritesEl.innerHTML = '';
         } else {
             favoritesEl.innerHTML = `
-                <li>
+                <li class='no-favorites'>
                     <h4>You don't have any favorites yet!</h4>
                     <h4>Click the "Save Favorite" button at the bottom of the page!</h4>
                 </li>`;

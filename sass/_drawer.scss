@@ -80,6 +80,12 @@
 
             ul#drawer-list {
                 clear: both;
+                width: 100%;
+
+                .no-favorites {
+                    text-align: center;
+                    width: 100%;
+                }
 
                 .favorite {
                     cursor: pointer;
@@ -106,6 +112,7 @@
                     }
                     .favorite__title {
                         float: left;
+                        width: 240px;
 
                         .favorite__title-date,
                         .favorite__title-title {

@@ -117,7 +117,11 @@
           .apod__drawer .apod__drawer-view .explanation #apod-explanation a + a {
             margin-left: 5px; }
     .apod__drawer .apod__drawer-view .favorites ul#drawer-list {
-      clear: both; }
+      clear: both;
+      width: 100%; }
+      .apod__drawer .apod__drawer-view .favorites ul#drawer-list .no-favorites {
+        text-align: center;
+        width: 100%; }
       .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite {
         cursor: pointer;
         width: 100%;
@@ -135,7 +139,8 @@
             background-repeat: no-repeat;
             background-position: center; }
         .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title {
-          float: left; }
+          float: left;
+          width: 240px; }
           .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-date,
           .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-title {
             margin: 0; }

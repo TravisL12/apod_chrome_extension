@@ -30,10 +30,12 @@ class DrawerTab {
         this.render();
         this.drawer.setCurrentTabIdx(this.drawerIdx);
         this.el.classList.add('is-open');
+        this.isOpen = true;
     }
 
     closeTab () {
         this.el.classList.remove('is-open');
+        this.isOpen = false;
     }
 
     toggle () {
