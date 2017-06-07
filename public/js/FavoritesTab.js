@@ -4,7 +4,6 @@ class FavoritesTab extends DrawerTab {
 
     constructor (el, apod, drawer) {
         super(el, apod, drawer);
-        this.title = 'Favorites';
         this.keycode = 70;
         this.template = `
             <div class='favorites'>

@@ -6,7 +6,6 @@ class DrawerTab {
         this.el        = $(el);
         this.apod      = apod;
         this.drawer    = drawer;
-        this.title     = 'Tab Name';
         this.isOpen    = false;
         this.drawerIdx = this.drawer.tabs.length;
         this.baseView  = drawer.el.querySelector('.apod__drawer-view');
