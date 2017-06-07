@@ -116,45 +116,49 @@
           .apod__drawer .apod__drawer-view .explanation .external-links a + a,
           .apod__drawer .apod__drawer-view .explanation #apod-explanation a + a {
             margin-left: 5px; }
-    .apod__drawer .apod__drawer-view .favorites ul#drawer-list {
-      clear: both;
-      width: 100%; }
-      .apod__drawer .apod__drawer-view .favorites ul#drawer-list .no-favorites {
-        text-align: center;
+    .apod__drawer .apod__drawer-view .favorites {
+      margin-bottom: 20px; }
+      .apod__drawer .apod__drawer-view .favorites ul#drawer-list {
+        clear: both;
         width: 100%; }
-      .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite {
-        cursor: pointer;
-        width: 100%;
-        margin-bottom: 10px; }
-        .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite:hover .favorite__title {
-          color: rgba(51, 51, 51, 0.8); }
-        .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__image {
-          float: left;
-          margin-right: 10px; }
-          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__image .favorite__image-image {
-            width: 125px;
-            height: 70px;
-            background-color: black;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center; }
-        .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title {
-          float: left;
-          width: 240px; }
-          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-date,
-          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-title {
-            margin: 0; }
-    .apod__drawer .apod__drawer-view .favorites .clear-all {
-      background-color: rgba(51, 51, 51, 0.8);
-      color: rgba(199, 199, 199, 0.8);
-      transition: 0.2s linear background-color;
-      cursor: pointer;
-      position: absolute;
-      bottom: 10px;
-      right: 10px;
-      padding: 5px 10px; }
-      .apod__drawer .apod__drawer-view .favorites .clear-all.hover, .apod__drawer .apod__drawer-view .favorites .clear-all:hover {
-        background-color: rgba(102, 102, 102, 0.8); }
+        .apod__drawer .apod__drawer-view .favorites ul#drawer-list .no-favorites {
+          text-align: center;
+          width: 100%; }
+        .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite {
+          position: relative;
+          cursor: pointer;
+          width: 100%;
+          margin-bottom: 10px; }
+          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .remove-favorite {
+            background-color: rgba(51, 51, 51, 0.8);
+            color: rgba(199, 199, 199, 0.8);
+            transition: 0.2s linear background-color;
+            cursor: pointer;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 2px 6px;
+            font-size: 11px; }
+            .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .remove-favorite.hover, .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .remove-favorite:hover {
+              background-color: rgba(102, 102, 102, 0.8); }
+          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__image {
+            float: left;
+            margin-right: 10px; }
+            .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__image .favorite__image-image {
+              width: 125px;
+              height: 70px;
+              background-color: black;
+              background-size: contain;
+              background-repeat: no-repeat;
+              background-position: center; }
+          .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title {
+            float: left;
+            width: 240px; }
+            .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-date,
+            .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-title {
+              margin: 0; }
+            .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title:hover {
+              color: rgba(51, 51, 51, 0.8); }
 
 @keyframes clockwise-spin {
   0% {

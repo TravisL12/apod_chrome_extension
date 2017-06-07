@@ -10,7 +10,6 @@ class FavoritesTab extends DrawerTab {
             <div class='favorites'>
                 <h2>Favorite APOD's</h2>
                 <ul id='drawer-list'></ul>
-                <div class='clear-all' id='clear-all-favorites'>Clear All</div>
             </div>
         `;
 
@@ -46,18 +45,8 @@ class FavoritesTab extends DrawerTab {
         }
     }
 
-    deleteAllFavorites () {
-        chrome.storage.sync.remove(['apodFavorites'], () => {
-            console.log('all cleared!!!');
-            this.baseView.querySelector('#drawer-list').innerHTML = '';
-            this.favorites = {};
-            this.load();
-        });
-    }
-
     render () {
         this.baseView.innerHTML = this.template;
-        $('#clear-all-favorites').addEventListener('click', this.deleteAllFavorites.bind(this));
 
         let favoritesEl = this.baseView.querySelector('#drawer-list');
 
@@ -86,11 +75,26 @@ class FavoritesTab extends DrawerTab {
                     <p class='favorite__title-date'>${DateManager.prettyDateFormat(date)}</p>
                     <p class='favorite__title-title'>${this.favorites[date].title}</p>
                 </div>
+                <div class='remove-favorite'>Remove</div>
             `;
 
-            listEl.addEventListener('click', () => {
-                this.apod.specificDate(date);
+            listEl.querySelector('.remove-favorite').addEventListener('click', () => {
+                delete this.favorites[date];
+
+                chrome.storage.sync.set({
+                    apodFavorites: this.favorites,
+                });
+
+                this.render();
             })
+
+            const linkSelectors = ['.favorite__image','.favorite__title-title','.favorite__title-date'];
+
+            for (let i in linkSelectors) {
+                listEl.querySelector(linkSelectors[i]).addEventListener('click', () => {
+                    this.apod.specificDate(date);
+                })
+            }
 
             favoritesEl.appendChild(listEl);
         }
