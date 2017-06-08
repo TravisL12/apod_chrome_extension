@@ -5,6 +5,7 @@ class DrawerTab {
     constructor (el, apod, drawer) {
         this.el        = $(el);
         this.apod      = apod;
+        this.keycode   = null;
         this.drawer    = drawer;
         this.isOpen    = false;
         this.drawerIdx = this.drawer.tabs.length;
@@ -16,7 +17,7 @@ class DrawerTab {
     }
 
     setKeydownListener (e) {
-        if (e.which === this.keycode) {
+        if (this.keycode && e.which === this.keycode) {
             this.toggle();
         }
     }

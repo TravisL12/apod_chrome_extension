@@ -21,10 +21,12 @@ function uniqueResults (value, index, self) {
  * Keyword
  * @param {string} name
  * @param {string} category
+ * @param {int} index id
  */
-function Keyword (name, category) {
+function Keyword (name, category, id) {
     this.title = name[0].toUpperCase() + name.slice(1);
     this.query = `${name} ${category}`;
+    this.id = id;
 }
 
 /**
@@ -67,8 +69,8 @@ class KnowMore {
     }
 
     createKeywords (match, category) {
-        return match.map((name) => {
-            return new Keyword(name, category);
+        return match.map((name, idx) => {
+            return new Keyword(name, category, idx+1);
         });
     }
 
@@ -90,30 +92,25 @@ class KnowMore {
     createLink (result) {
         const el = document.createElement('div');
         el.className = 'tab';
+        el.id = 'know-more-tab-' + result.id;
 
         const loadImg = document.createElement('span');
         loadImg.className = 'loading-spinner hide';
 
         const googleSearch = (e) => {
             ga('send', 'event', 'Know More', 'clicked', result.query);
-
             el.removeEventListener('click', googleSearch); // No clicking twice!
+
+            const knowMoreTab = new KnowMoreTab('#' + el.id, apod, drawer);
             loadImg.classList.remove('hide'); // show spinner
 
             this.search(result.query).then((data) => {
                 loadImg.classList.add('hide'); // hide spinner
 
                 let response = JSON.parse(data.response);
-                let items = response.items;
+                knowMoreTab.items = response.items;
 
-                el.innerHTML = `
-                    ${el.innerHTML}
-                    <div class='know-links'>
-                        <a href="${items[0].link}" target="_blank">${items[0].htmlTitle}</a>
-                        <a href="${items[1].link}" target="_blank">${items[1].htmlTitle}</a>
-                        <a href="${items[2].link}" target="_blank">${items[2].htmlTitle}</a>
-                    </div>`;
-
+                knowMoreTab.toggle();
             }, (error) => {
                 console.log(JSON.parse(error.response).error.errors[0].message);
             });
