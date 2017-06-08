@@ -448,9 +448,7 @@ ul, li {
 .apod__footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
-  height: 70px;
-  margin: 0 auto; }
+  width: 100%; }
   .apod__footer h1 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 100;
@@ -486,13 +484,13 @@ ul, li {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     position: absolute;
+    right: 20px;
+    bottom: 45px;
     padding: 10px;
-    box-sizing: border-box;
-    height: 250px;
-    width: 750px;
-    max-width: 100%;
+    width: auto;
+    height: auto;
     color: white;
-    background-color: transparent; }
+    transition: 0.2s opacity ease-out; }
     .apod__footer .description #img-quality {
       display: inline-block;
       font-size: 14px;
