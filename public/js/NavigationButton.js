@@ -32,7 +32,7 @@ class NavigationButton {
             this.el.classList.remove('hover');
         }, delay);
 
-        apod[this.action].call(apod);
+        apod[this.action]();
     }
 
 }

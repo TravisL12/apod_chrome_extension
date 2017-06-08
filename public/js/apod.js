@@ -1,24 +1,5 @@
 'use strict';
 
-function _zeroPad (num) {
-    num = '0' + num.toString();
-    return num.slice(-2);
-}
-
-function _setLoadingView () {
-    apodImage.style['background-image'] = '';
-    apodImage.style['background-size'] = '';
-    apodVideo.src = '';
-    $('.apod__footer .description').classList.add('hide');
-    apodLoading.classList.remove('hide');
-    apodKnowMore.innerHTML = '';
-    drawer.closeDrawer();
-}
-
-function fitToWindow (image) {
-    return image.width > window.innerWidth || image.height > window.innerHeight;
-}
-
 class Apod {
 
     constructor () {
@@ -49,6 +30,20 @@ class Apod {
         this.getApod();
     }
 
+    fitToWindow (image) {
+        return image.width > window.innerWidth || image.height > window.innerHeight;
+    }
+
+    _setLoadingView () {
+        apodImage.style['background-image'] = '';
+        apodImage.style['background-size'] = '';
+        apodVideo.src = '';
+        $('.apod__footer .description').classList.add('hide');
+        apodLoading.classList.remove('hide');
+        apodKnowMore.innerHTML = '';
+        drawer.closeDrawer();
+    }
+
     isRequestValid () {
         if (this.isRequestInProgress) {
             return false;
@@ -73,7 +68,7 @@ class Apod {
             return;
         }
 
-        _setLoadingView();
+        this._setLoadingView();
 
         reqwest({
             type: 'GET',
@@ -162,7 +157,7 @@ class Apod {
         this.isRequestInProgress = false;
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
-        let bgSize = fitToWindow(this.loadedImage) ? 'contain' : 'auto';
+        let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
         apodImage.style['background-size'] = bgSize;
 
         $('#img-quality').textContent = imgQuality;

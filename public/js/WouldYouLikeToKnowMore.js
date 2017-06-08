@@ -31,14 +31,14 @@ function Keyword (name, category) {
  * KnowMore
  * @param {string} text
  */
-function KnowMore (text) {
-    this.text = text;
-    this.celestialObjects = this.findCelestialObjects();
-    this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
-    this.results = this.buildResults();
-}
+class KnowMore {
 
-KnowMore.prototype = {
+    constructor (text) {
+        this.text = text;
+        this.celestialObjects = this.findCelestialObjects();
+        this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
+        this.results = this.buildResults();
+    }
 
     findNewGeneralCatalogObjects () {
         let match = this.text.match(/NGC(-|\s)?\d{1,7}/gi) || [];
@@ -47,7 +47,7 @@ KnowMore.prototype = {
         }
 
         return match;
-    },
+    }
 
     findCelestialObjects () {
         let matches = [];
@@ -64,13 +64,13 @@ KnowMore.prototype = {
             matches = matches.concat(match);
         }
         return matches;
-    },
+    }
 
     createKeywords (match, category) {
         return match.map((name) => {
             return new Keyword(name, category);
         });
-    },
+    }
 
     buildResults () {
         const results = [].concat(this.celestialObjects, this.newGeneralCatalog);
@@ -85,7 +85,7 @@ KnowMore.prototype = {
         return results.filter(uniqueResults).sort((a,b) => {
             return frequency[b.title] > frequency[a.title];
         }).slice(0,resultsToDisplay);
-    },
+    }
 
     createLink (result) {
         const el = document.createElement('li');
@@ -122,7 +122,7 @@ KnowMore.prototype = {
         el.addEventListener('click', googleSearch);
 
         return el;
-    },
+    }
 
     search (query) {
         return reqwest({
@@ -134,7 +134,7 @@ KnowMore.prototype = {
                 q: query,
             },
         });
-    },
+    }
 }
 
 const celestialDictionary = {
