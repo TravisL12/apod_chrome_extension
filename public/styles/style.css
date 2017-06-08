@@ -54,28 +54,36 @@
 .apod__drawer {
   position: absolute;
   z-index: 1000;
-  top: 130px;
+  top: 80px;
   right: 0;
+  width: 400px;
+  height: 80vh;
   transform: translate3d(400px, 0px, 0px);
   transition: 0.4s transform ease-out; }
   .apod__drawer.show {
     transform: translate3d(0px, 0px, 0px); }
   .apod__drawer .apod__drawer-tabs {
     position: absolute;
-    top: 157px;
-    left: -193px;
-    width: 350px;
+    top: 465px;
     height: 35px;
-    text-align: right;
+    width: 500px;
     box-sizing: border-box;
-    transform: rotate(-90deg); }
+    transform: rotate(-90deg);
+    transform-origin: left bottom;
+    display: flex;
+    flex-direction: row-reverse; }
+    .apod__drawer .apod__drawer-tabs .default-tabs,
+    .apod__drawer .apod__drawer-tabs .apod__know-more {
+      display: flex;
+      justify-content: flex-end;
+      align-content: flex-start;
+      align-items: flex-start; }
     .apod__drawer .apod__drawer-tabs .tab {
       background-color: rgba(51, 51, 51, 0.8);
       color: rgba(199, 199, 199, 0.8);
       transition: 0.2s linear background-color;
-      float: right;
       margin-left: 2px;
-      width: 100px;
+      min-width: 100px;
       height: 100%;
       cursor: pointer;
       text-align: center;
@@ -94,7 +102,7 @@
     background-color: rgba(199, 199, 199, 0.8);
     height: auto;
     min-height: 400px;
-    max-height: 80vh;
+    height: 100%;
     width: 400px;
     box-sizing: border-box;
     overflow-x: hidden;
@@ -358,71 +366,59 @@ ul, li {
   height: 60px;
   padding: 10px;
   box-sizing: border-box; }
-
-.apod__top-sites {
-  float: left;
-  width: 40%;
-  color: white;
-  opacity: 0.6;
-  transition: 0.1s opacity linear; }
-  .apod__top-sites:hover {
-    opacity: 1; }
-  .apod__top-sites ul {
-    display: flex;
-    flex-wrap: wrap;
-    align-content: flex-start;
-    align-items: flex-start; }
-    .apod__top-sites ul li {
-      margin: 0 5px 10px; }
-      .apod__top-sites ul li a {
-        background-color: rgba(51, 51, 51, 0.8);
-        color: rgba(199, 199, 199, 0.8);
-        transition: 0.2s linear background-color;
-        display: inline-block;
-        padding: 10px; }
-        .apod__top-sites ul li a.hover, .apod__top-sites ul li a:hover {
-          background-color: rgba(102, 102, 102, 0.8); }
-        .apod__top-sites ul li a .thumb-img {
-          width: 16px;
-          height: 16px;
-          display: block; }
-
-.apod__know-more {
-  float: right;
-  width: 60%; }
-  .apod__know-more ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: flex-end;
-    align-content: flex-start;
-    align-items: flex-start; }
-    .apod__know-more ul li {
-      background-color: rgba(51, 51, 51, 0.8);
-      color: rgba(199, 199, 199, 0.8);
-      transition: 0.2s linear background-color;
-      margin: 0 5px 10px;
-      text-align: center;
+  .apod__header h1 {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 100;
+    display: inline-block;
+    margin: 0; }
+  .apod__header h2 {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    margin: 0;
+    color: #757575; }
+  .apod__header .description {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    position: absolute;
+    right: 20px;
+    top: 0;
+    padding: 10px;
+    width: auto;
+    height: auto;
+    color: white;
+    transition: 0.2s opacity ease-out; }
+    .apod__header .description #img-quality {
       display: inline-block;
-      cursor: pointer;
-      min-width: 110px;
-      max-width: 180px;
-      padding: 6px 10px;
-      box-sizing: border-box;
-      transition: 0.5s opacity linear, 0.2s background-color linear; }
-      .apod__know-more ul li.hover, .apod__know-more ul li:hover {
-        background-color: rgba(102, 102, 102, 0.8); }
-      .apod__know-more ul li .know-links {
-        text-align: left; }
-      .apod__know-more ul li h4, .apod__know-more ul li .know-links a {
-        display: block;
-        margin: 0;
-        color: inherit;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        line-height: 2; }
-      .apod__know-more ul li h4 {
-        display: inline-block; }
+      font-size: 14px;
+      color: #757575;
+      margin-left: 10px; }
+  .apod__header .apod__top-sites {
+    float: left;
+    width: 40%;
+    color: white;
+    opacity: 0.6;
+    transition: 0.1s opacity linear; }
+    .apod__header .apod__top-sites:hover {
+      opacity: 1; }
+    .apod__header .apod__top-sites ul {
+      display: flex;
+      flex-wrap: wrap;
+      align-content: flex-start;
+      align-items: flex-start; }
+      .apod__header .apod__top-sites ul li {
+        margin: 0 5px 10px; }
+        .apod__header .apod__top-sites ul li a {
+          background-color: rgba(51, 51, 51, 0.8);
+          color: rgba(199, 199, 199, 0.8);
+          transition: 0.2s linear background-color;
+          display: inline-block;
+          padding: 10px; }
+          .apod__header .apod__top-sites ul li a.hover, .apod__header .apod__top-sites ul li a:hover {
+            background-color: rgba(102, 102, 102, 0.8); }
+          .apod__header .apod__top-sites ul li a .thumb-img {
+            width: 16px;
+            height: 16px;
+            display: block; }
 
 .apod__image,
 .apod__video {
@@ -449,16 +445,6 @@ ul, li {
   position: absolute;
   bottom: 0;
   width: 100%; }
-  .apod__footer h1 {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 100;
-    display: inline-block;
-    margin: 0; }
-  .apod__footer h2 {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    margin: 0;
-    color: #757575; }
   .apod__footer .nav-buttons {
     position: absolute;
     bottom: 10;
@@ -480,21 +466,5 @@ ul, li {
           background-color: rgba(102, 102, 102, 0.8); }
       .apod__footer .nav-buttons ul li.save-favorite:active {
         background-color: gold; }
-  .apod__footer .description {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    position: absolute;
-    right: 20px;
-    bottom: 45px;
-    padding: 10px;
-    width: auto;
-    height: auto;
-    color: white;
-    transition: 0.2s opacity ease-out; }
-    .apod__footer .description #img-quality {
-      display: inline-block;
-      font-size: 14px;
-      color: #757575;
-      margin-left: 10px; }
 
 /*# sourceMappingURL=style.css.map */

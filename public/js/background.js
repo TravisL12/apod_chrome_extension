@@ -31,7 +31,7 @@ const apodVideo = $('#apod-video iframe');
 
 const apodTitle = $('#apod-title');
 const apodDate = $('#apod-date');
-const apodKnowMore = $('#want-to-know-more ul');
+const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');

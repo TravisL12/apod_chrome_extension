@@ -38,7 +38,7 @@ class Apod {
         apodImage.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodVideo.src = '';
-        $('.apod__footer .description').classList.add('hide');
+        $('.apod__header .description').classList.add('hide');
         apodLoading.classList.remove('hide');
         apodKnowMore.innerHTML = '';
         drawer.closeDrawer();
@@ -127,7 +127,10 @@ class Apod {
 
     preLoadImage () {
         let Img = new Image();
-        let quality = 'HD';
+        let quality = {
+            text: 'HD',
+            title: 'High Definition Image'
+        };
         const delayForHdLoad = 3000;
 
         Img.src = this.hdurl;
@@ -135,7 +138,10 @@ class Apod {
         let timeout = setTimeout(() => {
             if (!Img.complete) {
                 Img.src = this.url;
-                quality = 'SD';
+                quality = {
+                    text: 'SD',
+                    title: 'Standard Definition Image'
+                };
             }
         }, delayForHdLoad);
 
@@ -160,7 +166,8 @@ class Apod {
         let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
         apodImage.style['background-size'] = bgSize;
 
-        $('#img-quality').textContent = imgQuality;
+        $('#img-quality').textContent = imgQuality.text;
+        $('#img-quality').setAttribute('title', imgQuality.title);
 
         this.apodDescription();
     }
@@ -177,7 +184,7 @@ class Apod {
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');
-        $('.apod__footer .description').classList.remove('hide');
+        $('.apod__header .description').classList.remove('hide');
     }
 
     /**

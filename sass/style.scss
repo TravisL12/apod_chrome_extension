@@ -51,83 +51,68 @@ ul, li {
     height: 60px;
     padding: 10px;
     box-sizing: border-box;
-}
 
-.apod__top-sites {
-    float: left;
-    width: 40%;
-    color: white;
-    opacity: 0.6;
-    transition: 0.1s opacity linear;
-
-    &:hover {
-        opacity: 1;
+    h1 {
+        @include helvetica-neue-light(100);
+        display: inline-block;
+        margin: 0;
     }
 
-    ul {
-        display: flex;
-        flex-wrap: wrap;
-        align-content: flex-start;
-        align-items: flex-start;
+    h2 {
+        @include helvetica-neue-light;
+        margin: 0;
+        color: #757575;
+    }
 
-        li {
-            margin: 0 5px 10px;
-            a {
-                @include apod-button;
-                display: inline-block;
-                padding: 10px;
+    .description {
+        @include helvetica-neue-light;
+        position: absolute;
+        right: 20px;
+        top: 0;
+        padding: 10px;
+        width: auto;
+        height: auto;
+        color: white;
+        transition: 0.2s opacity ease-out;
 
-                .thumb-img{
-                    width: 16px;
-                    height: 16px;
-                    display: block;
-                }
-            }
+        #img-quality {
+            display: inline-block;
+            font-size: 14px;
+            color: #757575;
+            margin-left: 10px;
         }
     }
-}
 
-.apod__know-more {
-    float: right;
-    width: 60%;
+    .apod__top-sites {
+        float: left;
+        width: 40%;
+        color: white;
+        opacity: 0.6;
+        transition: 0.1s opacity linear;
 
-    ul {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        align-content: flex-start;
-        align-items: flex-start;
+        &:hover {
+            opacity: 1;
+        }
 
-        li {
-            @include apod-button;
-            margin: 0 5px 10px;
-            text-align: center;
-            display: inline-block;
-            cursor: pointer;
-            min-width: 110px;
-            max-width: 180px;
-            padding: 6px 10px;
-            box-sizing: border-box;
+        ul {
+            display: flex;
+            flex-wrap: wrap;
+            align-content: flex-start;
+            align-items: flex-start;
 
-            transition: 0.5s opacity linear,
-                        0.2s background-color linear;
+            li {
+                margin: 0 5px 10px;
+                a {
+                    @include apod-button;
+                    display: inline-block;
+                    padding: 10px;
 
-            .know-links {
-                text-align: left;
-            }
-
-            h4, .know-links a {
-                display: block;
-                margin: 0;
-                color: inherit;
-                text-overflow: ellipsis;
-                white-space: nowrap;
-                overflow: hidden;
-                line-height: 2;
-            }
-
-            h4 {
-                display: inline-block;
+                    .thumb-img{
+                        width: 16px;
+                        height: 16px;
+                        display: block;
+                    }
+                }
             }
         }
     }
@@ -164,18 +149,6 @@ ul, li {
     bottom: 0;
     width: 100%;
 
-    h1 {
-        @include helvetica-neue-light(100);
-        display: inline-block;
-        margin: 0;
-    }
-
-    h2 {
-        @include helvetica-neue-light;
-        margin: 0;
-        color: #757575;
-    }
-
     .nav-buttons {
         position: absolute;
         bottom: 10;
@@ -196,25 +169,6 @@ ul, li {
             &.save-favorite:active {
                 background-color: gold;
             }
-        }
-    }
-
-    .description {
-        @include helvetica-neue-light;
-        position: absolute;
-        right: 20px;
-        bottom: 45px;
-        padding: 10px;
-        width: auto;
-        height: auto;
-        color: white;
-        transition: 0.2s opacity ease-out;
-
-        #img-quality {
-            display: inline-block;
-            font-size: 14px;
-            color: #757575;
-            margin-left: 10px;
         }
     }
 }

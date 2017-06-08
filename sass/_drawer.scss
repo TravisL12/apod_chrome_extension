@@ -1,9 +1,12 @@
+$drawer-width: 400px;
+
 .apod__drawer {
-    $drawer-width: 400px;
     position: absolute;
     z-index: 1000;
-    top: 130px;
+    top: 80px;
     right: 0;
+    width: $drawer-width;
+    height: 80vh;
     transform: translate3d($drawer-width,0px,0px);
     transition: 0.4s transform ease-out;
 
@@ -13,19 +16,27 @@
 
     .apod__drawer-tabs {
         position: absolute;
-        top: 157px;
-        left: -193px;
-        width: 350px;
+        top: 465px;
         height: 35px;
-        text-align: right;
+        width: 500px;
         box-sizing: border-box;
         transform: rotate(-90deg);
+        transform-origin: left bottom;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .default-tabs,
+        .apod__know-more {
+            display: flex;
+            justify-content: flex-end;
+            align-content: flex-start;
+            align-items: flex-start;
+        }
 
         .tab {
             @include apod-button;
-            float: right;
             margin-left: 2px;
-            width: 100px;
+            min-width: 100px;
             height: 100%;
             cursor: pointer;
             text-align: center;
@@ -46,7 +57,7 @@
         background-color: $light-gray;
         height: auto;
         min-height: 400px;
-        max-height: 80vh;
+        height: 100%;
         width: $drawer-width;
         box-sizing: border-box;
         overflow-x: hidden;

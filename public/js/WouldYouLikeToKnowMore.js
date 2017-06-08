@@ -88,7 +88,9 @@ class KnowMore {
     }
 
     createLink (result) {
-        const el = document.createElement('li');
+        const el = document.createElement('div');
+        el.className = 'tab';
+
         const loadImg = document.createElement('span');
         loadImg.className = 'loading-spinner hide';
 
@@ -117,7 +119,7 @@ class KnowMore {
             });
         }
 
-        el.innerHTML = '<h4>' + result.title + '</h4>';
+        el.innerHTML = result.title;
         el.appendChild(loadImg);
         el.addEventListener('click', googleSearch);
 
