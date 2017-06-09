@@ -108,6 +108,9 @@ class KnowMore {
                 knowMoreTab.openTab();
             }, (error) => {
                 console.log(JSON.parse(error.response).error.errors[0].message);
+            }).fail((error) => {
+                knowMoreTab.template = `<h1>All out of searches for today!</h1>`;
+                knowMoreTab.openTab();
             });
         }
 

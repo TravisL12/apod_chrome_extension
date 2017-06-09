@@ -153,8 +153,8 @@
             float: left;
             margin-right: 10px; }
             .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__image .favorite__image-image {
-              width: 125px;
-              height: 70px;
+              width: 100px;
+              height: 60px;
               background-color: black;
               background-size: contain;
               background-repeat: no-repeat;
