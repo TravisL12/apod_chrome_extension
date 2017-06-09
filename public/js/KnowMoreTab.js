@@ -6,7 +6,8 @@ class KnowMoreTab extends DrawerTab {
         super(el, apod, drawer);
         this.items = [];
         this.loader = new SunLoader();
-        this.keycode = drawer.tabs.length + 49;
+        this.keycode = drawer.tabs.length + 48; // tab populates with `super` so you start at 49 (number 1 key)
+
         this.template = `
             <div class='know-links'>
                 <div class='loading-spinner hide'>${this.loader.render()}</div>
@@ -27,7 +28,10 @@ class KnowMoreTab extends DrawerTab {
         let links = '';
         for (let i in this.items) {
             let item = this.items[i];
-            links += `<li><a href="${item.link}" target="_blank">${item.htmlTitle}</a></li>`;
+            links += `
+                <li>
+                    <a href="${item.link}" target="_blank">${item.title}</a>
+                </li>`;
         }
 
         this.baseView.querySelector('.know-links ul').innerHTML = links;

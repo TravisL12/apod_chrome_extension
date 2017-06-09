@@ -4,27 +4,25 @@ $drawer-width: 400px;
     h3 {
         @include helvetica-neue-light;
         color: white;
-        margin: 0 0 5px 25px;
+        margin-bottom: 5px;
+        text-align: center;
         color: $light-gray;
     }
 
     position: absolute;
     top: 60px;
     left: 10px;
-    width: 200px;
     box-sizing: border-box;
     z-index: 1000;
 
     .tab {
         @include apod-button;
-        margin-left: 2px;
-        min-width: 100px;
-        max-width: 150px;
-        height: 35px;
+        min-width: 110px;
+        max-width: 200px;
+        height: 25px;
         cursor: pointer;
         text-align: center;
-        padding-top: 11px;
-        box-sizing: border-box;
+        padding: 10px 10px 0;
         margin-bottom: 10px;
 
         &.is-open {
@@ -154,7 +152,7 @@ $drawer-width: 400px;
                 margin-bottom: 10px;
                 a {
                     @include helvetica-neue-light;
-                    font-size: 14px;
+                    font-size: 13px;
                     color: white;
                 }
             }

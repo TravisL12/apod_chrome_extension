@@ -55,27 +55,25 @@
   position: absolute;
   top: 60px;
   left: 10px;
-  width: 200px;
   box-sizing: border-box;
   z-index: 1000; }
   .apod__drawer-tabs h3 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     color: white;
-    margin: 0 0 5px 25px;
+    margin-bottom: 5px;
+    text-align: center;
     color: rgba(199, 199, 199, 0.8); }
   .apod__drawer-tabs .tab {
     background-color: rgba(51, 51, 51, 0.8);
     color: rgba(199, 199, 199, 0.8);
     transition: 0.2s linear background-color;
-    margin-left: 2px;
-    min-width: 100px;
-    max-width: 150px;
-    height: 35px;
+    min-width: 110px;
+    max-width: 200px;
+    height: 25px;
     cursor: pointer;
     text-align: center;
-    padding-top: 11px;
-    box-sizing: border-box;
+    padding: 10px 10px 0;
     margin-bottom: 10px; }
     .apod__drawer-tabs .tab.hover, .apod__drawer-tabs .tab:hover {
       background-color: rgba(102, 102, 102, 0.8); }
@@ -177,7 +175,7 @@
       .apod__drawer .apod__drawer-view .know-links ul li a {
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: 300;
-        font-size: 14px;
+        font-size: 13px;
         color: white; }
     .apod__drawer .apod__drawer-view .know-links .loading-spinner {
       opacity: 0.5; }
