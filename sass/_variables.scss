@@ -53,3 +53,6 @@ $light-gray: rgba(#C7C7C7, 0.8);
     border-top: 0 solid transparent;
     transform-origin: bottom;
 }
+
+@import 'apod_loading_sun';
+@import 'apod_loading_moon';

@@ -1,5 +1,39 @@
 $drawer-width: 400px;
 
+.apod__drawer-tabs {
+    h3 {
+        @include helvetica-neue-light;
+        color: white;
+        margin: 0 0 5px 25px;
+        color: $light-gray;
+    }
+
+    position: absolute;
+    top: 60px;
+    left: 10px;
+    width: 200px;
+    box-sizing: border-box;
+    z-index: 1000;
+
+    .tab {
+        @include apod-button;
+        margin-left: 2px;
+        min-width: 100px;
+        max-width: 150px;
+        height: 35px;
+        cursor: pointer;
+        text-align: center;
+        padding-top: 11px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+
+        &.is-open {
+            background-color: $light-gray;
+            color: $gray;
+        }
+    }
+}
+
 .apod__drawer {
     position: absolute;
     z-index: 1000;
@@ -14,47 +48,13 @@ $drawer-width: 400px;
         transform: translate3d(0px,0px,0px);
     }
 
-    .apod__drawer-tabs {
-        position: absolute;
-        top: 465px;
-        height: 35px;
-        width: 500px;
-        box-sizing: border-box;
-        transform: rotate(-90deg);
-        transform-origin: left bottom;
-        display: flex;
-        flex-direction: row-reverse;
-
-        .default-tabs,
-        .apod__know-more {
-            display: flex;
-            justify-content: flex-end;
-            align-content: flex-start;
-            align-items: flex-start;
-        }
-
-        .tab {
-            @include apod-button;
-            margin-left: 2px;
-            min-width: 100px;
-            height: 100%;
-            cursor: pointer;
-            text-align: center;
-            padding-top: 11px;
-            box-sizing: border-box;
-
-            &.is-open {
-                background-color: $light-gray;
-                color: $gray;
-            }
-        }
-    }
-
     .apod__drawer-view {
         @include helvetica-neue-light;
         position: relative;
         padding: 10px;
-        background-color: $light-gray;
+        box-shadow: inset 0 0 0 0.5px $light-gray;
+        background-color: rgba(0,0,0,0.6);
+        color: white;
         height: auto;
         min-height: 400px;
         height: 100%;
@@ -138,25 +138,30 @@ $drawer-width: 400px;
                             margin: 0;
                         }
                         &:hover {
-                            color: $gray;
+                            color: $light-gray;
                         }
                     }
                 }
             }
         }
         .know-links {
-            ul,
-            ul li {
+            ul {
                 display: block;
             }
 
+            ul li {
+                display: block;
+                margin-bottom: 10px;
+                a {
+                    @include helvetica-neue-light;
+                    font-size: 14px;
+                    color: white;
+                }
+            }
+
             .loading-spinner {
-                height: 24px;
-                width: 24px;
-                display: inline-block;
-                background: url('../images/ajax-loader-white.gif') center center no-repeat; 
-                background-size: 70%;
-                margin-left: 5px;
+                opacity: 0.5;
+                @include sun-loader(80px);
 
                 &.hide {
                     display: none;

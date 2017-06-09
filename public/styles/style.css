@@ -3,7 +3,7 @@
   height: 0;
   width: 0; }
 
-.apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light, .apod__loading .moon-container {
+.apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-container, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small, .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-light, .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light, .apod__loading .moon-container {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -11,7 +11,7 @@
   right: 0;
   margin: auto; }
 
-.apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
+.apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray, .apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
   position: absolute;
   width: 0;
   height: 0;
@@ -51,6 +51,38 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
+.apod__drawer-tabs {
+  position: absolute;
+  top: 60px;
+  left: 10px;
+  width: 200px;
+  box-sizing: border-box;
+  z-index: 1000; }
+  .apod__drawer-tabs h3 {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
+    color: white;
+    margin: 0 0 5px 25px;
+    color: rgba(199, 199, 199, 0.8); }
+  .apod__drawer-tabs .tab {
+    background-color: rgba(51, 51, 51, 0.8);
+    color: rgba(199, 199, 199, 0.8);
+    transition: 0.2s linear background-color;
+    margin-left: 2px;
+    min-width: 100px;
+    max-width: 150px;
+    height: 35px;
+    cursor: pointer;
+    text-align: center;
+    padding-top: 11px;
+    box-sizing: border-box;
+    margin-bottom: 10px; }
+    .apod__drawer-tabs .tab.hover, .apod__drawer-tabs .tab:hover {
+      background-color: rgba(102, 102, 102, 0.8); }
+    .apod__drawer-tabs .tab.is-open {
+      background-color: rgba(199, 199, 199, 0.8);
+      color: rgba(51, 51, 51, 0.8); }
+
 .apod__drawer {
   position: absolute;
   z-index: 1000;
@@ -62,44 +94,14 @@
   transition: 0.4s transform ease-out; }
   .apod__drawer.show {
     transform: translate3d(0px, 0px, 0px); }
-  .apod__drawer .apod__drawer-tabs {
-    position: absolute;
-    top: 465px;
-    height: 35px;
-    width: 500px;
-    box-sizing: border-box;
-    transform: rotate(-90deg);
-    transform-origin: left bottom;
-    display: flex;
-    flex-direction: row-reverse; }
-    .apod__drawer .apod__drawer-tabs .default-tabs,
-    .apod__drawer .apod__drawer-tabs .apod__know-more {
-      display: flex;
-      justify-content: flex-end;
-      align-content: flex-start;
-      align-items: flex-start; }
-    .apod__drawer .apod__drawer-tabs .tab {
-      background-color: rgba(51, 51, 51, 0.8);
-      color: rgba(199, 199, 199, 0.8);
-      transition: 0.2s linear background-color;
-      margin-left: 2px;
-      min-width: 100px;
-      height: 100%;
-      cursor: pointer;
-      text-align: center;
-      padding-top: 11px;
-      box-sizing: border-box; }
-      .apod__drawer .apod__drawer-tabs .tab.hover, .apod__drawer .apod__drawer-tabs .tab:hover {
-        background-color: rgba(102, 102, 102, 0.8); }
-      .apod__drawer .apod__drawer-tabs .tab.is-open {
-        background-color: rgba(199, 199, 199, 0.8);
-        color: rgba(51, 51, 51, 0.8); }
   .apod__drawer .apod__drawer-view {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
     position: relative;
     padding: 10px;
-    background-color: rgba(199, 199, 199, 0.8);
+    box-shadow: inset 0 0 0 0.5px rgba(199, 199, 199, 0.8);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
     height: auto;
     min-height: 400px;
     height: 100%;
@@ -166,17 +168,120 @@
             .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title .favorite__title-title {
               margin: 0; }
             .apod__drawer .apod__drawer-view .favorites ul#drawer-list .favorite .favorite__title:hover {
-              color: rgba(51, 51, 51, 0.8); }
-    .apod__drawer .apod__drawer-view .know-links ul,
-    .apod__drawer .apod__drawer-view .know-links ul li {
+              color: rgba(199, 199, 199, 0.8); }
+    .apod__drawer .apod__drawer-view .know-links ul {
       display: block; }
+    .apod__drawer .apod__drawer-view .know-links ul li {
+      display: block;
+      margin-bottom: 10px; }
+      .apod__drawer .apod__drawer-view .know-links ul li a {
+        font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+        font-weight: 300;
+        font-size: 14px;
+        color: white; }
     .apod__drawer .apod__drawer-view .know-links .loading-spinner {
-      height: 24px;
-      width: 24px;
-      display: inline-block;
-      background: url("../images/ajax-loader-white.gif") center center no-repeat;
-      background-size: 70%;
-      margin-left: 5px; }
+      opacity: 0.5; }
+@keyframes clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 0deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 360deg); } }
+@keyframes counter-clockwise-spin {
+  0% {
+    transform: rotate3d(0, 0, 1, 360deg); }
+  100% {
+    transform: rotate3d(0, 0, 1, 0deg); } }
+      .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-container {
+        width: 80px;
+        height: 80px; }
+      .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big {
+        width: 64px;
+        height: 64px;
+        animation: clockwise-spin 20s infinite linear; }
+        .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray {
+          border-bottom: 32px solid orange;
+          border-left: 9.6px solid transparent;
+          border-right: 9.6px solid transparent; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(1) {
+            transform: rotate3d(0, 0, 1, 0deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(2) {
+            transform: rotate3d(0, 0, 1, 30deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(3) {
+            transform: rotate3d(0, 0, 1, 60deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(4) {
+            transform: rotate3d(0, 0, 1, 90deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(5) {
+            transform: rotate3d(0, 0, 1, 120deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(6) {
+            transform: rotate3d(0, 0, 1, 150deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(7) {
+            transform: rotate3d(0, 0, 1, 180deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(8) {
+            transform: rotate3d(0, 0, 1, 210deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(9) {
+            transform: rotate3d(0, 0, 1, 240deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(10) {
+            transform: rotate3d(0, 0, 1, 270deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(11) {
+            transform: rotate3d(0, 0, 1, 300deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(12) {
+            transform: rotate3d(0, 0, 1, 330deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray:nth-child(13) {
+            transform: rotate3d(0, 0, 1, 360deg);
+            transform-origin: bottom; }
+      .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small {
+        width: 56px;
+        height: 56px;
+        animation: counter-clockwise-spin 15s infinite linear; }
+        .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray {
+          border-bottom: 28px solid yellow;
+          border-left: 11.2px solid transparent;
+          border-right: 11.2px solid transparent; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(1) {
+            transform: rotate3d(0, 0, 1, 0deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(2) {
+            transform: rotate3d(0, 0, 1, 45deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(3) {
+            transform: rotate3d(0, 0, 1, 90deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(4) {
+            transform: rotate3d(0, 0, 1, 135deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(5) {
+            transform: rotate3d(0, 0, 1, 180deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(6) {
+            transform: rotate3d(0, 0, 1, 225deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(7) {
+            transform: rotate3d(0, 0, 1, 270deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(8) {
+            transform: rotate3d(0, 0, 1, 315deg);
+            transform-origin: bottom; }
+          .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray:nth-child(9) {
+            transform: rotate3d(0, 0, 1, 360deg);
+            transform-origin: bottom; }
+      .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-light {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        background: gold;
+        background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
       .apod__drawer .apod__drawer-view .know-links .loading-spinner.hide {
         display: none; }
 
@@ -407,7 +512,9 @@ ul, li {
       align-content: flex-start;
       align-items: flex-start; }
       .apod__header .apod__top-sites ul li {
-        margin: 0 5px 10px; }
+        margin-bottom: 10px; }
+        .apod__header .apod__top-sites ul li + li {
+          margin-left: 10px; }
         .apod__header .apod__top-sites ul li a {
           background-color: rgba(51, 51, 51, 0.8);
           color: rgba(199, 199, 199, 0.8);

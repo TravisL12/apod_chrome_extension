@@ -7,8 +7,8 @@
 }
 
 .apod__loading {
-    @import 'apod_loading_sun';
-    @import 'apod_loading_moon';
+    @include sun-loader;
+    @include moon-loader;
 }
 
 body {
@@ -87,7 +87,10 @@ ul, li {
             align-items: flex-start;
 
             li {
-                margin: 0 5px 10px;
+                margin-bottom: 10px;
+                & + li {
+                    margin-left: 10px;
+                }
                 a {
                     @include apod-button;
                     display: inline-block;

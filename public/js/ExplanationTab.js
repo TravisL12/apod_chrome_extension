@@ -7,7 +7,7 @@ class ExplanationTab extends DrawerTab {
         this.keycode = 69;
         this.template = `
             <div class='explanation'>
-                <h2 class='title'></h2>
+                <h2 class='title'>Explanation</h2>
 
                 <div id='apod-explanation'></div>
 
@@ -21,8 +21,6 @@ class ExplanationTab extends DrawerTab {
     }
 
     render () {
-        // this.baseView.innerHTML = this.template;
-        const apodTitle  = this.baseView.querySelector('h2.title');
         const apodOrigin = this.baseView.querySelector('#apod-origin');
         const apodHiRes  = this.baseView.querySelector('#apod-hires');
         const apodLowRes = this.baseView.querySelector('#apod-lowres');
@@ -37,7 +35,6 @@ class ExplanationTab extends DrawerTab {
             });
         });
 
-        apodTitle.textContent = this.apod.title;
         apodDescription.innerHTML = this.apod.description;
         apodHiRes.setAttribute('href', this.apod.hdurl);
         apodLowRes.setAttribute('href', this.apod.url);

@@ -5,9 +5,11 @@ class KnowMoreTab extends DrawerTab {
     constructor (el, apod, drawer) {
         super(el, apod, drawer);
         this.items = [];
+        this.loader = new SunLoader();
+        this.keycode = drawer.tabs.length + 49;
         this.template = `
             <div class='know-links'>
-                <span class='loading-spinner hide'></span>
+                <div class='loading-spinner hide'>${this.loader.render()}</div>
                 <ul></ul>
             </div>
         `;
