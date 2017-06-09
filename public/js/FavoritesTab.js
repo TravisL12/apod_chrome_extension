@@ -39,14 +39,12 @@ class FavoritesTab extends DrawerTab {
 
         this.load();
 
-        if (this.isOpen) {
+        if (this.el.classList.contains('is-open')) {
             this.render();
         }
     }
 
     render () {
-        this.baseView.innerHTML = this.template;
-
         let favoritesEl = this.baseView.querySelector('#drawer-list');
 
         if (Object.keys(this.favorites).length) {

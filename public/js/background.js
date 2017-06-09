@@ -47,7 +47,7 @@ apodLoading.innerHTML = loader.render();
 
 const drawer = new Drawer('#apod-drawer');
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
-const favoritesTab   = new FavoritesTab('#tab-favorites', apod, drawer);
+const favoritesTab = new FavoritesTab('#tab-favorites', apod, drawer);
 
 chrome.storage.sync.get(['apodType'], (items) => {
     let apodOptionType = items.apodType || 'today';

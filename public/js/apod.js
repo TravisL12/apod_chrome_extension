@@ -86,20 +86,18 @@ class Apod {
                 this.date        = response.date;
                 this.description = response.explanation;
 
-                switch (response.media_type) {
-                    case 'image':
-                        apodImage.style.display = 'block';
-                        $('#apod-video').style.display = 'none';
-                        this.preLoadImage();
-                        break;
-                    case 'video':
-                        apodImage.style.display = 'none';
-                        $('#apod-video').style.display = 'inline-block';
-                        this.apodVideo();
-                        break;
-                    default:
-                        this.random();
+                if (response.media_type === 'image') {
+                    apodImage.style.display = 'block';
+                    $('#apod-video').style.display = 'none';
+                    this.preLoadImage();
+                } else if (response.media_type === 'video') {
+                    apodImage.style.display = 'none';
+                    $('#apod-video').style.display = 'inline-block';
+                    this.apodVideo();
+                } else {
+                    this.random();
                 }
+
             }, (error) => {
                 console.log('Error: APOD API response');
                 this.isRequestInProgress = false;
@@ -120,7 +118,7 @@ class Apod {
         if (results.length) {
             for (let i in results) {
                 this.highlightResults(results[i].title);
-                apodKnowMore.appendChild(knowMore.createLink(results[i]));
+                knowMore.createTab(results[i]);
             }
         }
     }

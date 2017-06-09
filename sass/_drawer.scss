@@ -144,5 +144,25 @@ $drawer-width: 400px;
                 }
             }
         }
+        .know-links {
+            ul,
+            ul li {
+                display: block;
+            }
+
+            .loading-spinner {
+                height: 24px;
+                width: 24px;
+                display: inline-block;
+                background: url('../images/ajax-loader-white.gif') center center no-repeat; 
+                background-size: 70%;
+                margin-left: 5px;
+
+                &.hide {
+                    display: none;
+                }
+            }
+
+        }
     }
 }

@@ -21,7 +21,7 @@ class ExplanationTab extends DrawerTab {
     }
 
     render () {
-        this.baseView.innerHTML = this.template;
+        // this.baseView.innerHTML = this.template;
         const apodTitle  = this.baseView.querySelector('h2.title');
         const apodOrigin = this.baseView.querySelector('#apod-origin');
         const apodHiRes  = this.baseView.querySelector('#apod-hires');

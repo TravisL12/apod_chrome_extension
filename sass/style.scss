@@ -23,19 +23,6 @@ ul, li {
     display: inline-block;
 }
 
-.loading-spinner {
-    height: 24px;
-    width: 24px;
-    display: inline-block;
-    background: url('../images/ajax-loader-white.gif') center center no-repeat; 
-    background-size: 70%;
-    margin-left: 5px;
-
-    &.hide {
-        display: none;
-    }
-}
-
 .apod {
     width: 100%;
     height: 100%;
@@ -85,7 +72,6 @@ ul, li {
 
     .apod__top-sites {
         float: left;
-        width: 40%;
         color: white;
         opacity: 0.6;
         transition: 0.1s opacity linear;

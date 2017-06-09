@@ -7,7 +7,6 @@ class DrawerTab {
         this.apod      = apod;
         this.keycode   = null;
         this.drawer    = drawer;
-        this.isOpen    = false;
         this.drawerIdx = this.drawer.tabs.length;
         this.baseView  = drawer.el.querySelector('.apod__drawer-view');
         this.drawer.tabs.push(this);
@@ -27,15 +26,14 @@ class DrawerTab {
     }
 
     openTab () {
+        this.baseView.innerHTML = this.template;
         this.render();
         this.drawer.setCurrentTabIdx(this.drawerIdx);
         this.el.classList.add('is-open');
-        this.isOpen = true;
     }
 
     closeTab () {
         this.el.classList.remove('is-open');
-        this.isOpen = false;
     }
 
     toggle () {
@@ -43,9 +41,11 @@ class DrawerTab {
             this.openTab();
             this.drawer.openDrawer();
         } else {
+            // Drawer open, click another tab
             if (this.drawer.currentTabIdx !== this.drawerIdx) {
                 this.closeTab.call(this.drawer.tabs[this.drawer.currentTabIdx]);
                 this.openTab();
+            // Click opened tab to close
             } else {
                 this.closeTab();
                 this.drawer.closeDrawer();
