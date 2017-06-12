@@ -6,14 +6,21 @@ So what did I do??? I built an extension to show me an APOD on every new tab I o
 
 [Go download it now!](https://chrome.google.com/webstore/detail/apod-by-the-trav/aedpginojmhafbemcoelnppdcmlfjcdj)
 
-__Shortcut Keys__
+## Description
 
-`J`, `<- (left arrow)` - Goes back one day
+Your New Tab page will now be the Astronomy Picture of the Day (APOD)! Your top sites are shown in the top left of the page to maintain some usefulness from the default new tab screen.
 
-`K`, `-> (right arrow)` - Goes forward one day
+APOD by The Trav has the following features:
+* Use the options in the Chrome menu bar to set "Today" or a "Random" APOD on new tab.
+* Save your favorite APOD's for viewing again with the "Save Favorites" button at the bottom right.
+* Use the "Learn More" tabs on certain APOD's to learn about the celestial objects shown!
 
-`R` - shows a random APOD
+Navigation shortcuts:
+* Random APOD - `r`
+* Today's APOD - `t`
+* Previous Day APOD - `j`
+* Next Day APOD - `k`
 
-`T` - shows today's APOD
-
-`D` - toggles the description shelf (also displays if you hover over the APOD title).
+Tab Shortcuts:
+* Toggle Explanation - `e`
+* Toggle Favorites - `f`
