@@ -90,13 +90,16 @@ class KnowMore {
     }
 
     buildLinkId (result) {
-        return result.query.replace(/[\s-_.'"]/ig,'').toLowerCase().slice(0,5);
+        let id = 'know-more-tab-' + result.title.replace(/[\s-_.'"]/ig,'').toLowerCase().slice(0,10);
+        let isIdUsed = $('#' + id);
+
+        return id;
     }
 
     createTab (result) {
         const el = document.createElement('div');
         el.className = 'tab';
-        el.id = 'know-more-tab-' + this.buildLinkId(result);
+        el.id = this.buildLinkId(result);
 
         const googleSearch = (e) => {
             ga('send', 'event', 'Know More', 'clicked', result.query);

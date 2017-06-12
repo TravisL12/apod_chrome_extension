@@ -30,7 +30,7 @@ class KnowMoreTab extends DrawerTab {
             let item = this.items[i];
             links += `
                 <li>
-                    <a href="${item.link}" target="_blank">${item.title}</a>
+                    <a href="${item.link}" target="_blank">${item.htmlTitle}</a>
                 </li>`;
         }
 

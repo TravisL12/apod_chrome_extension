@@ -1,37 +1,5 @@
 $drawer-width: 400px;
 
-.apod__drawer-tabs {
-    h3 {
-        @include helvetica-neue-light;
-        color: white;
-        margin-bottom: 5px;
-        text-align: center;
-        color: $light-gray;
-    }
-
-    position: absolute;
-    top: 60px;
-    left: 10px;
-    box-sizing: border-box;
-    z-index: 1000;
-
-    .tab {
-        @include apod-button;
-        min-width: 110px;
-        max-width: 200px;
-        height: 25px;
-        cursor: pointer;
-        text-align: center;
-        padding: 10px 10px 0;
-        margin-bottom: 10px;
-
-        &.is-open {
-            background-color: $light-gray;
-            color: $gray;
-        }
-    }
-}
-
 .apod__drawer {
     position: absolute;
     z-index: 1000;
@@ -43,7 +11,43 @@ $drawer-width: 400px;
     transition: 0.4s transform ease-out;
 
     &.show {
-        transform: translate3d(0px,0px,0px);
+        transform: translate3d(1px,0px,0px);
+    }
+
+    .apod__drawer-tabs {
+        position: absolute;
+        top: 465px;
+        height: 35px;
+        width: 500px;
+        box-sizing: border-box;
+        transform: rotate(-90deg);
+        transform-origin: left bottom;
+        display: flex;
+        flex-direction: row-reverse;
+
+        .default-tabs,
+        .apod__know-more {
+            display: flex;
+            justify-content: flex-end;
+            align-content: flex-start;
+            align-items: flex-start;
+        }
+
+        .tab {
+            @include apod-button;
+            margin-left: 2px;
+            min-width: 100px;
+            height: 100%;
+            cursor: pointer;
+            text-align: center;
+            padding: 10px 10px 0;
+            box-sizing: border-box;
+
+            &.is-open {
+                background-color: $light-gray;
+                color: $gray;
+            }
+        }
     }
 
     .apod__drawer-view {
@@ -150,6 +154,11 @@ $drawer-width: 400px;
             ul li {
                 display: block;
                 margin-bottom: 10px;
+                overflow: hidden;
+                white-space: nowrap;
+                text-overflow: ellipsis;
+                width: 100%;
+
                 a {
                     @include helvetica-neue-light;
                     font-size: 13px;
