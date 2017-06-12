@@ -1,9 +1,10 @@
-function SunLoader() {
-    this.bigRayCount = 12;
-    this.littleRayCount = 8;
-}
+class SunLoader {
 
-SunLoader.prototype = {
+    constructor () {
+        this.bigRayCount = 12;
+        this.littleRayCount = 8;
+    }
+
     buildRays (num) {
         const rayEl = "<div class='ray'></div>";
         let rays = '';
@@ -13,7 +14,7 @@ SunLoader.prototype = {
         }
 
         return rays;
-    },
+    }
 
     render () {
         return `
@@ -21,25 +22,25 @@ SunLoader.prototype = {
                 <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
                 <div class='rays-small' id='small-rays'>${this.buildRays(this.littleRayCount)}</div>
                 <div class='sun-light'></div>
-            </div>
-        `;
-    },
+            </div>`;
+    }
 }
 
-function MoonLoader() {};
+class MoonLoader {
 
-MoonLoader.prototype.render = () => {
-    return `
-        <div class='moon-container'>
-            <div class='mask-left'>
-                <div class='moon shade-to-light'></div>
-                <div class='moon light-to-shade'></div>
-            </div>
+    render () {
+        return `
+            <div class='moon-container'>
+                <div class='mask-left'>
+                    <div class='moon shade-to-light'></div>
+                    <div class='moon light-to-shade'></div>
+                </div>
 
-            <div class='mask-right'>
-                <div class='moon shade-to-light'></div>
-                <div class='moon light-to-shade'></div>
-            </div>
-        </div>
-    `
+                <div class='mask-right'>
+                    <div class='moon shade-to-light'></div>
+                    <div class='moon light-to-shade'></div>
+                </div>
+            </div>`;
+    }
+
 }

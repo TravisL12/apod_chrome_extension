@@ -1,6 +1,6 @@
 'use strict';
 
-function DateManagement () {
+const DateManagement = () => {
 
     const _monthNames = [
       "January", "February", "March", "April", "May", "June", "July",
@@ -64,11 +64,11 @@ function DateManagement () {
             
             if (!isTodayGreater) {
                 console.log(date + ' is in the future!');
-                apodNext.classList.add('hide');
+                apodNext.el.classList.add('hide');
             } else if (isDateEqual) {
-                apodNext.classList.add('hide');
+                apodNext.el.classList.add('hide');
             } else {
-                apodNext.classList.remove('hide');
+                apodNext.el.classList.remove('hide');
             }
 
             return isTodayGreater;

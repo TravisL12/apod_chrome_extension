@@ -1,45 +1,48 @@
 'use strict';
 
-function _zeroPad (num) {
-    num = '0' + num.toString();
-    return num.slice(-2);
-}
+class Apod {
 
-function setLoadingView () {
-    apodImage.style['background-image'] = '';
-    apodImage.style['background-size'] = '';
-    apodVideo.src = '';
-    $('.apod__description .description').classList.add('hide');
-    apodLoading.classList.remove('hide');
-    apodKnowMore.innerHTML = '';
-}
-
-function Apod() {
-    this.date;
-    this.url;
-    this.hdurl;
-    this.title;
-    this.description;
-    this.DateManager = new DateManagement();
-}
-
-Apod.prototype = {
+    constructor () {
+        this.date;
+        this.url;
+        this.hdurl;
+        this.title;
+        this.description;
+    }
 
     random () {
-        this.getApod(this.DateManager.randomDate());
-    },
+        this.getApod(DateManager.randomDate());
+    }
+
+    specificDate (date) {
+        this.getApod(date);
+    }
 
     previous () {
-        this.getApod(this.DateManager.adjacentDate(this.date, -1));
-    },
+        this.getApod(DateManager.adjacentDate(this.date, -1));
+    }
 
     next () {
-        this.getApod(this.DateManager.adjacentDate(this.date, 1));
-    },
+        this.getApod(DateManager.adjacentDate(this.date, 1));
+    }
 
     current () {
         this.getApod();
-    },
+    }
+
+    fitToWindow (image) {
+        return image.width > window.innerWidth || image.height > window.innerHeight;
+    }
+
+    _setLoadingView () {
+        apodImage.style['background-image'] = '';
+        apodImage.style['background-size'] = '';
+        apodVideo.src = '';
+        $('.apod__header .description').classList.add('hide');
+        apodLoading.classList.remove('hide');
+        apodKnowMore.innerHTML = '';
+        drawer.closeDrawer();
+    }
 
     isRequestValid () {
         if (this.isRequestInProgress) {
@@ -49,23 +52,23 @@ Apod.prototype = {
         this.isRequestInProgress = true;
 
         return this.isRequestInProgress;
-    },
+    }
 
     getApod (date) {
 
-        date = date || this.DateManager.today;
+        date = date || DateManager.today;
 
         if (!this.isRequestValid()) {
             console.log('Request in Progress!');
             return;
         }
 
-        if (!this.DateManager.isDateValid(date)) {
+        if (!DateManager.isDateValid(date)) {
             this.isRequestInProgress = false;
             return;
         }
 
-        setLoadingView();
+        this._setLoadingView();
 
         reqwest({
             type: 'GET',
@@ -83,33 +86,30 @@ Apod.prototype = {
                 this.date        = response.date;
                 this.description = response.explanation;
 
-                switch (response.media_type) {
-                    case 'image':
-                        apodImage.style.display = 'block';
-                        $('#apod-video').style.display = 'none';
-                        this.preLoadImage();
-                        break;
-                    case 'video':
-                        apodImage.style.display = 'none';
-                        $('#apod-video').style.display = 'inline-block';
-                        this.apodVideo();
-                        break;
-                    default:
-                        this.random();
+                if (response.media_type === 'image') {
+                    apodImage.style.display = 'block';
+                    $('#apod-video').style.display = 'none';
+                    this.preLoadImage();
+                } else if (response.media_type === 'video') {
+                    apodImage.style.display = 'none';
+                    $('#apod-video').style.display = 'inline-block';
+                    this.apodVideo();
+                } else {
+                    this.random();
                 }
+
             }, (error) => {
                 console.log('Error: APOD API response');
                 this.isRequestInProgress = false;
                 this.random();
             }
         );
-    },
+    }
 
     highlightResults (result) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
         this.description = this.description.replace(re, '<span class="keyword">$1</span>');
-        apodDescription.innerHTML = this.description;
-    },
+    }
 
     wouldYouLikeToKnowMore (text) {
         const knowMore = new KnowMore(text);
@@ -118,16 +118,17 @@ Apod.prototype = {
         if (results.length) {
             for (let i in results) {
                 this.highlightResults(results[i].title);
-                apodKnowMore.appendChild(knowMore.createLink(results[i]));
+                knowMore.createTab(results[i]);
             }
-
         }
-
-    },
+    }
 
     preLoadImage () {
         let Img = new Image();
-        let quality = 'HD';
+        let quality = {
+            text: 'HD',
+            title: 'High Definition Image'
+        };
         const delayForHdLoad = 3000;
 
         Img.src = this.hdurl;
@@ -135,7 +136,10 @@ Apod.prototype = {
         let timeout = setTimeout(() => {
             if (!Img.complete) {
                 Img.src = this.url;
-                quality = 'SD';
+                quality = {
+                    text: 'SD',
+                    title: 'Standard Definition Image'
+                };
             }
         }, delayForHdLoad);
 
@@ -151,38 +155,35 @@ Apod.prototype = {
             this.isRequestInProgress = false;
             this.random();
         };
-    },
+    }
 
     apodImage (imgQuality) {
         this.isRequestInProgress = false;
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
-        let bgSize = fitToWindow(this.loadedImage) ? 'contain' : 'auto';
+        let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
         apodImage.style['background-size'] = bgSize;
 
-        $('#img-quality').textContent = imgQuality;
-        apodHiRes.setAttribute('href', this.hdurl);
-        apodLowRes.setAttribute('href', this.url);
+        $('#img-quality').textContent = imgQuality.text;
+        $('#img-quality').setAttribute('title', imgQuality.title);
 
         this.apodDescription();
-    },
+    }
 
     apodVideo () {
         this.isRequestInProgress = false;
         apodVideo.src = this.url;
         this.apodDescription();
-    },
+    }
 
     apodDescription () {
         apodTitle.textContent = this.title;
-        apodDate.textContent = this.DateManager.prettyDateFormat(this.date);
-        apodDescription.textContent = this.description;
-        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+        apodDate.textContent = DateManager.prettyDateFormat(this.date);
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         apodLoading.classList.add('hide');
-        $('.apod__description .description').classList.remove('hide');
-    },
+        $('.apod__header .description').classList.remove('hide');
+    }
 
     /**
      * Build filename for APOD site: ap170111.html
