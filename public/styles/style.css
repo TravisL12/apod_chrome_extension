@@ -51,36 +51,6 @@
     background: #ffff33;
     color: rgba(51, 51, 51, 0.8); }
 
-.apod__drawer-tabs {
-  position: absolute;
-  top: 60px;
-  left: 10px;
-  box-sizing: border-box;
-  z-index: 1000; }
-  .apod__drawer-tabs h3 {
-    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 300;
-    color: white;
-    margin-bottom: 5px;
-    text-align: center;
-    color: rgba(199, 199, 199, 0.8); }
-  .apod__drawer-tabs .tab {
-    background-color: rgba(51, 51, 51, 0.8);
-    color: rgba(199, 199, 199, 0.8);
-    transition: 0.2s linear background-color;
-    min-width: 110px;
-    max-width: 200px;
-    height: 25px;
-    cursor: pointer;
-    text-align: center;
-    padding: 10px 10px 0;
-    margin-bottom: 10px; }
-    .apod__drawer-tabs .tab.hover, .apod__drawer-tabs .tab:hover {
-      background-color: rgba(102, 102, 102, 0.8); }
-    .apod__drawer-tabs .tab.is-open {
-      background-color: rgba(199, 199, 199, 0.8);
-      color: rgba(51, 51, 51, 0.8); }
-
 .apod__drawer {
   position: absolute;
   z-index: 1000;
@@ -91,7 +61,39 @@
   transform: translate3d(400px, 0px, 0px);
   transition: 0.4s transform ease-out; }
   .apod__drawer.show {
-    transform: translate3d(0px, 0px, 0px); }
+    transform: translate3d(1px, 0px, 0px); }
+  .apod__drawer .apod__drawer-tabs {
+    position: absolute;
+    top: 465px;
+    height: 35px;
+    width: 500px;
+    box-sizing: border-box;
+    transform: rotate(-90deg);
+    transform-origin: left bottom;
+    display: flex;
+    flex-direction: row-reverse; }
+    .apod__drawer .apod__drawer-tabs .default-tabs,
+    .apod__drawer .apod__drawer-tabs .apod__know-more {
+      display: flex;
+      justify-content: flex-end;
+      align-content: flex-start;
+      align-items: flex-start; }
+    .apod__drawer .apod__drawer-tabs .tab {
+      background-color: rgba(51, 51, 51, 0.8);
+      color: rgba(199, 199, 199, 0.8);
+      transition: 0.2s linear background-color;
+      margin-left: 2px;
+      min-width: 100px;
+      height: 100%;
+      cursor: pointer;
+      text-align: center;
+      padding: 10px 10px 0;
+      box-sizing: border-box; }
+      .apod__drawer .apod__drawer-tabs .tab.hover, .apod__drawer .apod__drawer-tabs .tab:hover {
+        background-color: rgba(102, 102, 102, 0.8); }
+      .apod__drawer .apod__drawer-tabs .tab.is-open {
+        background-color: rgba(199, 199, 199, 0.8);
+        color: rgba(51, 51, 51, 0.8); }
   .apod__drawer .apod__drawer-view {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
     font-weight: 300;
@@ -171,7 +173,11 @@
       display: block; }
     .apod__drawer .apod__drawer-view .know-links ul li {
       display: block;
-      margin-bottom: 10px; }
+      margin-bottom: 10px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%; }
       .apod__drawer .apod__drawer-view .know-links ul li a {
         font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
         font-weight: 300;
