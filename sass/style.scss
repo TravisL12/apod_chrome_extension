@@ -155,7 +155,7 @@ ul, li {
                 cursor: pointer;
             }
 
-            &.save-favorite:active {
+            &:active {
                 background-color: gold;
             }
         }

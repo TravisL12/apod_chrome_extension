@@ -6,7 +6,6 @@ class KnowMoreTab extends DrawerTab {
         super(el, apod, drawer);
         this.items = [];
         this.loader = new SunLoader();
-        this.keycode = drawer.tabs.length + 48; // tab populates with `super` so you start at 49 (number 1 key)
 
         this.template = `
             <div class='know-links'>

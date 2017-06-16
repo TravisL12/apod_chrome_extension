@@ -8,6 +8,12 @@ class Drawer {
         this.tabs = [];
         this.isOpen = false;
         this.currentTabIdx;
+
+        document.addEventListener('keydown', function (e) {
+            if (e.which === 27 && this.isOpen) {
+                this.closeDrawer();
+            }
+        }.bind(this));
     }
 
     openDrawer () {

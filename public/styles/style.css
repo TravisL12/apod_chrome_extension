@@ -576,7 +576,7 @@ ul, li {
         cursor: pointer; }
         .apod__footer .nav-buttons ul li a.hover, .apod__footer .nav-buttons ul li a:hover {
           background-color: rgba(102, 102, 102, 0.8); }
-      .apod__footer .nav-buttons ul li.save-favorite:active {
+      .apod__footer .nav-buttons ul li:active {
         background-color: gold; }
 
 /*# sourceMappingURL=style.css.map */
