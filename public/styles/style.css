@@ -26,15 +26,19 @@
   font-weight: 300;
   width: 275px;
   color: rgba(51, 51, 51, 0.8); }
+  .apod-options h3 {
+    font-size: 14px; }
   .apod-options #choose-apod .info,
   .apod-options #choose-apod .inputs {
     display: inline-block; }
   .apod-options #choose-apod .info {
+    font-size: 12px;
     width: 200px;
     margin: 10px 0; }
   .apod-options #choose-apod .inputs input[type='radio'] {
     display: none; }
   .apod-options #choose-apod .inputs label {
+    font-size: 12px;
     width: 60px;
     box-sizing: border-box;
     display: block;
@@ -82,6 +86,9 @@
       background-color: rgba(51, 51, 51, 0.8);
       color: rgba(199, 199, 199, 0.8);
       transition: 0.2s linear background-color;
+      font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+      font-weight: 300;
+      font-size: 12px;
       margin-left: 2px;
       min-width: 100px;
       height: 100%;
@@ -453,6 +460,12 @@
   .apod__loading .moon-container .mask-left .light-to-shade {
     animation: 5s linear shadow-to-light-left infinite; }
 
+h1 {
+  font-size: 24px; }
+
+h2 {
+  font-size: 18px; }
+
 body {
   background: black;
   margin: 0;
@@ -479,7 +492,7 @@ ul, li {
   box-sizing: border-box; }
   .apod__header h1 {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-    font-weight: 100;
+    font-weight: 300;
     display: inline-block;
     margin: 0; }
   .apod__header h2 {
@@ -558,10 +571,13 @@ ul, li {
   bottom: 0;
   width: 100%; }
   .apod__footer .nav-buttons {
+    font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+    font-weight: 300;
     position: absolute;
     bottom: 10;
     right: 0; }
     .apod__footer .nav-buttons ul li {
+      font-size: 12px;
       color: rgba(51, 51, 51, 0.8);
       text-align: center;
       margin-right: 15px;

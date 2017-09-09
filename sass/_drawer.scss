@@ -35,6 +35,8 @@ $drawer-width: 400px;
 
         .tab {
             @include apod-button;
+            @include helvetica-neue-light;
+            font-size: 12px;
             margin-left: 2px;
             min-width: 100px;
             height: 100%;

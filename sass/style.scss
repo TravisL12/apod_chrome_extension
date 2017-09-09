@@ -11,6 +11,14 @@
     @include moon-loader;
 }
 
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
 body {
     background: black;
     margin: 0;
@@ -40,7 +48,7 @@ ul, li {
     box-sizing: border-box;
 
     h1 {
-        @include helvetica-neue-light(100);
+        @include helvetica-neue-light;
         display: inline-block;
         margin: 0;
     }
@@ -139,10 +147,12 @@ ul, li {
     width: 100%;
 
     .nav-buttons {
+        @include helvetica-neue-light;
         position: absolute;
         bottom: 10;
         right: 0;
         ul li {
+            font-size: 12px;
             color: $gray;
             text-align: center;
             margin-right: 15px;
