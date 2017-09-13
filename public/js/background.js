@@ -26,6 +26,10 @@ const $ = (el) => {
     return document.querySelector(el);
 }
 
+function isFF () {
+    return /firefox/ig.test(window.navigator.userAgent);
+}
+
 const apodImage = $('#apod-image');
 const apodVideo = $('#apod-video iframe');
 
@@ -34,6 +38,7 @@ const apodDate = $('#apod-date');
 const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 
+const apodDatePicker = new DateWheel('#apod-date-picker');
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
 const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
@@ -42,6 +47,7 @@ const apodNext = new NavigationButton('#apod-next', 75, 'next');
 const DateManager = DateManagement();
 const apod = new Apod();
 const loader = new [SunLoader, MoonLoader][randomizer(1)];
+const isFirefox = isFF();
 
 apodLoading.innerHTML = loader.render();
 
