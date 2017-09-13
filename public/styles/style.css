@@ -302,13 +302,12 @@
   z-index: 10;
   width: 500px;
   height: 500px;
-  bottom: 0;
-  left: 0;
+  bottom: -250px;
+  left: -250px;
   border-radius: 50%;
   background-color: #333;
   color: white; }
   .apod__date-picker .date-val {
-    color: white;
     font-size: 18px;
     position: absolute;
     top: 230px;
@@ -412,9 +411,9 @@
       transform: rotate3d(0, 0, 1, 360deg);
       transform-origin: bottom; }
     .apod__date-picker .date-val .num {
-      z-index: 15;
-      transform: rotate3d(0, 0, 1, -90deg);
-      display: inline-block; }
+      transform: rotate3d(0, 0, 1, -84deg);
+      display: inline-block;
+      width: 0; }
 
 @keyframes clockwise-spin {
   0% {

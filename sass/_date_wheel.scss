@@ -5,14 +5,13 @@
     z-index: 10;
     width: $date-dimension;
     height: $date-dimension;
-    bottom: 0; //-$date-dimension/2;
-    left: 0; //-$date-dimension/2;
+    bottom: -$date-dimension/2;
+    left: -$date-dimension/2;
     border-radius: 50%;
     background-color: #333;
     color: white;
 
     .date-val {
-        color: white;
         font-size: 18px;
         @include calculate-ray-angles(31);
         position: absolute;
@@ -20,17 +19,10 @@
         width: $date-dimension;
         padding-left: 10px;
         box-sizing: border-box;
-        // &:before {
-        //     content: '';
-        //     @extend %ray;
-        //     border-bottom: 270px solid lightgray;
-        //     border-left: 15px solid transparent;
-        //     border-right: 15px solid transparent;
-        // }
         .num {
-            z-index: 15;
-            transform: rotate3d(0,0,1,-90deg);
+            transform: rotate3d(0,0,1,-84deg);
             display: inline-block;
+            width: 0;
         }
     }
 }
