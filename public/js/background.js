@@ -38,7 +38,7 @@ const apodDate = $('#apod-date');
 const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 
-const apodDatePicker = new DateWheel('#apod-date-picker');
+const apodDatePicker = new DateWheel('#apod-date-picker', 31);
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
 const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
