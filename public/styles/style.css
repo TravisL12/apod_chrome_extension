@@ -299,6 +299,7 @@
 .apod__date-picker #day-wheel {
   display: block;
   position: absolute;
+  border: 1px solid;
   z-index: 10;
   width: 500px;
   height: 500px;
@@ -419,6 +420,7 @@
 .apod__date-picker #month-wheel {
   display: block;
   position: absolute;
+  border: 1px solid;
   z-index: 10;
   width: 375px;
   height: 375px;
@@ -426,9 +428,7 @@
   left: -187.5px;
   border-radius: 50%;
   background-color: #333;
-  color: white;
-  background-color: yellow;
-  color: black; }
+  color: white; }
   .apod__date-picker #month-wheel .date-val {
     font-size: 18px;
     position: absolute;
@@ -484,6 +484,7 @@
 .apod__date-picker #year-wheel {
   display: block;
   position: absolute;
+  border: 1px solid;
   z-index: 10;
   width: 250px;
   height: 250px;
@@ -491,9 +492,7 @@
   left: -125px;
   border-radius: 50%;
   background-color: #333;
-  color: white;
-  background-color: red;
-  color: black; }
+  color: white; }
   .apod__date-picker #year-wheel .date-val {
     font-size: 18px;
     position: absolute;

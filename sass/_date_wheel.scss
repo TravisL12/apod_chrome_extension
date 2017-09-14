@@ -1,6 +1,7 @@
 @mixin date-picker($date-dimension, $ray-count) {
     display: block;
     position: absolute;
+    border: 1px solid;
     z-index: 10;
     width: $date-dimension;
     height: $date-dimension;
@@ -35,13 +36,9 @@
     }
     #month-wheel {
         @include date-picker(375px, 12);
-        background-color: yellow;
-        color: black;
     }
     #year-wheel {
         @include date-picker(250px, 22);
-        background-color: red;
-        color: black;
     }
 }
 

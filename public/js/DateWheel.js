@@ -4,9 +4,11 @@ class DateWheel {
         this.el = document.createElement('div');
         this.el.id = id;
         this.amount = nums;
+        this.currentRotationDeg = 135;
+        this.setRotationAngle();
 
         this.days = [];
-        for (let day = 1; day <= nums; day++) {
+        for (let day = 1; day <= this.amount; day++) {
             this.days.push(`
                 <div class='date-val'>
                     <div class='num'>${day}</div>
@@ -14,8 +16,6 @@ class DateWheel {
             );
         }
         this.el.innerHTML = this.days.join('');
-        this.currentRotationDeg = 135;
-        this.setRotationAngle();
 
         this.el.addEventListener('mousewheel', function (e) {
             this.currentRotationDeg += e.deltaY * -0.1;
@@ -23,11 +23,20 @@ class DateWheel {
         }.bind(this));
     }
 
+    setCurrent (idx) {
+        let current = this.el.querySelector('.current')
+        if (current) {
+            current.classList.remove('current');
+        }
+        this.el.children[idx].querySelector('.num').classList.add('current')
+    }
+
     setRotationAngle () {
         this.el.style.transform = `rotate3d(0,0,1,${this.currentRotationDeg}deg)`; 
     }
 
     setDate (value) {
+        this.setCurrent(value);
         this.currentRotationDeg = -((value / this.amount) * 360) + 135;
         this.setRotationAngle();
     }
@@ -55,7 +64,7 @@ class DatePicker {
         date = new Date(DateManager.prettyDateFormat(date));
         this.dayWheel.setDate(date.getDate() - 1);
         this.monthWheel.setDate(date.getMonth());
-        this.yearWheel.setDate(date.getYear() - 1);
+        this.yearWheel.setDate(8 - 1);
     }
 
 }
