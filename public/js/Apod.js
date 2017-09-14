@@ -85,6 +85,7 @@ class Apod {
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
                 this.description = response.explanation;
+                apodDatePicker.update(this.date);
 
                 if (response.media_type === 'image') {
                     apodImage.style.display = 'block';

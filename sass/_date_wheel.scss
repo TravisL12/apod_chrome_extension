@@ -34,12 +34,12 @@
         @include date-picker(500px, 31);
     }
     #month-wheel {
-        @include date-picker(350px, 12);
+        @include date-picker(375px, 12);
         background-color: yellow;
         color: black;
     }
     #year-wheel {
-        @include date-picker(200px, 10);
+        @include date-picker(250px, 22);
         background-color: red;
         color: black;
     }

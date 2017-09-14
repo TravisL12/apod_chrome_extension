@@ -420,10 +420,10 @@
   display: block;
   position: absolute;
   z-index: 10;
-  width: 350px;
-  height: 350px;
-  bottom: -175px;
-  left: -175px;
+  width: 375px;
+  height: 375px;
+  bottom: -187.5px;
+  left: -187.5px;
   border-radius: 50%;
   background-color: #333;
   color: white;
@@ -432,8 +432,8 @@
   .apod__date-picker #month-wheel .date-val {
     font-size: 18px;
     position: absolute;
-    top: 154px;
-    width: 350px;
+    top: 166.5px;
+    width: 375px;
     box-sizing: border-box; }
     .apod__date-picker #month-wheel .date-val:nth-child(1) {
       transform: rotate3d(0, 0, 1, 0deg);
@@ -485,10 +485,10 @@
   display: block;
   position: absolute;
   z-index: 10;
-  width: 200px;
-  height: 200px;
-  bottom: -100px;
-  left: -100px;
+  width: 250px;
+  height: 250px;
+  bottom: -125px;
+  left: -125px;
   border-radius: 50%;
   background-color: #333;
   color: white;
@@ -497,40 +497,76 @@
   .apod__date-picker #year-wheel .date-val {
     font-size: 18px;
     position: absolute;
-    top: 79px;
-    width: 200px;
+    top: 104px;
+    width: 250px;
     box-sizing: border-box; }
     .apod__date-picker #year-wheel .date-val:nth-child(1) {
       transform: rotate3d(0, 0, 1, 0deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(2) {
-      transform: rotate3d(0, 0, 1, 36deg);
+      transform: rotate3d(0, 0, 1, 16.3636363636deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(3) {
-      transform: rotate3d(0, 0, 1, 72deg);
+      transform: rotate3d(0, 0, 1, 32.7272727273deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(4) {
-      transform: rotate3d(0, 0, 1, 108deg);
+      transform: rotate3d(0, 0, 1, 49.0909090909deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(5) {
-      transform: rotate3d(0, 0, 1, 144deg);
+      transform: rotate3d(0, 0, 1, 65.4545454545deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(6) {
-      transform: rotate3d(0, 0, 1, 180deg);
+      transform: rotate3d(0, 0, 1, 81.8181818182deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(7) {
-      transform: rotate3d(0, 0, 1, 216deg);
+      transform: rotate3d(0, 0, 1, 98.1818181818deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(8) {
-      transform: rotate3d(0, 0, 1, 252deg);
+      transform: rotate3d(0, 0, 1, 114.5454545455deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(9) {
-      transform: rotate3d(0, 0, 1, 288deg);
+      transform: rotate3d(0, 0, 1, 130.9090909091deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(10) {
-      transform: rotate3d(0, 0, 1, 324deg);
+      transform: rotate3d(0, 0, 1, 147.2727272727deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val:nth-child(11) {
+      transform: rotate3d(0, 0, 1, 163.6363636364deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(12) {
+      transform: rotate3d(0, 0, 1, 180deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(13) {
+      transform: rotate3d(0, 0, 1, 196.3636363636deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(14) {
+      transform: rotate3d(0, 0, 1, 212.7272727273deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(15) {
+      transform: rotate3d(0, 0, 1, 229.0909090909deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(16) {
+      transform: rotate3d(0, 0, 1, 245.4545454545deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(17) {
+      transform: rotate3d(0, 0, 1, 261.8181818182deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(18) {
+      transform: rotate3d(0, 0, 1, 278.1818181818deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(19) {
+      transform: rotate3d(0, 0, 1, 294.5454545455deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(20) {
+      transform: rotate3d(0, 0, 1, 310.9090909091deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(21) {
+      transform: rotate3d(0, 0, 1, 327.2727272727deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(22) {
+      transform: rotate3d(0, 0, 1, 343.6363636364deg);
+      transform-origin: bottom; }
+    .apod__date-picker #year-wheel .date-val:nth-child(23) {
       transform: rotate3d(0, 0, 1, 360deg);
       transform-origin: bottom; }
     .apod__date-picker #year-wheel .date-val .num {
