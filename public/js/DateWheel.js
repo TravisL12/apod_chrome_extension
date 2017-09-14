@@ -5,7 +5,7 @@ class DateWheel {
         this.el.id = id;
         this.amount = nums;
         this.currentRotationDeg = 135;
-        this.setRotationAngle();
+        this.updateAngle();
 
         this.days = [];
         for (let day = 1; day <= this.amount; day++) {
@@ -17,13 +17,24 @@ class DateWheel {
         }
         this.el.innerHTML = this.days.join('');
 
+        let wheelSpin = false;
+        const wheelDelay = 10000 / this.amount; // larger amounts have shorter delays
+
         this.el.addEventListener('mousewheel', function (e) {
-            this.currentRotationDeg += e.deltaY * -0.1;
-            this.setRotationAngle();
+            if (!wheelSpin) {
+                let direction = e.deltaY < 0 ? 1 : -1;
+                this.currentRotationDeg += (360 / this.amount) * direction;
+                this.updateAngle();
+                wheelSpin = true;
+
+                setTimeout(() => {
+                    wheelSpin = false;
+                }, wheelDelay);
+            }
         }.bind(this));
     }
 
-    setCurrent (idx) {
+    set currentDate (idx) {
         let current = this.el.querySelector('.current')
         if (current) {
             current.classList.remove('current');
@@ -31,14 +42,14 @@ class DateWheel {
         this.el.children[idx].querySelector('.num').classList.add('current')
     }
 
-    setRotationAngle () {
+    updateAngle () {
         this.el.style.transform = `rotate3d(0,0,1,${this.currentRotationDeg}deg)`; 
     }
 
     setDate (value) {
-        this.setCurrent(value);
+        this.currentDate = value;
         this.currentRotationDeg = -((value / this.amount) * 360) + 135;
-        this.setRotationAngle();
+        this.updateAngle();
     }
 
     render () {

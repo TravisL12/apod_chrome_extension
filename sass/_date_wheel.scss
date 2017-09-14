@@ -10,6 +10,7 @@
     border-radius: 50%;
     background-color: #333;
     color: white;
+    transition: 0.25s ease-in transform;
 
     .date-val {
         font-size: 18px;
@@ -24,7 +25,7 @@
             text-align: center;
             width: 25px;
             &.current {
-                background-color: red;    
+                background-color: red;
             }
         }
     }

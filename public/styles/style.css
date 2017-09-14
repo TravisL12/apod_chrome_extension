@@ -307,7 +307,8 @@
   left: -250px;
   border-radius: 50%;
   background-color: #333;
-  color: white; }
+  color: white;
+  transition: 0.25s ease-in transform; }
   .apod__date-picker #day-wheel .date-val {
     font-size: 18px;
     position: absolute;
@@ -428,7 +429,8 @@
   left: -187.5px;
   border-radius: 50%;
   background-color: #333;
-  color: white; }
+  color: white;
+  transition: 0.25s ease-in transform; }
   .apod__date-picker #month-wheel .date-val {
     font-size: 18px;
     position: absolute;
@@ -492,7 +494,8 @@
   left: -125px;
   border-radius: 50%;
   background-color: #333;
-  color: white; }
+  color: white;
+  transition: 0.25s ease-in transform; }
   .apod__date-picker #year-wheel .date-val {
     font-size: 18px;
     position: absolute;
