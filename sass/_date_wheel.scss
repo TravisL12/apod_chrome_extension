@@ -1,19 +1,18 @@
-.apod__date-picker {
-    $date-dimension: 500px;
+@mixin date-picker($date-dimension, $ray-count) {
     display: block;
     position: absolute;
     z-index: 10;
     width: $date-dimension;
     height: $date-dimension;
-    bottom: 0; //-$date-dimension/2;
-    left: 0; //-$date-dimension/2;
+    bottom: -$date-dimension/2;
+    left: -$date-dimension/2;
     border-radius: 50%;
     background-color: #333;
     color: white;
 
     .date-val {
         font-size: 18px;
-        @include calculate-ray-angles(31);
+        @include calculate-ray-angles($ray-count);
         position: absolute;
         top: ($date-dimension/2) - 21px;
         width: $date-dimension;
@@ -27,6 +26,22 @@
                 background-color: red;    
             }
         }
+    }
+}
+
+.apod__date-picker {
+    #day-wheel {
+        @include date-picker(500px, 31);
+    }
+    #month-wheel {
+        @include date-picker(350px, 12);
+        background-color: yellow;
+        color: black;
+    }
+    #year-wheel {
+        @include date-picker(200px, 10);
+        background-color: red;
+        color: black;
     }
 }
 
