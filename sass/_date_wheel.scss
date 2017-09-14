@@ -5,8 +5,8 @@
     z-index: 10;
     width: $date-dimension;
     height: $date-dimension;
-    bottom: -$date-dimension/2;
-    left: -$date-dimension/2;
+    bottom: 0; //-$date-dimension/2;
+    left: 0; //-$date-dimension/2;
     border-radius: 50%;
     background-color: #333;
     color: white;
@@ -15,14 +15,18 @@
         font-size: 18px;
         @include calculate-ray-angles(31);
         position: absolute;
-        top: ($date-dimension/2) - 20px;
+        top: ($date-dimension/2) - 21px;
         width: $date-dimension;
-        padding-left: 10px;
         box-sizing: border-box;
         .num {
-            transform: rotate3d(0,0,1,-84deg);
+            transform: rotate3d(0,0,1,-87deg);
             display: inline-block;
-            width: 0;
+            text-align: center;
+            width: 25px;
+            &.current {
+                background-color: red;    
+            }
         }
     }
 }
+

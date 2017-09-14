@@ -302,17 +302,16 @@
   z-index: 10;
   width: 500px;
   height: 500px;
-  bottom: -250px;
-  left: -250px;
+  bottom: 0;
+  left: 0;
   border-radius: 50%;
   background-color: #333;
   color: white; }
   .apod__date-picker .date-val {
     font-size: 18px;
     position: absolute;
-    top: 230px;
+    top: 229px;
     width: 500px;
-    padding-left: 10px;
     box-sizing: border-box; }
     .apod__date-picker .date-val:nth-child(1) {
       transform: rotate3d(0, 0, 1, 0deg);
@@ -411,9 +410,12 @@
       transform: rotate3d(0, 0, 1, 360deg);
       transform-origin: bottom; }
     .apod__date-picker .date-val .num {
-      transform: rotate3d(0, 0, 1, -84deg);
+      transform: rotate3d(0, 0, 1, -87deg);
       display: inline-block;
-      width: 0; }
+      text-align: center;
+      width: 25px; }
+      .apod__date-picker .date-val .num.current {
+        background-color: red; }
 
 @keyframes clockwise-spin {
   0% {
