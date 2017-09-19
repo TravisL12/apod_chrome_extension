@@ -18,7 +18,7 @@
     }
 
     .date-val {
-        font-size: 18px;
+        font-size: 12px;
         @include calculate-ray-angles($ray-count);
         position: absolute;
         top: ($date-dimension/2) - 21px;
@@ -42,7 +42,7 @@
     bottom: 0;
     left: 0;
 
-    $wheel-diameter: 650px;
+    $wheel-diameter: 500px;
     #day-wheel {
         @include date-picker($wheel-diameter, 31);
     }

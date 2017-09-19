@@ -305,10 +305,10 @@
     position: absolute;
     box-shadow: inset 0 0 0 0.5px rgba(199, 199, 199, 0.8);
     z-index: 10;
-    width: 650px;
-    height: 650px;
-    bottom: -325px;
-    left: -325px;
+    width: 500px;
+    height: 500px;
+    bottom: -250px;
+    left: -250px;
     border-radius: 50%;
     background-color: rgba(51, 51, 51, 0.8);
     color: rgba(199, 199, 199, 0.8);
@@ -316,10 +316,10 @@
     .apod__date-picker #day-wheel:hover {
       background-color: rgba(64, 64, 64, 0.8); }
     .apod__date-picker #day-wheel .date-val {
-      font-size: 18px;
+      font-size: 12px;
       position: absolute;
-      top: 304px;
-      width: 650px;
+      top: 229px;
+      width: 500px;
       box-sizing: border-box; }
       .apod__date-picker #day-wheel .date-val:nth-child(1) {
         transform: rotate3d(0, 0, 1, 0deg);
@@ -430,10 +430,10 @@
     position: absolute;
     box-shadow: inset 0 0 0 0.5px rgba(199, 199, 199, 0.8);
     z-index: 10;
-    width: 550px;
-    height: 550px;
-    bottom: -275px;
-    left: -275px;
+    width: 400px;
+    height: 400px;
+    bottom: -200px;
+    left: -200px;
     border-radius: 50%;
     background-color: rgba(51, 51, 51, 0.8);
     color: rgba(199, 199, 199, 0.8);
@@ -441,10 +441,10 @@
     .apod__date-picker #month-wheel:hover {
       background-color: rgba(64, 64, 64, 0.8); }
     .apod__date-picker #month-wheel .date-val {
-      font-size: 18px;
+      font-size: 12px;
       position: absolute;
-      top: 254px;
-      width: 550px;
+      top: 179px;
+      width: 400px;
       box-sizing: border-box; }
       .apod__date-picker #month-wheel .date-val:nth-child(1) {
         transform: rotate3d(0, 0, 1, 0deg);
@@ -498,10 +498,10 @@
     position: absolute;
     box-shadow: inset 0 0 0 0.5px rgba(199, 199, 199, 0.8);
     z-index: 10;
-    width: 450px;
-    height: 450px;
-    bottom: -225px;
-    left: -225px;
+    width: 300px;
+    height: 300px;
+    bottom: -150px;
+    left: -150px;
     border-radius: 50%;
     background-color: rgba(51, 51, 51, 0.8);
     color: rgba(199, 199, 199, 0.8);
@@ -509,10 +509,10 @@
     .apod__date-picker #year-wheel:hover {
       background-color: rgba(64, 64, 64, 0.8); }
     .apod__date-picker #year-wheel .date-val {
-      font-size: 18px;
+      font-size: 12px;
       position: absolute;
-      top: 204px;
-      width: 450px;
+      top: 129px;
+      width: 300px;
       box-sizing: border-box; }
       .apod__date-picker #year-wheel .date-val:nth-child(1) {
         transform: rotate3d(0, 0, 1, 0deg);
