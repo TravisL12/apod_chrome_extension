@@ -33,6 +33,7 @@ const apodTitle = $('#apod-title');
 const apodDate = $('#apod-date');
 const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
+const apodError = $('#apod-error');
 
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');

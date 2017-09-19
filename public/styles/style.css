@@ -469,6 +469,12 @@ ul, li {
   position: relative;
   overflow: hidden; }
 
+.apod__error {
+  color: white;
+  font-size: 18px;
+  margin-top: 200px;
+  text-align: center; }
+
 .apod__header {
   position: absolute;
   z-index: 1000;

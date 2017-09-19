@@ -8,6 +8,8 @@ class Apod {
         this.hdurl;
         this.title;
         this.description;
+        this.errorCount = 0;
+        this.errorLimit = 3;
     }
 
     random () {
@@ -85,6 +87,7 @@ class Apod {
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
                 this.description = response.explanation;
+                this.errorCount = 0;
 
                 if (response.media_type === 'image') {
                     apodImage.style.display = 'block';
@@ -100,8 +103,13 @@ class Apod {
 
             }, (error) => {
                 console.log('Error: APOD API response');
+                this.errorCount++;
                 this.isRequestInProgress = false;
-                this.random();
+                if (this.errorCount < this.errorLimit) {
+                    this.random();
+                } else {
+                    apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
+                }
             }
         );
     }
