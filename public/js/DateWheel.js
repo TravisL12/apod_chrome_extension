@@ -3,7 +3,7 @@ class DateWheel {
     constructor(id, nums) {
         this.el = document.createElement('div');
         this.el.id = id;
-        this.currentRotationDeg = 135;
+        this.currentRotationDeg = 45;
         this.updateAngle();
 
         if (Array.isArray(nums)) {
@@ -83,7 +83,7 @@ class DateWheel {
 
     setDate (value) {
         this.currentDate = value;
-        this.currentRotationDeg = -((value / this.amount) * 360) + 135;
+        this.currentRotationDeg = -((value / this.amount) * 360) + 45;
         this.updateAngle();
     }
 

@@ -157,9 +157,9 @@ ul, li {
     .nav-buttons {
         @include helvetica-neue-light;
         position: absolute;
-        bottom: 10;
-        right: 0;
-        ul li {
+        bottom: 10px;
+        right: 200px;
+        li {
             font-size: 12px;
             color: $gray;
             text-align: center;

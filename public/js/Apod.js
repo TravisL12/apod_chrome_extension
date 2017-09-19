@@ -103,8 +103,8 @@ class Apod {
                 }
 
             }, (error) => {
-                console.log('Error: APOD API response');
                 this.errorCount++;
+                console.log(`Error: APOD API response (${this.errorCount})`);
                 this.isRequestInProgress = false;
                 if (this.errorCount < this.errorLimit) {
                     this.random();
