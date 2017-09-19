@@ -16,9 +16,10 @@ class DateWheel {
 
         let wheelSpin = false;
         const wheelDelay = 250;
+        const wheelTriggerSpeed = 35;
         this.el.addEventListener('mousewheel', function (e) {
-            if (!wheelSpin) {
-                let direction = e.deltaY < 0 ? 1 : -1;
+            if (!wheelSpin && Math.abs(e.deltaY) > wheelTriggerSpeed) {
+                const direction = e.deltaY < 0 ? 1 : -1;
                 this.currentRotationDeg += (360 / this.amount) * direction;
                 this.updateAngle();
                 wheelSpin = true;

@@ -7,6 +7,7 @@ $drawer-width: 400px;
     right: 0;
     width: $drawer-width;
     height: 80vh;
+    max-height: 800px;
     transform: translate3d($drawer-width,0px,0px);
     transition: 0.4s transform ease-out;
 

@@ -62,6 +62,7 @@
   right: 0;
   width: 400px;
   height: 80vh;
+  max-height: 800px;
   transform: translate3d(400px, 0px, 0px);
   transition: 0.4s transform ease-out; }
   .apod__drawer.show {
@@ -575,11 +576,11 @@
     display: inline-block;
     text-align: center;
     width: 30px;
-    text-rendering: optimizeLegibility; }
+    text-rendering: optimizeLegibility;
+    cursor: pointer; }
     .apod__date-picker .num.current {
       color: #99cfe0; }
   .apod__date-picker .date-submit {
-    display: none;
     position: relative;
     z-index: 11; }
 

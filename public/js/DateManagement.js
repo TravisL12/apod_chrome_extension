@@ -68,7 +68,8 @@ const DateManagement = () => {
             
             if (!isTodayGreater) {
                 console.log(date + ' is in the future!');
-                apodNext.el.classList.add('hide');
+                apod.isRequestInProgress = false;
+                apod.current();
             } else if (isDateEqual) {
                 apodNext.el.classList.add('hide');
             } else {
