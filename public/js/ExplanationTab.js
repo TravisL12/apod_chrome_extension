@@ -20,6 +20,14 @@ class ExplanationTab extends DrawerTab {
         `;
     }
 
+    setTabListeners () {
+        const tabs = this.drawer.tabs.slice(2);
+
+        for (let i = 0; i < tabs.length; i++) {
+            tabs[i].setClickListener();
+        }
+    }
+
     render () {
         const apodOrigin = this.baseView.querySelector('#apod-origin');
         const apodHiRes  = this.baseView.querySelector('#apod-hires');
@@ -39,6 +47,8 @@ class ExplanationTab extends DrawerTab {
         apodHiRes.setAttribute('href', this.apod.hdurl);
         apodLowRes.setAttribute('href', this.apod.url);
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
+
+        this.setTabListeners();
     }
 
 };

@@ -16,6 +16,11 @@ class Drawer {
         }.bind(this));
     }
 
+    clearKnowMoreTabs () {
+        this.currentTabIdx = null;
+        this.tabs = this.tabs.slice(0,2);
+    }
+
     openDrawer () {
         this.el.classList.add('show');
         this.isOpen = true;

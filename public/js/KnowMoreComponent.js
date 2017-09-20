@@ -30,10 +30,10 @@ function Keyword (name, category, id) {
 }
 
 /**
- * KnowMore
+ * KnowMoreComponent
  * @param {string} text
  */
-class KnowMore {
+class KnowMoreComponent {
 
     constructor (text) {
         this.text = text;
@@ -96,7 +96,7 @@ class KnowMore {
         return id;
     }
 
-    createTab (result) {
+    createTab (result, index) {
         const el = document.createElement('div');
         el.className = 'tab';
         el.id = this.buildLinkId(result);
@@ -121,7 +121,7 @@ class KnowMore {
         el.addEventListener('click', googleSearch);
         apodKnowMore.appendChild(el);
 
-        const knowMoreTab = new KnowMoreTab('#' + el.id, apod, drawer);
+        const knowMoreTab = new KnowMoreTab('#' + el.id, apod, drawer, index, googleSearch);
     }
 
     search (query) {

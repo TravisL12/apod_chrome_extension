@@ -44,6 +44,7 @@ class Apod {
         apodLoading.classList.remove('hide');
         apodKnowMore.innerHTML = '';
         drawer.closeDrawer();
+        drawer.clearKnowMoreTabs();
     }
 
     isRequestValid () {
@@ -119,7 +120,6 @@ class Apod {
         const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
 
         if (isFavorite) {
-            console.log(this.date + ' is a favorite!');
             favoriteButtonShow.classList.remove('hide');
             favoriteButtonHide.classList.add('hide');
         } else {
@@ -128,19 +128,19 @@ class Apod {
         }
     }
 
-    highlightResults (result) {
+    highlightResults (result, index) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.description = this.description.replace(re, '<span class="keyword">$1</span>');
+        this.description = this.description.replace(re, `<span class="keyword keyword-${index}">$1</span>`);
     }
 
     wouldYouLikeToKnowMore (text) {
-        const knowMore = new KnowMore(text);
+        const knowMore = new KnowMoreComponent(text);
         const results = knowMore.results;
 
         if (results.length) {
             for (let i in results) {
-                this.highlightResults(results[i].title);
-                knowMore.createTab(results[i]);
+                this.highlightResults(results[i].title, i);
+                knowMore.createTab(results[i], i);
             }
         }
     }
