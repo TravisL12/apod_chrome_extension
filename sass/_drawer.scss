@@ -36,12 +36,15 @@ $drawer-width: 400px;
         .tab {
             @include apod-button;
             margin-left: 2px;
-            min-width: 100px;
+            width: 104px;
             height: 100%;
             cursor: pointer;
             text-align: center;
             padding: 10px 10px 0;
             box-sizing: border-box;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
 
             &.is-open {
                 background-color: $light-gray;
@@ -57,7 +60,6 @@ $drawer-width: 400px;
         box-shadow: inset 0 0 0 0.5px $light-gray;
         background-color: rgba(0,0,0,0.6);
         color: white;
-        height: auto;
         min-height: 400px;
         height: 100%;
         width: $drawer-width;

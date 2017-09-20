@@ -83,12 +83,15 @@
       color: rgba(199, 199, 199, 0.8);
       transition: 0.2s linear background-color;
       margin-left: 2px;
-      min-width: 100px;
+      width: 104px;
       height: 100%;
       cursor: pointer;
       text-align: center;
       padding: 10px 10px 0;
-      box-sizing: border-box; }
+      box-sizing: border-box;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap; }
       .apod__drawer .apod__drawer-tabs .tab.hover, .apod__drawer .apod__drawer-tabs .tab:hover {
         background-color: rgba(102, 102, 102, 0.8); }
       .apod__drawer .apod__drawer-tabs .tab.is-open {
@@ -102,7 +105,6 @@
     box-shadow: inset 0 0 0 0.5px rgba(199, 199, 199, 0.8);
     background-color: rgba(0, 0, 0, 0.6);
     color: white;
-    height: auto;
     min-height: 400px;
     height: 100%;
     width: 400px;
@@ -506,21 +508,6 @@ ul, li {
     transition: 0.2s opacity ease-out; }
     .apod__header .description .title {
       position: relative; }
-      .apod__header .description .title .save-favorite {
-        position: absolute;
-        left: -40px;
-        bottom: 0;
-        width: 30px;
-        height: 30px;
-        background-color: lightblue;
-        box-shadow: inset 3px 2px 6px 0px rgba(0, 0, 0, 0.6);
-        border-radius: 50%; }
-        .apod__header .description .title .save-favorite .checkmark {
-          font-size: 16px;
-          position: absolute;
-          margin: 0;
-          top: 6px;
-          left: 10px; }
       .apod__header .description .title #img-quality {
         display: inline-block;
         font-size: 14px;

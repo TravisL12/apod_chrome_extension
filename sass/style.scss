@@ -71,23 +71,7 @@ ul, li {
 
         .title {
             position: relative;
-            .save-favorite {
-                position: absolute;
-                left: -40px;
-                bottom: 0;
-                width: 30px;
-                height: 30px;
-                background-color: lightblue;
-                box-shadow: inset 3px 2px 6px 0px rgba(0, 0, 0, 0.6);
-                border-radius: 50%;
-                .checkmark {
-                    font-size: 16px;
-                    position: absolute;
-                    margin: 0;
-                    top: 6px;
-                    left: 10px;
-                }
-            }
+
             #img-quality {
                 display: inline-block;
                 font-size: 14px;
