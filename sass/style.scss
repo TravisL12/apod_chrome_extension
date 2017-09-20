@@ -69,11 +69,50 @@ ul, li {
         color: white;
         transition: 0.2s opacity ease-out;
 
-        #img-quality {
-            display: inline-block;
-            font-size: 14px;
-            color: #757575;
-            margin-left: 10px;
+        .title {
+            position: relative;
+            .save-favorite {
+                position: absolute;
+                left: -40px;
+                bottom: 0;
+                width: 30px;
+                height: 30px;
+                background-color: lightblue;
+                box-shadow: inset 3px 2px 6px 0px rgba(0, 0, 0, 0.6);
+                border-radius: 50%;
+                .checkmark {
+                    font-size: 16px;
+                    position: absolute;
+                    margin: 0;
+                    top: 6px;
+                    left: 10px;
+                }
+            }
+            #img-quality {
+                display: inline-block;
+                font-size: 14px;
+                color: #757575;
+                margin-left: 10px;
+            }
+        }
+
+        .nav-buttons {
+            display: block;
+            li {
+                margin-right: 15px;
+                color: $light-gray;
+                transition: 0.2s linear background-color;
+                cursor: pointer;
+
+                &.hover,
+                &:hover {
+                    color: lighten($gray, 20%);
+                }
+
+                &:active {
+                    color: gold;
+                }
+            }
         }
     }
 
@@ -138,33 +177,4 @@ ul, li {
 .keyword {
     color: lightblue;
     font-weight: bold;
-}
-
-.apod__footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    .nav-buttons {
-        position: absolute;
-        bottom: 10;
-        right: 0;
-        ul li {
-            color: $gray;
-            text-align: center;
-            margin-right: 15px;
-            float: left;
-            a {
-                @include apod-button;
-                display: block;
-                min-width: 65px;
-                padding: 10px;
-                cursor: pointer;
-            }
-
-            &:active {
-                background-color: gold;
-            }
-        }
-    }
 }

@@ -12,8 +12,17 @@
                 <div class='apod__top-sites' id='topSites'></div>
 
                 <div class='description hide'>
-                    <h2 id='apod-date'></h2>
-                    <h1 id='apod-title'></h1><span id='img-quality'></span>
+
+                    <div class='title'>
+                        <div class='save-favorite' id='add-favorite'><p class='checkmark'>&#10003;</p></div>
+                        <h2 id='apod-date'></h2>
+                        <h1 id='apod-title'></h1><span id='img-quality'></span>
+                    </div>
+
+                    <ul class='nav-buttons'>
+                        <li id='apod-random'>Random</li>
+                        <li id='apod-current'>Today</li>
+                    </ul>
                 </div>
             </div>
 
@@ -37,19 +46,6 @@
 
             <div class='apod__video' id='apod-video'>
                 <iframe width='960' height='540' frameborder='0'></iframe>
-            </div>
-
-            <div class='apod__footer'>
-                <div class='nav-buttons'>
-                    <ul>
-                        <li class='save-favorite'><a id='add-favorite'>Save Favorite</a></li>
-                        <li><a id='apod-previous'>Previous</a></li>
-                        <li><a id='apod-next'>Next</a></li>
-                        <li><a id='apod-random'>Random</a></li>
-                        <li><a id='apod-current'>Today</a></li>
-                    </ul>
-                </div>
-
             </div>
         </div>
 

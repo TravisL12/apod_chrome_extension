@@ -54,7 +54,7 @@
 .apod__drawer {
   position: absolute;
   z-index: 1000;
-  top: 80px;
+  top: 100px;
   right: 0;
   width: 400px;
   height: 80vh;
@@ -504,11 +504,39 @@ ul, li {
     height: auto;
     color: white;
     transition: 0.2s opacity ease-out; }
-    .apod__header .description #img-quality {
-      display: inline-block;
-      font-size: 14px;
-      color: #757575;
-      margin-left: 10px; }
+    .apod__header .description .title {
+      position: relative; }
+      .apod__header .description .title .save-favorite {
+        position: absolute;
+        left: -40px;
+        bottom: 0;
+        width: 30px;
+        height: 30px;
+        background-color: lightblue;
+        box-shadow: inset 3px 2px 6px 0px rgba(0, 0, 0, 0.6);
+        border-radius: 50%; }
+        .apod__header .description .title .save-favorite .checkmark {
+          font-size: 16px;
+          position: absolute;
+          margin: 0;
+          top: 6px;
+          left: 10px; }
+      .apod__header .description .title #img-quality {
+        display: inline-block;
+        font-size: 14px;
+        color: #757575;
+        margin-left: 10px; }
+    .apod__header .description .nav-buttons {
+      display: block; }
+      .apod__header .description .nav-buttons li {
+        margin-right: 15px;
+        color: rgba(199, 199, 199, 0.8);
+        transition: 0.2s linear background-color;
+        cursor: pointer; }
+        .apod__header .description .nav-buttons li.hover, .apod__header .description .nav-buttons li:hover {
+          color: rgba(102, 102, 102, 0.8); }
+        .apod__header .description .nav-buttons li:active {
+          color: gold; }
   .apod__header .apod__top-sites {
     float: left;
     color: white;
@@ -558,31 +586,5 @@ ul, li {
 .keyword {
   color: lightblue;
   font-weight: bold; }
-
-.apod__footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%; }
-  .apod__footer .nav-buttons {
-    position: absolute;
-    bottom: 10;
-    right: 0; }
-    .apod__footer .nav-buttons ul li {
-      color: rgba(51, 51, 51, 0.8);
-      text-align: center;
-      margin-right: 15px;
-      float: left; }
-      .apod__footer .nav-buttons ul li a {
-        background-color: rgba(51, 51, 51, 0.8);
-        color: rgba(199, 199, 199, 0.8);
-        transition: 0.2s linear background-color;
-        display: block;
-        min-width: 65px;
-        padding: 10px;
-        cursor: pointer; }
-        .apod__footer .nav-buttons ul li a.hover, .apod__footer .nav-buttons ul li a:hover {
-          background-color: rgba(102, 102, 102, 0.8); }
-      .apod__footer .nav-buttons ul li:active {
-        background-color: gold; }
 
 /*# sourceMappingURL=style.css.map */
