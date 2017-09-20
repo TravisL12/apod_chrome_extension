@@ -576,8 +576,7 @@
     display: inline-block;
     text-align: center;
     width: 30px;
-    text-rendering: optimizeLegibility;
-    cursor: pointer; }
+    text-rendering: optimizeLegibility; }
     .apod__date-picker .num.current {
       color: #99cfe0; }
   .apod__date-picker .date-submit {
