@@ -577,6 +577,9 @@ ul, li {
 
 .keyword {
   color: lightblue;
-  font-weight: bold; }
+  font-weight: bold;
+  cursor: pointer; }
+  .keyword:hover {
+    text-decoration: underline; }
 
 /*# sourceMappingURL=style.css.map */

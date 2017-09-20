@@ -30,7 +30,7 @@ class Drawer {
         this.el.classList.remove('show');
         this.isOpen = false;
 
-        if (this.currentTabIdx >= 0) {
+        if (this.currentTabIdx && this.currentTabIdx >= 0) {
             this.tabs[this.currentTabIdx].closeTab();
         }
     }

@@ -146,6 +146,8 @@ class Apod {
     }
 
     preLoadImage () {
+        this.isRequestInProgress = false;
+
         let Img = new Image();
         let quality = {
             text: 'HD',
@@ -180,7 +182,6 @@ class Apod {
     }
 
     apodImage (imgQuality) {
-        this.isRequestInProgress = false;
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
         let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
