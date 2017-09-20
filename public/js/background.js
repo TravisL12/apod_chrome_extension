@@ -38,6 +38,9 @@ const apodError = $('#apod-error');
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
 
+const favoriteButtonShow = $('#add-favorite .favorite');
+const favoriteButtonHide = $('#add-favorite .not-favorite');
+
 const DateManager = DateManagement();
 const apod = new Apod();
 const loader = new [SunLoader, MoonLoader][randomizer(1)];

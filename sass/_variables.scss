@@ -34,6 +34,10 @@ $light-gray: rgba(#C7C7C7, 0.8);
     width: 0;
 }
 
+%hide-display {
+    display: none;
+}
+
 %center-div {
     position: absolute;
     top: 0;

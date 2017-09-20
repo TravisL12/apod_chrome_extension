@@ -17,25 +17,31 @@ class FavoritesTab extends DrawerTab {
         this.load();
     }
 
-    get (callback) {
-       chrome.storage.sync.get(['apodFavorites'], callback);
-    }
-
     load () {
-        this.get((favorites) => {
+        chrome.storage.sync.get(['apodFavorites'], (favorites) => {
             this.favorites = favorites.apodFavorites || {};
         });
     }
 
+    get favoriteDates () {
+        return Object.keys(this.favorites);
+    }
+
     save () {
-        this.favorites[apod.date] = {
-            title: apod.title,
-            imgUrl: apod.url,
-        };
+        if (this.favorites[apod.date]) {
+            delete this.favorites[apod.date];
+        } else {
+            this.favorites[apod.date] = {
+                title: apod.title,
+                imgUrl: apod.url,
+            };
+        }
 
         chrome.storage.sync.set({
             apodFavorites: this.favorites,
         });
+
+        apod.checkFavorite();
 
         this.load();
 

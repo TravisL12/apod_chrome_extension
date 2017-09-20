@@ -88,6 +88,7 @@ class Apod {
                 this.date        = response.date;
                 this.description = response.explanation;
                 this.errorCount = 0;
+                this.checkFavorite();
 
                 if (response.media_type === 'image') {
                     apodImage.style.display = 'block';
@@ -112,6 +113,19 @@ class Apod {
                 }
             }
         );
+    }
+
+    checkFavorite () {
+        const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
+
+        if (isFavorite) {
+            console.log(this.date + ' is a favorite!');
+            favoriteButtonShow.classList.remove('hide');
+            favoriteButtonHide.classList.add('hide');
+        } else {
+            favoriteButtonShow.classList.add('hide');
+            favoriteButtonHide.classList.remove('hide');
+        }
     }
 
     highlightResults (result) {

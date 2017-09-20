@@ -88,6 +88,16 @@ ul, li {
                 transition: 0.2s linear background-color;
                 cursor: pointer;
 
+                span {
+                    &.hide {
+                        @extend %hide-display;
+                    }
+
+                    &.favorite {
+                        color: yellow;
+                    }                    
+                }
+
                 &.hover,
                 &:hover {
                     color: lighten($gray, 20%);
