@@ -88,6 +88,10 @@ ul, li {
                 transition: 0.2s linear background-color;
                 cursor: pointer;
 
+                &.hide {
+                    @extend %hide-display;
+                }
+
                 span {
                     &.hide {
                         @extend %hide-display;

@@ -3,7 +3,7 @@
   height: 0;
   width: 0; }
 
-.apod__header .description .nav-buttons li span.hide {
+.apod__header .description .nav-buttons li.hide, .apod__header .description .nav-buttons li span.hide {
   display: none; }
 
 .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-container, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small, .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-light, .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light, .apod__loading .moon-container {
