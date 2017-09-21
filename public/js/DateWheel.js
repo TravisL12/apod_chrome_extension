@@ -17,7 +17,7 @@ class DateWheel {
         let wheelSpin = false;
         const wheelDelay = 250;
         const wheelTriggerSpeed = 35;
-        this.el.addEventListener('mousewheel', function (e) {
+        this.el.addEventListener('mousewheel', (e) => {
             if (!wheelSpin && Math.abs(e.deltaY) > wheelTriggerSpeed) {
                 const direction = e.deltaY < 0 ? 1 : -1;
                 this.currentRotationDeg += (360 / this.amount) * direction;
@@ -39,7 +39,7 @@ class DateWheel {
                     wheelSpin = false;
                 }, wheelDelay);
             }
-        }.bind(this));
+        });
     }
 
     createWheelValues () {
@@ -113,14 +113,14 @@ class DatePicker {
         this.el.appendChild(this.monthWheel.render());
         this.el.appendChild(this.yearWheel.render());
 
-        this.submitBtn.addEventListener('click', function (e) {
+        this.submitBtn.addEventListener('click', (e) => {
             const date = [
                 yearRange[this.yearWheel.currentValue()],
                 this.monthWheel.currentValue() + 1,
                 this.dayWheel.currentValue() + 1
             ].join('-');
             apod.specificDate(date);
-        }.bind(this));
+        });
     }
 
     update (date) {

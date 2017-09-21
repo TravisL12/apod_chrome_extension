@@ -44,14 +44,6 @@ const DateManagement = () => {
             return _monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
         },
 
-        adjacentDate (dateString, direction) {
-            let date = _actualDate(dateString),
-                adjDate = new Date(date.getTime());
-
-            adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
-            return _hyphenDateFormat(adjDate);
-        },
-
         randomDate () {
             let start = new Date(1995, 5, 16),
                 end   = new Date(),
@@ -60,24 +52,18 @@ const DateManagement = () => {
             return _hyphenDateFormat(date);
         },
 
+        checkDateEqual (date) {
+            return new Date(_getToday()).getTime() === _actualDate(date).getTime();
+        },
+
+        checkTodayGreater (date) {
+            return _actualDate(_getToday()).getTime() >=  _actualDate(date).getTime();
+        },
+
         isDateValid (date) {
             date = date || _getToday();
 
-            const isTodayGreater = _actualDate(_getToday()).getTime() >=  _actualDate(date).getTime();
-            const isDateEqual    = new Date(_getToday()).getTime() === _actualDate(date).getTime();
-            
-            if (!isTodayGreater) {
-                console.log(date + ' is in the future!');
-                apodCurrent.el.classList.add('hide');
-                apod.isRequestInProgress = false;
-                apod.current();
-            } else if (isDateEqual) {
-                apodCurrent.el.classList.add('hide');
-            } else {
-                apodCurrent.el.classList.remove('hide');
-            }
-
-            return isTodayGreater;
+            return this.checkTodayGreater(date);
         },
 
     }

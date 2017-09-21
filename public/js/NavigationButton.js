@@ -12,27 +12,12 @@ class NavigationButton {
             apod[this.action]();
         });
 
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', (e) => {
             if (e.which === this.keycode) {
-                this.showHoverState();
+                ga('send', 'event', 'Keydown', 'pressed', this.el.id);
+                apod[this.action]();
             }
-        }.bind(this));
-    }
-
-    showHoverState () {
-        if (apod.isRequestInProgress) {
-            return;
-        }
-
-        ga('send', 'event', 'Keydown', 'pressed', this.el.id);
-        const delay = 125;
-        this.el.classList.add('hover');
-
-        setTimeout(() => {
-            this.el.classList.remove('hover');
-        }, delay);
-
-        apod[this.action]();
+        });
     }
 
 }

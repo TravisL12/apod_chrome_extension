@@ -20,14 +20,6 @@ class Apod {
         this.getApod(date);
     }
 
-    previous () {
-        this.getApod(DateManager.adjacentDate(this.date, -1));
-    }
-
-    next () {
-        this.getApod(DateManager.adjacentDate(this.date, 1));
-    }
-
     current () {
         this.getApod();
     }
@@ -210,6 +202,17 @@ class Apod {
         // Couldn't get Firefox to do the googleapi custom searcch without CORS errors
         if (!isFirefox) {
             this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+        }
+
+        if (!DateManager.checkTodayGreater(this.date)) {
+            console.log(date + ' is in the future!');
+            apodCurrent.el.classList.add('hide');
+            this.isRequestInProgress = false;
+            this.current();
+        } else if (DateManager.checkDateEqual(this.date)) {
+            apodCurrent.el.classList.add('hide');
+        } else {
+            apodCurrent.el.classList.remove('hide');
         }
 
         apodLoading.classList.add('hide');
