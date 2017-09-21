@@ -29,10 +29,14 @@ const DateManagement = () => {
         return new Date(split[0], split[1]-1, split[2]);
     }
 
+    function _getToday () {
+        return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
+    }
+
     return {
 
         get today () {
-            return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
+            return _getToday();
         },
 
         prettyDateFormat (date) {
@@ -42,11 +46,12 @@ const DateManagement = () => {
 
         adjacentDate (dateString, direction) {
             let date = _actualDate(dateString),
-                adjDate = new Date(date.getTime());
+            adjDate = new Date(date.getTime());
 
             adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
             return _hyphenDateFormat(adjDate);
         },
+
 
         randomDate () {
             let start = new Date(1995, 5, 16),
@@ -56,22 +61,18 @@ const DateManagement = () => {
             return _hyphenDateFormat(date);
         },
 
+        checkDateEqual (date) {
+            return new Date(_getToday()).getTime() === _actualDate(date).getTime();
+        },
+
+        checkTodayGreater (date) {
+            return _actualDate(_getToday()).getTime() >=  _actualDate(date).getTime();
+        },
+
         isDateValid (date) {
-            date = date || this.today;
+            date = date || _getToday();
 
-            let isTodayGreater = new Date(this.today).getTime() >=  _actualDate(date).getTime(),
-                isDateEqual    = new Date(this.today).getTime() === _actualDate(date).getTime();
-            
-            if (!isTodayGreater) {
-                console.log(date + ' is in the future!');
-                apodNext.el.classList.add('hide');
-            } else if (isDateEqual) {
-                apodNext.el.classList.add('hide');
-            } else {
-                apodNext.el.classList.remove('hide');
-            }
-
-            return isTodayGreater;
+            return this.checkTodayGreater(date);
         },
 
     }

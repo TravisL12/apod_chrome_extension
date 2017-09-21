@@ -8,6 +8,7 @@ class Apod {
         this.hdurl;
         this.title;
         this.description;
+        this.showDatePicker;
         this.errorCount = 0;
         this.errorLimit = 3;
     }
@@ -28,6 +29,7 @@ class Apod {
         this.getApod(DateManager.adjacentDate(this.date, 1));
     }
 
+
     current () {
         this.getApod();
     }
@@ -44,6 +46,7 @@ class Apod {
         apodLoading.classList.remove('hide');
         apodKnowMore.innerHTML = '';
         drawer.closeDrawer();
+        drawer.clearKnowMoreTabs();
     }
 
     isRequestValid () {
@@ -88,6 +91,11 @@ class Apod {
                 this.date        = response.date;
                 this.description = response.explanation;
                 this.errorCount = 0;
+                this.checkFavorite();
+
+                if (this.showDatePicker) {
+                    apodDatePicker.update(this.date);
+                }
 
                 if (response.media_type === 'image') {
                     apodImage.style.display = 'block';
@@ -102,8 +110,8 @@ class Apod {
                 }
 
             }, (error) => {
-                console.log('Error: APOD API response');
                 this.errorCount++;
+                console.log(`Error: APOD API response (${this.errorCount})`);
                 this.isRequestInProgress = false;
                 if (this.errorCount < this.errorLimit) {
                     this.random();
@@ -114,19 +122,31 @@ class Apod {
         );
     }
 
-    highlightResults (result) {
+    checkFavorite () {
+        const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
+
+        if (isFavorite) {
+            favoriteButtonShow.classList.remove('hide');
+            favoriteButtonHide.classList.add('hide');
+        } else {
+            favoriteButtonShow.classList.add('hide');
+            favoriteButtonHide.classList.remove('hide');
+        }
+    }
+
+    highlightResults (result, index) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.description = this.description.replace(re, '<span class="keyword">$1</span>');
+        this.description = this.description.replace(re, `<span class="keyword keyword-${index}">$1</span>`);
     }
 
     wouldYouLikeToKnowMore (text) {
-        const knowMore = new KnowMore(text);
+        const knowMore = new KnowMoreComponent(text);
         const results = knowMore.results;
 
         if (results.length) {
             for (let i in results) {
-                this.highlightResults(results[i].title);
-                knowMore.createTab(results[i]);
+                this.highlightResults(results[i].title, i);
+                knowMore.createTab(results[i], i);
             }
         }
     }
@@ -167,6 +187,7 @@ class Apod {
 
     apodImage (imgQuality) {
         this.isRequestInProgress = false;
+
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
         let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
@@ -180,14 +201,33 @@ class Apod {
 
     apodVideo () {
         this.isRequestInProgress = false;
-        apodVideo.src = this.url;
+        this.url = this.url.replace(';autoplay=1','');
+        let url = new URL(this.url);
+        url.search = 'autopause=1&autoplay=0';
+        apodVideo.src = url.href;
         this.apodDescription();
     }
 
     apodDescription () {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+
+        // Couldn't get Firefox to do the googleapi custom searcch without CORS errors
+        if (!isFirefox) {
+            this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+        }
+
+        if (!DateManager.checkTodayGreater(this.date)) {
+            console.log(date + ' is in the future!');
+            this.isRequestInProgress = false;
+            this.current();
+        } else if (DateManager.checkDateEqual(this.date)) {
+            apodCurrent.el.classList.add('current');
+            apodNext.el.classList.add('hide');
+        } else {
+            apodCurrent.el.classList.remove('current');
+            apodNext.el.classList.remove('hide');
+        }
 
         apodLoading.classList.add('hide');
         $('.apod__header .description').classList.remove('hide');

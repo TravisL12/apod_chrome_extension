@@ -9,11 +9,16 @@ class Drawer {
         this.isOpen = false;
         this.currentTabIdx;
 
-        document.addEventListener('keydown', function (e) {
+        document.addEventListener('keydown', (e) => {
             if (e.which === 27 && this.isOpen) {
                 this.closeDrawer();
             }
-        }.bind(this));
+        });
+    }
+
+    clearKnowMoreTabs () {
+        this.currentTabIdx = null;
+        this.tabs = this.tabs.slice(0,2);
     }
 
     openDrawer () {
@@ -25,7 +30,7 @@ class Drawer {
         this.el.classList.remove('show');
         this.isOpen = false;
 
-        if (this.currentTabIdx >= 0) {
+        if (this.currentTabIdx && this.currentTabIdx >= 0) {
             this.tabs[this.currentTabIdx].closeTab();
         }
     }

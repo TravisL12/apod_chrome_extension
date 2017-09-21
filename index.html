@@ -2,6 +2,7 @@
 <head>
     <title>New Tab - APOD</title>
     <link href='public/styles/style.css' rel='stylesheet'>
+    <meta charset="UTF-8">
 </head>
 
     <body>
@@ -12,9 +13,27 @@
                 <div class='apod__top-sites' id='topSites'></div>
 
                 <div class='description hide'>
-                    <h2 id='apod-date'></h2>
-                    <h1 id='apod-title'></h1><span id='img-quality'></span>
+
+                    <div class='title'>
+                        <h2 id='apod-date'></h2>
+                        <h1 id='apod-title'></h1><span id='img-quality'></span>
+                    </div>
+
+                    <ul class='nav-buttons'>
+                        <li id='apod-random'>Random</li>
+                        <li id='apod-current'>Today</li>
+                        <li id='apod-previous'>Previous</li>
+                        <li id='apod-next'>Next</li>
+                        <li class='save-favorite' id='add-favorite'>
+                            <span class='not-favorite'>Save Favorite</span>
+                            <span class='favorite hide'>Favorite</span>
+                        </li>
+                    </ul>
                 </div>
+            </div>
+
+            <div class='apod__date-picker hide' id='apod-date-picker'>
+                <button class='date-submit'>Go</button>
             </div>
 
             <div class='apod__loading' id='apod-loading'></div>
@@ -38,19 +57,6 @@
             <div class='apod__video' id='apod-video'>
                 <iframe width='960' height='540' frameborder='0'></iframe>
             </div>
-
-            <div class='apod__footer'>
-                <div class='nav-buttons'>
-                    <ul>
-                        <li class='save-favorite'><a id='add-favorite'>Save Favorite</a></li>
-                        <li><a id='apod-previous'>Previous</a></li>
-                        <li><a id='apod-next'>Next</a></li>
-                        <li><a id='apod-random'>Random</a></li>
-                        <li><a id='apod-current'>Today</a></li>
-                    </ul>
-                </div>
-
-            </div>
         </div>
 
     </body>
@@ -59,8 +65,9 @@
     <script src='public/js/buildTopSites.js'></script>
     <script src='public/js/DateManagement.js'></script>
     <script src='public/js/CelestialDictionary.js'></script>
-    <script src='public/js/WouldYouLikeToKnowMore.js'></script>
+    <script src='public/js/KnowMoreComponent.js'></script>
     <script src='public/js/Apod.js'></script>
+    <script src='public/js/DateWheel.js'></script>
     <script src='public/js/Drawer.js'></script>
     <script src='public/js/DrawerTab.js'></script>
     <script src='public/js/FavoritesTab.js'></script>

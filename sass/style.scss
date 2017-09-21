@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'options';
 @import 'drawer';
+@import 'date_wheel';
 
 .hide {
     @extend %hide;
@@ -9,6 +10,14 @@
 .apod__loading {
     @include sun-loader;
     @include moon-loader;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
 }
 
 body {
@@ -47,7 +56,7 @@ ul, li {
     box-sizing: border-box;
 
     h1 {
-        @include helvetica-neue-light(100);
+        @include helvetica-neue-light;
         display: inline-block;
         margin: 0;
     }
@@ -65,15 +74,62 @@ ul, li {
         top: 0;
         padding: 10px;
         width: auto;
+        min-width: 305px;
+        box-sizing: border-box;
         height: auto;
         color: white;
         transition: 0.2s opacity ease-out;
 
-        #img-quality {
-            display: inline-block;
-            font-size: 14px;
-            color: #757575;
-            margin-left: 10px;
+        .title {
+            position: relative;
+
+            #img-quality {
+                display: inline-block;
+                font-size: 14px;
+                color: #757575;
+                margin-left: 10px;
+            }
+        }
+
+        .nav-buttons {
+            display: block;
+            text-align: left;
+            li {
+                margin-right: 15px;
+                color: $light-gray;
+                transition: 0.2s linear background-color;
+                cursor: pointer;
+
+                &.save-favorite {
+                    float: right;
+                    margin: 0;
+                }
+
+                &.hide {
+                    @extend %hide-display;
+                }
+
+                &.current,
+                span.favorite {
+                    color: yellow;
+                    &:hover {
+                        color: yellow;
+                    }
+                }
+
+                span.hide {
+                    @extend %hide-display;
+                }
+
+                &.hover,
+                &:hover {
+                    color: lighten($gray, 20%);
+                }
+
+                &:active {
+                    color: gold;
+                }
+            }
         }
     }
 
@@ -138,33 +194,8 @@ ul, li {
 .keyword {
     color: lightblue;
     font-weight: bold;
-}
-
-.apod__footer {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-
-    .nav-buttons {
-        position: absolute;
-        bottom: 10;
-        right: 0;
-        ul li {
-            color: $gray;
-            text-align: center;
-            margin-right: 15px;
-            float: left;
-            a {
-                @include apod-button;
-                display: block;
-                min-width: 65px;
-                padding: 10px;
-                cursor: pointer;
-            }
-
-            &:active {
-                background-color: gold;
-            }
-        }
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
     }
 }

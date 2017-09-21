@@ -18,7 +18,7 @@
                 <div class='option'>
                     <div class='info'>Display the most recent APOD</div>
                     <div class='inputs'>
-                        <input name='choose-apod' id='today' value='today' type='radio'>
+                        <input type='radio' id='today' name='choose-apod' value='today'>
                         <label for='today'>Today</label>
                     </div>
                 </div>
@@ -26,8 +26,19 @@
                 <div class='option'>
                     <div class='info'>Display a random APOD</div>
                     <div class='inputs'>
-                        <input name='choose-apod' id='random' value='random' type='radio'>
+                        <input type='radio' id='random' name='choose-apod' value='random'>
                         <label for='random'>Random</label>
+                    </div>
+                </div>
+
+                <div class='option'>
+                    <div class='info'>
+                        Show Date Picker
+                        <p class='sub-info'>Use mousewheel to scroll dates</p>
+                        <p class='sub-info'>(reloads page)</p>
+                    </div>
+                    <div class='inputs'>
+                        <input type='checkbox' id='date-picker-option' name='date-picker'>
                     </div>
                 </div>
             </form>
