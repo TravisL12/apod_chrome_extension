@@ -3,7 +3,7 @@
   height: 0;
   width: 0; }
 
-.apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-container, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small, .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-light, .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light, .apod__loading .moon-container {
+.apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-container, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small, .apod__drawer .apod__drawer-view .know-links .loading-spinner .sun-light, .apod__loading .sun-container, .apod__loading .rays-big, .apod__loading .rays-small, .apod__loading .sun-light, .apod__loading .stars-container, .apod__loading .moon-container {
   position: absolute;
   top: 0;
   bottom: 0;
@@ -11,7 +11,7 @@
   right: 0;
   margin: auto; }
 
-.apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray, .apod__loading .rays-big .ray, .apod__loading .rays-small .ray {
+.apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-big .ray, .apod__drawer .apod__drawer-view .know-links .loading-spinner .rays-small .ray, .apod__loading .rays-big .ray, .apod__loading .rays-small .ray, .apod__loading .star .ray {
   position: absolute;
   width: 0;
   height: 0;
@@ -390,6 +390,49 @@
   border-radius: 50%;
   background: gold;
   background: radial-gradient(ellipse at center, #fefcea 0%, gold 60%); }
+.apod__loading .stars-container {
+  width: 500px;
+  height: 500px; }
+.apod__loading .star {
+  position: absolute;
+  left: 0%;
+  top: 0%;
+  width: 12px;
+  height: 12px;
+  color: white;
+  transition: 0.5s opacity linear; }
+  .apod__loading .star .ray {
+    border-bottom: 6px solid;
+    border-left: 1.8px solid transparent;
+    border-right: 1.8px solid transparent; }
+    .apod__loading .star .ray:nth-child(1) {
+      transform: rotate3d(0, 0, 1, 0deg);
+      transform-origin: bottom; }
+    .apod__loading .star .ray:nth-child(2) {
+      transform: rotate3d(0, 0, 1, 72deg);
+      transform-origin: bottom; }
+    .apod__loading .star .ray:nth-child(3) {
+      transform: rotate3d(0, 0, 1, 144deg);
+      transform-origin: bottom; }
+    .apod__loading .star .ray:nth-child(4) {
+      transform: rotate3d(0, 0, 1, 216deg);
+      transform-origin: bottom; }
+    .apod__loading .star .ray:nth-child(5) {
+      transform: rotate3d(0, 0, 1, 288deg);
+      transform-origin: bottom; }
+    .apod__loading .star .ray:nth-child(6) {
+      transform: rotate3d(0, 0, 1, 360deg);
+      transform-origin: bottom; }
+.apod__loading .star-1 {
+  color: lightblue; }
+.apod__loading .star-2 {
+  color: aqua; }
+.apod__loading .star-3 {
+  color: yellow; }
+.apod__loading .star-4 {
+  color: gold; }
+.apod__loading .star-5 {
+  color: cornsilk; }
 @keyframes light-to-shadow-right {
   25%, 100% {
     right: 100%;

@@ -8,6 +8,7 @@
 
 .apod__loading {
     @include sun-loader;
+    @include stars-loader;
     @include moon-loader;
 }
 

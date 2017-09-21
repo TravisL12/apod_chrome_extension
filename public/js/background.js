@@ -42,15 +42,19 @@ const apodNext = new NavigationButton('#apod-next', 75, 'next');
 
 const DateManager = DateManagement();
 const apod = new Apod();
-const loader = new [SunLoader, MoonLoader][randomizer(1)];
+const loader = new StarsLoader(); //new [SunLoader, MoonLoader][randomizer(1)];
 
 apodLoading.innerHTML = loader.render();
+
+if (loader.constructor.name === "StarsLoader"){
+    loader.setBlinkRates();
+}
 
 const drawer = new Drawer('#apod-drawer');
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
 const favoritesTab = new FavoritesTab('#tab-favorites', apod, drawer);
 
-chrome.storage.sync.get(['apodType'], (items) => {
-    let apodOptionType = items.apodType || 'today';
-    apodOptionType == 'today' ? apod.current() : apod.random();
-});
+// chrome.storage.sync.get(['apodType'], (items) => {
+//     let apodOptionType = items.apodType || 'today';
+//     apodOptionType == 'today' ? apod.current() : apod.random();
+// });

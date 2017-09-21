@@ -1,0 +1,40 @@
+@mixin stars-loader($dimension:15px) {
+
+    $star-container-dimension: $dimension;
+    $star-ray-count: 5;
+    $star-ray-container: $star-container-dimension * 0.8;
+    $star-ray-width: $star-ray-container * 0.15;
+    $star-ray-color: lightblue, aqua, yellow, gold, cornsilk;
+
+    .stars-container {
+        @extend %center-div;
+        width: 500px;
+        height: 500px;
+    }
+
+    .star {
+        position: absolute;
+        left: 0%;
+        top: 0%;
+        width: $star-ray-container;
+        height: $star-ray-container;
+        color: white;
+        transition: 0.5s opacity linear;
+
+        .ray {
+            @extend %ray;
+            border-bottom: $star-ray-container/2 solid;
+            border-left: $star-ray-width solid transparent;
+            border-right: $star-ray-width solid transparent;
+
+            @include calculate-ray-angles($star-ray-count);
+        }
+    }
+
+    @for $i from 1 through length($star-ray-color) {
+        .star-#{$i} {
+            color: nth($star-ray-color, $i);
+        }
+    }
+
+}
