@@ -8,6 +8,7 @@ class Apod {
         this.hdurl;
         this.title;
         this.description;
+        this.showDatePicker;
         this.errorCount = 0;
         this.errorLimit = 3;
     }
@@ -80,9 +81,12 @@ class Apod {
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
                 this.description = response.explanation;
-                apodDatePicker.update(this.date);
                 this.errorCount = 0;
                 this.checkFavorite();
+
+                if (this.showDatePicker) {
+                    apodDatePicker.update(this.date);
+                }
 
                 if (response.media_type === 'image') {
                     apodImage.style.display = 'block';

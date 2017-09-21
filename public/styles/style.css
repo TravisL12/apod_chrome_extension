@@ -38,6 +38,9 @@
     font-size: 12px;
     width: 200px;
     margin: 10px 0; }
+    .apod-options #choose-apod .info .sub-info {
+      margin: 0;
+      font-size: 11px; }
   .apod-options #choose-apod .inputs input[type='radio'] {
     display: none; }
   .apod-options #choose-apod .inputs label {

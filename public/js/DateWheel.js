@@ -1,3 +1,43 @@
+const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
+const startYear = 1995;
+const currentYear = new Date().getFullYear();
+const yearDif = currentYear - startYear;
+const yearRange = Array.from(new Array(yearDif + 1), (x,i) => i + startYear);
+
+class DatePicker {
+
+    constructor(el) {
+        this.el = $(el);
+        this.submitBtn = $('button.date-submit');
+        this.dayWheel = new DateWheel('day-wheel', 31);
+        this.monthWheel = new DateWheel('month-wheel', monthNames);
+        this.yearWheel = new DateWheel('year-wheel', yearRange);
+
+        this.el.appendChild(this.dayWheel.render());
+        this.el.appendChild(this.monthWheel.render());
+        this.el.appendChild(this.yearWheel.render());
+
+        this.submitBtn.addEventListener('click', (e) => {
+            const date = [
+                yearRange[this.yearWheel.currentValue()],
+                this.monthWheel.currentValue() + 1,
+                this.dayWheel.currentValue() + 1
+            ].join('-');
+            apod.specificDate(date);
+        });
+    }
+
+    update (date) {
+        date = new Date(DateManager.prettyDateFormat(date));
+        this.dayWheel.setDate(date.getDate() - 1);
+        this.monthWheel.setDate(date.getMonth());
+
+        const yearIdx = yearRange.indexOf(date.getFullYear());
+        this.yearWheel.setDate(yearIdx);
+    }
+
+}
+
 class DateWheel {
 
     constructor(id, nums) {
@@ -90,46 +130,6 @@ class DateWheel {
 
     render () {
         return this.el;
-    }
-
-}
-
-const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'];
-const startYear = 1995;
-const currentYear = new Date().getFullYear();
-const yearDif = currentYear - startYear;
-const yearRange = Array.from(new Array(yearDif + 1), (x,i) => i + startYear);
-
-class DatePicker {
-
-    constructor(el) {
-        this.el = $(el);
-        this.submitBtn = $('button.date-submit');
-        this.dayWheel = new DateWheel('day-wheel', 31);
-        this.monthWheel = new DateWheel('month-wheel', monthNames);
-        this.yearWheel = new DateWheel('year-wheel', yearRange);
-
-        this.el.appendChild(this.dayWheel.render());
-        this.el.appendChild(this.monthWheel.render());
-        this.el.appendChild(this.yearWheel.render());
-
-        this.submitBtn.addEventListener('click', (e) => {
-            const date = [
-                yearRange[this.yearWheel.currentValue()],
-                this.monthWheel.currentValue() + 1,
-                this.dayWheel.currentValue() + 1
-            ].join('-');
-            apod.specificDate(date);
-        });
-    }
-
-    update (date) {
-        date = new Date(DateManager.prettyDateFormat(date));
-        this.dayWheel.setDate(date.getDate() - 1);
-        this.monthWheel.setDate(date.getMonth());
-
-        const yearIdx = yearRange.indexOf(date.getFullYear());
-        this.yearWheel.setDate(yearIdx);
     }
 
 }
