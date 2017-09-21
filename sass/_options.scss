@@ -3,6 +3,10 @@
     width: 275px;
     color: $gray;
 
+    h3 {
+        font-size: 14px;
+    }
+
     #choose-apod {
         .info,
         .inputs {
@@ -10,6 +14,7 @@
         }
 
         .info {
+            font-size: 12px;
             width: 200px;
             margin: 10px 0;
         }
@@ -20,6 +25,7 @@
             }
             label {
                 // unchecked case
+                font-size: 12px;
                 width: 60px;
                 box-sizing: border-box;
                 display: block;

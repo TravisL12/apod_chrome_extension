@@ -29,10 +29,14 @@ const DateManagement = () => {
         return new Date(split[0], split[1]-1, split[2]);
     }
 
+    function _getToday () {
+        return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
+    }
+
     return {
 
         get today () {
-            return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
+            return _getToday();
         },
 
         prettyDateFormat (date) {
@@ -57,14 +61,16 @@ const DateManagement = () => {
         },
 
         isDateValid (date) {
-            date = date || this.today;
+            date = date || _getToday();
 
-            let isTodayGreater = new Date(this.today).getTime() >=  _actualDate(date).getTime(),
-                isDateEqual    = new Date(this.today).getTime() === _actualDate(date).getTime();
+            const isTodayGreater = _actualDate(_getToday()).getTime() >=  _actualDate(date).getTime();
+            const isDateEqual    = new Date(_getToday()).getTime() === _actualDate(date).getTime();
             
             if (!isTodayGreater) {
                 console.log(date + ' is in the future!');
                 apodCurrent.el.classList.add('hide');
+                apod.isRequestInProgress = false;
+                apod.current();
             } else if (isDateEqual) {
                 apodCurrent.el.classList.add('hide');
             } else {

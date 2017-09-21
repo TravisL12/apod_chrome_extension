@@ -88,6 +88,7 @@ class Apod {
                 this.hdurl       = response.hdurl;
                 this.date        = response.date;
                 this.description = response.explanation;
+                apodDatePicker.update(this.date);
                 this.errorCount = 0;
                 this.checkFavorite();
 
@@ -104,8 +105,8 @@ class Apod {
                 }
 
             }, (error) => {
-                console.log('Error: APOD API response');
                 this.errorCount++;
+                console.log(`Error: APOD API response (${this.errorCount})`);
                 this.isRequestInProgress = false;
                 if (this.errorCount < this.errorLimit) {
                     this.random();
@@ -195,14 +196,21 @@ class Apod {
 
     apodVideo () {
         this.isRequestInProgress = false;
-        apodVideo.src = this.url;
+        this.url = this.url.replace(';autoplay=1','');
+        let url = new URL(this.url);
+        url.search = 'autopause=1&autoplay=0';
+        apodVideo.src = url.href;
         this.apodDescription();
     }
 
     apodDescription () {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+
+        // Couldn't get Firefox to do the googleapi custom searcch without CORS errors
+        if (!isFirefox) {
+            this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+        }
 
         apodLoading.classList.add('hide');
         $('.apod__header .description').classList.remove('hide');

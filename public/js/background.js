@@ -26,6 +26,12 @@ const $ = (el) => {
     return document.querySelector(el);
 }
 
+function htmlToElements(html) {
+    var template = document.createElement('template');
+    template.innerHTML = html;
+    return template.content.firstChild;
+}
+
 const apodImage = $('#apod-image');
 const apodVideo = $('#apod-video iframe');
 
@@ -35,6 +41,7 @@ const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 const apodError = $('#apod-error');
 
+const apodDatePicker = new DatePicker('#apod-date-picker');
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
 
@@ -42,10 +49,12 @@ const favoriteButtonShow = $('#add-favorite .favorite');
 const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 const DateManager = DateManagement();
+
 const apod = new Apod();
 const loader = new [SunLoader, MoonLoader][randomizer(1)];
+const isFirefox = /firefox/ig.test(window.navigator.userAgent);
 
-apodLoading.innerHTML = loader.render();
+apodLoading.appendChild(htmlToElements(`<div class='apod__loading' id='apod-loading'>${loader.render()}</div>`));
 
 const drawer = new Drawer('#apod-drawer');
 const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);

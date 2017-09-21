@@ -1,6 +1,7 @@
 @import 'variables';
 @import 'options';
 @import 'drawer';
+@import 'date_wheel';
 
 .hide {
     @extend %hide;
@@ -9,6 +10,14 @@
 .apod__loading {
     @include sun-loader;
     @include moon-loader;
+}
+
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
 }
 
 body {
@@ -47,7 +56,7 @@ ul, li {
     box-sizing: border-box;
 
     h1 {
-        @include helvetica-neue-light(100);
+        @include helvetica-neue-light;
         display: inline-block;
         margin: 0;
     }
