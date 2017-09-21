@@ -589,7 +589,15 @@
       color: #99cfe0; }
   .apod__date-picker .date-submit {
     position: relative;
-    z-index: 11; }
+    z-index: 11;
+    margin: 0 10px 10px 0;
+    border: 0;
+    font-size: 14px;
+    background-color: rgba(51, 51, 51, 0.8);
+    color: rgba(199, 199, 199, 0.8);
+    transition: 0.2s linear background-color; }
+    .apod__date-picker .date-submit.hover, .apod__date-picker .date-submit:hover {
+      background-color: rgba(102, 102, 102, 0.8); }
 
 @keyframes clockwise-spin {
   0% {

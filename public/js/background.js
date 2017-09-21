@@ -71,7 +71,7 @@ const favoritesTab = new FavoritesTab('#tab-favorites', apod, drawer);
 chrome.storage.sync.get(['apodType', 'showDatePicker'], (items) => {
     if (items.showDatePicker) {
         $('#apod-date-picker').classList.remove('hide');
-        apodDatePicker = new DatePicker('#apod-date-picker');
+        apodDatePicker = new DatePickerComponent('#apod-date-picker');
         apod.showDatePicker = true;
     }
     let apodOptionType = items.apodType || 'today';

@@ -4,7 +4,7 @@ const currentYear = new Date().getFullYear();
 const yearDif = currentYear - startYear;
 const yearRange = Array.from(new Array(yearDif + 1), (x,i) => i + startYear);
 
-class DatePicker {
+class DatePickerComponent {
 
     constructor(el) {
         this.el = $(el);
@@ -18,13 +18,16 @@ class DatePicker {
         this.el.appendChild(this.yearWheel.render());
 
         this.submitBtn.addEventListener('click', (e) => {
-            const date = [
-                yearRange[this.yearWheel.currentValue()],
-                this.monthWheel.currentValue() + 1,
-                this.dayWheel.currentValue() + 1
-            ].join('-');
-            apod.specificDate(date);
+            apod.specificDate(this.getSelectedDate());
         });
+    }
+
+    getSelectedDate () {
+        return [
+            yearRange[this.yearWheel.currentValue()],
+            this.monthWheel.currentValue() + 1,
+            this.dayWheel.currentValue() + 1
+        ].join('-');
     }
 
     update (date) {
