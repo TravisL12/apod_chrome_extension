@@ -112,6 +112,9 @@ ul, li {
                 &.current,
                 span.favorite {
                     color: yellow;
+                    &:hover {
+                        color: yellow;
+                    }
                 }
 
                 span.hide {

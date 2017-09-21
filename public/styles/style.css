@@ -843,6 +843,9 @@ ul, li {
         .apod__header .description .nav-buttons li.current,
         .apod__header .description .nav-buttons li span.favorite {
           color: yellow; }
+          .apod__header .description .nav-buttons li.current:hover,
+          .apod__header .description .nav-buttons li span.favorite:hover {
+            color: yellow; }
         .apod__header .description .nav-buttons li.hover, .apod__header .description .nav-buttons li:hover {
           color: rgba(102, 102, 102, 0.8); }
         .apod__header .description .nav-buttons li:active {

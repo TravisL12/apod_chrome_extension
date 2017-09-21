@@ -37,6 +37,12 @@ class DatePickerComponent {
 
         const yearIdx = yearRange.indexOf(date.getFullYear());
         this.yearWheel.setDate(yearIdx);
+        ga('send', 'event', {
+            eventCategory: 'Date Wheel',
+            eventAction: 'clicked',
+            eventLabel: this.getSelectedDate(),
+            transport: 'beacon'
+        });
     }
 
 }
