@@ -44,6 +44,15 @@ const DateManagement = () => {
             return _monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
         },
 
+        adjacentDate (dateString, direction) {
+            let date = _actualDate(dateString),
+            adjDate = new Date(date.getTime());
+
+            adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
+            return _hyphenDateFormat(adjDate);
+        },
+
+
         randomDate () {
             let start = new Date(1995, 5, 16),
                 end   = new Date(),

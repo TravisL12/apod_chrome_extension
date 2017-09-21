@@ -817,6 +817,8 @@ ul, li {
     top: 0;
     padding: 10px;
     width: auto;
+    min-width: 305px;
+    box-sizing: border-box;
     height: auto;
     color: white;
     transition: 0.2s opacity ease-out; }
@@ -828,12 +830,17 @@ ul, li {
         color: #757575;
         margin-left: 10px; }
     .apod__header .description .nav-buttons {
-      display: block; }
+      display: block;
+      text-align: left; }
       .apod__header .description .nav-buttons li {
         margin-right: 15px;
         color: rgba(199, 199, 199, 0.8);
         transition: 0.2s linear background-color;
         cursor: pointer; }
+        .apod__header .description .nav-buttons li.save-favorite {
+          float: right;
+          margin: 0; }
+        .apod__header .description .nav-buttons li.current,
         .apod__header .description .nav-buttons li span.favorite {
           color: yellow; }
         .apod__header .description .nav-buttons li.hover, .apod__header .description .nav-buttons li:hover {

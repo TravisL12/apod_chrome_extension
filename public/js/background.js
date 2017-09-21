@@ -50,6 +50,9 @@ const apodError = $('#apod-error');
 // Initialize button objects
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
+const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
+const apodNext = new NavigationButton('#apod-next', 75, 'next');
+
 const favoriteButtonShow = $('#add-favorite .favorite');
 const favoriteButtonHide = $('#add-favorite .not-favorite');
 

@@ -21,6 +21,15 @@ class Apod {
         this.getApod(date);
     }
 
+    previous () {
+        this.getApod(DateManager.adjacentDate(this.date, -1));
+    }
+
+    next () {
+        this.getApod(DateManager.adjacentDate(this.date, 1));
+    }
+
+
     current () {
         this.getApod();
     }
@@ -210,13 +219,14 @@ class Apod {
 
         if (!DateManager.checkTodayGreater(this.date)) {
             console.log(date + ' is in the future!');
-            apodCurrent.el.classList.add('hide');
             this.isRequestInProgress = false;
             this.current();
         } else if (DateManager.checkDateEqual(this.date)) {
-            apodCurrent.el.classList.add('hide');
+            apodCurrent.el.classList.add('current');
+            apodNext.el.classList.add('hide');
         } else {
-            apodCurrent.el.classList.remove('hide');
+            apodCurrent.el.classList.remove('current');
+            apodNext.el.classList.remove('hide');
         }
 
         apodLoading.classList.add('hide');
