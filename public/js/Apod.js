@@ -144,6 +144,10 @@ class Apod {
         const results = knowMore.results;
 
         if (results.length) {
+            // Don't draw duplicate tabs
+            if (drawer.tabs.length > 2) {
+                return;
+            }
             for (let i in results) {
                 this.highlightResults(results[i].title, i);
                 knowMore.createTab(results[i], i);
@@ -151,7 +155,7 @@ class Apod {
         }
     }
 
-    preLoadImage () {
+    preLoadImage (forceHighDef = false) {
         let Img = new Image();
         let quality = {
             text: 'HD',
@@ -162,11 +166,11 @@ class Apod {
         Img.src = this.hdurl;
 
         let timeout = setTimeout(() => {
-            if (!Img.complete) {
+            if (!Img.complete && !forceHighDef) {
                 Img.src = this.url;
                 quality = {
                     text: 'SD',
-                    title: 'Standard Definition Image'
+                    title: 'Click to Show HD Image'
                 };
             }
         }, delayForHdLoad);
@@ -186,15 +190,29 @@ class Apod {
     }
 
     apodImage (imgQuality) {
+        const imgQualityEl = $('#img-quality');
         this.isRequestInProgress = false;
+        imgQualityEl.classList.remove('spin-loader');
 
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
 
         let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
         apodImage.style['background-size'] = bgSize;
 
-        $('#img-quality').textContent = imgQuality.text;
-        $('#img-quality').setAttribute('title', imgQuality.title);
+        imgQualityEl.textContent = imgQuality.text;
+        imgQualityEl.setAttribute('title', imgQuality.title);
+
+        if (imgQuality.text != 'HD') {
+            imgQualityEl.classList.add('add-hd');
+            const forceLoadHighDefImg = (e) => {
+                imgQualityEl.removeEventListener('click', forceLoadHighDefImg);
+                imgQualityEl.textContent = '';
+                imgQualityEl.classList.add('spin-loader');
+                imgQualityEl.classList.remove('add-hd');
+                this.preLoadImage(true);
+            };
+            imgQualityEl.addEventListener('click', forceLoadHighDefImg);
+        }
 
         this.apodDescription();
     }

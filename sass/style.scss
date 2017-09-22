@@ -12,6 +12,13 @@
     @include moon-loader;
 }
 
+.spin-loader {
+    width: 20px;
+    height: 20px;
+    background: url('../images/ajax-loader-black.gif');
+    background-size: contain;
+}
+
 h1 {
     font-size: 24px;
 }
@@ -88,6 +95,10 @@ ul, li {
                 font-size: 14px;
                 color: #757575;
                 margin-left: 10px;
+
+                &.add-hd {
+                    cursor: pointer;
+                }
             }
         }
 

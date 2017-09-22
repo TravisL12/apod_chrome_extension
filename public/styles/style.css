@@ -763,6 +763,12 @@
   .apod__loading .moon-container .mask-left .light-to-shade {
     animation: 5s linear shadow-to-light-left infinite; }
 
+.spin-loader {
+  width: 20px;
+  height: 20px;
+  background: url("../images/ajax-loader-black.gif");
+  background-size: contain; }
+
 h1 {
   font-size: 24px; }
 
@@ -829,6 +835,8 @@ ul, li {
         font-size: 14px;
         color: #757575;
         margin-left: 10px; }
+        .apod__header .description .title #img-quality.add-hd {
+          cursor: pointer; }
     .apod__header .description .nav-buttons {
       display: block;
       text-align: left; }
