@@ -13,8 +13,7 @@ const DateManagement = () => {
      * @param  {Date}
      * @return {string}
      */
-    function _hyphenDateFormat (date) {
-        date = date || new Date();
+    function _hyphenDateFormat (date = new Date()) {
         return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-'); 
     }
 
@@ -69,9 +68,7 @@ const DateManagement = () => {
             return _actualDate(_getToday()).getTime() >=  _actualDate(date).getTime();
         },
 
-        isDateValid (date) {
-            date = date || _getToday();
-
+        isDateValid (date = _getToday()) {
             return this.checkTodayGreater(date);
         },
 
