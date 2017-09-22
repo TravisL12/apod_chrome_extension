@@ -59,7 +59,7 @@ class FavoritesTab extends DrawerTab {
             favoritesEl.innerHTML = `
                 <li class='no-favorites'>
                     <h4>You don't have any favorites yet!</h4>
-                    <h4>Click the "Save Favorite" button at the bottom of the page!</h4>
+                    <h4>Click the "Save Favorite" button at the top right of the page!</h4>
                 </li>`;
         }
 
