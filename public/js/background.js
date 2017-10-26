@@ -38,6 +38,7 @@ function htmlToElements(html) {
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
+const apodBgImage = $('#bg-apod-image');
 const apodVideo = $('#apod-video iframe');
 
 // Initialize various elements

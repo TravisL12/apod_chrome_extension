@@ -37,7 +37,7 @@ class Apod {
     }
 
     _setLoadingView() {
-        $('#bg-apod-image').style['background-image'] = '';
+        apodBgImage.style['background-image'] = '';
         apodImage.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodVideo.src = '';
@@ -80,13 +80,14 @@ class Apod {
                 api_key: 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
                 date: date,
             },
-        }).then((response) => {
+        }).then(
+            response => {
                 response = JSON.parse(response.response);
                 ga('send', 'event', 'APOD', 'viewed', response.date);
-                this.title       = response.title;
-                this.url         = response.url;
-                this.hdurl       = response.hdurl;
-                this.date        = response.date;
+                this.title = response.title;
+                this.url = response.url;
+                this.hdurl = response.hdurl;
+                this.date = response.date;
                 this.description = response.explanation;
                 this.errorCount = 0;
                 this.checkFavorite();
@@ -106,8 +107,8 @@ class Apod {
                 } else {
                     this.random();
                 }
-
-            }, (error) => {
+            },
+            error => {
                 this.errorCount++;
                 console.log(`Error: APOD API response (${this.errorCount})`);
                 this.isRequestInProgress = false;
@@ -195,16 +196,15 @@ class Apod {
         this.isRequestInProgress = false;
         imgQualityEl.classList.remove('spin-loader');
 
-        apodImage.style['background-image'] = `url(${this.loadedImage.src})`;
-        apodImage.style['background-size'] = 'auto';
+        apodBgImage.style.background = `url(${this.url}) no-repeat center center`;
+        apodBgImage.style['background-size'] = 'cover';
+        apodBgImage.style.display = 'block';
+        apodBgImage.style.opacity = 0.2;
 
-        if (this.fitToWindow(this.loadedImage)) {
-            apodImage.style['background-size'] = 'contain';
-            $('#bg-apod-image').style.background = `url(${this.url}) no-repeat center center`;
-            $('#bg-apod-image').style.opacity = 0.6;
-            $('#bg-apod-image').style['background-size'] = 'cover';
-            $('#bg-apod-image').style.display = 'block';
-        }
+        apodImage.style['background-image'] = `url(${this.loadedImage.src})`;
+
+        let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
+        apodImage.style['background-size'] = bgSize;
 
         imgQualityEl.textContent = imgQuality.text;
         imgQualityEl.setAttribute('title', imgQuality.title);
