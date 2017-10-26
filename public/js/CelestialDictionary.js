@@ -29,6 +29,14 @@ const celestialDictionary = {
         'tethys','thalassa','thebe','thelxinoe','themisto','thrymr','thyone','titan','titania','trinculo','triton','umbriel','ymir',
     ],
 
+    satellite: [
+        'hubble', 'james webb', 'new horizons', 'voyager', 'spitzer', 'cassini',
+    ],
+
+    spacecraft: [
+        'apollo', 'saturn v', 'gemini', 'shuttle',
+    ],
+
     galaxy: [
         "andromeda","black eye","bode's","cartwheel","cigar","cosmos redshift 7","hoag's object","large magellanic cloud",
         "mayall's object","milky way","pinwheel","small magellanic cloud","sombrero","sunflower","tadpole","whirlpool",

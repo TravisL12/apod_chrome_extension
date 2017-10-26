@@ -12,7 +12,7 @@ class NavigationButton {
             apod[this.action]();
         });
 
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keyup', (e) => {
             if (e.which === this.keycode) {
                 ga('send', 'event', 'Keydown', 'pressed', this.el.id);
                 apod[this.action]();
