@@ -1,8 +1,7 @@
 'use strict';
 
 class Apod {
-
-    constructor () {
+    constructor() {
         this.date;
         this.url;
         this.hdurl;
@@ -13,32 +12,32 @@ class Apod {
         this.errorLimit = 3;
     }
 
-    random () {
+    random() {
         this.getApod(DateManager.randomDate());
     }
 
-    specificDate (date) {
+    specificDate(date) {
         this.getApod(date);
     }
 
-    previous () {
+    previous() {
         this.getApod(DateManager.adjacentDate(this.date, -1));
     }
 
-    next () {
+    next() {
         this.getApod(DateManager.adjacentDate(this.date, 1));
     }
 
-
-    current () {
+    current() {
         this.getApod();
     }
 
-    fitToWindow (image) {
+    fitToWindow(image) {
         return image.width > window.innerWidth || image.height > window.innerHeight;
     }
 
-    _setLoadingView () {
+    _setLoadingView() {
+        $('#bg-apod-image').style['background-image'] = '';
         apodImage.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodVideo.src = '';
@@ -49,7 +48,7 @@ class Apod {
         drawer.clearKnowMoreTabs();
     }
 
-    isRequestValid () {
+    isRequestValid() {
         if (this.isRequestInProgress) {
             return false;
         }
@@ -59,8 +58,7 @@ class Apod {
         return this.isRequestInProgress;
     }
 
-    getApod (date) {
-
+    getApod(date) {
         date = date || DateManager.today;
 
         if (!this.isRequestValid()) {
@@ -118,11 +116,11 @@ class Apod {
                 } else {
                     apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
                 }
-            }
+            },
         );
     }
 
-    checkFavorite () {
+    checkFavorite() {
         const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
 
         if (isFavorite) {
@@ -134,12 +132,15 @@ class Apod {
         }
     }
 
-    highlightResults (result, index) {
+    highlightResults(result, index) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.description = this.description.replace(re, `<span class="keyword keyword-${index}">$1</span>`);
+        this.description = this.description.replace(
+            re,
+            `<span class="keyword keyword-${index}">$1</span>`,
+        );
     }
 
-    wouldYouLikeToKnowMore (text) {
+    wouldYouLikeToKnowMore(text) {
         const knowMore = new KnowMoreComponent(text);
         const results = knowMore.results;
 
@@ -155,11 +156,11 @@ class Apod {
         }
     }
 
-    preLoadImage (forceHighDef = false) {
+    preLoadImage(forceHighDef = false) {
         let Img = new Image();
         let quality = {
             text: 'HD',
-            title: 'High Definition Image'
+            title: 'High Definition Image',
         };
         const delayForHdLoad = 3000;
 
@@ -170,7 +171,7 @@ class Apod {
                 Img.src = this.url;
                 quality = {
                     text: 'SD',
-                    title: 'Click to Show HD Image'
+                    title: 'Click to Show HD Image',
                 };
             }
         }, delayForHdLoad);
@@ -189,22 +190,28 @@ class Apod {
         };
     }
 
-    apodImage (imgQuality) {
+    apodImage(imgQuality) {
         const imgQualityEl = $('#img-quality');
         this.isRequestInProgress = false;
         imgQualityEl.classList.remove('spin-loader');
 
-        apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
+        apodImage.style['background-image'] = `url(${this.loadedImage.src})`;
+        apodImage.style['background-size'] = 'auto';
 
-        let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
-        apodImage.style['background-size'] = bgSize;
+        if (this.fitToWindow(this.loadedImage)) {
+            apodImage.style['background-size'] = 'contain';
+            $('#bg-apod-image').style.background = `url(${this.url}) no-repeat center center`;
+            $('#bg-apod-image').style.opacity = 0.6;
+            $('#bg-apod-image').style['background-size'] = 'cover';
+            $('#bg-apod-image').style.display = 'block';
+        }
 
         imgQualityEl.textContent = imgQuality.text;
         imgQualityEl.setAttribute('title', imgQuality.title);
 
         if (imgQuality.text != 'HD') {
             imgQualityEl.classList.add('add-hd');
-            const forceLoadHighDefImg = (e) => {
+            const forceLoadHighDefImg = e => {
                 imgQualityEl.removeEventListener('click', forceLoadHighDefImg);
                 imgQualityEl.textContent = '';
                 imgQualityEl.classList.add('spin-loader');
@@ -217,16 +224,16 @@ class Apod {
         this.apodDescription();
     }
 
-    apodVideo () {
+    apodVideo() {
         this.isRequestInProgress = false;
-        this.url = this.url.replace(';autoplay=1','');
+        this.url = this.url.replace(';autoplay=1', '');
         let url = new URL(this.url);
         url.search = 'autopause=1&autoplay=0';
         apodVideo.src = url.href;
         this.apodDescription();
     }
 
-    apodDescription () {
+    apodDescription() {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
 
@@ -256,7 +263,7 @@ class Apod {
      *
      * @return {String} "2011-02-15"
      */
-    apodSource () {
+    apodSource() {
         const date = this.date.split('-');
         return 'ap' + date[0].slice(-2) + _zeroPad(date[1]) + _zeroPad(date[2]) + '.html';
     }
