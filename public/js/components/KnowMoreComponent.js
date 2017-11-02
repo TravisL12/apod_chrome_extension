@@ -26,6 +26,7 @@ function uniqueResults (value, index, self) {
 function Keyword (name, category, id) {
     this.title = name[0].toUpperCase() + name.slice(1);
     this.query = `${name} ${category}`;
+    this.category = category;
     this.id = id;
 }
 
@@ -117,7 +118,7 @@ class KnowMoreComponent {
             });
         }
 
-        el.innerHTML = result.title;
+        el.innerHTML = `${ImageDictionary[result.category]()} ${result.title}`;
         el.addEventListener('click', googleSearch);
         apodKnowMore.appendChild(el);
 

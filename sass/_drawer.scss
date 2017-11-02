@@ -26,6 +26,11 @@ $drawer-width: 400px;
         display: flex;
         flex-direction: row-reverse;
 
+        svg {
+            vertical-align: middle;
+            margin-right: 3px;
+        }
+
         .default-tabs,
         .apod__know-more {
             display: flex;
@@ -43,7 +48,7 @@ $drawer-width: 400px;
             height: 100%;
             cursor: pointer;
             text-align: center;
-            padding: 10px 10px 0;
+            padding-top: 10px;
             box-sizing: border-box;
             overflow: hidden;
             text-overflow: ellipsis;

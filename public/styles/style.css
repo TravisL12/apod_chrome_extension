@@ -83,6 +83,9 @@
     transform-origin: left bottom;
     display: flex;
     flex-direction: row-reverse; }
+    .apod__drawer .apod__drawer-tabs svg {
+      vertical-align: middle;
+      margin-right: 3px; }
     .apod__drawer .apod__drawer-tabs .default-tabs,
     .apod__drawer .apod__drawer-tabs .apod__know-more {
       display: flex;
@@ -101,7 +104,7 @@
       height: 100%;
       cursor: pointer;
       text-align: center;
-      padding: 10px 10px 0;
+      padding-top: 10px;
       box-sizing: border-box;
       overflow: hidden;
       text-overflow: ellipsis;
