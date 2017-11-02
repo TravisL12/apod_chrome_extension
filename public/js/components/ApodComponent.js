@@ -241,10 +241,8 @@ class Apod {
             this.current();
         } else if (DateManager.checkDateEqual(this.date)) {
             apodCurrent.el.classList.add('current');
-            apodNext.el.classList.add('hide');
         } else {
             apodCurrent.el.classList.remove('current');
-            apodNext.el.classList.remove('hide');
         }
 
         apodLoading.classList.add('hide');

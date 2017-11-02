@@ -848,9 +848,6 @@ ul, li {
         color: rgba(199, 199, 199, 0.8);
         transition: 0.2s linear background-color;
         cursor: pointer; }
-        .apod__header .description .nav-buttons li.save-favorite {
-          float: right;
-          margin: 0; }
         .apod__header .description .nav-buttons li.current,
         .apod__header .description .nav-buttons li span.favorite {
           color: yellow; }

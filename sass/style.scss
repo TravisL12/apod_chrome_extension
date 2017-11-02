@@ -111,11 +111,6 @@ ul, li {
                 transition: 0.2s linear background-color;
                 cursor: pointer;
 
-                &.save-favorite {
-                    float: right;
-                    margin: 0;
-                }
-
                 &.hide {
                     @extend %hide-display;
                 }
