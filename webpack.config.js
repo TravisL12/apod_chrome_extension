@@ -26,7 +26,7 @@ module.exports = {
     background: './client/index.js',
   },
 
-  devtool: 'cheap-eval-source-map',
+  devtool: 'eval',
   output: {
     path: path.resolve('dist'),
     filename: '[name].bundle.js',

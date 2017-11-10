@@ -16,16 +16,15 @@ import Drawer from './scripts/components/Drawer';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
 import DatePickerComponent from './scripts/components/DatePicker';
-import DateManagement from './scripts/DateManagement';
 import { $, randomizer, htmlToElements } from './scripts/utilities';
 import topSites from './scripts/utils/buildTopSites';
 
 import './styles/style.scss';
 
 // Create thumbnails and links for Top Sites
-document.addEventListener('DOMContentLoaded', function() {
-  topSites('topSites');
-});
+// document.addEventListener('DOMContentLoaded', function() {
+//   topSites('topSites');
+// });
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
@@ -49,7 +48,6 @@ const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 // Initialize apod and date objects
 let apodDatePicker = null;
-const DateManager = DateManagement();
 const apod = new Apod();
 const loader = new [SunLoader, MoonLoader][(randomizer(1))]();
 const isFirefox = /firefox/gi.test(window.navigator.userAgent);

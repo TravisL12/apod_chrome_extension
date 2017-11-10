@@ -1,5 +1,6 @@
 import { $ } from '../utilities';
 import DrawerTab from './DrawerTab';
+import DateManager from '../DateManagement';
 
 export default class FavoritesTab extends DrawerTab {
     constructor(el, apod, drawer) {
