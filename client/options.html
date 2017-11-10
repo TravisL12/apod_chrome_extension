@@ -1,0 +1,48 @@
+<html>
+    <head>
+        <title>APOD - Options</title>
+        <link href='public/styles/style.css' rel='stylesheet'>
+        <style>
+            body {
+                background: #C7C7C7;
+                padding: 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class='apod-options'>
+            <h3>Select which APOD type you would like to see on the new tab screen.</h3>
+            <form id='choose-apod'>
+
+                <div class='option'>
+                    <div class='info'>Display the most recent APOD</div>
+                    <div class='inputs'>
+                        <input type='radio' id='today' name='choose-apod' value='today'>
+                        <label for='today'>Today</label>
+                    </div>
+                </div>
+
+                <div class='option'>
+                    <div class='info'>Display a random APOD</div>
+                    <div class='inputs'>
+                        <input type='radio' id='random' name='choose-apod' value='random'>
+                        <label for='random'>Random</label>
+                    </div>
+                </div>
+
+                <div class='option'>
+                    <div class='info'>
+                        Show Date Picker
+                        <p class='sub-info'>Use mousewheel to scroll dates</p>
+                    </div>
+                    <div class='inputs'>
+                        <input type='checkbox' id='date-picker-option' name='date-picker'>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </body>
+
+    <script src="public/js/options.js"></script>
+</html>
