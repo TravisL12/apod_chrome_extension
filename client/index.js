@@ -18,8 +18,14 @@ import FavoritesTab from './scripts/tabs/FavoritesTab';
 import DatePickerComponent from './scripts/components/DatePicker';
 import DateManagement from './scripts/DateManagement';
 import { $, randomizer, htmlToElements } from './scripts/utilities';
+import topSites from './scripts/utils/buildTopSites';
 
-require('./styles/style.scss');
+import './styles/style.scss';
+
+// Create thumbnails and links for Top Sites
+document.addEventListener('DOMContentLoaded', function() {
+  topSites('topSites');
+});
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');

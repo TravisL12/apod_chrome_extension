@@ -1,8 +1,10 @@
+import '../styles/style.scss';
+
 function saveTypeOption() {
   let form = document.forms['choose-apod'];
   let value = form[0].checked ? form[0].value : form[1].value;
   chrome.storage.sync.set({
-    apodType: value
+    apodType: value,
   });
   setTimeout(window.close, 350);
 }
@@ -10,20 +12,20 @@ function saveTypeOption() {
 function saveDatePickerOption() {
   let form = document.forms['choose-apod'];
   chrome.storage.sync.set({
-    showDatePicker: form[2].checked
+    showDatePicker: form[2].checked,
   });
   setTimeout(window.close, 350);
 }
 
-function restoreOptions () {
+function restoreOptions() {
   chrome.storage.sync.get(['apodType', 'showDatePicker'], function(items) {
     let type = items.apodType;
     if (!type) {
-        type = 'today';
-        chrome.storage.sync.set({
-          apodType: type
-        });
-    };
+      type = 'today';
+      chrome.storage.sync.set({
+        apodType: type,
+      });
+    }
 
     let form = document.forms['choose-apod'];
     form[type].checked = true;

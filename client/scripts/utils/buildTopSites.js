@@ -8,9 +8,9 @@ function buildPopupDom(divName, data) {
 
   for (var i = 0, ie = data.length; i < ie; ++i) {
     var site = data[i],
-        a    = document.createElement('a'),
-        li   = document.createElement('li')
-        img  = new Image();
+      a = document.createElement('a'),
+      li = document.createElement('li');
+    img = new Image();
 
     img.src = 'chrome://favicon/' + site.url;
     img.classList.add('thumb-img');
@@ -25,11 +25,9 @@ function buildPopupDom(divName, data) {
 }
 
 function buildTypedUrlList(divName) {
-    chrome.topSites.get(function(data) {
-        buildPopupDom(divName, data.slice(0,10));
-    });
+  chrome.topSites.get(function(data) {
+    buildPopupDom(divName, data.slice(0, 10));
+  });
 }
 
-document.addEventListener('DOMContentLoaded', function () {
-  buildTypedUrlList('topSites');
-});
+export default buildTypedUrlList;

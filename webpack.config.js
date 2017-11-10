@@ -1,18 +1,35 @@
 const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+const CopyWebpackPlugin = require('copy-webpack-plugin');
+
+const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
   filename: 'index.html',
   inject: 'body',
 });
 
+const OptionsHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
+  template: './client/options.html',
+  filename: 'options.html',
+});
+
+// move files to dist folder
+const CopyWebpackPluginConfig = new CopyWebpackPlugin([
+  { from: './client/manifest.json' },
+  { context: './client/images', from: '*', to: 'images' }, // copy images to dist folder
+]);
+
 module.exports = {
-  entry: './client/index.js',
+  entry: {
+    options: './client/scripts/options.js',
+    background: './client/index.js',
+  },
+
   devtool: 'cheap-eval-source-map',
   output: {
     path: path.resolve('dist'),
-    filename: 'index_bundle.js',
+    filename: '[name].bundle.js',
   },
   resolve: {
     extensions: ['.js'],
@@ -42,5 +59,5 @@ module.exports = {
       },
     ],
   },
-  plugins: [HtmlWebpackPluginConfig],
+  plugins: [IndexHtmlWebpackPluginConfig, OptionsHtmlWebpackPluginConfig, CopyWebpackPluginConfig],
 };
