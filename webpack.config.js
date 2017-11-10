@@ -7,11 +7,13 @@ const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
   filename: 'index.html',
   inject: 'body',
+  chunks: ['index'], // only include index.js (see entry point)
 });
 
 const OptionsHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/options.html',
   filename: 'options.html',
+  chunks: ['options'], // only include options.js (see entry point)
 });
 
 // move files to dist folder
@@ -22,8 +24,8 @@ const CopyWebpackPluginConfig = new CopyWebpackPlugin([
 
 module.exports = {
   entry: {
+    index: './client/index.js',
     options: './client/scripts/options.js',
-    background: './client/index.js',
   },
 
   devtool: 'eval',
