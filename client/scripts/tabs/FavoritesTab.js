@@ -1,8 +1,8 @@
-'use strict';
+import { $ } from '../utilities';
+import DrawerTab from './DrawerTab';
 
-class FavoritesTab extends DrawerTab {
-
-    constructor (el, apod, drawer) {
+export default class FavoritesTab extends DrawerTab {
+    constructor(el, apod, drawer) {
         super(el, apod, drawer);
         this.keycode = 70;
         this.template = `
@@ -17,17 +17,17 @@ class FavoritesTab extends DrawerTab {
         this.load();
     }
 
-    load () {
-        chrome.storage.sync.get(['apodFavorites'], (favorites) => {
+    load() {
+        chrome.storage.sync.get(['apodFavorites'], favorites => {
             this.favorites = favorites.apodFavorites || {};
         });
     }
 
-    get favoriteDates () {
+    get favoriteDates() {
         return Object.keys(this.favorites);
     }
 
-    save () {
+    save() {
         if (this.favorites[apod.date]) {
             delete this.favorites[apod.date];
         } else {
@@ -50,7 +50,7 @@ class FavoritesTab extends DrawerTab {
         }
     }
 
-    render () {
+    render() {
         let favoritesEl = this.baseView.querySelector('#drawer-list');
 
         if (Object.keys(this.favorites).length) {
@@ -89,18 +89,21 @@ class FavoritesTab extends DrawerTab {
                 });
 
                 this.render();
-            })
+            });
 
-            const linkSelectors = ['.favorite__image','.favorite__title-title','.favorite__title-date'];
+            const linkSelectors = [
+                '.favorite__image',
+                '.favorite__title-title',
+                '.favorite__title-date',
+            ];
 
             for (let i in linkSelectors) {
                 listEl.querySelector(linkSelectors[i]).addEventListener('click', () => {
                     this.apod.specificDate(date);
-                })
+                });
             }
 
             favoritesEl.appendChild(listEl);
         }
     }
-
-};
+}

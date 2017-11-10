@@ -5,7 +5,7 @@
   "name": "APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
-  "version": "1.6.2",
+  "version": "2.0",
 
   "applications": {
     "gecko": {
@@ -15,23 +15,18 @@
   },
 
   "browser_action": {
-    "default_icon": "public/images/sun_icon.png",
+    "default_icon": "images/sun_icon.png",
     "default_title": "APOD by The Trav",
     "default_popup": "options.html"
   },
 
   "icons": {
-    "128": "public/images/sun_icon.png"
+    "128": "images/sun_icon.png"
   },
 
-  "chrome_url_overrides" : {
+  "chrome_url_overrides": {
     "newtab": "index.html"
   },
 
-  "permissions": [
-    "topSites",
-    "storage",
-    "chrome://favicon/",
-    "https://api.nasa.gov/*"
-  ]
+  "permissions": ["topSites", "storage", "chrome://favicon/", "https://api.nasa.gov/*"]
 }

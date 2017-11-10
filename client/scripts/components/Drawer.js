@@ -1,32 +1,31 @@
-'use strict';
+import { $ } from '../utilities';
 
 class Drawer {
-
-    constructor (el) {
+    constructor(el) {
         this.el = $(el);
         this.tabsEl = this.el.querySelector('.apod__drawer-tabs');
         this.tabs = [];
         this.isOpen = false;
         this.currentTabIdx;
 
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', e => {
             if (e.which === 27 && this.isOpen) {
                 this.closeDrawer();
             }
         });
     }
 
-    clearKnowMoreTabs () {
+    clearKnowMoreTabs() {
         this.currentTabIdx = null;
-        this.tabs = this.tabs.slice(0,2);
+        this.tabs = this.tabs.slice(0, 2);
     }
 
-    openDrawer () {
+    openDrawer() {
         this.el.classList.add('show');
         this.isOpen = true;
     }
 
-    closeDrawer () {
+    closeDrawer() {
         this.el.classList.remove('show');
         this.isOpen = false;
 
@@ -35,8 +34,9 @@ class Drawer {
         }
     }
 
-    setCurrentTabIdx (idx) {
+    setCurrentTabIdx(idx) {
         this.currentTabIdx = idx;
     }
-
 }
+
+export default Drawer;

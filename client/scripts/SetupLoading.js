@@ -1,22 +1,21 @@
 class SunLoader {
-
-    constructor () {
+    constructor() {
         this.bigRayCount = 12;
         this.littleRayCount = 8;
     }
 
-    buildRays (num) {
+    buildRays(num) {
         const rayEl = "<div class='ray'></div>";
         let rays = '';
 
-        for(let i = 0; i < num; i++) {
+        for (let i = 0; i < num; i++) {
             rays += rayEl;
         }
 
         return rays;
     }
 
-    render () {
+    render() {
         return `
             <div class='sun-container'>
                 <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
@@ -27,8 +26,7 @@ class SunLoader {
 }
 
 class MoonLoader {
-
-    render () {
+    render() {
         return `
             <div class='moon-container'>
                 <div class='mask-left'>
@@ -42,5 +40,6 @@ class MoonLoader {
                 </div>
             </div>`;
     }
-
 }
+
+export { SunLoader, MoonLoader };

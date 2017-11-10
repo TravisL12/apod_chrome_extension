@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * uniqueResults
  * Callback for the filter() function to get
@@ -11,11 +9,13 @@
  *
  * @return {array}
  */
-function uniqueResults (value, index, self) {
-    return self.findIndex((v) => {
-        return v.title === value.title;
-    }) === index;
-};
+function uniqueResults(value, index, self) {
+    return (
+        self.findIndex(v => {
+            return v.title === value.title;
+        }) === index
+    );
+}
 
 /**
  * Keyword
@@ -23,7 +23,7 @@ function uniqueResults (value, index, self) {
  * @param {string} category
  * @param {int} index id
  */
-function Keyword (name, category, id) {
+function Keyword(name, category, id) {
     this.title = name[0].toUpperCase() + name.slice(1);
     this.query = `${name} ${category}`;
     this.category = category;
@@ -35,15 +35,14 @@ function Keyword (name, category, id) {
  * @param {string} text
  */
 class KnowMoreComponent {
-
-    constructor (text) {
+    constructor(text) {
         this.text = text;
         this.celestialObjects = this.findCelestialObjects();
         this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
         this.results = this.buildResults();
     }
 
-    findNewGeneralCatalogObjects () {
+    findNewGeneralCatalogObjects() {
         let match = this.text.match(/NGC(-|\s)?\d{1,7}/gi) || [];
         if (match.length) {
             match = this.createKeywords(match, 'NGC');
@@ -52,10 +51,10 @@ class KnowMoreComponent {
         return match;
     }
 
-    findCelestialObjects () {
+    findCelestialObjects() {
         let matches = [];
         for (let category in celestialDictionary) {
-            let match = celestialDictionary[category].filter((constellation) => {
+            let match = celestialDictionary[category].filter(constellation => {
                 const re = new RegExp('\\b' + constellation + '\\b', 'gi');
                 return this.text.match(re);
             });
@@ -69,13 +68,13 @@ class KnowMoreComponent {
         return matches;
     }
 
-    createKeywords (match, category) {
+    createKeywords(match, category) {
         return match.map((name, idx) => {
             return new Keyword(name, category, idx + 1);
         });
     }
 
-    buildResults () {
+    buildResults() {
         const results = [].concat(this.celestialObjects, this.newGeneralCatalog);
         const resultsToDisplay = 5;
         let frequency = {};
@@ -83,40 +82,49 @@ class KnowMoreComponent {
         for (let i in results) {
             const re = new RegExp('\\b' + results[i].title + '\\b', 'gi');
             frequency[results[i].title] = this.text.match(re).length;
-        };
+        }
 
-        return results.filter(uniqueResults).sort((a,b) => {
-            return frequency[b.title] > frequency[a.title];
-        }).slice(0,resultsToDisplay);
+        return results
+            .filter(uniqueResults)
+            .sort((a, b) => {
+                return frequency[b.title] > frequency[a.title];
+            })
+            .slice(0, resultsToDisplay);
     }
 
-    buildLinkId (result) {
-        let id = 'know-more-tab-' + result.title.replace(/[\s-_.'"]/ig,'').toLowerCase().slice(0,10);
+    buildLinkId(result) {
+        let id =
+            'know-more-tab-' + result.title.replace(/[\s-_.'"]/gi, '').toLowerCase().slice(0, 10);
         let isIdUsed = $('#' + id);
 
         return id;
     }
 
-    createTab (result, index) {
+    createTab(result, index) {
         const el = document.createElement('div');
         el.className = 'tab';
         el.id = this.buildLinkId(result);
 
-        const googleSearch = (e) => {
+        const googleSearch = e => {
             ga('send', 'event', 'Know More', 'clicked', result.query);
             el.removeEventListener('click', googleSearch); // Avoid searching twice!
 
-            this.search(result.query).then((data) => {
-                let response = JSON.parse(data.response);
-                knowMoreTab.items = response.items;
-                knowMoreTab.openTab();
-            }, (error) => {
-                console.log(JSON.parse(error.response).error.errors[0].message);
-            }).fail((error) => {
-                knowMoreTab.template = `<h1>All out of searches for today!</h1>`;
-                knowMoreTab.openTab();
-            });
-        }
+            this.search(result.query)
+                .then(
+                    data => {
+                        let response = JSON.parse(data.response);
+                        knowMoreTab.items = response.items;
+                        knowMoreTab.openTab();
+                    },
+                    error => {
+                        console.log(JSON.parse(error.response).error.errors[0].message);
+                    },
+                )
+                .fail(error => {
+                    knowMoreTab.template = `<h1>All out of searches for today!</h1>`;
+                    knowMoreTab.openTab();
+                });
+        };
 
         el.innerHTML = `${ImageDictionary[result.category]()} ${result.title}`;
         el.addEventListener('click', googleSearch);
@@ -125,7 +133,7 @@ class KnowMoreComponent {
         const knowMoreTab = new KnowMoreTab('#' + el.id, apod, drawer, index, googleSearch);
     }
 
-    search (query) {
+    search(query) {
         return reqwest({
             type: 'GET',
             url: 'https://www.googleapis.com/customsearch/v1',
@@ -137,3 +145,5 @@ class KnowMoreComponent {
         });
     }
 }
+
+export default KnowMoreComponent;

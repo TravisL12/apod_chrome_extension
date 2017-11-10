@@ -1,8 +1,7 @@
-'use strict';
+import DrawerTab from './DrawerTab';
 
 class KnowMoreTab extends DrawerTab {
-
-    constructor (el, apod, drawer, index, searchCallback) {
+    constructor(el, apod, drawer, index, searchCallback) {
         super(el, apod, drawer);
         this.items = [];
         this.loader = new SunLoader();
@@ -16,22 +15,22 @@ class KnowMoreTab extends DrawerTab {
         `;
     }
 
-    showLoader () {
+    showLoader() {
         this.baseView.querySelector('.loading-spinner').classList.remove('hide');
     }
 
-    setClickListener () {
+    setClickListener() {
         const tabs = document.getElementsByClassName(`keyword-${this.index}`);
 
         for (let i = 0; i < tabs.length; i++) {
             tabs[i].onclick = () => {
                 this.toggle();
                 this.searchFn();
-            }
+            };
         }
     }
 
-    render () {
+    render() {
         if (!this.items.length) {
             this.showLoader();
         }
@@ -47,5 +46,6 @@ class KnowMoreTab extends DrawerTab {
 
         this.baseView.querySelector('.know-links ul').innerHTML = links;
     }
+}
 
-};
+export default KnowMoreTab;

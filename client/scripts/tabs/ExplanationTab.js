@@ -1,8 +1,7 @@
-'use strict';
+import DrawerTab from './DrawerTab';
 
-class ExplanationTab extends DrawerTab {
-
-    constructor (el, apod, drawer) {
+export default class ExplanationTab extends DrawerTab {
+    constructor(el, apod, drawer) {
         super(el, apod, drawer);
         this.keycode = 69;
         this.template = `
@@ -20,7 +19,7 @@ class ExplanationTab extends DrawerTab {
         `;
     }
 
-    setTabListeners () {
+    setTabListeners() {
         const tabs = this.drawer.tabs.slice(2);
 
         for (let i = 0; i < tabs.length; i++) {
@@ -28,18 +27,18 @@ class ExplanationTab extends DrawerTab {
         }
     }
 
-    render () {
+    render() {
         const apodOrigin = this.baseView.querySelector('#apod-origin');
-        const apodHiRes  = this.baseView.querySelector('#apod-hires');
+        const apodHiRes = this.baseView.querySelector('#apod-hires');
         const apodLowRes = this.baseView.querySelector('#apod-lowres');
         const apodDescription = $('#apod-explanation');
 
-        $('.external-links').addEventListener('click', (e) => {
+        $('.external-links').addEventListener('click', e => {
             ga('send', 'event', {
                 eventCategory: 'Outbound Link',
                 eventAction: 'clicked',
                 eventLabel: event.target.id,
-                transport: 'beacon'
+                transport: 'beacon',
             });
         });
 
@@ -50,5 +49,4 @@ class ExplanationTab extends DrawerTab {
 
         this.setTabListeners();
     }
-
-};
+}
