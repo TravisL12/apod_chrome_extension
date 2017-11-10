@@ -1,3 +1,6 @@
+import { $ } from '../utilities';
+import ga from '../utils/ga';
+
 /**
  * uniqueResults
  * Callback for the filter() function to get

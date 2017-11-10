@@ -1,4 +1,5 @@
-'use strict';
+import { $ } from '../utilities';
+import ga from '../utils/ga';
 
 class Apod {
     constructor() {

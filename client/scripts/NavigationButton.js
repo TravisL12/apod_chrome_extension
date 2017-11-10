@@ -1,4 +1,5 @@
 import { $ } from './utilities';
+import ga from './utils/ga';
 
 class NavigationButton {
     constructor(el, keycode, action) {

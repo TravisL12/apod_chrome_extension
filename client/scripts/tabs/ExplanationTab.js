@@ -1,3 +1,5 @@
+import { $ } from '../utilities';
+import ga from '../utils/ga';
 import DrawerTab from './DrawerTab';
 
 export default class ExplanationTab extends DrawerTab {
