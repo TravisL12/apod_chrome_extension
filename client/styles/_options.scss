@@ -1,0 +1,54 @@
+.apod-options {
+    @include helvetica-neue-light;
+    width: 275px;
+    color: $gray;
+
+    h3 {
+        font-size: 14px;
+    }
+
+    #choose-apod {
+        .info,
+        .inputs {
+            display: inline-block;
+        }
+
+        .info {
+            font-size: 12px;
+            width: 200px;
+            margin: 10px 0;
+
+            .sub-info {
+                margin: 0;
+                font-size: 11px;
+            }
+        }
+
+        .inputs {
+            input[type='radio'] {
+                display: none;
+            }
+            label {
+                // unchecked case
+                font-size: 12px;
+                width: 60px;
+                box-sizing: border-box;
+                display: block;
+                text-align: center;
+                background: darken($light-gray, 5%);
+                color: darken($light-gray, 25%);
+                padding: 5px;
+                transition: 0.2s linear all;
+                cursor: pointer;
+                &:hover {
+                    color: $gray;
+                }
+            }
+            input[type='radio']:checked + label {
+                cursor: default;
+                background: lighten(yellow, 10%);
+                color: $gray;
+            }
+        }
+    }
+}
