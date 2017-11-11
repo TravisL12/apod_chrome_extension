@@ -44,10 +44,10 @@ export default class ExplanationTab extends DrawerTab {
             });
         });
 
-        apodDescription.innerHTML = this.apod.description;
+        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
         apodHiRes.setAttribute('href', this.apod.hdurl);
         apodLowRes.setAttribute('href', this.apod.url);
-        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
+        apodDescription.innerHTML = this.apod.description;
 
         this.setTabListeners();
     }

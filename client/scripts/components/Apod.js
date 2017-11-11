@@ -4,27 +4,28 @@ import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
 import { zeroPad } from '../utilities';
-import {
-    apodCurrent,
-    apodDate,
-    apodDatePicker,
-    apodError,
-    apodImage,
-    apodKnowMore,
-    apodKnowMore,
-    apodLoading,
-    apodLoading,
-    apodNext,
-    apodPrevious,
-    apodRandom,
-    apodTitle,
-    apodVideo,
-    drawer,
-    favoriteButtonHide,
-    favoriteButtonShow,
-    favoritesTab,
-    isFirefox,
-} from '../../index.js';
+import { apodDatePicker, drawer, favoritesTab } from '../../index.js';
+import NavigationButton from '../NavigationButton';
+
+// Initialize image & video elements
+const apodImage = $('#apod-image');
+const apodVideo = $('#apod-video iframe');
+
+// Initialize various elements
+const apodTitle = $('#apod-title');
+const apodDate = $('#apod-date');
+const apodKnowMore = $('#know-more-tabs');
+const apodLoading = $('#apod-loading');
+const apodError = $('#apod-error');
+
+// Initialize button objects
+const apodRandom = new NavigationButton('#apod-random', 82, 'random');
+const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
+const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
+const apodNext = new NavigationButton('#apod-next', 75, 'next');
+
+const favoriteButtonShow = $('#add-favorite .favorite');
+const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 class Apod {
     constructor() {
@@ -256,11 +257,7 @@ class Apod {
     apodDescription() {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
-
-        // Couldn't get Firefox to do the googleapi custom searcch without CORS errors
-        if (!isFirefox) {
-            this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
-        }
+        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
 
         if (!DateManager.checkTodayGreater(this.date)) {
             console.log(date + ' is in the future!');

@@ -3,7 +3,6 @@ import { $ } from '../utilities';
 import ga from '../utils/ga';
 import celestialDictionary from '../CelestialDictionary';
 import imageDictionary from '../ImageDictionary';
-import { apodKnowMore } from '../../index';
 import KnowMoreTab from '../tabs/KnowMoreTab';
 
 /**
@@ -136,7 +135,7 @@ class KnowMoreComponent {
 
         el.innerHTML = `${imageDictionary[result.category]()} ${result.title}`;
         el.addEventListener('click', googleSearch);
-        apodKnowMore.appendChild(el);
+        $('#know-more-tabs').appendChild(el);
 
         const knowMoreTab = new KnowMoreTab('#' + el.id, index, googleSearch);
     }
