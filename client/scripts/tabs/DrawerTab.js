@@ -1,7 +1,8 @@
 import { $ } from '../utilities';
+import { apod, drawer } from '../../index';
 
 export default class DrawerTab {
-    constructor(el, apod, drawer) {
+    constructor(el) {
         this.el = $(el);
         this.apod = apod;
         this.keycode = null;

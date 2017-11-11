@@ -1,21 +1,9 @@
-import { $ } from '../utilities';
+import { $, monthNames } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
+import { apod } from '../../index';
 
-const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'July',
-    'Aug',
-    'Sept',
-    'Oct',
-    'Nov',
-    'Dec',
-];
+const _monthNames = monthNames.short;
 const startYear = 1995;
 const currentYear = new Date().getFullYear();
 const yearDif = currentYear - startYear;
@@ -26,7 +14,7 @@ class DatePickerComponent {
         this.el = $(el);
         this.submitBtn = $('button.date-submit');
         this.dayWheel = new DateWheel('day-wheel', 31);
-        this.monthWheel = new DateWheel('month-wheel', monthNames);
+        this.monthWheel = new DateWheel('month-wheel', _monthNames);
         this.yearWheel = new DateWheel('year-wheel', yearRange);
 
         this.el.appendChild(this.dayWheel.render());

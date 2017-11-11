@@ -3,8 +3,8 @@ import ga from '../utils/ga';
 import DrawerTab from './DrawerTab';
 
 export default class ExplanationTab extends DrawerTab {
-    constructor(el, apod, drawer) {
-        super(el, apod, drawer);
+    constructor(el) {
+        super(el);
         this.keycode = 69;
         this.template = `
             <div class='explanation'>

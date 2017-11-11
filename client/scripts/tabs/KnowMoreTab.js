@@ -1,8 +1,9 @@
 import DrawerTab from './DrawerTab';
+import { SunLoader } from '../SetupLoading';
 
 class KnowMoreTab extends DrawerTab {
-    constructor(el, apod, drawer, index, searchCallback) {
-        super(el, apod, drawer);
+    constructor(el, index, searchCallback) {
+        super(el);
         this.items = [];
         this.loader = new SunLoader();
         this.index = index;

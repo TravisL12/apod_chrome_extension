@@ -1,3 +1,4 @@
+import { monthNames } from './utilities';
 /**
      * Formats the Date "2017-01-31"
      *
@@ -23,22 +24,9 @@ function _getToday() {
   return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
 }
 
-const _monthNames = [
-  'January',
-  'February',
-  'March',
-  'April',
-  'May',
-  'June',
-  'July',
-  'August',
-  'September',
-  'October',
-  'November',
-  'December',
-];
+const _monthNames = monthNames.full;
 
-const DateManagement = {
+export default {
   get today() {
     return _getToday();
   },
@@ -77,5 +65,3 @@ const DateManagement = {
     return this.checkTodayGreater(date);
   },
 };
-
-export default DateManagement;

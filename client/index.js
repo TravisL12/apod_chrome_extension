@@ -10,8 +10,7 @@
 
 import NavigationButton from './scripts/NavigationButton';
 import Apod from './scripts/components/Apod';
-import { SunLoader } from './scripts/SetupLoading';
-import { MoonLoader } from './scripts/SetupLoading';
+import { SunLoader, MoonLoader } from './scripts/SetupLoading';
 import Drawer from './scripts/components/Drawer';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
@@ -27,39 +26,39 @@ import './styles/style.scss';
 // });
 
 // Initialize image & video elements
-const apodImage = $('#apod-image');
-const apodVideo = $('#apod-video iframe');
+export const apodImage = $('#apod-image');
+export const apodVideo = $('#apod-video iframe');
 
 // Initialize various elements
-const apodTitle = $('#apod-title');
-const apodDate = $('#apod-date');
-const apodKnowMore = $('#know-more-tabs');
-const apodLoading = $('#apod-loading');
-const apodError = $('#apod-error');
+export const apodTitle = $('#apod-title');
+export const apodDate = $('#apod-date');
+export const apodKnowMore = $('#know-more-tabs');
+export const apodLoading = $('#apod-loading');
+export const apodError = $('#apod-error');
 
 // Initialize button objects
-const apodRandom = new NavigationButton('#apod-random', 82, 'random');
-const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
-const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
-const apodNext = new NavigationButton('#apod-next', 75, 'next');
+export const apodRandom = new NavigationButton('#apod-random', 82, 'random');
+export const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
+export const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
+export const apodNext = new NavigationButton('#apod-next', 75, 'next');
 
-const favoriteButtonShow = $('#add-favorite .favorite');
-const favoriteButtonHide = $('#add-favorite .not-favorite');
+export const favoriteButtonShow = $('#add-favorite .favorite');
+export const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 // Initialize apod and date objects
-let apodDatePicker = null;
-const apod = new Apod();
-const loader = new [SunLoader, MoonLoader][(randomizer(1))]();
-const isFirefox = /firefox/gi.test(window.navigator.userAgent);
+export let apodDatePicker = null;
+export const apod = new Apod();
+export const loader = new [SunLoader, MoonLoader][(randomizer(1))]();
+export const isFirefox = /firefox/gi.test(window.navigator.userAgent);
 
 apodLoading.appendChild(
   htmlToElements(`<div class='apod__loading' id='apod-loading'>${loader.render()}</div>`),
 );
 
 // Initialize drawer objects
-const drawer = new Drawer('#apod-drawer');
-const explanationTab = new ExplanationTab('#tab-explanation', apod, drawer);
-const favoritesTab = new FavoritesTab('#tab-favorites', apod, drawer);
+export const drawer = new Drawer('#apod-drawer');
+export const explanationTab = new ExplanationTab('#tab-explanation');
+export const favoritesTab = new FavoritesTab('#tab-favorites');
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(['apodType', 'showDatePicker'], items => {

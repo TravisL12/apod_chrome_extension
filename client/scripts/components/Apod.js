@@ -1,6 +1,30 @@
+import reqwest from 'reqwest';
 import { $ } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
+import KnowMoreComponent from './KnowMore';
+import { zeroPad } from '../utilities';
+import {
+    apodCurrent,
+    apodDate,
+    apodDatePicker,
+    apodError,
+    apodImage,
+    apodKnowMore,
+    apodKnowMore,
+    apodLoading,
+    apodLoading,
+    apodNext,
+    apodPrevious,
+    apodRandom,
+    apodTitle,
+    apodVideo,
+    drawer,
+    favoriteButtonHide,
+    favoriteButtonShow,
+    favoritesTab,
+    isFirefox,
+} from '../../index.js';
 
 class Apod {
     constructor() {
@@ -259,7 +283,7 @@ class Apod {
      */
     apodSource() {
         const date = this.date.split('-');
-        return 'ap' + date[0].slice(-2) + _zeroPad(date[1]) + _zeroPad(date[2]) + '.html';
+        return 'ap' + date[0].slice(-2) + zeroPad(date[1]) + zeroPad(date[2]) + '.html';
     }
 }
 

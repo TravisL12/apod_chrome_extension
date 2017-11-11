@@ -3,8 +3,8 @@ import DrawerTab from './DrawerTab';
 import DateManager from '../DateManagement';
 
 export default class FavoritesTab extends DrawerTab {
-    constructor(el, apod, drawer) {
-        super(el, apod, drawer);
+    constructor(el) {
+        super(el);
         this.keycode = 70;
         this.template = `
             <div class='favorites'>
@@ -29,12 +29,12 @@ export default class FavoritesTab extends DrawerTab {
     }
 
     save() {
-        if (this.favorites[apod.date]) {
-            delete this.favorites[apod.date];
+        if (this.favorites[this.apod.date]) {
+            delete this.favorites[this.apod.date];
         } else {
-            this.favorites[apod.date] = {
-                title: apod.title,
-                imgUrl: apod.url,
+            this.favorites[this.apod.date] = {
+                title: this.apod.title,
+                imgUrl: this.apod.url,
             };
         }
 
@@ -42,7 +42,7 @@ export default class FavoritesTab extends DrawerTab {
             apodFavorites: this.favorites,
         });
 
-        apod.checkFavorite();
+        this.apod.checkFavorite();
 
         this.load();
 
