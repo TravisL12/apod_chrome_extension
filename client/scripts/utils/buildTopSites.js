@@ -1,16 +1,16 @@
 // Given an array of URLs, build a DOM list of those URLs in the
 // browser action popup.
 function buildPopupDom(divName, data) {
-  var popupDiv = document.getElementById(divName);
+  const popupDiv = document.getElementById(divName);
 
-  var ul = document.createElement('ul');
+  const ul = document.createElement('ul');
   popupDiv.appendChild(ul);
 
   for (var i = 0, ie = data.length; i < ie; ++i) {
-    var site = data[i],
-      a = document.createElement('a'),
-      li = document.createElement('li');
-    img = new Image();
+    const site = data[i];
+    const a = document.createElement('a');
+    const li = document.createElement('li');
+    const img = new Image();
 
     img.src = 'chrome://favicon/' + site.url;
     img.classList.add('thumb-img');

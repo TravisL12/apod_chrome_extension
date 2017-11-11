@@ -1,4 +1,4 @@
-import '../styles/style.scss';
+import '../styles/options.scss';
 
 function saveTypeOption() {
   let form = document.forms['choose-apod'];
@@ -17,7 +17,7 @@ function saveDatePickerOption() {
   setTimeout(window.close, 350);
 }
 
-function restoreOptions() {
+(function restoreOptions() {
   chrome.storage.sync.get(['apodType', 'showDatePicker'], function(items) {
     let type = items.apodType;
     if (!type) {
@@ -35,6 +35,4 @@ function restoreOptions() {
     form[1].addEventListener('change', saveTypeOption);
     form[2].addEventListener('change', saveDatePickerOption);
   });
-}
-
-restoreOptions();
+})();

@@ -20,11 +20,6 @@ import topSites from './scripts/utils/buildTopSites';
 
 import './styles/style.scss';
 
-// Create thumbnails and links for Top Sites
-// document.addEventListener('DOMContentLoaded', function() {
-//   topSites('topSites');
-// });
-
 // Initialize image & video elements
 export const apodImage = $('#apod-image');
 export const apodVideo = $('#apod-video iframe');
@@ -75,4 +70,9 @@ chrome.storage.onChanged.addListener((changes, name) => {
   if (changes.showDatePicker) {
     window.location.reload();
   }
+});
+
+// Create thumbnails and links for Top Sites
+document.addEventListener('DOMContentLoaded', function() {
+  topSites('topSites');
 });
