@@ -1,21 +1,25 @@
 @import 'variables';
 
+html,
 body {
-    background: #C7C7C7;
-    padding: 10px;
+    height: 0;
     margin: 0;
 }
 
 .apod-options {
     @include helvetica-neue-light;
+    background: #C7C7C7;
+    padding: 10px;
     width: 275px;
     color: $gray;
 
     h3 {
         font-size: 14px;
+        margin-top: 0;
     }
 
     #choose-apod {
+        margin: 0;
         .info,
         .inputs {
             display: inline-block;
