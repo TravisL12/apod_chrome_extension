@@ -2,6 +2,7 @@ const path = require('path');
 
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -44,22 +45,19 @@ module.exports = {
     rules: [
       {
         test: /\.scss$/,
-        use: [
-          {
-            loader: 'style-loader', // creates style nodes from JS strings
-          },
-          {
-            loader: 'css-loader', // translates CSS into CommonJS
-          },
-          {
-            loader: 'sass-loader', // compiles Sass to CSS
-            options: {
-              sourceMap: true,
-            },
-          },
-        ],
+        use: ExtractTextPlugin.extract({
+          fallback: 'style-loader',
+          use: ['css-loader', 'sass-loader'],
+        }),
       },
     ],
   },
-  plugins: [IndexHtmlWebpackPluginConfig, OptionsHtmlWebpackPluginConfig, CopyWebpackPluginConfig],
+  plugins: [
+    IndexHtmlWebpackPluginConfig,
+    OptionsHtmlWebpackPluginConfig,
+    CopyWebpackPluginConfig,
+    new ExtractTextPlugin('styles/[name].css', {
+      allChunks: false,
+    }),
+  ],
 };
