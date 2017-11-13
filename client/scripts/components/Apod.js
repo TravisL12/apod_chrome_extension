@@ -29,12 +29,7 @@ const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 class Apod {
     constructor() {
-        this.date;
-        this.url;
-        this.hdurl;
-        this.title;
-        this.description;
-        this.showDatePicker;
+        this.showDatePicker = false;
         this.errorCount = 0;
         this.errorLimit = 3;
     }
@@ -172,7 +167,7 @@ class Apod {
         const results = knowMore.results;
 
         if (results.length) {
-            // Don't draw duplicate tabs
+            // Don't draw duplicate tabs beyond the default tabs (i.e. Explanation and Favorite tabs)
             if (drawer.tabs.length > 2) {
                 return;
             }
