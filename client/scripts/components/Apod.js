@@ -179,22 +179,26 @@ class Apod {
     }
 
     preLoadImage(forceHighDef = false) {
+        const delayForHdLoad = 3000;
         let Img = new Image();
         let quality = {
             text: 'HD',
             title: 'High Definition Image',
         };
-        const delayForHdLoad = 3000;
 
-        Img.src = this.hdurl;
+        if (!/(jpg|jpeg|png)$/.test(this.hdurl)) {
+            Img.src = this.url;
+            quality.text = 'SD';
+            quality.title = 'Click to Show HD Image';
+        } else {
+            Img.src = this.hdurl;
+        }
 
         let timeout = setTimeout(() => {
             if (!Img.complete && !forceHighDef) {
                 Img.src = this.url;
-                quality = {
-                    text: 'SD',
-                    title: 'Click to Show HD Image',
-                };
+                quality.text = 'SD';
+                quality.title = 'Click to Show HD Image';
             }
         }, delayForHdLoad);
 

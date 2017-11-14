@@ -6,7 +6,8 @@
   "license": "MIT",
   "scripts": {
     "start": "webpack-dev-server",
-    "watch": "webpack --watch"
+    "watch": "webpack --watch",
+    "build": "webpack -p"
   },
   "dependencies": {
     "css-loader": "^0.28.7",
