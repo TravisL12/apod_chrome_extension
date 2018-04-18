@@ -1,4 +1,4 @@
-import { $ } from '../utilities';
+import { $, clearElement, htmlToElements } from '../utilities';
 import DrawerTab from './DrawerTab';
 import DateManager from '../DateManagement';
 
@@ -6,12 +6,12 @@ export default class FavoritesTab extends DrawerTab {
     constructor(el) {
         super(el);
         this.keycode = 70;
-        this.template = `
+        this.template = htmlToElements(`
             <div class='favorites'>
                 <h2>Favorite APOD's</h2>
                 <ul id='drawer-list'></ul>
             </div>
-        `;
+        `);
 
         $('#add-favorite').addEventListener('click', this.save.bind(this));
 
@@ -53,15 +53,16 @@ export default class FavoritesTab extends DrawerTab {
 
     render() {
         let favoritesEl = this.baseView.querySelector('#drawer-list');
+        clearElement(favoritesEl);
 
-        if (Object.keys(this.favorites).length) {
-            favoritesEl.innerHTML = '';
-        } else {
-            favoritesEl.innerHTML = `
+        if (Object.keys(this.favorites).length === 0) {
+            favoritesEl.appendChild(
+                htmlToElements(`
                 <li class='no-favorites'>
                     <h4>You don't have any favorites yet!</h4>
                     <h4>Click the "Save Favorite" button at the top right of the page!</h4>
-                </li>`;
+                </li>`),
+            );
         }
 
         for (let date in this.favorites) {
@@ -71,7 +72,9 @@ export default class FavoritesTab extends DrawerTab {
             const listEl = document.createElement('li');
             listEl.className = 'favorite';
 
-            listEl.innerHTML = `
+            listEl.appendChild(
+                htmlToElements(
+                    `
                 <div class='favorite__image'>
                     <div class='favorite__image-image' style='${backgroundImage}'></div>
                 </div>
@@ -80,7 +83,10 @@ export default class FavoritesTab extends DrawerTab {
                     <p class='favorite__title-title'>${this.favorites[date].title}</p>
                 </div>
                 <div class='remove-favorite'>Remove</div>
-            `;
+            `,
+                    true,
+                ),
+            );
 
             listEl.querySelector('.remove-favorite').addEventListener('click', () => {
                 delete this.favorites[date];

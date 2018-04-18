@@ -18,10 +18,20 @@ export function $(el) {
 }
 
 /* Alternative to innerHTML */
-export function htmlToElements(html) {
-  var template = document.createElement('template');
-  template.innerHTML = html;
-  return template.content.firstChild;
+export function htmlToElements(html, wrap = false) {
+  const template = document.createElement('template');
+  let wrapElement = 'div';
+  if (typeof wrap === 'string') {
+    wrapElement = wrap;
+  }
+  template.innerHTML = wrap ? `<${wrap}>${html}</${wrap}>` : html;
+  return template.content.firstElementChild;
+}
+
+export function clearElement(el) {
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
 }
 
 export const monthNames = {

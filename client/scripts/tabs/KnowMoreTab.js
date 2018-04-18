@@ -1,3 +1,4 @@
+import { htmlToElements } from '../utilities';
 import DrawerTab from './DrawerTab';
 import { SunLoader } from '../SetupLoading';
 
@@ -8,16 +9,16 @@ class KnowMoreTab extends DrawerTab {
         this.loader = new SunLoader();
         this.index = index;
         this.searchFn = searchCallback;
-        this.template = `
+        const html = `
             <div class='know-links'>
                 <div class='loading-spinner hide'>${this.loader.render()}</div>
-                <ul></ul>
             </div>
         `;
+        this.template = htmlToElements(html);
     }
 
-    showLoader() {
-        this.baseView.querySelector('.loading-spinner').classList.remove('hide');
+    toggleLoader(isItems) {
+        this.baseView.querySelector('.loading-spinner').classList.toggle('hide', isItems);
     }
 
     setClickListener() {
@@ -32,9 +33,7 @@ class KnowMoreTab extends DrawerTab {
     }
 
     render() {
-        if (!this.items.length) {
-            this.showLoader();
-        }
+        this.toggleLoader(this.items.length > 0);
 
         let links = '';
         for (let i in this.items) {
@@ -45,7 +44,7 @@ class KnowMoreTab extends DrawerTab {
                 </li>`;
         }
 
-        this.baseView.querySelector('.know-links ul').innerHTML = links;
+        this.baseView.querySelector('.know-links').appendChild(htmlToElements(links, 'ul'));
     }
 }
 

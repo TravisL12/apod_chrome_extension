@@ -1,4 +1,4 @@
-import { $, monthNames } from '../utilities';
+import { $, monthNames, htmlToElements } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import { apod } from '../../index';
@@ -65,7 +65,7 @@ class DateWheel {
         } else {
             this.amount = nums;
         }
-        this.el.innerHTML = this.createWheelValues().join('');
+        this.el.appendChild(htmlToElements(this.createWheelValues().join(''), true));
 
         let wheelSpin = false;
         const wheelDelay = 250;
@@ -127,7 +127,7 @@ class DateWheel {
             current.classList.remove('current');
         }
         this.currentIdx = idx;
-        this.el.children[idx].querySelector('.num').classList.add('current');
+        this.el.firstChild.children[idx].querySelector('.num').classList.add('current');
     }
 
     updateAngle() {

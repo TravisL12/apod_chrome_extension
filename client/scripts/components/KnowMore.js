@@ -1,5 +1,5 @@
 import reqwest from 'reqwest';
-import { $ } from '../utilities';
+import { $, htmlToElements } from '../utilities';
 import ga from '../utils/ga';
 import celestialDictionary from '../CelestialDictionary';
 import imageDictionary from '../ImageDictionary';
@@ -133,7 +133,9 @@ class KnowMoreComponent {
                 });
         };
 
-        el.innerHTML = `${imageDictionary[result.category]()} ${result.title}`;
+        el.appendChild(
+            htmlToElements(`${imageDictionary[result.category]()} ${result.title}`, true),
+        );
         el.addEventListener('click', googleSearch);
         $('#know-more-tabs').appendChild(el);
 

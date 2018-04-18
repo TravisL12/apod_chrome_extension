@@ -1,5 +1,5 @@
 import reqwest from 'reqwest';
-import { $ } from '../utilities';
+import { $, clearElement } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
@@ -64,7 +64,7 @@ class Apod {
         apodVideo.src = '';
         $('.apod__header .description').classList.add('hide');
         apodLoading.classList.remove('hide');
-        apodKnowMore.innerHTML = '';
+        clearElement(apodKnowMore);
         drawer.closeDrawer();
         drawer.clearKnowMoreTabs();
     }

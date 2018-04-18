@@ -1,4 +1,4 @@
-import { $ } from '../utilities';
+import { $, clearElement } from '../utilities';
 import { apod, drawer } from '../../index';
 
 export default class DrawerTab {
@@ -22,11 +22,18 @@ export default class DrawerTab {
     }
 
     render() {
-        this.baseView.innerHTML = this.template;
+        this.baseView.appendChild(this.template);
+    }
+
+    clearDrawer() {
+        while (this.baseView.firstChild) {
+            this.baseView.removeChild(this.baseView.firstChild);
+        }
     }
 
     openTab() {
-        this.baseView.innerHTML = this.template;
+        clearElement(this.baseView);
+        this.baseView.appendChild(this.template);
         this.render();
         this.drawer.setCurrentTabIdx(this.drawerIdx);
         this.el.classList.add('is-open');
