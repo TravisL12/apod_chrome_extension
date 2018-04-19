@@ -1,4 +1,4 @@
-import { htmlToElements } from '../utilities';
+import { clearElement, htmlToElements } from '../utilities';
 import DrawerTab from './DrawerTab';
 import { SunLoader } from '../SetupLoading';
 
@@ -9,12 +9,12 @@ class KnowMoreTab extends DrawerTab {
         this.loader = new SunLoader();
         this.index = index;
         this.searchFn = searchCallback;
-        const html = `
+        this.isRendered = false;
+        this.template = htmlToElements(`
             <div class='know-links'>
                 <div class='loading-spinner hide'>${this.loader.render()}</div>
             </div>
-        `;
-        this.template = htmlToElements(html);
+        `);
     }
 
     toggleLoader(isItems) {
@@ -32,19 +32,30 @@ class KnowMoreTab extends DrawerTab {
         }
     }
 
-    render() {
-        this.toggleLoader(this.items.length > 0);
-
-        let links = '';
-        for (let i in this.items) {
-            let item = this.items[i];
-            links += `
+    constructLinksEl() {
+        return this.items.reduce((p, c) => {
+            p += `
                 <li>
-                    <a href="${item.link}" target="_blank">${item.htmlTitle}</a>
+                    <a href="${c.link}" target="_blank">${c.htmlTitle}</a>
                 </li>`;
+            return p;
+        }, '');
+    }
+
+    render() {
+        const isItems = this.items.length > 0;
+        this.toggleLoader(isItems);
+
+        // Don't re-render or render without items
+        if (this.isRendered || !isItems) {
+            return;
         }
 
-        this.baseView.querySelector('.know-links').appendChild(htmlToElements(links, 'ul'));
+        this.isRendered = true;
+
+        this.baseView
+            .querySelector('.know-links')
+            .appendChild(htmlToElements(this.constructLinksEl(), 'ul'));
     }
 }
 

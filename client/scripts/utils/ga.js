@@ -17,3 +17,12 @@ ga('require', 'displayfeatures');
 ga('send', 'pageview', '/apod_trav.html');
 
 export default ga;
+
+// const GA_TRACKING_ID = 'UA-91390132-1';
+// let request = new XMLHttpRequest();
+// let message =
+//   "v=1&tid=" + GA_TRACKING_ID + "&cid= " + GA_CLIENT_ID + "&aip=1" +
+//   "&ds=add-on&t=event&ec=AAA&ea=" + aType;
+
+// request.open("POST", "https://www.google-analytics.com/collect", true);
+// request.send(message);

@@ -1,4 +1,4 @@
-import { $, htmlToElements } from '../utilities';
+import { $, clearElement, htmlToElements } from '../utilities';
 import ga from '../utils/ga';
 import DrawerTab from './DrawerTab';
 
@@ -35,6 +35,7 @@ export default class ExplanationTab extends DrawerTab {
         const apodHiRes = this.baseView.querySelector('#apod-hires');
         const apodLowRes = this.baseView.querySelector('#apod-lowres');
         const apodDescription = $('#apod-explanation');
+        clearElement(apodDescription);
 
         $('.external-links').addEventListener('click', e => {
             ga('send', 'event', {
