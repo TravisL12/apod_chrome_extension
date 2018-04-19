@@ -119,8 +119,7 @@ class KnowMoreComponent {
             this.search(result.query)
                 .then(
                     data => {
-                        let response = JSON.parse(data.response);
-                        knowMoreTab.items = response.items;
+                        knowMoreTab.items = data.items;
                         knowMoreTab.openTab();
                     },
                     error => {
