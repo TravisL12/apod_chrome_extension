@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const MinifyPlugin = require("babel-minify-webpack-plugin");
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -29,7 +30,7 @@ module.exports = {
     options: './client/scripts/options.js',
   },
 
-  devtool: 'source-map',
+  devtool: 'cheap-source-map',
   output: {
     path: path.resolve('dist'),
     filename: '[name].bundle.js',
@@ -59,5 +60,6 @@ module.exports = {
     new ExtractTextPlugin('styles/[name].css', {
       allChunks: false,
     }),
+    new MinifyPlugin()
   ],
 };
