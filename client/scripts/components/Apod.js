@@ -95,7 +95,7 @@ class Apod {
         this._setLoadingView();
 
         reqwest({
-            type: 'GET',
+            method: 'GET',
             url: 'https://api.nasa.gov/planetary/apod',
             data: {
                 api_key: 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447',
@@ -103,8 +103,7 @@ class Apod {
             },
         }).then(
             response => {
-                response = JSON.parse(response.response);
-                ga('send', 'event', 'APOD', 'viewed', response.date);
+                ga({ category: 'APOD', action: 'viewed', label: response.date });
                 this.title = response.title;
                 this.url = response.url;
                 this.hdurl = response.hdurl;

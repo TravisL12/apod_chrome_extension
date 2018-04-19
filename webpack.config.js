@@ -29,7 +29,7 @@ module.exports = {
     options: './client/scripts/options.js',
   },
 
-  devtool: 'eval',
+  devtool: 'source-map',
   output: {
     path: path.resolve('dist'),
     filename: '[name].bundle.js',

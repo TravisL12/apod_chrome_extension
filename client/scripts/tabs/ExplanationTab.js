@@ -38,11 +38,10 @@ export default class ExplanationTab extends DrawerTab {
         clearElement(apodDescription);
 
         $('.external-links').addEventListener('click', e => {
-            ga('send', 'event', {
-                eventCategory: 'Outbound Link',
-                eventAction: 'clicked',
-                eventLabel: event.target.id,
-                transport: 'beacon',
+            ga({
+                category: 'Outbound Link',
+                action: 'clicked',
+                label: event.target.id,
             });
         });
 

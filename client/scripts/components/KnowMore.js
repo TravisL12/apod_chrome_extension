@@ -113,7 +113,7 @@ class KnowMoreComponent {
         el.id = this.buildLinkId(result);
 
         const googleSearch = e => {
-            ga('send', 'event', 'Know More', 'clicked', result.query);
+            ga({ category: 'Know More', action: 'clicked', label: result.query });
             el.removeEventListener('click', googleSearch); // Avoid searching twice!
 
             this.search(result.query)
@@ -144,7 +144,7 @@ class KnowMoreComponent {
 
     search(query) {
         return reqwest({
-            type: 'GET',
+            method: 'GET',
             url: 'https://www.googleapis.com/customsearch/v1',
             data: {
                 key: 'AIzaSyAoX7Ec50Nuh8hScDw05App_8XQb2YR-Ts',

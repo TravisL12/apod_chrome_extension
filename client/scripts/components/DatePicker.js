@@ -25,11 +25,10 @@ class DatePickerComponent {
             const date = this.getSelectedDate();
             apod.specificDate(date);
 
-            ga('send', 'event', {
-                eventCategory: 'Date Wheel',
-                eventAction: 'clicked',
-                eventLabel: date,
-                transport: 'beacon',
+            ga({
+                category: 'Date Wheel',
+                action: 'clicked',
+                label: date,
             });
         });
     }
