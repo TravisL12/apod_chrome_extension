@@ -7,7 +7,7 @@
   "scripts": {
     "start": "webpack-dev-server",
     "watch": "webpack --watch",
-    "build": "webpack -p"
+    "build": "webpack"
   },
   "dependencies": {
     "css-loader": "^0.28.7",
