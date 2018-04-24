@@ -18,6 +18,8 @@
     "reqwest": "^2.0.5",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.0",
+    "uglify-js": "^3.3.22",
+    "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^3.8.1",
     "webpack-dev-server": "^2.9.4"
   },
