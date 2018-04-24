@@ -10,7 +10,6 @@
     "build": "webpack -p"
   },
   "dependencies": {
-    "babel-minify-webpack-plugin": "^0.3.1",
     "css-loader": "^0.28.7",
     "extract-text-webpack-plugin": "^3.0.2",
     "html-webpack-plugin": "^2.30.1",
