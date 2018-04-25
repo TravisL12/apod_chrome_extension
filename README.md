@@ -4,7 +4,8 @@ I really love space and astronomy pictures and for about 10 or 15 years I've had
 
 So what did I do??? I built an extension to show me an APOD on every new tab I open!
 
-[Go download it now!](https://chrome.google.com/webstore/detail/apod-by-the-trav/aedpginojmhafbemcoelnppdcmlfjcdj)
+[Get the plug-in for Chrome!](https://chrome.google.com/webstore/detail/apod-by-the-trav/aedpginojmhafbemcoelnppdcmlfjcdj)
+[Get the plug-in for Firefox!](https://addons.mozilla.org/en-US/firefox/addon/apod-by-the-trav/)
 
 ## Description
 
@@ -24,3 +25,16 @@ Navigation shortcuts:
 Tab Shortcuts:
 * Toggle Explanation - `e`
 * Toggle Favorites - `f`
+
+## Reviewer notes for APOD By The Trav
+
+#### Firefox validation warnings
+
+- Firefox has issued a warning for the use of `innerHTML` which is performed one time to avoid more widespread use. This single use
+is done inside a wrapper element and has been reviewed to avoid becoming an injection vector.
+
+#### Dependencies
+
+- [reqwest](https://github.com/ded/reqwest) - This is strictly used for ajax calls to the NASA API. There are uses of `eval` in this package.
+
+- Additional dependencies are considered well known sources as they all pertain to the use of webpack (i.e. babel, uglifyJS, path, etc.)
