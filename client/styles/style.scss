@@ -138,26 +138,13 @@ ul, li {
     }
 
     .apod__top-sites {
-        float: left;
-        color: white;
-        opacity: 0.6;
-        transition: 0.1s opacity linear;
-
-        &:hover {
-            opacity: 1;
-        }
 
         ul {
             display: flex;
-            flex-wrap: wrap;
-            align-content: flex-start;
-            align-items: flex-start;
+            width: 450px;
+            justify-content: space-between;
 
             li {
-                margin-bottom: 10px;
-                & + li {
-                    margin-left: 10px;
-                }
                 a {
                     @include apod-button;
                     display: inline-block;

@@ -1,16 +1,29 @@
 {
   "manifest_version": 2,
-  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com; object-src 'self'",
 
   "name": "APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
-  "version": "2.0.1",
+  "version": "2.1",
 
   "browser_action": {
     "default_icon": "images/sun_icon.png",
     "default_title": "APOD by The Trav",
     "default_popup": "options.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["index.bundle.js", "options.bundle.js"]
+    }
+  ],
+
+  "applications": {
+    "gecko": {
+      "id": "travis.lawrence12@gmail.com",
+      "strict_min_version": "54.0"
+    }
   },
 
   "icons": {
@@ -21,5 +34,11 @@
     "newtab": "index.html"
   },
 
-  "permissions": ["topSites", "storage", "chrome://favicon/", "https://api.nasa.gov/*"]
+  "permissions": [
+    "topSites",
+    "storage",
+    "https://api.nasa.gov/*",
+    "https://www.googleapis.com/customsearch/*",
+    "https://www.google-analytics.com/collect"
+  ]
 }

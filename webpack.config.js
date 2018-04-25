@@ -3,6 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const Uglify = require('uglifyjs-webpack-plugin');
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/index.html',
@@ -29,7 +30,7 @@ module.exports = {
     options: './client/scripts/options.js',
   },
 
-  devtool: 'eval',
+  devtool: 'source-map',
   output: {
     path: path.resolve('dist'),
     filename: '[name].bundle.js',
@@ -39,20 +40,39 @@ module.exports = {
   },
   module: {
     loaders: [
-      { test: /\.js$/, loader: 'babel-loader', exclude: /node_modules/ },
-      { test: /\.jsx$/, loader: 'babel-loader', exclude: /node_modules/ },
+      {
+        test: /\.js$/,
+        loader: 'babel-loader',
+        exclude: /node_modules/,
+      },
     ],
     rules: [
       {
         test: /\.scss$/,
         use: ExtractTextPlugin.extract({
           fallback: 'style-loader',
-          use: ['css-loader', 'sass-loader'],
+          use: [
+            {
+              loader: 'css-loader',
+              options: {
+                minimize: true,
+                sourceMap: false,
+              },
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                minimize: true,
+                sourceMap: false,
+              },
+            },
+          ],
         }),
       },
     ],
   },
   plugins: [
+    new Uglify(),
     IndexHtmlWebpackPluginConfig,
     OptionsHtmlWebpackPluginConfig,
     CopyWebpackPluginConfig,

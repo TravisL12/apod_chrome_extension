@@ -6,22 +6,32 @@ export function randomizer(max, min) {
   return Math.round(Math.random() * (max - min) + min);
 }
 
-/* Zero pad dates */
+// Zero pad dates
 export function zeroPad(num) {
   num = '0' + num.toString();
   return num.slice(-2);
 }
 
-/* Query selector shortcut (mimic jQuery) */
+// Query selector shortcut (mimic jQuery)
 export function $(el) {
   return document.querySelector(el);
 }
 
-/* Alternative to innerHTML */
-export function htmlToElements(html) {
-  var template = document.createElement('template');
-  template.innerHTML = html;
-  return template.content.firstChild;
+// Alternative to innerHTML
+export function htmlToElements(html, wrap) {
+  const template = document.createElement('template');
+  let wrapElement = 'div';
+  if (typeof wrap === 'string') {
+    wrapElement = wrap;
+  }
+  template.innerHTML = wrap ? `<${wrapElement}>${html}</${wrapElement}>` : html;
+  return template.content.firstElementChild;
+}
+
+export function clearElement(el) {
+  while (el.firstChild) {
+    el.removeChild(el.firstChild);
+  }
 }
 
 export const monthNames = {
