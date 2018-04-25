@@ -8,13 +8,13 @@ function buildPopupDom(divName, data) {
 
   for (var i = 0, ie = data.length; i < ie; ++i) {
     const site = data[i];
-    const a = document.createElement('a');
     const li = document.createElement('li');
-    const img = new Image();
 
-    img.src = 'chrome://favicon/' + site.url;
+    const img = new Image();
+    img.src = `http://www.google.com/s2/favicons?domain_url=${site.url}`;
     img.classList.add('thumb-img');
 
+    const a = document.createElement('a');
     a.href = site.url;
     a.title = site.title;
 
