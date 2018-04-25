@@ -9,6 +9,7 @@ import NavigationButton from '../NavigationButton';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
+const apodImageVert = $('#apod-image-vertical-bg');
 const apodVideo = $('#apod-video iframe');
 
 // Initialize various elements
@@ -54,12 +55,37 @@ class Apod {
         this.getApod();
     }
 
-    fitToWindow(image) {
-        return image.width > window.innerWidth || image.height > window.innerHeight;
+    addFadedBackground() {
+        apodImageVert.style['background-image'] = 'url(' + this.loadedImage.src + ')';
+        apodImageVert.classList.remove('hide');
+    }
+
+    backgroundSize() {
+        const widthGTwindow = this.loadedImage.width > window.innerWidth;
+        const heightGTwindow = this.loadedImage.height > window.innerHeight;
+        const isLandscape = this.loadedImage.width >= this.loadedImage.height;
+
+        if (widthGTwindow || heightGTwindow) {
+            if (isLandscape) {
+                this.addFadedBackground();
+                return 'cover';
+            }
+            return 'auto';
+
+        }
+
+        if (
+            this.loadedImage.width / window.innerWidth > 0.8 ||
+            this.loadedImage.height / window.innerHeight > 0.8
+        ) {
+            this.addFadedBackground();
+        }
+        return 'auto';
     }
 
     _setLoadingView() {
         apodImage.style['background-image'] = '';
+        apodImageVert.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodVideo.src = '';
         $('.apod__header .description').classList.add('hide');
@@ -108,7 +134,7 @@ class Apod {
                 this.url = response.url;
                 this.hdurl = response.hdurl;
                 this.date = response.date;
-                this.description = response.explanation;
+                this.explanation = response.explanation;
                 this.errorCount = 0;
                 this.checkFavorite();
 
@@ -144,18 +170,13 @@ class Apod {
     checkFavorite() {
         const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
 
-        if (isFavorite) {
-            favoriteButtonShow.classList.remove('hide');
-            favoriteButtonHide.classList.add('hide');
-        } else {
-            favoriteButtonShow.classList.add('hide');
-            favoriteButtonHide.classList.remove('hide');
-        }
+        favoriteButtonShow.classList.toggle('hide', !isFavorite);
+        favoriteButtonHide.classList.toggle('hide', isFavorite);
     }
 
     highlightResults(result, index) {
         const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.description = this.description.replace(
+        this.explanation = this.explanation.replace(
             re,
             `<span class="keyword keyword-${index}">$1</span>`,
         );
@@ -180,7 +201,7 @@ class Apod {
     preLoadImage(forceHighDef = false) {
         const delayForHdLoad = 3000;
         let Img = new Image();
-        let quality = {
+        const quality = {
             text: 'HD',
             title: 'High Definition Image',
         };
@@ -217,18 +238,17 @@ class Apod {
 
     apodImage(imgQuality) {
         const imgQualityEl = $('#img-quality');
+        apodImage.classList = 'apod__image';
         this.isRequestInProgress = false;
         imgQualityEl.classList.remove('spin-loader');
 
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
-
-        let bgSize = this.fitToWindow(this.loadedImage) ? 'contain' : 'auto';
-        apodImage.style['background-size'] = bgSize;
+        apodImage.classList.add(`bg-${this.backgroundSize()}`);
 
         imgQualityEl.textContent = imgQuality.text;
         imgQualityEl.setAttribute('title', imgQuality.title);
 
-        if (imgQuality.text != 'HD') {
+        if (imgQuality.text !== 'HD') {
             imgQualityEl.classList.add('add-hd');
             const forceLoadHighDefImg = e => {
                 imgQualityEl.removeEventListener('click', forceLoadHighDefImg);
@@ -255,7 +275,7 @@ class Apod {
     apodDescription() {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(this.title + ' ' + this.description);
+        this.wouldYouLikeToKnowMore(this.title + ' ' + this.explanation);
 
         if (!DateManager.checkTodayGreater(this.date)) {
             console.log(date + ' is in the future!');

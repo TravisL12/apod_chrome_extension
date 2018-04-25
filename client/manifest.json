@@ -37,6 +37,7 @@
   "permissions": [
     "topSites",
     "storage",
+    "chrome://favicon/",
     "https://api.nasa.gov/*",
     "https://www.googleapis.com/customsearch/*",
     "https://www.google-analytics.com/collect"

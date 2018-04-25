@@ -38,6 +38,28 @@ ul, li {
     display: inline-block;
 }
 
+.bg-contain {
+    background-size: contain;
+}
+
+.bg-cover {
+    background-size: cover;
+}
+
+.bg-auto {
+    background-size: auto;
+}
+
+.cover-vertical {
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background-position: 50%;
+    background-repeat: no-repeat;
+}
+
 .apod {
     width: 100%;
     height: 100%;
@@ -138,24 +160,13 @@ ul, li {
     }
 
     .apod__top-sites {
-        float: left;
-        color: white;
-        // opacity: 0.6;
-        // transition: 0.1s opacity linear;
-
-        // &:hover {
-        //     opacity: 1;
-        // }
 
         ul {
             display: flex;
-            flex-wrap: wrap;
-            flex-direction: column;
-            align-content: flex-start;
-            align-items: flex-start;
+            justify-content: space-between;
+            width: 450px;
 
             li {
-                margin-bottom: 10px;
                 a {
                     @include apod-button;
                     display: inline-block;
@@ -191,7 +202,6 @@ ul, li {
     background-position: center center;
     background-repeat: no-repeat;
 }
-
 
 .keyword {
     color: lightblue;

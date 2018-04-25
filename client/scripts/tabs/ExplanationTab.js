@@ -48,7 +48,7 @@ export default class ExplanationTab extends DrawerTab {
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
         apodHiRes.setAttribute('href', this.apod.hdurl);
         apodLowRes.setAttribute('href', this.apod.url);
-        apodDescription.appendChild(htmlToElements(this.apod.description, true));
+        apodDescription.appendChild(htmlToElements(this.apod.explanation, true));
 
         this.setTabListeners();
     }
