@@ -3,7 +3,7 @@ const GA_TRACKING_ID = 'UA-91390132-1';
 export default function(event) {
   const xhr = new XMLHttpRequest();
   const url = "http://www.google-analytics.com/collect";
-  const params = "v=1";
+  let params = "v=1";
   params += `&tid=${GA_TRACKING_ID}`;
   params += `&cid=${'55555'}`;
   params += `&t=${"event"}`;
