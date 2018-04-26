@@ -9,7 +9,6 @@
  */
 
 import Apod from './scripts/components/Apod';
-import DatePickerComponent from './scripts/components/DatePicker';
 import Drawer from './scripts/components/Drawer';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
@@ -20,7 +19,6 @@ import { SunLoader, MoonLoader } from './scripts/SetupLoading';
 import './styles/style.scss';
 
 // Initialize apod and date objects
-export let apodDatePicker = null;
 export const apod = new Apod();
 export const loader = new [SunLoader, MoonLoader][(randomizer(1))]();
 
@@ -39,18 +37,7 @@ $('#apod-loading').appendChild(
 );
 
 // Fetch chrome storage settings from options and load
-chrome.storage.sync.get(['apodType', 'showDatePicker'], items => {
-  if (items.showDatePicker) {
-    $('#apod-date-picker').classList.remove('hide');
-    apodDatePicker = new DatePickerComponent('#apod-date-picker');
-    apod.showDatePicker = true;
-  }
-  let apodOptionType = items.apodType || 'today';
+chrome.storage.sync.get(['apodType'], items => {
+  const apodOptionType = items.apodType || 'today';
   apodOptionType == 'today' ? apod.current() : apod.random();
-});
-
-chrome.storage.onChanged.addListener((changes, name) => {
-  if (changes.showDatePicker) {
-    window.location.reload();
-  }
 });

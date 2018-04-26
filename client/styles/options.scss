@@ -57,7 +57,7 @@ body {
             }
             input[type='radio']:checked + label {
                 cursor: default;
-                background: lighten(yellow, 10%);
+                background: lighten($highlight-blue, 10%);
                 color: $gray;
             }
         }

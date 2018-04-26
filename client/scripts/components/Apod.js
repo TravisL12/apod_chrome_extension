@@ -4,13 +4,14 @@ import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
 import { zeroPad } from '../utilities';
-import { apodDatePicker, drawer, favoritesTab } from '../../index.js';
+import { drawer, favoritesTab } from '../../index.js';
 import NavigationButton from '../NavigationButton';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
+const apodVideo = $('#apod-video');
 const apodImageVert = $('#apod-image-vertical-bg');
-const apodVideo = $('#apod-video iframe');
+const apodVideoFrame = $('#apod-video iframe');
 
 // Initialize various elements
 const apodTitle = $('#apod-title');
@@ -18,6 +19,8 @@ const apodDate = $('#apod-date');
 const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 const apodError = $('#apod-error');
+const imgQualityEl = $('#img-quality');
+const loadHiResEl = $('.nav-buttons #show-hi-res');
 
 // Initialize button objects
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
@@ -30,7 +33,6 @@ const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 class Apod {
     constructor() {
-        this.showDatePicker = false;
         this.errorCount = 0;
         this.errorLimit = 3;
     }
@@ -64,19 +66,25 @@ class Apod {
         const widthGTwindow = this.loadedImage.width > window.innerWidth;
         const heightGTwindow = this.loadedImage.height > window.innerHeight;
         const isLandscape = this.loadedImage.width >= this.loadedImage.height;
+        const isPortrait = !isLandscape;
 
         if (widthGTwindow || heightGTwindow) {
-            if (isLandscape) {
+            if (isLandscape && heightGTwindow) {
                 this.addFadedBackground();
                 return 'cover';
             }
-            return 'auto';
 
+            if (isPortrait) {
+                this.addFadedBackground();
+                return 'contain';
+            }
+
+            return 'auto';
         }
 
         if (
-            this.loadedImage.width / window.innerWidth > 0.8 ||
-            this.loadedImage.height / window.innerHeight > 0.8
+            this.loadedImage.width / window.innerWidth > 0.5 ||
+            this.loadedImage.height / window.innerHeight > 0.5
         ) {
             this.addFadedBackground();
         }
@@ -85,12 +93,18 @@ class Apod {
 
     _setLoadingView() {
         apodImage.style['background-image'] = '';
-        apodImageVert.style['background-image'] = '';
         apodImage.style['background-size'] = '';
-        apodVideo.src = '';
+        apodImage.classList.add('hide');
+
+        apodImageVert.style['background-image'] = '';
+        apodVideo.classList.add('hide');
+        apodVideoFrame.src = '';
+
         $('.apod__header .description').classList.add('hide');
+        loadHiResEl.classList.add('hide');
         apodLoading.classList.remove('hide');
         clearElement(apodKnowMore);
+
         drawer.closeDrawer();
         drawer.clearKnowMoreTabs();
     }
@@ -138,17 +152,13 @@ class Apod {
                 this.errorCount = 0;
                 this.checkFavorite();
 
-                if (this.showDatePicker) {
-                    apodDatePicker.update(this.date);
-                }
-
                 if (response.media_type === 'image') {
-                    apodImage.style.display = 'block';
-                    $('#apod-video').style.display = 'none';
+                    apodImage.classList.remove('hide');
+                    apodVideo.classList.add('hide');
                     this.preLoadImage();
                 } else if (response.media_type === 'video') {
-                    apodImage.style.display = 'none';
-                    $('#apod-video').style.display = 'inline-block';
+                    apodImage.classList.add('hide');
+                    apodVideo.classList.remove('hide');
                     this.apodVideo();
                 } else {
                     this.random();
@@ -200,13 +210,13 @@ class Apod {
 
     preLoadImage(forceHighDef = false) {
         const delayForHdLoad = 3000;
-        let Img = new Image();
+        const Img = new Image();
         const quality = {
             text: 'HD',
             title: 'High Definition Image',
         };
 
-        if (!/(jpg|jpeg|png)$/.test(this.hdurl)) {
+        if (!/(jpg|jpeg|png|gif)$/.test(this.hdurl)) {
             Img.src = this.url;
             quality.text = 'SD';
             quality.title = 'Click to Show HD Image';
@@ -214,7 +224,7 @@ class Apod {
             Img.src = this.hdurl;
         }
 
-        let timeout = setTimeout(() => {
+        const timeout = setTimeout(() => {
             if (!Img.complete && !forceHighDef) {
                 Img.src = this.url;
                 quality.text = 'SD';
@@ -237,9 +247,8 @@ class Apod {
     }
 
     apodImage(imgQuality) {
-        const imgQualityEl = $('#img-quality');
-        apodImage.classList = 'apod__image';
         this.isRequestInProgress = false;
+        apodImage.classList = 'apod__image';
         imgQualityEl.classList.remove('spin-loader');
 
         apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
@@ -251,6 +260,8 @@ class Apod {
         if (imgQuality.text !== 'HD') {
             imgQualityEl.classList.add('add-hd');
             const forceLoadHighDefImg = e => {
+                loadHiResEl.classList.add('hide');
+                loadHiResEl.removeEventListener('click', forceLoadHighDefImg);
                 imgQualityEl.removeEventListener('click', forceLoadHighDefImg);
                 imgQualityEl.textContent = '';
                 imgQualityEl.classList.add('spin-loader');
@@ -258,6 +269,8 @@ class Apod {
                 this.preLoadImage(true);
             };
             imgQualityEl.addEventListener('click', forceLoadHighDefImg);
+            loadHiResEl.classList.remove('hide');
+            loadHiResEl.addEventListener('click', forceLoadHighDefImg);
         }
 
         this.apodDescription();
@@ -266,9 +279,9 @@ class Apod {
     apodVideo() {
         this.isRequestInProgress = false;
         this.url = this.url.replace(';autoplay=1', '');
-        let url = new URL(this.url);
+        const url = new URL(this.url);
         url.search = 'autopause=1&autoplay=0';
-        apodVideo.src = url.href;
+        apodVideoFrame.src = url.href;
         this.apodDescription();
     }
 

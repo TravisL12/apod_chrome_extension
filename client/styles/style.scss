@@ -1,6 +1,5 @@
 @import 'variables';
 @import 'drawer';
-@import 'date_wheel';
 
 .hide {
     @extend %hide;
@@ -12,10 +11,11 @@
 }
 
 .spin-loader {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     background: url('/images/ajax-loader-black.gif');
     background-size: contain;
+    background-repeat: no-repeat;
 }
 
 h1 {
@@ -75,12 +75,13 @@ ul, li {
 
 .apod__header {
     position: absolute;
-    z-index: 1000;
-    top: 0;
+    top: 15px;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
-    height: 60px;
-    padding: 10px;
     box-sizing: border-box;
+    padding: 0 20px;
+    z-index: 1000;
 
     h1 {
         @include helvetica-neue-light;
@@ -96,16 +97,17 @@ ul, li {
 
     .description {
         @include helvetica-neue-light;
-        position: absolute;
-        right: 20px;
-        top: 0;
-        padding: 10px;
         width: auto;
-        min-width: 305px;
+        min-width: 400px;
         box-sizing: border-box;
-        height: auto;
         color: white;
-        transition: 0.2s opacity ease-out;
+        padding: 10px 20px;
+        transition: 0.2s ease-out opacity,
+        0.2s linear background-color;
+
+        &:hover {
+            background-color: rgba(0,0,0,0.6);
+        }
 
         .title {
             position: relative;
@@ -137,10 +139,8 @@ ul, li {
 
                 &.current,
                 span.favorite {
-                    color: yellow;
-                    &:hover {
-                        color: yellow;
-                    }
+                    color: $highlight-blue;
+                    font-weight: 600;
                 }
 
                 span.hide {
@@ -160,7 +160,7 @@ ul, li {
     }
 
     .apod__top-sites {
-
+        padding-top: 10px;
         ul {
             display: flex;
             justify-content: space-between;
@@ -169,13 +169,17 @@ ul, li {
             li {
                 a {
                     @include apod-button;
+                    background-color: transparent;
                     display: inline-block;
-                    padding: 10px;
+                    padding: 6px;
 
                     .thumb-img{
                         width: 16px;
                         height: 16px;
                         display: block;
+                    }
+                    &:hover {
+                        background-color: $light-gray;
                     }
                 }
             }
@@ -185,17 +189,18 @@ ul, li {
 
 .apod__image,
 .apod__video {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    display: none;
-}
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.apod__video {
-    text-align: center;
-    padding-top: 20vh;
-    box-sizing: border-box;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+
+    &.hide {
+        @extend %hide-display;
+    }
 }
 
 .apod__image {
@@ -204,7 +209,7 @@ ul, li {
 }
 
 .keyword {
-    color: lightblue;
+    color: $highlight-blue;
     font-weight: bold;
     cursor: pointer;
     &:hover {
