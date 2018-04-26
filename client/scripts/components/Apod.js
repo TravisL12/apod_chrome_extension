@@ -33,6 +33,7 @@ const favoriteButtonHide = $('#add-favorite .not-favorite');
 
 class Apod {
     constructor() {
+        this.hiResOnly = false;
         this.errorCount = 0;
         this.errorLimit = 3;
     }
@@ -155,7 +156,7 @@ class Apod {
                 if (response.media_type === 'image') {
                     apodImage.classList.remove('hide');
                     apodVideo.classList.add('hide');
-                    this.preLoadImage();
+                    this.preLoadImage(this.hiResOnly);
                 } else if (response.media_type === 'video') {
                     apodImage.classList.add('hide');
                     apodVideo.classList.remove('hide');

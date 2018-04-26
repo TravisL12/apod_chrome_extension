@@ -37,7 +37,16 @@ $('#apod-loading').appendChild(
 );
 
 // Fetch chrome storage settings from options and load
-chrome.storage.sync.get(['apodType'], items => {
+chrome.storage.sync.get(['apodType', 'hiResOnly'], items => {
+  if (items.hiResOnly) {
+    apod.hiResOnly = true;
+  }
   const apodOptionType = items.apodType || 'today';
   apodOptionType == 'today' ? apod.current() : apod.random();
+});
+
+chrome.storage.onChanged.addListener((changes, name) => {
+  if (changes.hiResOnly) {
+    window.location.reload();
+  }
 });
