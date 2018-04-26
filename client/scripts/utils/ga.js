@@ -6,10 +6,14 @@ export default function(event) {
   const data = {
     v: 1,
     tid: GA_TRACKING_ID,
-    t: event,
+    t: 'pageview',
     ec: event.category,
     ea: event.action,
     el: event.label,
+    dl: 'chrome-extension://aedpginojmhafbemcoelnppdcmlfjcdj/index.html',
+    dp: 'apod_trav.html',
+    ul: 'en-us',
+    dt: 'APOD by The Trav'
   };
 
   reqwest({
