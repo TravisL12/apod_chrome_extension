@@ -278,13 +278,15 @@ class Apod {
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
         this.wouldYouLikeToKnowMore(this.title + ' ' + this.explanation);
 
-        if (!DateManager.checkTodayGreater(this.date)) {
+        if (!DateManager.isInPast(this.date)) {
             console.log(date + ' is in the future!');
             this.isRequestInProgress = false;
             this.current();
-        } else if (DateManager.checkDateEqual(this.date)) {
+        } else if (DateManager.isToday(this.date)) {
             apodCurrent.el.classList.add('current');
+            apodNext.el.classList.add('hide');
         } else {
+            apodNext.el.classList.remove('hide');
             apodCurrent.el.classList.remove('current');
         }
 

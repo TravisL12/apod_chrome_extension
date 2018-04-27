@@ -124,6 +124,7 @@ ul, li {
         .nav-buttons {
             float: right;
             width: $description-width;
+
             li {
                 margin-right: 15px;
                 color: $light-gray;
@@ -185,7 +186,7 @@ ul, li {
                 .delete-top-site {
                     @include flexCenter;
                     position: absolute;
-                    bottom: -18px;
+                    top: -20px;
                     opacity: 0;
                     color: $light-gray;
                     font-size: 18px;
