@@ -1,8 +1,15 @@
-import { $, htmlToElements } from '../utilities';
+import { $, htmlToElements, clearElement } from '../utilities';
+
+function deleteTopSite (url) {
+  chrome.history.deleteUrl({url: url}, () => {
+    window.setTimeout(buildTypedUrlList, 250); // race condition between history and topSites, weird
+  });
+}
 
 function buildPopupDom(data) {
   const popupDiv = $('#topSites');
-
+  clearElement(popupDiv);
+  
   const ul = document.createElement('ul');
   popupDiv.appendChild(ul);
 
@@ -16,6 +23,10 @@ function buildPopupDom(data) {
           </a>
           <div class='delete-top-site' title="Don't show on this page">&times;</div>
         </li>`);
+
+    topSiteList.querySelector('.delete-top-site').addEventListener('click', (e) => {
+      deleteTopSite(e.target.previousElementSibling.href);
+    });
 
     ul.appendChild(topSiteList);
   }
