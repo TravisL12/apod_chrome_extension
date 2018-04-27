@@ -66,21 +66,11 @@ class Apod {
     backgroundSize() {
         const widthGTwindow = this.loadedImage.width > window.innerWidth;
         const heightGTwindow = this.loadedImage.height > window.innerHeight;
-        const isLandscape = this.loadedImage.width >= this.loadedImage.height;
-        const isPortrait = !isLandscape;
+        const aspectRatio = this.loadedImage.width / this.loadedImage.height;
 
         if (widthGTwindow || heightGTwindow) {
-            if (isLandscape && heightGTwindow) {
-                this.addFadedBackground();
-                return 'cover';
-            }
-
-            if (isPortrait) {
-                this.addFadedBackground();
-                return 'contain';
-            }
-
-            return 'auto';
+            this.addFadedBackground();
+            return aspectRatio >= 1.3 ? 'cover' : 'contain';
         }
 
         if (
@@ -89,6 +79,7 @@ class Apod {
         ) {
             this.addFadedBackground();
         }
+
         return 'auto';
     }
 
@@ -217,7 +208,7 @@ class Apod {
             title: 'High Definition Image',
         };
 
-        if (!/(jpg|jpeg|png|gif)$/.test(this.hdurl)) {
+        if (!/(jpg|jpeg|png|gif)$/i.test(this.hdurl)) {
             Img.src = this.url;
             quality.text = 'SD';
             quality.title = 'Click to Show HD Image';
@@ -259,17 +250,13 @@ class Apod {
         imgQualityEl.setAttribute('title', imgQuality.title);
 
         if (imgQuality.text !== 'HD') {
-            imgQualityEl.classList.add('add-hd');
             const forceLoadHighDefImg = e => {
                 loadHiResEl.classList.add('hide');
                 loadHiResEl.removeEventListener('click', forceLoadHighDefImg);
-                imgQualityEl.removeEventListener('click', forceLoadHighDefImg);
                 imgQualityEl.textContent = '';
                 imgQualityEl.classList.add('spin-loader');
-                imgQualityEl.classList.remove('add-hd');
                 this.preLoadImage(true);
             };
-            imgQualityEl.addEventListener('click', forceLoadHighDefImg);
             loadHiResEl.classList.remove('hide');
             loadHiResEl.addEventListener('click', forceLoadHighDefImg);
         }
