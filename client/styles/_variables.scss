@@ -1,5 +1,6 @@
 $gray: rgba(#333333, 0.8);
 $light-gray: rgba(#C7C7C7, 0.8);
+$highlight-blue: lightblue;
 
 @mixin helvetica-neue-light($weight:300) {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
@@ -9,7 +10,7 @@ $light-gray: rgba(#C7C7C7, 0.8);
 @mixin apod-button {
     background-color: $gray;
     color: $light-gray;
-    transition: 0.2s linear background-color;
+    transition: 0.1s linear background-color;
 
     &.hover,
     &:hover {
@@ -26,6 +27,12 @@ $light-gray: rgba(#C7C7C7, 0.8);
             transform-origin: bottom;
         }
     }
+}
+
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 %hide {

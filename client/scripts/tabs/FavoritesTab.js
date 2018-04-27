@@ -69,23 +69,17 @@ export default class FavoritesTab extends DrawerTab {
             const favorite = this.favorites[date];
             const backgroundImage = 'background-image: url("' + favorite.imgUrl + '")';
 
-            const listEl = document.createElement('li');
-            listEl.className = 'favorite';
-
-            listEl.appendChild(
-                htmlToElements(
-                    `
-                <div class='favorite__image'>
-                    <div class='favorite__image-image' style='${backgroundImage}'></div>
-                </div>
-                <div class='favorite__title'>
-                    <p class='favorite__title-date'>${DateManager.prettyDateFormat(date)}</p>
-                    <p class='favorite__title-title'>${this.favorites[date].title}</p>
-                </div>
-                <div class='remove-favorite'>Remove</div>
-            `,
-                    true,
-                ),
+            const listEl = htmlToElements(
+                `<li class='favorite'>
+                    <div class='favorite__image'>
+                        <div class='favorite__image-image' style='${backgroundImage}'></div>
+                    </div>
+                    <div class='favorite__title'>
+                        <p class='favorite__title-date'>${DateManager.prettyDateFormat(date)}</p>
+                        <p class='favorite__title-title'>${this.favorites[date].title}</p>
+                    </div>
+                    <div class='remove-favorite'>Remove</div>
+                </li>`,
             );
 
             listEl.querySelector('.remove-favorite').addEventListener('click', () => {

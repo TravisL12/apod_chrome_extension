@@ -5,7 +5,7 @@
 
     <body>
         <div class='apod-options'>
-            <h3>Select which APOD type you would like to see on the new tab screen.</h3>
+            <h3>APOD By The Trav Options</h3>
             <form id='choose-apod'>
 
                 <div class='option'>
@@ -26,11 +26,14 @@
 
                 <div class='option'>
                     <div class='info'>
-                        Show Date Picker
-                        <p class='sub-info'>Use mousewheel to scroll dates</p>
+                        <span>High Resolution Images Only</span>
+                        <div class='sub-info'>
+                            When turned off, the standard res image
+                            is loaded if the HD image doesn't load within 3 seconds
+                        </div>
                     </div>
                     <div class='inputs'>
-                        <input type='checkbox' id='date-picker-option' name='date-picker'>
+                        <input type='checkbox' id='high-resolution-images-only' name='high-res-only'>
                     </div>
                 </div>
             </form>

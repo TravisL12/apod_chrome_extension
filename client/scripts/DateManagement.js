@@ -52,16 +52,16 @@ export default {
     return _hyphenDateFormat(date);
   },
 
-  checkDateEqual(date) {
+  isToday(date) {
     return new Date(_getToday()).getTime() === _actualDate(date).getTime();
   },
 
-  checkTodayGreater(date) {
+  isInPast(date) {
     return _actualDate(_getToday()).getTime() >= _actualDate(date).getTime();
   },
 
   isDateValid(date) {
     date = date || _getToday();
-    return this.checkTodayGreater(date);
+    return this.isInPast(date);
   },
 };
