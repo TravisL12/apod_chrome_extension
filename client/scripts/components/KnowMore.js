@@ -108,9 +108,10 @@ class KnowMoreComponent {
     }
 
     createTab(result, index) {
-        const el = document.createElement('div');
-        el.className = 'tab';
-        el.id = this.buildLinkId(result);
+        const el = htmlToElements(`
+            <div class='tab' id='${this.buildLinkId(result)}'>
+                ${imageDictionary[result.category]()} ${result.title}
+            </div>`);
 
         const googleSearch = e => {
             ga({ category: 'Know More', action: 'clicked', label: result.query });
@@ -132,9 +133,6 @@ class KnowMoreComponent {
                 });
         };
 
-        el.appendChild(
-            htmlToElements(`${imageDictionary[result.category]()} ${result.title}`, true),
-        );
         el.addEventListener('click', googleSearch);
         $('#know-more-tabs').appendChild(el);
 
