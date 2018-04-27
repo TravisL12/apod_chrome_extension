@@ -164,6 +164,11 @@ ul, li {
             width: 450px;
 
             li {
+                position: relative;
+                @include flexCenter;
+                flex-direction: column;
+                cursor: pointer;
+
                 a {
                     @include apod-button;
                     background-color: transparent;
@@ -175,8 +180,28 @@ ul, li {
                         height: 16px;
                         display: block;
                     }
+                }
+
+                .delete-top-site {
+                    @include flexCenter;
+                    position: absolute;
+                    bottom: -18px;
+                    opacity: 0;
+                    color: $light-gray;
+                    font-size: 18px;
+                    transition: 0.15s linear opacity;
+                    font-weight: 100;
                     &:hover {
+                        color: red;
+                        font-weight: 600;
+                    }
+                }
+                &:hover {
+                    a {
                         background-color: $light-gray;
+                    }
+                    .delete-top-site {
+                        opacity: 1;
                     }
                 }
             }
@@ -186,10 +211,7 @@ ul, li {
 
 .apod__image,
 .apod__video {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
+    @include flexCenter;
     position: absolute;
     width: 100%;
     height: 100%;

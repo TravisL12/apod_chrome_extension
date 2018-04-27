@@ -29,6 +29,12 @@ $highlight-blue: lightblue;
     }
 }
 
+@mixin flexCenter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 %hide {
     opacity: 0;
     height: 0;

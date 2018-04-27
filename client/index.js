@@ -29,7 +29,7 @@ export const favoritesTab = new FavoritesTab('#tab-favorites');
 
 // Create thumbnails and links for Top Sites
 document.addEventListener('DOMContentLoaded', function() {
-  topSites('topSites');
+  topSites();
 });
 
 $('#apod-loading').appendChild(
