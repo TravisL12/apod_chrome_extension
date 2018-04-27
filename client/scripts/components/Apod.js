@@ -20,13 +20,13 @@ const apodKnowMore = $('#know-more-tabs');
 const apodLoading = $('#apod-loading');
 const apodError = $('#apod-error');
 const imgQualityEl = $('#img-quality');
-const loadHiResEl = $('.nav-buttons #show-hi-res');
 
 // Initialize button objects
 const apodRandom = new NavigationButton('#apod-random', 82, 'random');
 const apodCurrent = new NavigationButton('#apod-current', 84, 'current');
 const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
 const apodNext = new NavigationButton('#apod-next', 75, 'next');
+const loadHiResEl = $('.nav-buttons #show-hi-res');
 
 const favoriteButtonShow = $('#add-favorite .favorite');
 const favoriteButtonHide = $('#add-favorite .not-favorite');

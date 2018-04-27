@@ -29,5 +29,4 @@ function buildTypedUrlList(divName) {
     buildPopupDom(divName, data.slice(0, 10));
   });
 }
-
 export default buildTypedUrlList;
