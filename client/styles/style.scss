@@ -130,6 +130,7 @@ ul, li {
                 color: $light-gray;
                 transition: 0.2s linear background-color;
                 cursor: pointer;
+                font-size: 12px;
 
                 &.hide {
                     @extend %hide-display;
