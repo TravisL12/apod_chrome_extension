@@ -14,13 +14,13 @@ import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
 import topSites from './scripts/utils/buildTopSites';
 import { $, randomizer, htmlToElements } from './scripts/utilities';
-import { SunLoader, MoonLoader } from './scripts/SetupLoading';
+import { SunLoader, MoonLoader, CubeLoader } from './scripts/SetupLoading';
 
 import './styles/style.scss';
 
 // Initialize apod and date objects
 export const apod = new Apod();
-export const loader = new [SunLoader, MoonLoader][(randomizer(1))]();
+export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
 
 // Initialize drawer objects
 export const drawer = new Drawer('#apod-drawer');
@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 $('#apod-loading').appendChild(
-  htmlToElements(`<div class='apod__loading' id='apod-loading'>${loader.render()}</div>`),
+  htmlToElements(`${loader.render()}`),
 );
 
 // Fetch chrome storage settings from options and load

@@ -8,6 +8,7 @@
 .apod__loading {
     @include sun-loader;
     @include moon-loader;
+    @import 'apod_loading_cube';
 }
 
 .spin-loader {
