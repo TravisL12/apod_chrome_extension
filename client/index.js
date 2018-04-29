@@ -40,7 +40,5 @@ chrome.storage.sync.get(['apodType', 'hiResOnly'], items => {
 });
 
 chrome.storage.onChanged.addListener((changes, name) => {
-  if (changes.hiResOnly) {
-    window.location.reload();
-  }
+  apod.hiResOnly = changes.hiResOnly.newValue;
 });
