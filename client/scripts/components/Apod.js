@@ -5,6 +5,7 @@ import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
 import { drawer } from '../../index.js';
 import NavigationButton from '../NavigationButton';
+import History from './History';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
@@ -34,6 +35,7 @@ class Apod {
         this.errorLimit = 3;
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
+        this.history = new History();
     }
 
     specificDate(date) {
@@ -138,6 +140,8 @@ class Apod {
                 this.explanation = response.explanation;
                 this.errorCount = 0;
                 this.populateTabs();
+
+                this.history.add(this.date);
 
                 const isMediaImage = response.media_type === 'image';
                 apodImage.classList.toggle('hide', !isMediaImage);
