@@ -31,6 +31,8 @@ body {
     background: black;
     margin: 0;
     overflow: hidden;
+    width: 100%;
+    height: 100%;
 }
 
 ul, li {
@@ -59,12 +61,6 @@ ul, li {
     width: 100%;
     background-position: 50%;
     background-repeat: no-repeat;
-}
-
-.apod {
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
 }
 
 .apod__error {

@@ -24,17 +24,20 @@ export default class FavoritesTab extends DrawerTab {
         });
     }
 
-    get favoriteDates() {
-        return Object.keys(this.favorites);
+    checkFavorite() {
+        const favoriteDates = Object.keys(this.favorites);
+        const isFavorite = favoriteDates.indexOf(this.date) > 0;
+        $('#add-favorite .favorite').classList.toggle('hide', !isFavorite);
+        $('#add-favorite .not-favorite').classList.toggle('hide', isFavorite);
     }
 
     save() {
-        if (this.favorites[this.apod.date]) {
-            delete this.favorites[this.apod.date];
+        if (this.favorites[this.date]) {
+            delete this.favorites[this.date];
         } else {
-            this.favorites[this.apod.date] = {
-                title: this.apod.title,
-                imgUrl: this.apod.url,
+            this.favorites[this.date] = {
+                title: this.title,
+                imgUrl: this.url,
             };
         }
 
@@ -42,7 +45,7 @@ export default class FavoritesTab extends DrawerTab {
             apodFavorites: this.favorites,
         });
 
-        this.apod.checkFavorite();
+        this.checkFavorite();
 
         this.load();
 

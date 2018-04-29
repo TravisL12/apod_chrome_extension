@@ -3,9 +3,11 @@ import { $, clearElement } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
-import { drawer, favoritesTab } from '../../index.js';
+import { drawer } from '../../index.js';
 import NavigationButton from '../NavigationButton';
+
 import ExplanationTab from '../tabs/ExplanationTab';
+import FavoritesTab from '../tabs/FavoritesTab';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
@@ -28,9 +30,6 @@ const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
 const apodNext = new NavigationButton('#apod-next', 75, 'next');
 const loadHiResEl = $('.nav-buttons #show-hi-res');
 
-const favoriteButtonShow = $('#add-favorite .favorite');
-const favoriteButtonHide = $('#add-favorite .not-favorite');
-
 class Apod {
     constructor() {
         this.hiResOnly = false;
@@ -39,6 +38,7 @@ class Apod {
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
         this.explanationTab = new ExplanationTab('#tab-explanation');
+        this.favoritesTab = new FavoritesTab('#tab-favorites');
     }
 
     random() {
@@ -143,14 +143,7 @@ class Apod {
                 this.date = response.date;
                 this.explanation = response.explanation;
                 this.errorCount = 0;
-                this.checkFavorite();
-
-                this.explanationTab.urls = {
-                    hdurl: this.hdurl,
-                    url: this.url
-                };
-                this.explanationTab.explanation = this.explanation;
-                this.explanationTab.date = this.date;
+                this.populateTabs();
 
                 const isMediaImage = response.media_type === 'image';
                 apodImage.classList.toggle('hide', !isMediaImage);
@@ -177,10 +170,19 @@ class Apod {
         );
     }
 
-    checkFavorite() {
-        const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
-        favoriteButtonShow.classList.toggle('hide', !isFavorite);
-        favoriteButtonHide.classList.toggle('hide', isFavorite);
+    populateTabs() {
+        this.explanationTab.urls = {
+            hdurl: this.hdurl,
+            url: this.url
+        };
+        this.explanationTab.explanation = this.explanation;
+        this.explanationTab.date = this.date;
+
+        this.favoritesTab.date = this.date;
+        this.favoritesTab.title = this.title;
+        this.favoritesTab.url = this.url;
+
+        this.favoritesTab.checkFavorite();
     }
 
     wouldYouLikeToKnowMore(text) {
