@@ -6,9 +6,6 @@ import KnowMoreComponent from './KnowMore';
 import { drawer } from '../../index.js';
 import NavigationButton from '../NavigationButton';
 
-import ExplanationTab from '../tabs/ExplanationTab';
-import FavoritesTab from '../tabs/FavoritesTab';
-
 // Initialize image & video elements
 const apodImage = $('#apod-image');
 const apodBgImage = $('#apod-image-vertical-bg');
@@ -37,16 +34,14 @@ class Apod {
         this.errorLimit = 3;
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
-        this.explanationTab = new ExplanationTab('#tab-explanation');
-        this.favoritesTab = new FavoritesTab('#tab-favorites');
-    }
-
-    random() {
-        this.getApod(DateManager.randomDate());
     }
 
     specificDate(date) {
         this.getApod(date);
+    }
+
+    random() {
+        this.getApod(DateManager.randomDate());
     }
 
     previous() {
@@ -110,7 +105,6 @@ class Apod {
         }
 
         this.isRequestInProgress = true;
-
         return this.isRequestInProgress;
     }
 
@@ -171,18 +165,18 @@ class Apod {
     }
 
     populateTabs() {
-        this.explanationTab.urls = {
+        drawer.tabs[0].urls = {
             hdurl: this.hdurl,
             url: this.url
         };
-        this.explanationTab.explanation = this.explanation;
-        this.explanationTab.date = this.date;
+        drawer.tabs[0].explanation = this.explanation;
+        drawer.tabs[0].date = this.date;
 
-        this.favoritesTab.date = this.date;
-        this.favoritesTab.title = this.title;
-        this.favoritesTab.url = this.url;
-        this.favoritesTab.specificDate = this.specificDate.bind(this);
-        this.favoritesTab.checkFavorite();
+        drawer.tabs[1].date = this.date;
+        drawer.tabs[1].title = this.title;
+        drawer.tabs[1].url = this.url;
+        drawer.tabs[1].specificDate = this.specificDate.bind(this);
+        drawer.tabs[1].checkFavorite();
     }
 
     wouldYouLikeToKnowMore(text) {
@@ -195,7 +189,7 @@ class Apod {
                 return;
             }
             for (let i in results) {
-                this.explanationTab.highlightKeywords(results[i].title, i);
+                drawer.tabs[0].highlightKeywords(results[i].title, i);
                 knowMore.createTab(results[i], i);
             }
         }

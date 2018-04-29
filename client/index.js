@@ -13,11 +13,15 @@ import Drawer from './scripts/components/Drawer';
 import topSites from './scripts/utils/buildTopSites';
 import { $, randomizer, htmlToElements } from './scripts/utilities';
 import { SunLoader, MoonLoader, CubeLoader } from './scripts/SetupLoading';
+import ExplanationTab from './scripts/tabs/ExplanationTab';
+import FavoritesTab from './scripts/tabs/FavoritesTab';
 
 import './styles/style.scss';
 
 // Initialize apod and date objects
 export const drawer = new Drawer('#apod-drawer');
+drawer.tabs.push(new ExplanationTab('#tab-explanation'),new FavoritesTab('#tab-favorites'));
+
 export const apod = new Apod();
 export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
 
