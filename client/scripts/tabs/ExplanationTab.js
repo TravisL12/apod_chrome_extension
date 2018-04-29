@@ -1,4 +1,4 @@
-import { $, clearElement, htmlToElements } from '../utilities';
+import { $, clearElement, htmlToElements, zeroPad } from '../utilities';
 import ga from '../utils/ga';
 import DrawerTab from './DrawerTab';
 
@@ -6,7 +6,13 @@ export default class ExplanationTab extends DrawerTab {
     constructor(el) {
         super(el);
         this.keycode = 69;
-        const html = `
+        this.date = '';
+        this.urls = {
+            hdurl: '',
+            url: '',
+        };
+        this.explanation = '';
+        this.template = htmlToElements(`
             <div class='explanation'>
                 <h2 class='title'>Explanation</h2>
 
@@ -18,8 +24,7 @@ export default class ExplanationTab extends DrawerTab {
                     <a id='apod-lowres' target='_blank'>Low-res</a>
                 </div>
             </div>
-        `;
-        this.template = htmlToElements(html);
+        `);
     }
 
     setTabListeners() {
@@ -28,6 +33,24 @@ export default class ExplanationTab extends DrawerTab {
         for (let i = 0; i < tabs.length; i++) {
             tabs[i].setClickListener();
         }
+    }
+
+    /**
+     * Build filename for APOD site: ap170111.html
+     *
+     * @return {String} "2011-02-15"
+     */
+    apodSource() {
+        const date = this.date.split('-');
+        return `ap${date[0].slice(-2)}${zeroPad(date[1])}${zeroPad(date[2])}.html`;
+    }
+
+    highlightKeywords(result, index) {
+        const re = new RegExp('\\b(' + result + ')\\b', 'gi');
+        this.explanation = this.explanation.replace(
+            re,
+            `<span class="keyword keyword-${index}">$1</span>`,
+        );
     }
 
     render() {
@@ -45,10 +68,10 @@ export default class ExplanationTab extends DrawerTab {
             });
         });
 
-        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
-        apodHiRes.setAttribute('href', this.apod.hdurl);
-        apodLowRes.setAttribute('href', this.apod.url);
-        apodExplanation.appendChild(htmlToElements(this.apod.explanation, true));
+        apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apodSource());
+        apodHiRes.setAttribute('href', this.urls.hdurl);
+        apodLowRes.setAttribute('href', this.urls.url);
+        apodExplanation.appendChild(htmlToElements(this.explanation, true));
 
         this.setTabListeners();
     }

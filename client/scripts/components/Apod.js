@@ -3,9 +3,9 @@ import { $, clearElement } from '../utilities';
 import ga from '../utils/ga';
 import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
-import { zeroPad } from '../utilities';
 import { drawer, favoritesTab } from '../../index.js';
 import NavigationButton from '../NavigationButton';
+import ExplanationTab from '../tabs/ExplanationTab';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
@@ -38,6 +38,7 @@ class Apod {
         this.errorLimit = 3;
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
+        this.explanationTab = new ExplanationTab('#tab-explanation');
     }
 
     random() {
@@ -144,6 +145,13 @@ class Apod {
                 this.errorCount = 0;
                 this.checkFavorite();
 
+                this.explanationTab.urls = {
+                    hdurl: this.hdurl,
+                    url: this.url
+                };
+                this.explanationTab.explanation = this.explanation;
+                this.explanationTab.date = this.date;
+
                 const isMediaImage = response.media_type === 'image';
                 apodImage.classList.toggle('hide', !isMediaImage);
                 apodVideo.classList.toggle('hide', isMediaImage);
@@ -175,14 +183,6 @@ class Apod {
         favoriteButtonHide.classList.toggle('hide', isFavorite);
     }
 
-    highlightResults(result, index) {
-        const re = new RegExp('\\b(' + result + ')\\b', 'gi');
-        this.explanation = this.explanation.replace(
-            re,
-            `<span class="keyword keyword-${index}">$1</span>`,
-        );
-    }
-
     wouldYouLikeToKnowMore(text) {
         const knowMore = new KnowMoreComponent(text);
         const results = knowMore.results;
@@ -193,7 +193,7 @@ class Apod {
                 return;
             }
             for (let i in results) {
-                this.highlightResults(results[i].title, i);
+                this.explanationTab.highlightKeywords(results[i].title, i);
                 knowMore.createTab(results[i], i);
             }
         }
@@ -283,16 +283,6 @@ class Apod {
 
         apodLoading.classList.add('hide');
         $('.apod__header .explanation').classList.remove('hide');
-    }
-
-    /**
-     * Build filename for APOD site: ap170111.html
-     *
-     * @return {String} "2011-02-15"
-     */
-    apodSource() {
-        const date = this.date.split('-');
-        return `ap${date[0].slice(-2)}${zeroPad(date[1])}${zeroPad(date[2])}.html`;
     }
 }
 
