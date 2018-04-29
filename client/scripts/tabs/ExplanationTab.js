@@ -27,11 +27,11 @@ export default class ExplanationTab extends DrawerTab {
         `);
     }
 
-    setTabListeners() {
+    knowMoreKeywordListeners() {
         const tabs = this.drawer.tabs.slice(2);
 
         for (let i = 0; i < tabs.length; i++) {
-            tabs[i].setClickListener();
+            tabs[i].addKeywordClickListener();
         }
     }
 
@@ -73,6 +73,6 @@ export default class ExplanationTab extends DrawerTab {
         apodLowRes.setAttribute('href', this.urls.url);
         apodExplanation.appendChild(htmlToElements(this.explanation, true));
 
-        this.setTabListeners();
+        this.knowMoreKeywordListeners();
     }
 }

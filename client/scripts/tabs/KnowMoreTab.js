@@ -21,7 +21,7 @@ class KnowMoreTab extends DrawerTab {
         this.baseView.querySelector('.loading-spinner').classList.toggle('hide', isItems);
     }
 
-    setClickListener() {
+    addKeywordClickListener() {
         const tabs = document.getElementsByClassName(`keyword-${this.index}`);
 
         for (let i = 0; i < tabs.length; i++) {
