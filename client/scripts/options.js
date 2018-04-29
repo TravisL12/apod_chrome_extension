@@ -1,38 +1,40 @@
 import '../styles/options.scss';
 
-function saveTypeOption() {
-  const form = document.forms['choose-apod'];
-  const value = form[0].checked ? form[0].value : form[1].value;
-  chrome.storage.sync.set({
-    apodType: value,
-  });
-  setTimeout(window.close, 350);
+class ApodOptions {
+  constructor () {
+    this.form = document.getElementById('apod-options');
+    this.restoreOptions();
+  }
+
+  save(obj) {
+    chrome.storage.sync.set(obj);
+    setTimeout(window.close, 350);
+  }
+
+  saveApodType() {
+    this.save({apodType: this.form['choose-apod'].value});
+  }
+
+  saveHiResOnly() {
+    this.save({hiResOnly: this.form['high-res-only'].checked});
+  }
+
+  restoreOptions() {
+    chrome.storage.sync.get(['apodType', 'hiResOnly'], (items) => {
+      let type = items.apodType;
+      if (!type) {
+        type = 'today';
+        chrome.storage.sync.set({
+          apodType: type,
+        });
+      }
+      this.form[type].checked = true;
+      this.form['high-res-only'].checked = items.hiResOnly;
+      this.form['choose-apod'][0].addEventListener('change', this.saveApodType.bind(this));
+      this.form['choose-apod'][1].addEventListener('change', this.saveApodType.bind(this));
+      this.form['high-res-only'].addEventListener('change', this.saveHiResOnly.bind(this));
+    });
+  }
 }
 
-function saveHiResOnlyOption() {
-  const form = document.forms['choose-apod'];
-  chrome.storage.sync.set({
-    hiResOnly: form[2].checked,
-  });
-  setTimeout(window.close, 350);
-}
-
-(function restoreOptions() {
-  chrome.storage.sync.get(['apodType', 'hiResOnly'], function(items) {
-    const type = items.apodType;
-    if (!type) {
-      type = 'today';
-      chrome.storage.sync.set({
-        apodType: type,
-      });
-    }
-
-    const form = document.forms['choose-apod'];
-    form[type].checked = true;
-    form[2].checked = items.hiResOnly;
-
-    form[0].addEventListener('change', saveTypeOption);
-    form[1].addEventListener('change', saveTypeOption);
-    form[2].addEventListener('change', saveHiResOnlyOption);
-  });
-})();
+const options = new ApodOptions();

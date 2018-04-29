@@ -9,9 +9,9 @@ import NavigationButton from '../NavigationButton';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
+const apodBgImage = $('#apod-image-vertical-bg');
 const apodVideo = $('#apod-video');
-const apodImageVert = $('#apod-image-vertical-bg');
-const apodVideoFrame = $('#apod-video iframe');
+const apodVideoIFrame = $('#apod-video iframe');
 
 // Initialize various elements
 const apodTitle = $('#apod-title');
@@ -36,6 +36,8 @@ class Apod {
         this.hiResOnly = false;
         this.errorCount = 0;
         this.errorLimit = 3;
+        this.imageQuality = 'HD';
+        this.delayForHdLoad = 3000;
     }
 
     random() {
@@ -59,8 +61,8 @@ class Apod {
     }
 
     addFadedBackground() {
-        apodImageVert.style['background-image'] = 'url(' + this.loadedImage.src + ')';
-        apodImageVert.classList.remove('hide');
+        apodBgImage.style['background-image'] = `url(${this.loadedImage.src})`;
+        apodBgImage.classList.remove('hide');
     }
 
     backgroundSize() {
@@ -88,11 +90,11 @@ class Apod {
         apodImage.style['background-size'] = '';
         apodImage.classList.add('hide');
 
-        apodImageVert.style['background-image'] = '';
+        apodBgImage.style['background-image'] = '';
         apodVideo.classList.add('hide');
-        apodVideoFrame.src = '';
+        apodVideoIFrame.src = '';
 
-        $('.apod__header .description').classList.add('hide');
+        $('.apod__header .explanation').classList.add('hide');
         loadHiResEl.classList.add('hide');
         apodLoading.classList.remove('hide');
         clearElement(apodKnowMore);
@@ -111,9 +113,7 @@ class Apod {
         return this.isRequestInProgress;
     }
 
-    getApod(date) {
-        date = date || DateManager.today;
-
+    getApod(date = DateManager.today) {
         if (!this.isRequestValid()) {
             console.log('Request in Progress!');
             return;
@@ -144,13 +144,13 @@ class Apod {
                 this.errorCount = 0;
                 this.checkFavorite();
 
-                if (response.media_type === 'image') {
-                    apodImage.classList.remove('hide');
-                    apodVideo.classList.add('hide');
+                const isMediaImage = response.media_type === 'image';
+                apodImage.classList.toggle('hide', !isMediaImage);
+                apodVideo.classList.toggle('hide', isMediaImage);
+
+                if (isMediaImage) {
                     this.preLoadImage(this.hiResOnly);
                 } else if (response.media_type === 'video') {
-                    apodImage.classList.add('hide');
-                    apodVideo.classList.remove('hide');
                     this.apodVideo();
                 } else {
                     this.random();
@@ -171,7 +171,6 @@ class Apod {
 
     checkFavorite() {
         const isFavorite = favoritesTab.favoriteDates.indexOf(this.date) > 0;
-
         favoriteButtonShow.classList.toggle('hide', !isFavorite);
         favoriteButtonHide.classList.toggle('hide', isFavorite);
     }
@@ -201,17 +200,11 @@ class Apod {
     }
 
     preLoadImage(forceHighDef = false) {
-        const delayForHdLoad = 3000;
         const Img = new Image();
-        const quality = {
-            text: 'HD',
-            title: 'High Definition Image',
-        };
 
         if (!/(jpg|jpeg|png|gif)$/i.test(this.hdurl)) {
             Img.src = this.url;
-            quality.text = 'SD';
-            quality.title = 'Click to Show HD Image';
+            this.imageQuality = 'SD';
         } else {
             Img.src = this.hdurl;
         }
@@ -219,15 +212,14 @@ class Apod {
         const timeout = setTimeout(() => {
             if (!Img.complete && !forceHighDef) {
                 Img.src = this.url;
-                quality.text = 'SD';
-                quality.title = 'Click to Show HD Image';
+                this.imageQuality = 'SD';
             }
-        }, delayForHdLoad);
+        }, this.delayForHdLoad);
 
         Img.onload = () => {
             clearTimeout(timeout);
             this.loadedImage = Img;
-            this.apodImage(quality);
+            this.apodImage();
         };
 
         Img.onerror = () => {
@@ -238,18 +230,17 @@ class Apod {
         };
     }
 
-    apodImage(imgQuality) {
+    apodImage() {
         this.isRequestInProgress = false;
         apodImage.classList = 'apod__image';
         imgQualityEl.classList.remove('spin-loader');
 
-        apodImage.style['background-image'] = 'url(' + this.loadedImage.src + ')';
+        apodImage.style['background-image'] = `url(${this.loadedImage.src})`;
         apodImage.classList.add(`bg-${this.backgroundSize()}`);
 
-        imgQualityEl.textContent = imgQuality.text;
-        imgQualityEl.setAttribute('title', imgQuality.title);
+        imgQualityEl.textContent = this.imageQuality;
 
-        if (imgQuality.text !== 'HD') {
+        if (this.imageQuality !== 'HD') {
             const forceLoadHighDefImg = e => {
                 loadHiResEl.classList.add('hide');
                 loadHiResEl.removeEventListener('click', forceLoadHighDefImg);
@@ -261,7 +252,7 @@ class Apod {
             loadHiResEl.addEventListener('click', forceLoadHighDefImg);
         }
 
-        this.apodDescription();
+        this.apodExplanation();
     }
 
     apodVideo() {
@@ -269,14 +260,14 @@ class Apod {
         this.url = this.url.replace(';autoplay=1', '');
         const url = new URL(this.url);
         url.search = 'autopause=1&autoplay=0';
-        apodVideoFrame.src = url.href;
-        this.apodDescription();
+        apodVideoIFrame.src = url.href;
+        this.apodExplanation();
     }
 
-    apodDescription() {
+    apodExplanation() {
         apodTitle.textContent = this.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(this.title + ' ' + this.explanation);
+        this.wouldYouLikeToKnowMore(`${this.title} ${this.explanation}`);
 
         if (!DateManager.isInPast(this.date)) {
             console.log(date + ' is in the future!');
@@ -291,7 +282,7 @@ class Apod {
         }
 
         apodLoading.classList.add('hide');
-        $('.apod__header .description').classList.remove('hide');
+        $('.apod__header .explanation').classList.remove('hide');
     }
 
     /**
@@ -301,7 +292,7 @@ class Apod {
      */
     apodSource() {
         const date = this.date.split('-');
-        return 'ap' + date[0].slice(-2) + zeroPad(date[1]) + zeroPad(date[2]) + '.html';
+        return `ap${date[0].slice(-2)}${zeroPad(date[1])}${zeroPad(date[2])}.html`;
     }
 }
 

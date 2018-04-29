@@ -96,11 +96,11 @@ ul, li {
         color: #757575;
     }
 
-    .description {
-        $description-width: 400px;
+    .explanation {
+        $explanation-width: 400px;
         @include helvetica-neue-light;
         width: auto;
-        min-width: $description-width;
+        min-width: $explanation-width;
         box-sizing: border-box;
         color: white;
         padding: 10px 20px;
@@ -124,7 +124,7 @@ ul, li {
 
         .nav-buttons {
             float: right;
-            width: $description-width;
+            width: $explanation-width;
 
             li {
                 margin-right: 15px;

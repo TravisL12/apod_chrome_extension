@@ -34,8 +34,8 @@ export default class ExplanationTab extends DrawerTab {
         const apodOrigin = this.baseView.querySelector('#apod-origin');
         const apodHiRes = this.baseView.querySelector('#apod-hires');
         const apodLowRes = this.baseView.querySelector('#apod-lowres');
-        const apodDescription = $('#apod-explanation');
-        clearElement(apodDescription);
+        const apodExplanation = $('#apod-explanation');
+        clearElement(apodExplanation);
 
         $('.external-links').addEventListener('click', e => {
             ga({
@@ -48,7 +48,7 @@ export default class ExplanationTab extends DrawerTab {
         apodOrigin.setAttribute('href', 'https://apod.nasa.gov/apod/' + this.apod.apodSource());
         apodHiRes.setAttribute('href', this.apod.hdurl);
         apodLowRes.setAttribute('href', this.apod.url);
-        apodDescription.appendChild(htmlToElements(this.apod.explanation, true));
+        apodExplanation.appendChild(htmlToElements(this.apod.explanation, true));
 
         this.setTabListeners();
     }
