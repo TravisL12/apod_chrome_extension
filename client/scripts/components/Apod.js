@@ -181,7 +181,7 @@ class Apod {
         this.favoritesTab.date = this.date;
         this.favoritesTab.title = this.title;
         this.favoritesTab.url = this.url;
-
+        this.favoritesTab.specificDate = this.specificDate.bind(this);
         this.favoritesTab.checkFavorite();
     }
 

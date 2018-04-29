@@ -1,10 +1,9 @@
 import { $, clearElement } from '../utilities';
-import { apod, drawer } from '../../index';
+import { drawer } from '../../index';
 
 export default class DrawerTab {
     constructor(el) {
         this.el = $(el);
-        this.apod = apod;
         this.keycode = null;
         this.drawer = drawer;
         this.drawerIdx = this.drawer.tabs.length;

@@ -103,7 +103,7 @@ export default class FavoritesTab extends DrawerTab {
 
             for (let i in linkSelectors) {
                 listEl.querySelector(linkSelectors[i]).addEventListener('click', () => {
-                    this.apod.specificDate(date);
+                    this.specificDate(date);
                 });
             }
 
