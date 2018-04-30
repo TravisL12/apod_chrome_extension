@@ -4,11 +4,18 @@ class History {
         this.currentIdx = this.pastDates.length;
     }
 
-    add(date) {
-        if (this.pastDates.indexOf(date) === -1) {
-            this.pastDates.push(date);
-            this.currentIdx = this.pastDates.length;
-            console.log(this.pastDates);
+    checkDuplicateHistory(response) {
+        const dates = this.pastDates.map((response) => {
+            return response.date;
+        });
+
+        return dates.indexOf(response.date) === -1;
+    }
+
+    add(response) {
+        if (this.checkDuplicateHistory(response)) {
+            this.pastDates.push(response);
+            this.currentIdx = this.pastDates.length - 1;
         }
     }
 
@@ -18,10 +25,9 @@ class History {
         else if (direction < 0 && this.currentIdx > 0) {
             this.currentIdx += direction;
         } else {
-            return;
+            console.log('Hit history edge!');
+            return false;
         }
-
-        console.log(this.pastDates[this.currentIdx]);
 
         return this.pastDates[this.currentIdx];
     }

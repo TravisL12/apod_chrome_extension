@@ -36,17 +36,24 @@ class Apod {
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
         this.history = new History();
-        this.addToHistory = false;
+        this.addToHistory = true;
 
         document.addEventListener('keyup', e => {
-            // keycode left-arrow (37), right (39)
             if (this.addToHistory) {
+                let recalledResponse = false;
+
                 if (e.which === 37) {
-                    this.addToHistory = false;
-                    this.specificDate(this.history.recall(-1));
+                    // left arrow key
+                    recalledResponse = this.history.recall(-1);
                 } else if (e.which === 39) {
+                    // right arrow key
+                    recalledResponse = this.history.recall(1);
+                }
+
+                if (recalledResponse) {
+                    this._setLoadingView();
                     this.addToHistory = false;
-                    this.specificDate(this.history.recall(1));
+                    this.formatResponse(recalledResponse);
                 }
             }
         });
@@ -98,10 +105,6 @@ class Apod {
     }
 
     _setLoadingView() {
-        if (this.addToHistory) {
-            this.history.add(this.response.date);
-        }
-
         apodImage.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodImage.classList.add('hide');
@@ -140,7 +143,6 @@ class Apod {
         }
 
         this._setLoadingView();
-        this.addToHistory = true; // this starts history
 
         reqwest({
             method: 'GET',
@@ -150,41 +152,49 @@ class Apod {
                 date: date,
             },
         }).then(
-            response => {
-                ga({ category: 'APOD', action: 'viewed', label: response.date });
-                this.response = response;
-                this.errorCount = 0;
-                this.populateTabs();
-
-                const isMediaImage = response.media_type === 'image';
-                apodImage.classList.toggle('hide', !isMediaImage);
-                apodVideo.classList.toggle('hide', isMediaImage);
-
-                if (isMediaImage) {
-                    this.preLoadImage(this.hiResOnly);
-                } else if (response.media_type === 'video') {
-                    this.apodVideo();
-                } else {
-                    this.random();
-                }
-            },
-            error => {
-                this.errorCount++;
-                console.log(`Error: APOD API response (${this.errorCount})`);
-                this.isRequestInProgress = false;
-                if (this.errorCount < this.errorLimit) {
-                    this.random();
-                } else {
-                    apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
-                }
-            },
+            this.formatResponse.bind(this),
+            this.errorResponse.bind(this)
         );
+    }
+
+    formatResponse(response) {
+        ga({ category: 'APOD', action: 'viewed', label: response.date });
+        if (this.addToHistory) {
+            this.history.add(response);
+        }
+        this.addToHistory = true; // this starts history
+        this.response = response;
+        this.errorCount = 0;
+        this.populateTabs();
+
+        const isMediaImage = response.media_type === 'image';
+        apodImage.classList.toggle('hide', !isMediaImage);
+        apodVideo.classList.toggle('hide', isMediaImage);
+
+        if (isMediaImage) {
+            this.preLoadImage(this.hiResOnly);
+        } else if (response.media_type === 'video') {
+            this.apodVideo();
+        } else {
+            this.random();
+        }
+    }
+
+    errorResponse(error) {
+        this.errorCount++;
+        console.log(`Error: APOD API response (${this.errorCount})`);
+        this.isRequestInProgress = false;
+        if (this.errorCount < this.errorLimit) {
+            this.random();
+        } else {
+            apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
+        }
     }
 
     populateTabs() {
         drawer.tabs[0].urls = {
             hdurl: this.response.hdurl,
-            url: this.response.url
+            url: this.response.url,
         };
         drawer.tabs[0].explanation = this.response.explanation;
         drawer.tabs[0].date = this.response.date;
@@ -220,6 +230,13 @@ class Apod {
             this.imageQuality = 'SD';
         } else {
             Img.src = this.response.hdurl;
+            this.imageQuality = 'HD';
+        }
+
+        // If the urls are identical just mark it HD
+        if (this.response.hdurl === this.response.url) {
+            Img.src = this.response.hdurl;
+            this.imageQuality = 'HD';
         }
 
         const timeout = setTimeout(() => {
