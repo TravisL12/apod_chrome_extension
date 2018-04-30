@@ -5,6 +5,12 @@ class SunLoader {
     constructor() {
         this.bigRayCount = 12;
         this.littleRayCount = 8;
+        this.template = `
+            <div class='sun-container'>
+                <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
+                <div class='rays-small' id='small-rays'>${this.buildRays(this.littleRayCount)}</div>
+                <div class='sun-light'></div>
+            </div>`;
     }
 
     buildRays(num) {
@@ -19,12 +25,7 @@ class SunLoader {
     }
 
     render() {
-        return htmlToElements(`
-            <div class='sun-container'>
-                <div class='rays-big' id='big-rays'>${this.buildRays(this.bigRayCount)}</div>
-                <div class='rays-small' id='small-rays'>${this.buildRays(this.littleRayCount)}</div>
-                <div class='sun-light'></div>
-            </div>`);
+        return htmlToElements(this.template);
     }
 }
 

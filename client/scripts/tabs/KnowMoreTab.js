@@ -12,7 +12,7 @@ class KnowMoreTab extends DrawerTab {
         this.isRendered = false;
         this.template = htmlToElements(`
             <div class='know-links'>
-                <div class='loading-spinner hide'>${this.loader.render()}</div>
+                <div class='loading-spinner hide'>${this.loader.template}</div>
             </div>
         `);
     }
