@@ -5,6 +5,7 @@ import DateManager from '../DateManagement';
 import KnowMoreComponent from './KnowMore';
 import { drawer } from '../../index.js';
 import NavigationButton from '../NavigationButton';
+import History from './History';
 
 // Initialize image & video elements
 const apodImage = $('#apod-image');
@@ -34,6 +35,28 @@ class Apod {
         this.errorLimit = 3;
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
+        this.history = new History();
+        this.addToHistory = true;
+
+        document.addEventListener('keyup', e => {
+            if (this.addToHistory) {
+                let recalledResponse = false;
+
+                if (e.which === 37) {
+                    // left arrow key
+                    recalledResponse = this.history.recall(-1);
+                } else if (e.which === 39) {
+                    // right arrow key
+                    recalledResponse = this.history.recall(1);
+                }
+
+                if (recalledResponse) {
+                    this._setLoadingView();
+                    this.addToHistory = false;
+                    this.formatResponse(recalledResponse);
+                }
+            }
+        });
     }
 
     specificDate(date) {
@@ -45,11 +68,11 @@ class Apod {
     }
 
     previous() {
-        this.getApod(DateManager.adjacentDate(this.date, -1));
+        this.getApod(DateManager.adjacentDate(this.response.date, -1));
     }
 
     next() {
-        this.getApod(DateManager.adjacentDate(this.date, 1));
+        this.getApod(DateManager.adjacentDate(this.response.date, 1));
     }
 
     current() {
@@ -129,52 +152,56 @@ class Apod {
                 date: date,
             },
         }).then(
-            response => {
-                ga({ category: 'APOD', action: 'viewed', label: response.date });
-                this.title = response.title;
-                this.url = response.url;
-                this.hdurl = response.hdurl;
-                this.date = response.date;
-                this.explanation = response.explanation;
-                this.errorCount = 0;
-                this.populateTabs();
-
-                const isMediaImage = response.media_type === 'image';
-                apodImage.classList.toggle('hide', !isMediaImage);
-                apodVideo.classList.toggle('hide', isMediaImage);
-
-                if (isMediaImage) {
-                    this.preLoadImage(this.hiResOnly);
-                } else if (response.media_type === 'video') {
-                    this.apodVideo();
-                } else {
-                    this.random();
-                }
-            },
-            error => {
-                this.errorCount++;
-                console.log(`Error: APOD API response (${this.errorCount})`);
-                this.isRequestInProgress = false;
-                if (this.errorCount < this.errorLimit) {
-                    this.random();
-                } else {
-                    apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
-                }
-            },
+            this.formatResponse.bind(this),
+            this.errorResponse.bind(this)
         );
+    }
+
+    formatResponse(response) {
+        ga({ category: 'APOD', action: 'viewed', label: response.date });
+        if (this.addToHistory) {
+            this.history.add(response);
+        }
+        this.addToHistory = true; // this starts history
+        this.response = response;
+        this.errorCount = 0;
+        this.populateTabs();
+
+        const isMediaImage = response.media_type === 'image';
+        apodImage.classList.toggle('hide', !isMediaImage);
+        apodVideo.classList.toggle('hide', isMediaImage);
+
+        if (isMediaImage) {
+            this.preLoadImage(this.hiResOnly);
+        } else if (response.media_type === 'video') {
+            this.apodVideo();
+        } else {
+            this.random();
+        }
+    }
+
+    errorResponse(error) {
+        this.errorCount++;
+        console.log(`Error: APOD API response (${this.errorCount})`);
+        this.isRequestInProgress = false;
+        if (this.errorCount < this.errorLimit) {
+            this.random();
+        } else {
+            apodError.textContent = 'NASA APOD Error: Please reload or try Again Later';
+        }
     }
 
     populateTabs() {
         drawer.tabs[0].urls = {
-            hdurl: this.hdurl,
-            url: this.url
+            hdurl: this.response.hdurl,
+            url: this.response.url,
         };
-        drawer.tabs[0].explanation = this.explanation;
-        drawer.tabs[0].date = this.date;
+        drawer.tabs[0].explanation = this.response.explanation;
+        drawer.tabs[0].date = this.response.date;
 
-        drawer.tabs[1].date = this.date;
-        drawer.tabs[1].title = this.title;
-        drawer.tabs[1].url = this.url;
+        drawer.tabs[1].date = this.response.date;
+        drawer.tabs[1].title = this.response.title;
+        drawer.tabs[1].url = this.response.url;
         drawer.tabs[1].specificDate = this.specificDate.bind(this);
         drawer.tabs[1].checkFavorite();
     }
@@ -198,16 +225,23 @@ class Apod {
     preLoadImage(forceHighDef = false) {
         const Img = new Image();
 
-        if (!/(jpg|jpeg|png|gif)$/i.test(this.hdurl)) {
-            Img.src = this.url;
+        if (!/(jpg|jpeg|png|gif)$/i.test(this.response.hdurl)) {
+            Img.src = this.response.url;
             this.imageQuality = 'SD';
         } else {
-            Img.src = this.hdurl;
+            Img.src = this.response.hdurl;
+            this.imageQuality = 'HD';
+        }
+
+        // If the urls are identical just mark it HD
+        if (this.response.hdurl === this.response.url) {
+            Img.src = this.response.hdurl;
+            this.imageQuality = 'HD';
         }
 
         const timeout = setTimeout(() => {
             if (!Img.complete && !forceHighDef) {
-                Img.src = this.url;
+                Img.src = this.response.url;
                 this.imageQuality = 'SD';
             }
         }, this.delayForHdLoad);
@@ -248,28 +282,28 @@ class Apod {
             loadHiResEl.addEventListener('click', forceLoadHighDefImg);
         }
 
-        this.apodExplanation();
+        this.constructApod();
     }
 
     apodVideo() {
         this.isRequestInProgress = false;
-        this.url = this.url.replace(';autoplay=1', '');
-        const url = new URL(this.url);
+        this.response.url = this.response.url.replace(';autoplay=1', '');
+        const url = new URL(this.response.url);
         url.search = 'autopause=1&autoplay=0';
         apodVideoIFrame.src = url.href;
-        this.apodExplanation();
+        this.constructApod();
     }
 
-    apodExplanation() {
-        apodTitle.textContent = this.title;
-        apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(`${this.title} ${this.explanation}`);
+    constructApod() {
+        apodTitle.textContent = this.response.title;
+        apodDate.textContent = DateManager.prettyDateFormat(this.response.date);
+        this.wouldYouLikeToKnowMore(`${this.response.title} ${this.response.explanation}`);
 
-        if (!DateManager.isInPast(this.date)) {
+        if (!DateManager.isInPast(this.response.date)) {
             console.log(date + ' is in the future!');
             this.isRequestInProgress = false;
             this.current();
-        } else if (DateManager.isToday(this.date)) {
+        } else if (DateManager.isToday(this.response.date)) {
             apodCurrent.el.classList.add('current');
             apodNext.el.classList.add('hide');
         } else {
