@@ -28,6 +28,17 @@ const apodPrevious = new NavigationButton('#apod-previous', 74, 'previous');
 const apodNext = new NavigationButton('#apod-next', 75, 'next');
 const loadHiResEl = $('.nav-buttons #show-hi-res');
 
+function loadSettings() {
+    // Fetch chrome storage settings from options and load
+    chrome.storage.sync.get(['apodType', 'hiResOnly'], items => {
+      if (items.hiResOnly) {
+        this.hiResOnly = true;
+      }
+      const apodOptionType = items.apodType || 'today';
+      apodOptionType == 'today' ? this.current() : this.random();
+    });
+}
+
 class Apod {
     constructor() {
         this.hiResOnly = false;
@@ -57,6 +68,7 @@ class Apod {
                 }
             }
         });
+        loadSettings.call(this);
     }
 
     specificDate(date) {

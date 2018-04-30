@@ -1,4 +1,31 @@
-class SunLoader {
+import History from './components/History';
+import { $, randomizer, htmlToElements } from './utilities';
+
+class LoadingSpinner {
+    constructor(el) {
+        this.el = $(el);
+        // this.loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
+        this.loader = new CubeLoader();
+        this.el.appendChild(htmlToElements(this.loader.render()));
+        if (this.loader.constructor.name === 'CubeLoader') {
+            this.currentSide = 0;
+            this.sides = this.el.getElementsByClassName('side');
+        }
+    }
+
+    updateBackground(url) {
+        if (this.loader.constructor.name === 'CubeLoader') {
+            this.sides[this.currentSide].style['background-image'] = `url(${url})`;
+            if (this.currentSide < this.sides.length - 1) {
+                this.currentSide += 1;
+            } else {
+                this.currentSide = 0;
+            }
+        }
+    }
+}
+
+export class SunLoader {
     constructor() {
         this.bigRayCount = 12;
         this.littleRayCount = 8;
@@ -59,4 +86,4 @@ class CubeLoader {
     }
 }
 
-export { SunLoader, MoonLoader, CubeLoader };
+export default LoadingSpinner;

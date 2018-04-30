@@ -11,37 +11,24 @@
 import Apod from './scripts/components/Apod';
 import Drawer from './scripts/components/Drawer';
 import topSites from './scripts/utils/buildTopSites';
-import { $, randomizer, htmlToElements } from './scripts/utilities';
-import { SunLoader, MoonLoader, CubeLoader } from './scripts/SetupLoading';
+import LoadingSpinner from './scripts/LoadingSpinner';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
 
 import './styles/style.scss';
 
 // Initialize apod and date objects
+export const loader = new LoadingSpinner('#apod-loading');
 export const drawer = new Drawer('#apod-drawer');
 drawer.tabs.push(new ExplanationTab('#tab-explanation'),new FavoritesTab('#tab-favorites'));
 
 export const apod = new Apod();
-export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
 
 // Create thumbnails and links for Top Sites
 document.addEventListener('DOMContentLoaded', function() {
   topSites();
 });
 
-$('#apod-loading').appendChild(
-  htmlToElements(`${loader.render()}`),
-);
-
-// Fetch chrome storage settings from options and load
-chrome.storage.sync.get(['apodType', 'hiResOnly'], items => {
-  if (items.hiResOnly) {
-    apod.hiResOnly = true;
-  }
-  const apodOptionType = items.apodType || 'today';
-  apodOptionType == 'today' ? apod.current() : apod.random();
-});
 
 chrome.storage.onChanged.addListener((changes, name) => {
   if (changes.hiResOnly) {

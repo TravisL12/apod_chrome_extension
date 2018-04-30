@@ -1,11 +1,5 @@
 import { $, htmlToElements, clearElement } from '../utilities';
 
-function deleteTopSite (url) {
-  chrome.history.deleteUrl({url: url}, () => {
-    window.setTimeout(buildTypedUrlList, 250); // race condition between history and topSites, weird
-  });
-}
-
 function buildPopupDom(data) {
   const popupDiv = $('#topSites');
   clearElement(popupDiv);
@@ -21,12 +15,7 @@ function buildPopupDom(data) {
           <a href='${site.url}' title='${site.title}'>
             <img class='thumb-img' src='${imgSource}'/>
           </a>
-          <div class='delete-top-site' title="Don't show on this page">&times;</div>
         </li>`);
-
-    topSiteList.querySelector('.delete-top-site').addEventListener('click', (e) => {
-      deleteTopSite(e.target.previousElementSibling.href);
-    });
 
     ul.appendChild(topSiteList);
   }

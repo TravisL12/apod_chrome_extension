@@ -37,6 +37,7 @@ $transform: $size-px / 2;
     background-repeat: no-repeat;
     background-size: 50%;
     background-position: center;
+    box-shadow:  inset 0 0 3px 3px $gray;
 }
 
 .back {

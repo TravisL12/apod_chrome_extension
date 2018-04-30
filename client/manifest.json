@@ -12,13 +12,6 @@
     "default_popup": "options.html"
   },
 
-  "content_scripts": [
-    {
-      "matches": ["https://*/*"],
-      "js": ["index.bundle.js", "options.bundle.js"]
-    }
-  ],
-
   "applications": {
     "gecko": {
       "id": "travis.lawrence12@gmail.com",
@@ -31,13 +24,12 @@
   },
 
   "chrome_url_overrides": {
-    "newtab": "index.html"
+    "newtab": "apod-by-trav.html"
   },
 
   "permissions": [
     "topSites",
     "storage",
-    "history",
     "https://api.nasa.gov/*",
     "https://www.googleapis.com/customsearch/*",
     "https://www.google-analytics.com/collect"

@@ -6,8 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 // const Uglify = require('uglifyjs-webpack-plugin');
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
-  template: './client/index.html',
-  filename: 'index.html',
+  template: './client/apod-by-trav.html',
+  filename: 'apod-by-trav.html',
   inject: 'body',
   chunks: ['index'], // only include index.js (see entry point)
 });
