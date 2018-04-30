@@ -36,6 +36,20 @@ class Apod {
         this.imageQuality = 'HD';
         this.delayForHdLoad = 3000;
         this.history = new History();
+        this.addToHistory = false;
+
+        document.addEventListener('keyup', e => {
+            // keycode left-arrow (37), right (39)
+            if (this.addToHistory) {
+                if (e.which === 37) {
+                    this.addToHistory = false;
+                    this.specificDate(this.history.recall(-1));
+                } else if (e.which === 39) {
+                    this.addToHistory = false;
+                    this.specificDate(this.history.recall(1));
+                }
+            }
+        });
     }
 
     specificDate(date) {
@@ -47,11 +61,11 @@ class Apod {
     }
 
     previous() {
-        this.getApod(DateManager.adjacentDate(this.date, -1));
+        this.getApod(DateManager.adjacentDate(this.response.date, -1));
     }
 
     next() {
-        this.getApod(DateManager.adjacentDate(this.date, 1));
+        this.getApod(DateManager.adjacentDate(this.response.date, 1));
     }
 
     current() {
@@ -84,6 +98,10 @@ class Apod {
     }
 
     _setLoadingView() {
+        if (this.addToHistory) {
+            this.history.add(this.response.date);
+        }
+
         apodImage.style['background-image'] = '';
         apodImage.style['background-size'] = '';
         apodImage.classList.add('hide');
@@ -122,6 +140,7 @@ class Apod {
         }
 
         this._setLoadingView();
+        this.addToHistory = true; // this starts history
 
         reqwest({
             method: 'GET',
@@ -133,15 +152,9 @@ class Apod {
         }).then(
             response => {
                 ga({ category: 'APOD', action: 'viewed', label: response.date });
-                this.title = response.title;
-                this.url = response.url;
-                this.hdurl = response.hdurl;
-                this.date = response.date;
-                this.explanation = response.explanation;
+                this.response = response;
                 this.errorCount = 0;
                 this.populateTabs();
-
-                this.history.add(this.date);
 
                 const isMediaImage = response.media_type === 'image';
                 apodImage.classList.toggle('hide', !isMediaImage);
@@ -170,15 +183,15 @@ class Apod {
 
     populateTabs() {
         drawer.tabs[0].urls = {
-            hdurl: this.hdurl,
-            url: this.url
+            hdurl: this.response.hdurl,
+            url: this.response.url
         };
-        drawer.tabs[0].explanation = this.explanation;
-        drawer.tabs[0].date = this.date;
+        drawer.tabs[0].explanation = this.response.explanation;
+        drawer.tabs[0].date = this.response.date;
 
-        drawer.tabs[1].date = this.date;
-        drawer.tabs[1].title = this.title;
-        drawer.tabs[1].url = this.url;
+        drawer.tabs[1].date = this.response.date;
+        drawer.tabs[1].title = this.response.title;
+        drawer.tabs[1].url = this.response.url;
         drawer.tabs[1].specificDate = this.specificDate.bind(this);
         drawer.tabs[1].checkFavorite();
     }
@@ -202,16 +215,16 @@ class Apod {
     preLoadImage(forceHighDef = false) {
         const Img = new Image();
 
-        if (!/(jpg|jpeg|png|gif)$/i.test(this.hdurl)) {
-            Img.src = this.url;
+        if (!/(jpg|jpeg|png|gif)$/i.test(this.response.hdurl)) {
+            Img.src = this.response.url;
             this.imageQuality = 'SD';
         } else {
-            Img.src = this.hdurl;
+            Img.src = this.response.hdurl;
         }
 
         const timeout = setTimeout(() => {
             if (!Img.complete && !forceHighDef) {
-                Img.src = this.url;
+                Img.src = this.response.url;
                 this.imageQuality = 'SD';
             }
         }, this.delayForHdLoad);
@@ -252,28 +265,28 @@ class Apod {
             loadHiResEl.addEventListener('click', forceLoadHighDefImg);
         }
 
-        this.apodExplanation();
+        this.constructApod();
     }
 
     apodVideo() {
         this.isRequestInProgress = false;
-        this.url = this.url.replace(';autoplay=1', '');
-        const url = new URL(this.url);
+        this.response.url = this.response.url.replace(';autoplay=1', '');
+        const url = new URL(this.response.url);
         url.search = 'autopause=1&autoplay=0';
         apodVideoIFrame.src = url.href;
-        this.apodExplanation();
+        this.constructApod();
     }
 
-    apodExplanation() {
-        apodTitle.textContent = this.title;
-        apodDate.textContent = DateManager.prettyDateFormat(this.date);
-        this.wouldYouLikeToKnowMore(`${this.title} ${this.explanation}`);
+    constructApod() {
+        apodTitle.textContent = this.response.title;
+        apodDate.textContent = DateManager.prettyDateFormat(this.response.date);
+        this.wouldYouLikeToKnowMore(`${this.response.title} ${this.response.explanation}`);
 
-        if (!DateManager.isInPast(this.date)) {
+        if (!DateManager.isInPast(this.response.date)) {
             console.log(date + ' is in the future!');
             this.isRequestInProgress = false;
             this.current();
-        } else if (DateManager.isToday(this.date)) {
+        } else if (DateManager.isToday(this.response.date)) {
             apodCurrent.el.classList.add('current');
             apodNext.el.classList.add('hide');
         } else {
