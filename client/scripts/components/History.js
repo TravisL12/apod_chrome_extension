@@ -19,7 +19,7 @@ class History {
             this.pastDates.push(response);
             this.currentIdx = this.pastDates.length - 1;
             
-            if (loader.constructor.name === 'CubeLoader' && this.pastDates[this.currentIdx - 1]) {
+            if (this.pastDates[this.currentIdx - 1]) {
                 loader.updateBackground(this.pastDates[this.currentIdx - 1].url);
             }
         }
