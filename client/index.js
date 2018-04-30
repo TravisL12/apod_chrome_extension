@@ -11,20 +11,22 @@
 import Apod from './scripts/components/Apod';
 import Drawer from './scripts/components/Drawer';
 import topSites from './scripts/utils/buildTopSites';
-import LoadingSpinner from './scripts/LoadingSpinner';
+import { SunLoader, MoonLoader, CubeLoader } from './scripts/LoadingSpinner';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
+import { $ } from './scripts/utilities';
 
 import './styles/style.scss';
 
-// Initialize apod and date objects
-export const loader = new LoadingSpinner('#apod-loading');
+// export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
+export const loader = new CubeLoader();
+$('#apod-loading').appendChild(loader.render());
+
 export const drawer = new Drawer('#apod-drawer');
 drawer.tabs.push(new ExplanationTab('#tab-explanation'),new FavoritesTab('#tab-favorites'));
 
 export const apod = new Apod();
 
-// Create thumbnails and links for Top Sites
 document.addEventListener('DOMContentLoaded', function() {
   topSites();
 });

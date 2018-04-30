@@ -18,7 +18,10 @@ class History {
         if (this.checkDuplicateHistory(response)) {
             this.pastDates.push(response);
             this.currentIdx = this.pastDates.length - 1;
-            loader.updateBackground(response.url);
+            
+            if (this.pastDates[this.currentIdx - 1]) {
+                loader.updateBackground(this.pastDates[this.currentIdx - 1].url);
+            }
         }
     }
 
@@ -28,7 +31,6 @@ class History {
         else if (direction < 0 && this.currentIdx > 0) {
             this.currentIdx += direction;
         } else {
-            console.log('Hit history edge!');
             return false;
         }
 
