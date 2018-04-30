@@ -14,12 +14,12 @@ import topSites from './scripts/utils/buildTopSites';
 import { SunLoader, MoonLoader, CubeLoader } from './scripts/LoadingSpinner';
 import ExplanationTab from './scripts/tabs/ExplanationTab';
 import FavoritesTab from './scripts/tabs/FavoritesTab';
-import { $ } from './scripts/utilities';
+import { $, randomizer } from './scripts/utilities';
 
 import './styles/style.scss';
 
-// export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
-export const loader = new CubeLoader();
+export const loader = new [SunLoader, MoonLoader, CubeLoader][(randomizer(2))]();
+// export const loader = new CubeLoader();
 $('#apod-loading').appendChild(loader.render());
 
 export const drawer = new Drawer('#apod-drawer');

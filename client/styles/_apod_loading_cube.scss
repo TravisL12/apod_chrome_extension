@@ -1,6 +1,4 @@
 $size-px: 200px;
-$size: 300;
-$size-lg: $size * 1.5;
 $transform: $size-px / 2;
 
 .scene {
@@ -23,7 +21,7 @@ $transform: $size-px / 2;
     position: relative;
     width: $size-px;
     height: $size-px;
-    animation: rotate 10s linear infinite forwards;
+    animation: rotate 10s linear infinite;
     transform-origin: center center;
 }
 
@@ -70,6 +68,6 @@ $transform: $size-px / 2;
 }
 
 @keyframes rotate {
-    0% { transform: rotateX(0) rotateY(0deg) rotateZ(0deg)}
-    100% { transform: rotateX(360deg) rotateY(-360deg) rotateZ(360deg)}
+    0% { transform: rotateX(-35deg) rotateY(0deg) rotateZ(0deg)}
+    100% { transform: rotateX(325deg) rotateY(360deg) rotateZ(0deg)}
 }
