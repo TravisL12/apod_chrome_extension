@@ -162,7 +162,7 @@ class Apod {
         if (this.addToHistory) {
             this.history.add(response);
         }
-        this.addToHistory = true; // this starts history
+        this.addToHistory = true;
         this.response = response;
         this.errorCount = 0;
         this.populateTabs();
@@ -288,6 +288,11 @@ class Apod {
     apodVideo() {
         this.isRequestInProgress = false;
         this.response.url = this.response.url.replace(';autoplay=1', '');
+
+        if (!/^http(s?)/i.test(this.response.url)) {
+            this.response.url = `https:${this.response.url}`;
+        }
+
         const url = new URL(this.response.url);
         url.search = 'autopause=1&autoplay=0';
         apodVideoIFrame.src = url.href;
