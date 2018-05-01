@@ -65,5 +65,19 @@ $highlight-blue: lightblue;
     transform-origin: bottom;
 }
 
+h1 {
+    font-size: 24px;
+}
+
+h2 {
+    font-size: 18px;
+}
+
+ul, li {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
 @import 'apod_loading_sun';
 @import 'apod_loading_moon';

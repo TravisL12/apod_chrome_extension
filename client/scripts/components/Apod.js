@@ -312,6 +312,7 @@ class Apod {
     }
 
     constructApod() {
+        document.title = `${this.response.title} - (${this.history.currentIdx + 1})`;
         apodTitle.textContent = this.response.title;
         apodDate.textContent = DateManager.prettyDateFormat(this.response.date);
         this.wouldYouLikeToKnowMore(`${this.response.title} ${this.response.explanation}`);
