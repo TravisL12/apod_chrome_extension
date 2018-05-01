@@ -30,7 +30,6 @@ document.addEventListener('DOMContentLoaded', function() {
   topSites();
 });
 
-
 chrome.storage.onChanged.addListener((changes, name) => {
   if (changes.hiResOnly) {
     apod.hiResOnly = changes.hiResOnly.newValue;
