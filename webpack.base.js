@@ -3,7 +3,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
-// const Uglify = require('uglifyjs-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: './client/apod-by-trav.html',
@@ -72,7 +72,7 @@ module.exports = {
     ],
   },
   plugins: [
-    // new Uglify(),
+    new CleanWebpackPlugin(['dist']),
     IndexHtmlWebpackPluginConfig,
     OptionsHtmlWebpackPluginConfig,
     CopyWebpackPluginConfig,
