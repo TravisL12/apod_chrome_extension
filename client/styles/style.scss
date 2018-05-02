@@ -50,6 +50,7 @@ body {
 }
 
 .apod__error {
+    @extend %center-div;
     color: white;
     font-size: 18px;
     margin-top: 200px;

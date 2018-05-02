@@ -34,6 +34,7 @@ function loadSettings() {
       if (items.hiResOnly) {
         this.hiResOnly = true;
       }
+      ga({type: 'pageview', category: 'v2.3.2', page: 'apod-by-trav' });
       const apodOptionType = items.apodType || 'today';
       apodOptionType == 'today' ? this.current() : this.random();
     });

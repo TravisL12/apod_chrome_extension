@@ -22,7 +22,7 @@ export const loader = new CubeLoader();
 $('#apod-loading').appendChild(loader.render());
 
 export const drawer = new Drawer('#apod-drawer');
-drawer.tabs.push(new ExplanationTab('#tab-explanation'),new FavoritesTab('#tab-favorites'));
+drawer.tabs.push(new ExplanationTab('#tab-explanation'), new FavoritesTab('#tab-favorites'));
 
 export const apod = new Apod();
 

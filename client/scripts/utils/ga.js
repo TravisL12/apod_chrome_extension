@@ -1,10 +1,11 @@
 const GA_TRACKING_ID = 'UA-91390132-1';
-let CLIENT_ID;
+const analyticsSendInterval = 5 * 1000;
+let parameters = [], intervalFn, CLIENT_ID;
 
 // from: https://gist.github.com/jcxplorer/823878
 function generateUuid() {
-  var uuid = "", i, random;
-  for (i = 0; i < 32; i++) {
+  let uuid = "", i, random;
+  for (let i = 0; i < 32; i++) {
     random = Math.random() * 16 | 0;
 
     if (i == 8 || i == 12 || i == 16 || i == 20) {
@@ -15,20 +16,52 @@ function generateUuid() {
   return uuid;
 }
 
-function ga(event) {
-  const xhr = new XMLHttpRequest();
-  const url = "http://www.google-analytics.com/collect";
-  let params = "v=1";
-  params += `&tid=${GA_TRACKING_ID}`;
-  params += `&cid=${CLIENT_ID}`;
-  params += `&t=${"event"}`;
-  params += `&ec=${event.category}`;
-  params += `&ea=${event.action}`;
-  params += `&el=${event.label}`;
-  params += `&z=${(1000000000 + Math.floor(Math.random() * (2147483647 - 1000000000)))}`;
+function buildParameter(event) {
+  const type = event.type || 'event';
+  let param = "v=1";
+  param += `&tid=${GA_TRACKING_ID}`;
+  param += `&cid=${CLIENT_ID}`;
+  param += `&t=${type}`;
+  param += `&z=${(1000000000 + Math.floor(Math.random() * (2147483647 - 1000000000)))}`;
 
+  if (event.category) {
+    param += `&ec=${event.category}`;
+  }
+
+  if (event.action) {
+    param += `&ea=${event.action}`;
+  }
+
+  if (event.label) {
+    param += `&el=${event.label}`;
+  }
+
+  if (event.page) {
+    param += `&dp=${event.page}`;
+  }
+
+  parameters.push(param);
+  updateInterval();
+}
+
+function sendAnalytics() {
+  const xhr = new XMLHttpRequest();
+  const url = "http://www.google-analytics.com/batch";
   xhr.open("POST", url, true);
-  xhr.send(params);
+  xhr.send(parameters.join('\n'));
+
+  // reset for next round of data
+  parameters = [];
+  window.clearInterval(intervalFn);
+}
+
+function updateInterval() {
+  window.clearInterval(intervalFn); // debounces
+  intervalFn = window.setInterval(() => {
+    if (parameters.length > 0) {
+      sendAnalytics();
+    }
+  }, analyticsSendInterval);
 }
 
 export default function(event) {
@@ -37,13 +70,13 @@ export default function(event) {
       if (items.apodUuid) {
         CLIENT_ID = items.apodUuid;
       } else {
-        const uuid = { apodUuid: generateUuid() };
-        chrome.storage.sync.set(uuid);
+        const uuid = generateUuid();
+        chrome.storage.sync.set({ apodUuid: uuid });
         CLIENT_ID = uuid;
       }
-      ga(event);
+      buildParameter(event);
     });
   } else {
-    ga(event);
+    buildParameter(event);
   }
 }
