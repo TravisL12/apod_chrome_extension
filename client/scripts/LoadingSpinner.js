@@ -62,6 +62,14 @@ class CubeLoader {
         `);
         this.currentSide = 0;
         this.sides = this.el.getElementsByClassName('side');
+
+        chrome.storage.sync.get(['apodFavorites'], favorites => {
+            if (favorites.apodFavorites) {
+                for(let favorite in favorites.apodFavorites) {
+                    this.updateBackground(favorites.apodFavorites[favorite].imgUrl);
+                }
+            }
+        });
     }
 
     updateBackground(url) {
