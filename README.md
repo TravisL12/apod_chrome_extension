@@ -5,6 +5,7 @@ I really love space and astronomy pictures and for about 10 or 15 years I've had
 So what did I do??? I built an extension to show me an APOD on every new tab I open!
 
 [Get the plug-in for Chrome!](https://chrome.google.com/webstore/detail/apod-by-the-trav/aedpginojmhafbemcoelnppdcmlfjcdj)
+
 [Get the plug-in for Firefox!](https://addons.mozilla.org/en-US/firefox/addon/apod-by-the-trav/)
 
 ## Description
