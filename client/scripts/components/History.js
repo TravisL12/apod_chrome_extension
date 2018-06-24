@@ -1,5 +1,3 @@
-import { loader } from '../../index';
-
 class History {
     constructor() {
         this.pastDates = [];
@@ -18,10 +16,6 @@ class History {
         if (this.checkDuplicateHistory(response)) {
             this.pastDates.push(response);
             this.currentIdx = this.pastDates.length - 1;
-            
-            if (this.pastDates[this.currentIdx - 1]) {
-                loader.updateBackground(this.pastDates[this.currentIdx - 1].url);
-            }
         }
     }
 

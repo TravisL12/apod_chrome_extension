@@ -18,7 +18,7 @@ import { $, randomizer } from './scripts/utilities';
 
 import './styles/style.scss';
 
-export const loader = new CubeLoader();
+export const loader = new SunLoader();
 $('#apod-loading').appendChild(loader.render());
 
 export const drawer = new Drawer('#apod-drawer');
