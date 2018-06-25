@@ -9,6 +9,7 @@
     @include sun-loader;
     @include moon-loader;
     @import 'apod_loading_cube';
+    @import 'apod_loading_floating';
 }
 
 .spin-loader {

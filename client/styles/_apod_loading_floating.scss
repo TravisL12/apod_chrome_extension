@@ -1,0 +1,22 @@
+$size-px: 200px;
+$light-black: #101010;
+
+
+.floating-history {
+    @include flexCenter;
+    position: relative;
+    perspective: 800px;
+    height: 100vh;
+    width: 100%;
+    background-color: $light-black;
+}
+
+.floating-image {
+    position: absolute;
+    transform-style: preserve-3d;
+    width: $size-px;
+    height: $size-px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform-origin: center center;
+}
