@@ -87,42 +87,4 @@ class CubeLoader {
     }
 }
 
-class FloatingHistoryLoader {
-    constructor() {
-        this.el = htmlToElements(`
-            <div class="floating-history"></div>
-        `);
-
-        chrome.storage.sync.get(['apodFavorites'], favorites => {
-            if (favorites.apodFavorites) {
-                for(let favorite in favorites.apodFavorites) {
-                    this.updateBackground(favorites.apodFavorites[favorite].imgUrl);
-                }
-            }
-        });
-    }
-
-    loadFloatingImage(url) {
-        const background = htmlToElements(`<div class="floating-image"></div>`)
-        background.style['background-image'] = `url(${url})`;
-        background.style['top'] = `${randomizer(100)}%`;
-        background.style['left'] = `${randomizer(100)}%`;
-        background.style['transform'] = `translateZ(-${randomizer(1000)}px)`;
-
-        this.el.appendChild(background);
-    }
-
-    updateBackground(url) {
-        const bgImg = new Image();
-        bgImg.src = url;
-        bgImg.onload = () => {
-            this.loadFloatingImage(url);
-        }
-    }
-
-    render() {
-        return this.el;
-    }
-}
-
-export { SunLoader, MoonLoader, CubeLoader, FloatingHistoryLoader };
+export { SunLoader, MoonLoader, CubeLoader };
