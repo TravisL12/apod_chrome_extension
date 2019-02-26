@@ -1,7 +1,14 @@
 import { $, clearElement } from "../utilities";
 import NavigationButton from "../NavigationButton";
 
-const TitleBar = {
+const Elements = {
+  // Initialize image & video elements
+  image: $("#apod-image"),
+  bgImage: $("#apod-image-vertical-bg"),
+  video: $("#apod-video"),
+  videoIFrame: $("#apod-video iframe"),
+  explanation: $(".apod__header .explanation"),
+
   // Initialize various elements
   title: $("#apod-title"),
   date: $("#apod-date"),
@@ -24,4 +31,4 @@ const TitleBar = {
   }
 };
 
-export default TitleBar;
+export default Elements;

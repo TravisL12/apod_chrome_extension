@@ -1,17 +1,10 @@
 import reqwest from "reqwest";
-import { $ } from "../utilities";
 import ga from "../utils/ga";
 import DateManager from "../DateManagement";
 import KnowMoreComponent from "./KnowMore";
 import { drawer } from "../../index.js";
 import History from "./History";
-import TitleBar from "./TitleBar";
-
-// Initialize image & video elements
-const apodImage = $("#apod-image");
-const apodBgImage = $("#apod-image-vertical-bg");
-const apodVideo = $("#apod-video");
-const apodVideoIFrame = $("#apod-video iframe");
+import Elements from "./Elements";
 
 function loadSettings() {
   // Fetch chrome storage settings from options and load
@@ -74,12 +67,12 @@ class Apod {
   }
 
   current() {
-    this.getApod();
+    this.getApod(DateManager.today);
   }
 
   addFadedBackground() {
-    apodBgImage.style["background-image"] = `url(${this.loadedImage.src})`;
-    apodBgImage.classList.remove("hide");
+    Elements.bgImage.style["background-image"] = `url(${this.loadedImage.src})`;
+    Elements.bgImage.classList.remove("hide");
   }
 
   backgroundSize() {
@@ -103,19 +96,19 @@ class Apod {
   }
 
   _setLoadingView() {
-    apodImage.style["background-image"] = "";
-    apodImage.style["background-size"] = "";
-    apodImage.classList.add("hide");
+    Elements.image.style["background-image"] = "";
+    Elements.image.style["background-size"] = "";
+    Elements.image.classList.add("hide");
 
-    apodVideo.classList.add("hide");
-    apodVideoIFrame.src = "";
+    Elements.video.classList.add("hide");
+    Elements.videoIFrame.src = "";
 
-    apodBgImage.style["background-image"] = "";
+    Elements.bgImage.style["background-image"] = "";
 
-    $(".apod__header .explanation").classList.add("hide");
-    TitleBar.hiResEl.classList.add("hide");
-    TitleBar.loading.classList.remove("hide");
-    TitleBar.clearKnowMore();
+    Elements.explanation.classList.add("hide");
+    Elements.hiResEl.classList.add("hide");
+    Elements.loading.classList.remove("hide");
+    Elements.clearKnowMore();
 
     drawer.closeDrawer();
     drawer.clearKnowMoreTabs();
@@ -130,7 +123,7 @@ class Apod {
     return this.isRequestInProgress;
   }
 
-  getApod(date = DateManager.today) {
+  getApod(date) {
     if (!this.isRequestValid()) {
       console.log("Request in Progress!");
       return;
@@ -161,11 +154,11 @@ class Apod {
     this.addToHistory = true;
     this.response = response;
     this.errorCount = 0;
-    this.populateTabs();
+    this.populateTabs(response);
 
     const isMediaImage = response.media_type === "image";
-    apodImage.classList.toggle("hide", !isMediaImage);
-    apodVideo.classList.toggle("hide", isMediaImage);
+    Elements.image.classList.toggle("hide", !isMediaImage);
+    Elements.video.classList.toggle("hide", isMediaImage);
 
     if (isMediaImage) {
       this.preLoadImage(this.hiResOnly);
@@ -183,25 +176,25 @@ class Apod {
     if (this.errorCount < this.errorLimit) {
       this.random();
     } else {
-      TitleBar.error.textContent =
+      Elements.error.textContent =
         "NASA APOD Error: Please reload or try Again Later";
     }
   }
 
-  populateTabs() {
+  populateTabs(response) {
     Object.assign(drawer.tabs[0], {
       urls: {
-        hdurl: this.response.hdurl,
-        url: this.response.url
+        hdurl: response.hdurl,
+        url: response.url
       },
-      explanation: this.response.explanation,
-      date: this.response.date
+      explanation: response.explanation,
+      date: response.date
     });
 
     Object.assign(drawer.tabs[1], {
-      date: this.response.date,
-      title: this.response.title,
-      url: this.response.url,
+      date: response.date,
+      title: response.title,
+      url: response.url,
       specificDate: this.specificDate.bind(this)
     });
     drawer.tabs[1].checkFavorite();
@@ -225,24 +218,25 @@ class Apod {
 
   preLoadImage(forceHighDef = false) {
     const Img = new Image();
+    const { hdurl, url } = this.response;
 
-    if (!/(jpg|jpeg|png|gif)$/i.test(this.response.hdurl)) {
-      Img.src = this.response.url;
+    if (!/(jpg|jpeg|png|gif)$/i.test(hdurl)) {
+      Img.src = url;
       this.isImageHD = false;
     } else {
-      Img.src = this.response.hdurl;
+      Img.src = hdurl;
       this.isImageHD = true;
     }
 
     // If the urls are identical just mark it HD
-    if (this.response.hdurl === this.response.url) {
-      Img.src = this.response.hdurl;
+    if (hdurl === url) {
+      Img.src = hdurl;
       this.isImageHD = true;
     }
 
     const timeout = setTimeout(() => {
       if (!Img.complete && !forceHighDef) {
-        Img.src = this.response.url;
+        Img.src = url;
         this.isImageHD = false;
       }
     }, this.delayForHdLoad);
@@ -254,33 +248,33 @@ class Apod {
     };
 
     Img.onerror = () => {
-      clearTimeout(timeout);
       console.log("Error: image load");
+      clearTimeout(timeout);
       this.isRequestInProgress = false;
       this.random();
     };
   }
 
   apodImage() {
-    apodImage.classList = "apod__image";
-    TitleBar.imgQualityEl.classList.remove("spin-loader");
+    Elements.image.classList = "apod__image";
+    Elements.imgQualityEl.classList.remove("spin-loader");
 
-    apodImage.style["background-image"] = `url(${this.loadedImage.src})`;
-    apodImage.classList.add(`bg-${this.backgroundSize()}`);
+    Elements.image.style["background-image"] = `url(${this.loadedImage.src})`;
+    Elements.image.classList.add(`bg-${this.backgroundSize()}`);
 
-    TitleBar.imgQualityEl.textContent = this.isImageHD ? "HD" : "SD";
+    Elements.imgQualityEl.textContent = this.isImageHD ? "HD" : "SD";
 
     if (!this.isImageHD) {
       const forceLoadHighDefImg = e => {
         this.isRequestInProgress = true;
-        TitleBar.hiResEl.classList.add("hide");
-        TitleBar.hiResEl.removeEventListener("click", forceLoadHighDefImg);
-        TitleBar.imgQualityEl.textContent = "";
-        TitleBar.imgQualityEl.classList.add("spin-loader");
+        Elements.hiResEl.classList.add("hide");
+        Elements.hiResEl.removeEventListener("click", forceLoadHighDefImg);
+        Elements.imgQualityEl.textContent = "";
+        Elements.imgQualityEl.classList.add("spin-loader");
         this.preLoadImage(true);
       };
-      TitleBar.hiResEl.classList.remove("hide");
-      TitleBar.hiResEl.addEventListener("click", forceLoadHighDefImg);
+      Elements.hiResEl.classList.remove("hide");
+      Elements.hiResEl.addEventListener("click", forceLoadHighDefImg);
     }
 
     this.constructApod();
@@ -295,32 +289,30 @@ class Apod {
 
     const url = new URL(this.response.url);
     url.search = "autopause=1&autoplay=0";
-    apodVideoIFrame.src = url.href;
+    Elements.videoIFrame.src = url.href;
     this.constructApod();
   }
 
   constructApod() {
-    this.isRequestInProgress = false;
-    document.title = this.response.title;
-    TitleBar.title.textContent = this.response.title;
-    TitleBar.date.textContent = DateManager.prettyDateFormat(
-      this.response.date
-    );
-    this.wouldYouLikeToKnowMore(
-      `${this.response.title} ${this.response.explanation}`
-    );
+    const { date, title, explanation } = this.response;
 
-    if (!DateManager.isInPast(this.response.date)) {
+    this.isRequestInProgress = false;
+    document.title = title;
+    Elements.title.textContent = title;
+    Elements.date.textContent = DateManager.prettyDateFormat(date);
+    this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
+
+    if (!DateManager.isInPast(date)) {
       this.isRequestInProgress = false;
       this.current();
     } else {
-      const isToday = DateManager.isToday(this.response.date);
-      TitleBar.navigation.current.el.classList.toggle("current", isToday);
-      TitleBar.navigation.next.el.classList.toggle("hide", isToday);
+      const isToday = DateManager.isToday(date);
+      Elements.navigation.current.el.classList.toggle("current", isToday);
+      Elements.navigation.next.el.classList.toggle("hide", isToday);
     }
 
-    TitleBar.loading.classList.add("hide");
-    $(".apod__header .explanation").classList.remove("hide");
+    Elements.loading.classList.add("hide");
+    Elements.explanation.classList.remove("hide");
   }
 }
 
