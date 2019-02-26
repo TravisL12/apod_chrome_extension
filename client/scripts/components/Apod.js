@@ -1,5 +1,5 @@
 import reqwest from "reqwest";
-import { $, clearElement } from "../utilities";
+import { $ } from "../utilities";
 import ga from "../utils/ga";
 import DateManager from "../DateManagement";
 import KnowMoreComponent from "./KnowMore";
@@ -107,14 +107,15 @@ class Apod {
     apodImage.style["background-size"] = "";
     apodImage.classList.add("hide");
 
-    apodBgImage.style["background-image"] = "";
     apodVideo.classList.add("hide");
     apodVideoIFrame.src = "";
+
+    apodBgImage.style["background-image"] = "";
 
     $(".apod__header .explanation").classList.add("hide");
     TitleBar.hiResEl.classList.add("hide");
     TitleBar.loading.classList.remove("hide");
-    clearElement(TitleBar.knowMore);
+    TitleBar.clearKnowMore();
 
     drawer.closeDrawer();
     drawer.clearKnowMoreTabs();
