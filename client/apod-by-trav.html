@@ -1,55 +1,53 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>APOD by The Trav</title>
-</head>
-<body>
+  <head>
+    <meta charset="utf-8" />
+    <title>APOD by The Trav</title>
+  </head>
+  <body>
+    <div class="apod__header">
+      <div class="apod__top-sites" id="topSites"></div>
 
-  <div class='apod__header'>
-    <div class='apod__top-sites' id='topSites'></div>
+      <div class="explanation hide">
+        <div class="title">
+          <h2 id="apod-date"></h2>
+          <h1 id="apod-title"></h1>
+          <span id="img-quality"></span>
+        </div>
 
-    <div class='explanation hide'>
-
-      <div class='title'>
-        <h2 id='apod-date'></h2>
-        <h1 id='apod-title'></h1><span id='img-quality'></span>
+        <ul class="nav-buttons">
+          <li id="apod-current">Today</li>
+          <li id="apod-random">Random</li>
+          <li id="apod-previous">Previous</li>
+          <li id="apod-next">Next</li>
+          <li id="add-favorite">
+            <span class="not-favorite">Save</span>
+            <span class="favorite hide">Favorite</span>
+          </li>
+          <li class="hide" id="show-hi-res">Force HD</li>
+        </ul>
       </div>
-
-      <ul class='nav-buttons'>
-        <li id='apod-current'>Today</li>
-        <li id='apod-random'>Random</li>
-        <li id='apod-previous'>Previous</li>
-        <li id='apod-next'>Next</li>
-        <li id='add-favorite'>
-          <span class='not-favorite'>Save</span>
-          <span class='favorite hide'>Favorite</span>
-        </li>
-        <li class='hide' id='show-hi-res'>Force HD</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class='apod__loading' id='apod-loading'></div>
-  <div class='apod__error' id='apod-error'></div>
-  <div class='cover-vertical bg-cover' id='apod-image-vertical-bg'></div>
-  <div class='apod__image' id='apod-image'></div>
-  <div class='apod__video' id='apod-video'>
-    <iframe width='960' height='540' frameborder='0'></iframe>
-  </div>
-
-  <div class='apod__drawer' id='apod-drawer'>
-    <div class='apod__drawer-tabs'>
-      <div class='default-tabs'>
-        <div class='tab' id='tab-favorites'>Favorites</div>
-        <div class='tab' id='tab-explanation'>Explanation</div>
-      </div>
-
-      <div class='apod__know-more' id='know-more-tabs'></div>
     </div>
 
-    <div class='apod__drawer-view'></div>
-  </div>
+    <div class="apod__loading" id="apod-loading"></div>
+    <div class="apod__error" id="apod-error"></div>
+    <div class="cover-vertical bg-cover" id="apod-image-vertical-bg"></div>
+    <div class="apod__image" id="apod-image"></div>
+    <div class="apod__video" id="apod-video">
+      <iframe width="960" height="540" frameborder="0"></iframe>
+    </div>
 
-</body>
+    <div class="apod__drawer" id="apod-drawer">
+      <div class="apod__drawer-tabs">
+        <div class="default-tabs">
+          <div class="tab" id="tab-favorites">Favorites</div>
+          <div class="tab" id="tab-explanation">Explanation</div>
+        </div>
+
+        <div class="apod__know-more" id="know-more-tabs"></div>
+      </div>
+
+      <div class="apod__drawer-view"></div>
+    </div>
+  </body>
 </html>
