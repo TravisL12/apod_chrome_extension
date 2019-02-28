@@ -106,7 +106,7 @@ class Apod {
     Elements.bgImage.style["background-image"] = "";
 
     Elements.explanation.classList.add("hide");
-    Elements.hiResEl.classList.add("hide");
+    Elements.showHiRes.classList.add("hide");
     Elements.loading.classList.remove("hide");
     Elements.clearKnowMore();
 
@@ -257,24 +257,24 @@ class Apod {
 
   apodImage() {
     Elements.image.classList = "apod__image";
-    Elements.imgQualityEl.classList.remove("spin-loader");
+    Elements.imgQuality.classList.remove("spin-loader");
 
     Elements.image.style["background-image"] = `url(${this.loadedImage.src})`;
     Elements.image.classList.add(`bg-${this.backgroundSize()}`);
 
-    Elements.imgQualityEl.textContent = this.isImageHD ? "HD" : "SD";
+    Elements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
 
     if (!this.isImageHD) {
       const forceLoadHighDefImg = e => {
         this.isRequestInProgress = true;
-        Elements.hiResEl.classList.add("hide");
-        Elements.hiResEl.removeEventListener("click", forceLoadHighDefImg);
-        Elements.imgQualityEl.textContent = "";
-        Elements.imgQualityEl.classList.add("spin-loader");
+        Elements.showHiRes.classList.add("hide");
+        Elements.showHiRes.removeEventListener("click", forceLoadHighDefImg);
+        Elements.imgQuality.textContent = "";
+        Elements.imgQuality.classList.add("spin-loader");
         this.preLoadImage(true);
       };
-      Elements.hiResEl.classList.remove("hide");
-      Elements.hiResEl.addEventListener("click", forceLoadHighDefImg);
+      Elements.showHiRes.classList.remove("hide");
+      Elements.showHiRes.addEventListener("click", forceLoadHighDefImg);
     }
 
     this.constructApod();

@@ -14,8 +14,8 @@ const Elements = {
   date: $("#apod-date"),
   loading: $("#apod-loading"),
   error: $("#apod-error"),
-  imgQualityEl: $("#img-quality"),
-  hiResEl: $(".nav-buttons #show-hi-res"),
+  imgQuality: $("#img-quality"),
+  showHiRes: $(".nav-buttons #show-hi-res"),
 
   // Initialize button objects
   navigation: {

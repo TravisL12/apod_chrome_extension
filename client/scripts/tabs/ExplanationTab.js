@@ -36,10 +36,10 @@ export default class ExplanationTab extends DrawerTab {
   }
 
   /**
-     * Build filename for APOD site: ap170111.html
-     *
-     * @return {String} "2011-02-15"
-     */
+   * Build filename for APOD site: ap170111.html
+   *
+   * @return {String} "2011-02-15"
+   */
   apodSource() {
     const date = this.date.split("-");
     return `ap${date[0].slice(-2)}${zeroPad(date[1])}${zeroPad(date[2])}.html`;
@@ -54,10 +54,10 @@ export default class ExplanationTab extends DrawerTab {
   }
 
   render() {
-    const apodOrigin = this.baseView.querySelector("#apod-origin");
-    const apodHiRes = this.baseView.querySelector("#apod-hires");
-    const apodLowRes = this.baseView.querySelector("#apod-lowres");
-    const apodExplanation = $("#apod-explanation");
+    const origin = this.baseView.querySelector("#apod-origin");
+    const hiRes = this.baseView.querySelector("#apod-hires");
+    const lowRes = this.baseView.querySelector("#apod-lowres");
+    const explanation = $("#apod-explanation");
     clearElement(apodExplanation);
 
     $(".external-links").addEventListener("click", e => {
@@ -68,13 +68,13 @@ export default class ExplanationTab extends DrawerTab {
       });
     });
 
-    apodOrigin.setAttribute(
+    origin.setAttribute(
       "href",
-      "https://apod.nasa.gov/apod/" + this.apodSource()
+      `https://apod.nasa.gov/apod/${this.apodSource()}`
     );
-    apodHiRes.setAttribute("href", this.urls.hdurl);
-    apodLowRes.setAttribute("href", this.urls.url);
-    apodExplanation.appendChild(htmlToElements(this.explanation, true));
+    hiRes.setAttribute("href", this.urls.hdurl);
+    lowRes.setAttribute("href", this.urls.url);
+    explanation.appendChild(htmlToElements(this.explanation, true));
 
     this.knowMoreKeywordListeners();
   }

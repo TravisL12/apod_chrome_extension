@@ -1,20 +1,19 @@
-import { monthNames } from "./utilities";
 /**
-     * Formats the Date "2017-01-31"
-     *
-     * @param  {Date}
-     * @return {string}
-     */
+ * Formats the Date "2017-01-31"
+ *
+ * @param  {Date}
+ * @return {string}
+ */
 function _hyphenDateFormat(date = new Date()) {
   return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
 }
 
 /**
-     * Gives the actual date (with timezone) at midnight
-     *
-     * @param  {string} date
-     * @return {Date}
-     */
+ * Gives the actual date (with timezone) at midnight
+ *
+ * @param  {string} date
+ * @return {Date}
+ */
 function _actualDate(date) {
   let split = date.split("-");
   return new Date(split[0], split[1] - 1, split[2]);
@@ -24,22 +23,17 @@ function _getToday() {
   return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
 }
 
-const _monthNames = monthNames.full;
-
 export default {
   get today() {
     return _getToday();
   },
 
   prettyDateFormat(date) {
-    date = _actualDate(date);
-    return (
-      _monthNames[date.getMonth()] +
-      " " +
-      date.getDate() +
-      ", " +
-      date.getFullYear()
-    );
+    return _actualDate(date).toLocaleDateString("en", {
+      year: "numeric",
+      month: "long",
+      day: "numeric"
+    });
   },
 
   adjacentDate(dateString, direction) {

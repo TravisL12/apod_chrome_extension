@@ -1,20 +1,33 @@
-import { $, monthNames } from "../utilities";
+import { $ } from "../utilities";
 import ga from "../utils/ga";
 import DateManager from "../DateManagement";
 import { apod } from "../../index";
 
-const _monthNames = monthNames.short;
 const startYear = 1995;
 const currentYear = new Date().getFullYear();
 const yearDif = currentYear - startYear;
 const yearRange = Array.from(new Array(yearDif + 1), (x, i) => i + startYear);
+const monthNames = [
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "July",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec"
+];
 
 class DatePickerComponent {
   constructor(el) {
     this.el = $(el);
     this.submitBtn = $("button.date-submit");
     this.dayWheel = new DateWheel("day-wheel", 31);
-    this.monthWheel = new DateWheel("month-wheel", _monthNames);
+    this.monthWheel = new DateWheel("month-wheel", monthNames);
     this.yearWheel = new DateWheel("year-wheel", yearRange);
 
     this.el.appendChild(this.dayWheel.render());
@@ -73,7 +86,7 @@ class DateWheel {
     this.el.addEventListener("mousewheel", e => {
       if (!wheelSpin && Math.abs(e.deltaY) > wheelTriggerSpeed) {
         const direction = e.deltaY < 0 ? 1 : -1;
-        this.currentRotationDeg += 360 / this.amount * direction;
+        this.currentRotationDeg += (360 / this.amount) * direction;
         this.updateAngle();
         wheelSpin = true;
 
@@ -136,7 +149,7 @@ class DateWheel {
 
   setDate(value) {
     this.currentDate = value;
-    this.currentRotationDeg = -(value / this.amount * 360) + 45;
+    this.currentRotationDeg = -((value / this.amount) * 360) + 45;
     this.updateAngle();
   }
 
