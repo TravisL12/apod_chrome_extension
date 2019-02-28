@@ -58,7 +58,7 @@ export default class ExplanationTab extends DrawerTab {
     const hiRes = this.baseView.querySelector("#apod-hires");
     const lowRes = this.baseView.querySelector("#apod-lowres");
     const explanation = $("#apod-explanation");
-    clearElement(apodExplanation);
+    clearElement(explanation);
 
     $(".external-links").addEventListener("click", e => {
       ga({
