@@ -1,8 +1,8 @@
-import '../styles/options.scss';
+import "../styles/options.scss";
 
 class ApodOptions {
-  constructor () {
-    this.form = document.getElementById('apod-options');
+  constructor() {
+    this.form = document.getElementById("apod-options");
     this.restoreOptions();
   }
 
@@ -12,29 +12,38 @@ class ApodOptions {
   }
 
   saveApodType() {
-    this.save({apodType: this.form['choose-apod'].value});
+    this.save({ apodType: this.form["choose-apod"].value });
   }
 
   saveHiResOnly() {
-    this.save({hiResOnly: this.form['high-res-only'].checked});
+    this.save({ hiResOnly: this.form["high-res-only"].checked });
   }
 
   restoreOptions() {
-    chrome.storage.sync.get(['apodType', 'hiResOnly'], (items) => {
+    chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
       let type = items.apodType;
       if (!type) {
-        type = 'today';
+        type = "today";
         chrome.storage.sync.set({
-          apodType: type,
+          apodType: type
         });
       }
       this.form[type].checked = true;
-      this.form['high-res-only'].checked = items.hiResOnly;
-      this.form['choose-apod'][0].addEventListener('change', this.saveApodType.bind(this));
-      this.form['choose-apod'][1].addEventListener('change', this.saveApodType.bind(this));
-      this.form['high-res-only'].addEventListener('change', this.saveHiResOnly.bind(this));
+      this.form["high-res-only"].checked = items.hiResOnly;
+      this.form["choose-apod"][0].addEventListener(
+        "change",
+        this.saveApodType.bind(this)
+      );
+      this.form["choose-apod"][1].addEventListener(
+        "change",
+        this.saveApodType.bind(this)
+      );
+      this.form["high-res-only"].addEventListener(
+        "change",
+        this.saveHiResOnly.bind(this)
+      );
     });
   }
 }
 
-const options = new ApodOptions();
+new ApodOptions();

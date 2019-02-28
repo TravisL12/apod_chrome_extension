@@ -1,223 +1,205 @@
-@import 'variables';
-@import 'drawer';
+@import "variables";
+@import "drawer";
 
 .hide {
-    @extend %hide;
+  @extend %hide;
 }
 
 .apod__loading {
-    @include sun-loader;
-    @include moon-loader;
-    @import 'apod_loading_cube';
+  @include sun-loader;
+  @include moon-loader;
+  @import "apod_loading_cube";
 }
 
 .spin-loader {
-    width: 16px;
-    height: 16px;
-    background: url('/images/ajax-loader-black.gif');
-    background-size: contain;
-    background-repeat: no-repeat;
+  width: 16px;
+  height: 16px;
+  background: url("/images/ajax-loader-black.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
 }
 
 body {
-    background: black;
-    margin: 0;
-    overflow: hidden;
-    width: 100%;
-    height: 100%;
+  background: black;
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
 }
 
 .bg-contain {
-    background-size: contain;
+  background-size: contain;
 }
 
 .bg-cover {
-    background-size: cover;
+  background-size: cover;
 }
 
 .bg-auto {
-    background-size: auto;
+  background-size: auto;
 }
 
 .cover-vertical {
-    opacity: 0.3;
-    position: absolute;
-    top: 0;
-    height: 100%;
-    width: 100%;
-    background-position: 50%;
-    background-repeat: no-repeat;
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-position: 50%;
+  background-repeat: no-repeat;
 }
 
 .apod__error {
-    @extend %center-div;
-    color: white;
-    font-size: 18px;
-    margin-top: 200px;
-    text-align: center;
+  @extend %center-div;
+  color: white;
+  font-size: 18px;
+  margin-top: 200px;
+  text-align: center;
 }
 
 .apod__header {
-    position: absolute;
-    top: 15px;
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
+  position: absolute;
+  top: 15px;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0 20px;
+  z-index: 1000;
+
+  h1 {
+    @include helvetica-neue-light;
+    display: inline-block;
+    margin: 0;
+  }
+
+  h2 {
+    @include helvetica-neue-light;
+    margin: 0;
+    color: #757575;
+  }
+
+  .explanation {
+    $explanation-width: 400px;
+    @include helvetica-neue-light;
+    width: auto;
+    min-width: $explanation-width;
     box-sizing: border-box;
-    padding: 0 20px;
-    z-index: 1000;
+    color: white;
+    padding: 10px 20px;
+    transition: 0.2s ease-out opacity, 0.2s linear background-color;
 
-    h1 {
-        @include helvetica-neue-light;
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.6);
+    }
+
+    .title {
+      position: relative;
+
+      #img-quality {
         display: inline-block;
-        margin: 0;
-    }
-
-    h2 {
-        @include helvetica-neue-light;
-        margin: 0;
+        font-size: 14px;
         color: #757575;
+        margin-left: 10px;
+      }
     }
 
-    .explanation {
-        $explanation-width: 400px;
-        @include helvetica-neue-light;
-        width: auto;
-        min-width: $explanation-width;
-        box-sizing: border-box;
-        color: white;
-        padding: 10px 20px;
-        transition: 0.2s ease-out opacity,
-        0.2s linear background-color;
+    .nav-buttons {
+      float: right;
+      width: $explanation-width;
+
+      li {
+        margin-right: 15px;
+        color: $light-gray;
+        transition: 0.2s linear background-color;
+        cursor: pointer;
+        font-size: 12px;
+
+        &.hide {
+          @extend %hide-display;
+        }
+
+        &.current,
+        span.favorite {
+          color: $highlight-blue;
+          font-weight: 600;
+        }
+
+        span.hide {
+          @extend %hide-display;
+        }
+
+        &.hover,
+        &:hover {
+          color: lighten($gray, 20%);
+        }
+
+        &:active {
+          color: gold;
+        }
+      }
+    }
+  }
+
+  .apod__top-sites {
+    padding-top: 10px;
+    ul {
+      display: flex;
+      justify-content: space-between;
+      width: 450px;
+
+      li {
+        position: relative;
+        @include flexCenter;
+        flex-direction: column;
+        cursor: pointer;
+
+        a {
+          @include apod-button;
+          background-color: transparent;
+          display: inline-block;
+          padding: 6px;
+
+          .thumb-img {
+            width: 16px;
+            height: 16px;
+            display: block;
+          }
+        }
 
         &:hover {
-            background-color: rgba(0,0,0,0.6);
+          a {
+            background-color: $light-gray;
+          }
         }
-
-        .title {
-            position: relative;
-
-            #img-quality {
-                display: inline-block;
-                font-size: 14px;
-                color: #757575;
-                margin-left: 10px;
-            }
-        }
-
-        .nav-buttons {
-            float: right;
-            width: $explanation-width;
-
-            li {
-                margin-right: 15px;
-                color: $light-gray;
-                transition: 0.2s linear background-color;
-                cursor: pointer;
-                font-size: 12px;
-
-                &.hide {
-                    @extend %hide-display;
-                }
-
-                &.current,
-                span.favorite {
-                    color: $highlight-blue;
-                    font-weight: 600;
-                }
-
-                span.hide {
-                    @extend %hide-display;
-                }
-
-                &.hover,
-                &:hover {
-                    color: lighten($gray, 20%);
-                }
-
-                &:active {
-                    color: gold;
-                }
-            }
-        }
+      }
     }
-
-    .apod__top-sites {
-        padding-top: 10px;
-        ul {
-            display: flex;
-            justify-content: space-between;
-            width: 450px;
-
-            li {
-                position: relative;
-                @include flexCenter;
-                flex-direction: column;
-                cursor: pointer;
-
-                a {
-                    @include apod-button;
-                    background-color: transparent;
-                    display: inline-block;
-                    padding: 6px;
-
-                    .thumb-img{
-                        width: 16px;
-                        height: 16px;
-                        display: block;
-                    }
-                }
-
-                .delete-top-site {
-                    @include flexCenter;
-                    position: absolute;
-                    top: -20px;
-                    opacity: 0;
-                    color: $light-gray;
-                    font-size: 18px;
-                    transition: 0.15s linear opacity;
-                    font-weight: 100;
-                    &:hover {
-                        color: red;
-                        font-weight: 600;
-                    }
-                }
-                &:hover {
-                    a {
-                        background-color: $light-gray;
-                    }
-                    .delete-top-site {
-                        opacity: 1;
-                    }
-                }
-            }
-        }
-    }
+  }
 }
 
 .apod__image,
 .apod__video {
-    @include flexCenter;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
+  @include flexCenter;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
 
-    &.hide {
-        @extend %hide-display;
-    }
+  &.hide {
+    @extend %hide-display;
+  }
 }
 
 .apod__image {
-    background-position: center center;
-    background-repeat: no-repeat;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 .keyword {
-    color: $highlight-blue;
-    font-weight: bold;
-    cursor: pointer;
-    &:hover {
-        text-decoration: underline;
-    }
+  color: $highlight-blue;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
 }
