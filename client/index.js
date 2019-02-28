@@ -11,16 +11,16 @@
 import Apod from "./scripts/components/Apod";
 import Drawer from "./scripts/components/Drawer";
 import topSites from "./scripts/utils/buildTopSites";
-import { SunLoader, MoonLoader, CubeLoader } from "./scripts/LoadingSpinner";
+import { SunLoader, MoonLoader } from "./scripts/LoadingSpinner";
 import ExplanationTab from "./scripts/tabs/ExplanationTab";
 import FavoritesTab from "./scripts/tabs/FavoritesTab";
-import { $, randomizer } from "./scripts/utilities";
+import { $ } from "./scripts/utilities";
 
 import "./styles/style.scss";
 
 export const apod = new Apod();
-export const loader = new SunLoader();
 export const drawer = new Drawer("#apod-drawer");
+const loader = new SunLoader();
 
 $("#apod-loading").appendChild(loader.render());
 drawer.tabs.push(

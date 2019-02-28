@@ -1,5 +1,4 @@
-import History from "./components/History";
-import { $, randomizer, htmlToElements } from "./utilities";
+import { htmlToElements } from "./utilities";
 
 class SunLoader {
   constructor() {
@@ -50,45 +49,4 @@ class MoonLoader {
   }
 }
 
-class CubeLoader {
-  constructor() {
-    this.el = htmlToElements(`
-            <div class="scene">
-              <div class="cube">
-                <div class="side back"></div>
-                <div class="side left"></div>
-                <div class="side right"></div>
-                <div class="side top"></div>
-                <div class="side bottom"></div>
-                <div class="side front"></div>
-              </div>
-            </div>
-        `);
-    this.currentSide = 0;
-    this.sides = this.el.getElementsByClassName("side");
-
-    chrome.storage.sync.get(["apodFavorites"], favorites => {
-      if (favorites.apodFavorites) {
-        for (let favorite in favorites.apodFavorites) {
-          this.updateBackground(favorites.apodFavorites[favorite].imgUrl);
-        }
-      }
-    });
-  }
-
-  updateBackground(url) {
-    this.sides[this.currentSide].style["background-image"] = `url(${url})`;
-
-    if (this.currentSide < this.sides.length - 1) {
-      this.currentSide += 1;
-    } else {
-      this.currentSide = 0;
-    }
-  }
-
-  render() {
-    return this.el;
-  }
-}
-
-export { SunLoader, MoonLoader, CubeLoader };
+export { SunLoader, MoonLoader };
