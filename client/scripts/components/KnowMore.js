@@ -102,10 +102,7 @@ class KnowMoreComponent {
   buildLinkId(result) {
     let id =
       "know-more-tab-" +
-      result.title
-        .replace(/[\s-_.'"]/gi, "")
-        .toLowerCase()
-        .slice(0, 10);
+      result.title.replace(/[\s-_.'"]/gi, "").toLowerCase().slice(0, 10);
     let isIdUsed = $("#" + id);
 
     return id;

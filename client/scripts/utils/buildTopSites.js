@@ -1,10 +1,10 @@
-import { $, htmlToElements, clearElement } from '../utilities';
+import { $, htmlToElements, clearElement } from "../utilities";
 
 function buildPopupDom(data) {
-  const popupDiv = $('#topSites');
+  const popupDiv = $("#topSites");
   clearElement(popupDiv);
-  
-  const ul = document.createElement('ul');
+
+  const ul = document.createElement("ul");
   popupDiv.appendChild(ul);
 
   for (var i = 0, ie = data.length; i < ie; ++i) {
