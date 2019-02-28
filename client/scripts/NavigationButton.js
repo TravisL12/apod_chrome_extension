@@ -1,9 +1,8 @@
-import { $ } from "./utilities";
-import ga from "./utils/ga";
-import { apod } from "../index";
+import { $ } from "./utilities/";
+import ga from "./utilities/ga";
 
 class NavigationButton {
-  constructor(el, keycode, action) {
+  constructor(el, keycode, action, apod) {
     this.el = $(el);
     this.keycode = keycode;
     this.action = action;

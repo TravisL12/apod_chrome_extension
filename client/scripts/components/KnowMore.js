@@ -1,6 +1,6 @@
 import reqwest from "reqwest";
-import { $, htmlToElements } from "../utilities";
-import ga from "../utils/ga";
+import { $, htmlToElements } from "../utilities/";
+import ga from "../utilities/ga";
 import celestialDictionary from "../CelestialDictionary";
 import imageDictionary from "../ImageDictionary";
 import KnowMoreTab from "../tabs/KnowMoreTab";
@@ -102,7 +102,10 @@ class KnowMoreComponent {
   buildLinkId(result) {
     let id =
       "know-more-tab-" +
-      result.title.replace(/[\s-_.'"]/gi, "").toLowerCase().slice(0, 10);
+      result.title
+        .replace(/[\s-_.'"]/gi, "")
+        .toLowerCase()
+        .slice(0, 10);
     let isIdUsed = $("#" + id);
 
     return id;

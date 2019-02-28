@@ -1,22 +1,11 @@
 import reqwest from "reqwest";
-import ga from "../utils/ga";
+import ga from "../utilities/ga";
 import DateManager from "../DateManagement";
 import KnowMoreComponent from "./KnowMore";
 import { drawer } from "../../index.js";
 import History from "./History";
+import NavigationButton from "../NavigationButton";
 import Elements from "./Elements";
-
-function loadSettings() {
-  // Fetch chrome storage settings from options and load
-  chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
-    if (items.hiResOnly) {
-      this.hiResOnly = true;
-    }
-    ga({ type: "pageview", category: "v2.3.2", page: "apod-by-trav" });
-    const apodOptionType = items.apodType || "today";
-    apodOptionType == "today" ? this.current() : this.random();
-  });
-}
 
 class Apod {
   constructor() {
@@ -47,7 +36,24 @@ class Apod {
         }
       }
     });
-    loadSettings.call(this);
+
+    // Initialize button objects
+    this.navigation = {
+      random: new NavigationButton(".nav-buttons .random", 82, "random", this),
+      previous: new NavigationButton(
+        ".nav-buttons .previous",
+        74,
+        "previous",
+        this
+      ),
+      current: new NavigationButton(
+        ".nav-buttons .current",
+        84,
+        "current",
+        this
+      ),
+      next: new NavigationButton(".nav-buttons .next", 75, "next", this)
+    };
   }
 
   specificDate(date) {
@@ -307,8 +313,8 @@ class Apod {
       this.current();
     } else {
       const isToday = DateManager.isToday(date);
-      Elements.navigation.current.el.classList.toggle("current", isToday);
-      Elements.navigation.next.el.classList.toggle("hide", isToday);
+      this.navigation.current.el.classList.toggle("current", isToday);
+      this.navigation.next.el.classList.toggle("hide", isToday);
     }
 
     Elements.loading.classList.add("hide");

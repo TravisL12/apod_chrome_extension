@@ -1,4 +1,4 @@
-import { clearElement, htmlToElements } from "../utilities";
+import { clearElement, htmlToElements } from "../utilities/";
 import DrawerTab from "./DrawerTab";
 import { SunLoader } from "../LoadingSpinner";
 

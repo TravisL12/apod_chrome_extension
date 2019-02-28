@@ -1,4 +1,4 @@
-import { $, clearElement, htmlToElements } from "../utilities";
+import { $, clearElement, htmlToElements } from "../utilities/";
 import DrawerTab from "./DrawerTab";
 import DateManager from "../DateManagement";
 
@@ -82,8 +82,9 @@ export default class FavoritesTab extends DrawerTab {
                         <p class='favorite__title-date'>${DateManager.prettyDateFormat(
                           date
                         )}</p>
-                        <p class='favorite__title-title'>${this.favorites[date]
-                          .title}</p>
+                        <p class='favorite__title-title'>${
+                          this.favorites[date].title
+                        }</p>
                     </div>
                     <div class='remove-favorite'>Remove</div>
                 </li>`

@@ -1,5 +1,5 @@
-import { $, clearElement, htmlToElements, zeroPad } from "../utilities";
-import ga from "../utils/ga";
+import { $, clearElement, htmlToElements, zeroPad } from "../utilities/";
+import ga from "../utilities/ga";
 import DrawerTab from "./DrawerTab";
 
 export default class ExplanationTab extends DrawerTab {

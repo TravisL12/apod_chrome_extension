@@ -1,4 +1,4 @@
-import { $, clearElement } from "../utilities";
+import { $, clearElement } from "../utilities/";
 import { drawer } from "../../index";
 
 export default class DrawerTab {
