@@ -167,26 +167,9 @@ body {
           }
         }
 
-        .delete-top-site {
-          @include flexCenter;
-          position: absolute;
-          top: -20px;
-          opacity: 0;
-          color: $light-gray;
-          font-size: 18px;
-          transition: 0.15s linear opacity;
-          font-weight: 100;
-          &:hover {
-            color: red;
-            font-weight: 600;
-          }
-        }
         &:hover {
           a {
             background-color: $light-gray;
-          }
-          .delete-top-site {
-            opacity: 1;
           }
         }
       }

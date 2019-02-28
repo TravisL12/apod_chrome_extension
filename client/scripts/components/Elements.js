@@ -19,10 +19,10 @@ const Elements = {
 
   // Initialize button objects
   navigation: {
-    random: new NavigationButton("#apod-random", 82, "random"),
-    previous: new NavigationButton("#apod-previous", 74, "previous"),
-    current: new NavigationButton("#apod-current", 84, "current"),
-    next: new NavigationButton("#apod-next", 75, "next")
+    random: new NavigationButton(".nav-buttons .random", 82, "random"),
+    previous: new NavigationButton(".nav-buttons .previous", 74, "previous"),
+    current: new NavigationButton(".nav-buttons .current", 84, "current"),
+    next: new NavigationButton(".nav-buttons .next", 75, "next")
   },
 
   clearKnowMore: () => {
