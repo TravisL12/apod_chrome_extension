@@ -1,4 +1,4 @@
-import { monthNames } from './utilities';
+import { monthNames } from "./utilities";
 /**
      * Formats the Date "2017-01-31"
      *
@@ -6,7 +6,7 @@ import { monthNames } from './utilities';
      * @return {string}
      */
 function _hyphenDateFormat(date = new Date()) {
-  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join('-');
+  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
 }
 
 /**
@@ -16,7 +16,7 @@ function _hyphenDateFormat(date = new Date()) {
      * @return {Date}
      */
 function _actualDate(date) {
-  let split = date.split('-');
+  let split = date.split("-");
   return new Date(split[0], split[1] - 1, split[2]);
 }
 
@@ -33,7 +33,13 @@ export default {
 
   prettyDateFormat(date) {
     date = _actualDate(date);
-    return _monthNames[date.getMonth()] + ' ' + date.getDate() + ', ' + date.getFullYear();
+    return (
+      _monthNames[date.getMonth()] +
+      " " +
+      date.getDate() +
+      ", " +
+      date.getFullYear()
+    );
   },
 
   adjacentDate(dateString, direction) {
@@ -47,7 +53,9 @@ export default {
   randomDate() {
     let start = new Date(1995, 5, 16),
       end = new Date(),
-      date = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+      date = new Date(
+        start.getTime() + Math.random() * (end.getTime() - start.getTime())
+      );
 
     return _hyphenDateFormat(date);
   },
@@ -63,5 +71,5 @@ export default {
   isDateValid(date) {
     date = date || _getToday();
     return this.isInPast(date);
-  },
+  }
 };

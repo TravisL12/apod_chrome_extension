@@ -8,7 +8,7 @@ export function randomizer(max, min) {
 
 // Zero pad dates
 export function zeroPad(num) {
-  num = '0' + num.toString();
+  num = "0" + num.toString();
   return num.slice(-2);
 }
 
@@ -19,9 +19,9 @@ export function $(el) {
 
 // Alternative to innerHTML
 export function htmlToElements(html, wrap) {
-  const template = document.createElement('template');
-  let wrapElement = 'div';
-  if (typeof wrap === 'string') {
+  const template = document.createElement("template");
+  let wrapElement = "div";
+  if (typeof wrap === "string") {
     wrapElement = wrap;
   }
   template.innerHTML = wrap ? `<${wrapElement}>${html}</${wrapElement}>` : html;
@@ -35,19 +35,32 @@ export function clearElement(el) {
 }
 
 export const monthNames = {
-  short: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'July', 'Aug', 'Sept', 'Oct', 'Nov', 'Dec'],
-  full: [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
+  short: [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "July",
+    "Aug",
+    "Sept",
+    "Oct",
+    "Nov",
+    "Dec"
   ],
+  full: [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December"
+  ]
 };
