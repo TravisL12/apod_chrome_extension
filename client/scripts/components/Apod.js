@@ -209,7 +209,7 @@ class Apod {
 
   wouldYouLikeToKnowMore(text) {
     const knowMore = new KnowMoreComponent(text, this.drawer);
-    const results = knowMore.results;
+    const { results } = knowMore;
 
     if (results.length) {
       // Don't draw duplicate tabs beyond the default tabs (i.e. Explanation and Favorite tabs)

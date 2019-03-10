@@ -19,16 +19,6 @@ export default class DrawerTab {
     }
   }
 
-  render() {
-    this.baseView.appendChild(this.template);
-  }
-
-  clearDrawer() {
-    while (this.baseView.firstChild) {
-      this.baseView.removeChild(this.baseView.firstChild);
-    }
-  }
-
   openTab() {
     clearElement(this.baseView);
     this.baseView.appendChild(this.template);

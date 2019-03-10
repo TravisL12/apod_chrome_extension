@@ -12,7 +12,7 @@ import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
 import { $ } from "./scripts/utilities/";
 import ga from "./scripts/utilities/ga";
-import { SunLoader, MoonLoader } from "./scripts/LoadingSpinner";
+import { SunLoader } from "./scripts/LoadingSpinner";
 
 import "./styles/style.scss";
 
