@@ -10,16 +10,13 @@
 
 import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
-import { $ } from "./scripts/utilities/";
 import ga from "./scripts/utilities/ga";
 import { SunLoader } from "./scripts/LoadingSpinner";
 
 import "./styles/style.scss";
 
 const apod = new Apod();
-const loader = new SunLoader();
-
-$("#apod-loading").appendChild(loader.render());
+new SunLoader("#apod-loading");
 
 document.addEventListener("DOMContentLoaded", function() {
   topSites();
@@ -33,10 +30,8 @@ chrome.storage.onChanged.addListener((changes, name) => {
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
-  if (items.hiResOnly) {
-    apod.hiResOnly = true;
-  }
   ga({ type: "pageview", category: "v2.3.2", page: "apod-by-trav" });
+  apod.hiResOnly = items.hiResOnly;
   const apodOptionType = items.apodType || "today";
-  apodOptionType == "today" ? apod.current() : apod.random();
+  apodOptionType === "today" ? apod.current() : apod.random();
 });

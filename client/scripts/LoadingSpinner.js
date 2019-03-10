@@ -1,9 +1,11 @@
 import { htmlToElements } from "./utilities/";
+import { $ } from "./utilities/";
 
 class SunLoader {
-  constructor() {
+  constructor(el) {
     this.bigRayCount = 12;
     this.littleRayCount = 8;
+    this.el = $(el);
     this.template = `
             <div class='sun-container'>
                 <div class='rays-big' id='big-rays'>${this.buildRays(
@@ -14,6 +16,7 @@ class SunLoader {
                 )}</div>
                 <div class='sun-light'></div>
             </div>`;
+    this.el.appendChild(this.render());
   }
 
   buildRays(num) {
