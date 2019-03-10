@@ -1,10 +1,16 @@
 import { $ } from "../utilities/";
+import ExplanationTab from "../tabs/ExplanationTab";
+import FavoritesTab from "../tabs/FavoritesTab";
 
 class Drawer {
   constructor(el) {
     this.el = $(el);
     this.tabsEl = this.el.querySelector(".apod__drawer-tabs");
     this.tabs = [];
+    this.tabs.push(
+      new ExplanationTab("#tab-explanation", this),
+      new FavoritesTab("#tab-favorites", this)
+    );
     this.isOpen = false;
     this.currentTabIdx;
 

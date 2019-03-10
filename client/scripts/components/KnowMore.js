@@ -42,8 +42,9 @@ function Keyword(name, category, id) {
  * @param {string} text
  */
 class KnowMoreComponent {
-  constructor(text) {
+  constructor(text, drawer) {
     this.text = text;
+    this.drawer = drawer;
     this.celestialObjects = this.findCelestialObjects();
     this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
     this.results = this.buildResults();
@@ -140,7 +141,12 @@ class KnowMoreComponent {
     el.addEventListener("click", googleSearch);
     $("#know-more-tabs").appendChild(el);
 
-    const knowMoreTab = new KnowMoreTab("#" + el.id, index, googleSearch);
+    const knowMoreTab = new KnowMoreTab(
+      "#" + el.id,
+      this.drawer,
+      index,
+      googleSearch
+    );
   }
 
   search(query) {

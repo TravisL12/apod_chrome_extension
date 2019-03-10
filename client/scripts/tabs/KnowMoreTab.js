@@ -1,10 +1,10 @@
-import { clearElement, htmlToElements } from "../utilities/";
+import { htmlToElements } from "../utilities/";
 import DrawerTab from "./DrawerTab";
 import { SunLoader } from "../LoadingSpinner";
 
 class KnowMoreTab extends DrawerTab {
-  constructor(el, index, searchCallback) {
-    super(el);
+  constructor(el, drawer, index, searchCallback) {
+    super(el, drawer);
     this.items = [];
     this.loader = new SunLoader();
     this.index = index;

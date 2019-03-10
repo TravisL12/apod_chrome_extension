@@ -2,10 +2,10 @@ import reqwest from "reqwest";
 import ga from "../utilities/ga";
 import DateManager from "../DateManagement";
 import KnowMoreComponent from "./KnowMore";
-import { drawer } from "../../index.js";
 import History from "./History";
 import NavigationButton from "../NavigationButton";
 import Elements from "./Elements";
+import Drawer from "./Drawer";
 
 class Apod {
   constructor() {
@@ -16,6 +16,7 @@ class Apod {
     this.delayForHdLoad = 3000;
     this.history = new History();
     this.addToHistory = true;
+    this.drawer = new Drawer("#apod-drawer");
 
     document.addEventListener("keyup", e => {
       if (this.addToHistory) {
@@ -116,8 +117,8 @@ class Apod {
     Elements.loading.classList.remove("hide");
     Elements.clearKnowMore();
 
-    drawer.closeDrawer();
-    drawer.clearKnowMoreTabs();
+    this.drawer.closeDrawer();
+    this.drawer.clearKnowMoreTabs();
   }
 
   isRequestValid() {
@@ -188,7 +189,7 @@ class Apod {
   }
 
   populateTabs(response) {
-    Object.assign(drawer.tabs[0], {
+    Object.assign(this.drawer.tabs[0], {
       urls: {
         hdurl: response.hdurl,
         url: response.url
@@ -197,26 +198,26 @@ class Apod {
       date: response.date
     });
 
-    Object.assign(drawer.tabs[1], {
+    Object.assign(this.drawer.tabs[1], {
       date: response.date,
       title: response.title,
       url: response.url,
       specificDate: this.specificDate.bind(this)
     });
-    drawer.tabs[1].checkFavorite();
+    this.drawer.tabs[1].checkFavorite();
   }
 
   wouldYouLikeToKnowMore(text) {
-    const knowMore = new KnowMoreComponent(text);
+    const knowMore = new KnowMoreComponent(text, this.drawer);
     const results = knowMore.results;
 
     if (results.length) {
       // Don't draw duplicate tabs beyond the default tabs (i.e. Explanation and Favorite tabs)
-      if (drawer.tabs.length > 2) {
+      if (this.drawer.tabs.length > 2) {
         return;
       }
       for (let i in results) {
-        drawer.tabs[0].highlightKeywords(results[i].title, i);
+        this.drawer.tabs[0].highlightKeywords(results[i].title, i);
         knowMore.createTab(results[i], i);
       }
     }

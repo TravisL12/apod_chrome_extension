@@ -3,8 +3,8 @@ import ga from "../utilities/ga";
 import DrawerTab from "./DrawerTab";
 
 export default class ExplanationTab extends DrawerTab {
-  constructor(el) {
-    super(el);
+  constructor(el, drawer) {
+    super(el, drawer);
     this.keycode = 69;
     this.date = "";
     this.urls = {

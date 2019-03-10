@@ -1,8 +1,7 @@
 import { $, clearElement } from "../utilities/";
-import { drawer } from "../../index";
 
 export default class DrawerTab {
-  constructor(el) {
+  constructor(el, drawer) {
     this.el = $(el);
     this.keycode = null;
     this.drawer = drawer;

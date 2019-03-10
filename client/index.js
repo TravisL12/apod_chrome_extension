@@ -9,25 +9,17 @@
  */
 
 import Apod from "./scripts/components/Apod";
-import Drawer from "./scripts/components/Drawer";
 import topSites from "./scripts/utilities/buildTopSites";
 import { $ } from "./scripts/utilities/";
 import ga from "./scripts/utilities/ga";
 import { SunLoader, MoonLoader } from "./scripts/LoadingSpinner";
-import ExplanationTab from "./scripts/tabs/ExplanationTab";
-import FavoritesTab from "./scripts/tabs/FavoritesTab";
 
 import "./styles/style.scss";
 
-export const drawer = new Drawer("#apod-drawer");
 const apod = new Apod();
 const loader = new SunLoader();
 
 $("#apod-loading").appendChild(loader.render());
-drawer.tabs.push(
-  new ExplanationTab("#tab-explanation"),
-  new FavoritesTab("#tab-favorites")
-);
 
 document.addEventListener("DOMContentLoaded", function() {
   topSites();

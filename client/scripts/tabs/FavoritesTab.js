@@ -3,8 +3,8 @@ import DrawerTab from "./DrawerTab";
 import DateManager from "../DateManagement";
 
 export default class FavoritesTab extends DrawerTab {
-  constructor(el) {
-    super(el);
+  constructor(el, drawer) {
+    super(el, drawer);
     this.keycode = 70;
     this.template = htmlToElements(`
             <div class='favorites'>
