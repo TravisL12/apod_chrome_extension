@@ -1,4 +1,4 @@
-import { $, clearElement } from "../utilities/";
+import { $, clearElement } from "scripts/utilities";
 
 export default class DrawerTab {
   constructor(el, drawer) {

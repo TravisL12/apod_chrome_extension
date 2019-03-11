@@ -11,12 +11,14 @@
 import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
 import ga from "./scripts/utilities/ga";
+import { $ } from "./scripts/utilities";
 import { SunLoader } from "./scripts/LoadingSpinner";
 
-import "./styles/style.scss";
+import "styles/style.scss";
 
 const apod = new Apod();
-new SunLoader("#apod-loading");
+const loader = new SunLoader();
+$("#apod-loading").appendChild(loader.render());
 
 document.addEventListener("DOMContentLoaded", function() {
   topSites();

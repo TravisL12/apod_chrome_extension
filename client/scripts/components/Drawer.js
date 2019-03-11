@@ -1,6 +1,6 @@
-import { $ } from "../utilities/";
-import ExplanationTab from "../tabs/ExplanationTab";
-import FavoritesTab from "../tabs/FavoritesTab";
+import { $ } from "scripts/utilities";
+import ExplanationTab from "scripts/tabs/ExplanationTab";
+import FavoritesTab from "scripts/tabs/FavoritesTab";
 
 class Drawer {
   constructor(el) {

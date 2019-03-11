@@ -1,9 +1,9 @@
 import reqwest from "reqwest";
-import { $, htmlToElements } from "../utilities/";
-import ga from "../utilities/ga";
-import celestialDictionary from "../CelestialDictionary";
-import imageDictionary from "../ImageDictionary";
-import KnowMoreTab from "../tabs/KnowMoreTab";
+import { $, htmlToElements } from "scripts/utilities";
+import ga from "scripts/utilities/ga";
+import celestialDictionary from "scripts/CelestialDictionary";
+import imageDictionary from "scripts/ImageDictionary";
+import KnowMoreTab from "scripts/tabs/KnowMoreTab";
 
 /**
  * uniqueResults

@@ -1,4 +1,4 @@
-import { $, clearElement } from "../utilities/";
+import { $, clearElement } from "scripts/utilities";
 
 const Elements = {
   // Initialize image & video elements

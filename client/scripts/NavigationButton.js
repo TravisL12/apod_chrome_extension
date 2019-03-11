@@ -1,5 +1,5 @@
-import { $ } from "./utilities/";
-import ga from "./utilities/ga";
+import { $ } from "scripts/utilities";
+import ga from "scripts/utilities/ga";
 
 class NavigationButton {
   constructor(el, keycode, action, apod) {

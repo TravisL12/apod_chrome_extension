@@ -1,4 +1,4 @@
-import "../styles/options.scss";
+import "styles/options.scss";
 
 class ApodOptions {
   constructor() {

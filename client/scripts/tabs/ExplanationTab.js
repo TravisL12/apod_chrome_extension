@@ -1,6 +1,6 @@
-import { $, clearElement, htmlToElements, zeroPad } from "../utilities/";
-import ga from "../utilities/ga";
-import DrawerTab from "./DrawerTab";
+import { $, clearElement, htmlToElements, zeroPad } from "scripts/utilities";
+import ga from "scripts/utilities/ga";
+import DrawerTab from "scripts/tabs/DrawerTab";
 
 export default class ExplanationTab extends DrawerTab {
   constructor(el, drawer) {

@@ -1,22 +1,22 @@
 import reqwest from "reqwest";
-import ga from "../utilities/ga";
-import DateManager from "../DateManagement";
-import KnowMoreComponent from "./KnowMore";
-import History from "./History";
-import NavigationButton from "../NavigationButton";
-import Elements from "./Elements";
-import Drawer from "./Drawer";
+import ga from "scripts/utilities/ga";
+import DateManager from "scripts/DateManagement";
+import KnowMoreComponent from "scripts/components/KnowMore";
+import History from "scripts/components/History";
+import NavigationButton from "scripts/NavigationButton";
+import Elements from "scripts/components/Elements";
+import Drawer from "scripts/components/Drawer";
 
 class Apod {
   constructor() {
-    this.hiResOnly = false;
     this.errorCount = 0;
     this.errorLimit = 3;
-    this.isImageHD = true;
     this.delayForHdLoad = 3000;
     this.history = new History();
-    this.addToHistory = true;
     this.drawer = new Drawer("#apod-drawer");
+    this.hiResOnly = false;
+    this.isImageHD = true;
+    this.addToHistory = true;
 
     document.addEventListener("keyup", e => {
       if (this.addToHistory) {

@@ -1,6 +1,6 @@
-import { htmlToElements } from "../utilities/";
-import DrawerTab from "./DrawerTab";
-import { SunLoader } from "../LoadingSpinner";
+import { htmlToElements } from "scripts/utilities";
+import DrawerTab from "scripts/tabs/DrawerTab";
+import { SunLoader } from "scripts/LoadingSpinner";
 
 class KnowMoreTab extends DrawerTab {
   constructor(el, drawer, index, searchCallback) {
