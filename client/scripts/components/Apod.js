@@ -1,10 +1,10 @@
 import reqwest from "reqwest";
 import ga from "scripts/utilities/ga";
-import DateManager from "scripts/DateManagement";
+import DateManager from "scripts/DateManager";
 import KnowMoreComponent from "scripts/components/KnowMore";
 import History from "scripts/components/History";
 import NavigationButton from "scripts/NavigationButton";
-import Elements from "scripts/components/Elements";
+import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
 
 class Apod {
@@ -78,8 +78,10 @@ class Apod {
   }
 
   addFadedBackground() {
-    Elements.bgImage.style["background-image"] = `url(${this.loadedImage.src})`;
-    Elements.bgImage.classList.remove("hide");
+    ApodElements.bgImage.style["background-image"] = `url(${
+      this.loadedImage.src
+    })`;
+    ApodElements.bgImage.classList.remove("hide");
   }
 
   backgroundSize() {
@@ -103,25 +105,11 @@ class Apod {
   }
 
   _setLoadingView() {
-    Elements.image.style["background-image"] = "";
-    Elements.image.style["background-size"] = "";
-    Elements.image.classList.add("hide");
-
-    Elements.video.classList.add("hide");
-    Elements.videoIFrame.src = "";
-
-    Elements.bgImage.style["background-image"] = "";
-
-    Elements.explanation.classList.add("hide");
-    Elements.showHiRes.classList.add("hide");
-    Elements.loading.classList.remove("hide");
-    Elements.clearKnowMore();
-
-    this.drawer.closeDrawer();
-    this.drawer.clearKnowMoreTabs();
+    ApodElements.resetElements();
+    this.drawer.resetTabs();
   }
 
-  isRequestValid() {
+  get isRequestValid() {
     if (this.isRequestInProgress) {
       return false;
     }
@@ -131,7 +119,7 @@ class Apod {
   }
 
   getApod(date) {
-    if (!this.isRequestValid()) {
+    if (!this.isRequestValid) {
       console.log("Request in Progress!");
       return;
     }
@@ -164,8 +152,8 @@ class Apod {
     this.populateTabs(response);
 
     const isMediaImage = response.media_type === "image";
-    Elements.image.classList.toggle("hide", !isMediaImage);
-    Elements.video.classList.toggle("hide", isMediaImage);
+    ApodElements.image.classList.toggle("hide", !isMediaImage);
+    ApodElements.video.classList.toggle("hide", isMediaImage);
 
     if (isMediaImage) {
       this.preLoadImage(this.hiResOnly);
@@ -183,7 +171,7 @@ class Apod {
     if (this.errorCount < this.errorLimit) {
       this.random();
     } else {
-      Elements.error.textContent =
+      ApodElements.error.textContent =
         "NASA APOD Error: Please reload or try Again Later";
     }
   }
@@ -263,25 +251,30 @@ class Apod {
   }
 
   apodImage() {
-    Elements.image.classList = "apod__image";
-    Elements.imgQuality.classList.remove("spin-loader");
+    ApodElements.image.classList = "apod__image";
+    ApodElements.imgQuality.classList.remove("spin-loader");
 
-    Elements.image.style["background-image"] = `url(${this.loadedImage.src})`;
-    Elements.image.classList.add(`bg-${this.backgroundSize()}`);
+    ApodElements.image.style["background-image"] = `url(${
+      this.loadedImage.src
+    })`;
+    ApodElements.image.classList.add(`bg-${this.backgroundSize()}`);
 
-    Elements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
+    ApodElements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
 
     if (!this.isImageHD) {
       const forceLoadHighDefImg = e => {
         this.isRequestInProgress = true;
-        Elements.showHiRes.classList.add("hide");
-        Elements.showHiRes.removeEventListener("click", forceLoadHighDefImg);
-        Elements.imgQuality.textContent = "";
-        Elements.imgQuality.classList.add("spin-loader");
+        ApodElements.showHiRes.classList.add("hide");
+        ApodElements.showHiRes.removeEventListener(
+          "click",
+          forceLoadHighDefImg
+        );
+        ApodElements.imgQuality.textContent = "";
+        ApodElements.imgQuality.classList.add("spin-loader");
         this.preLoadImage(true);
       };
-      Elements.showHiRes.classList.remove("hide");
-      Elements.showHiRes.addEventListener("click", forceLoadHighDefImg);
+      ApodElements.showHiRes.classList.remove("hide");
+      ApodElements.showHiRes.addEventListener("click", forceLoadHighDefImg);
     }
 
     this.constructApod();
@@ -296,7 +289,7 @@ class Apod {
 
     const url = new URL(this.response.url);
     url.search = "autopause=1&autoplay=0";
-    Elements.videoIFrame.src = url.href;
+    ApodElements.videoIFrame.src = url.href;
     this.constructApod();
   }
 
@@ -305,8 +298,8 @@ class Apod {
 
     this.isRequestInProgress = false;
     document.title = title;
-    Elements.title.textContent = title;
-    Elements.date.textContent = DateManager.prettyDateFormat(date);
+    ApodElements.title.textContent = title;
+    ApodElements.date.textContent = DateManager.prettyDateFormat(date);
     this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
 
     if (!DateManager.isInPast(date)) {
@@ -318,8 +311,8 @@ class Apod {
       this.navigation.next.el.classList.toggle("hide", isToday);
     }
 
-    Elements.loading.classList.add("hide");
-    Elements.explanation.classList.remove("hide");
+    ApodElements.loading.classList.add("hide");
+    ApodElements.explanation.classList.remove("hide");
   }
 }
 

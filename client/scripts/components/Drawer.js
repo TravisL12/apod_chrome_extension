@@ -7,13 +7,9 @@ class Drawer {
     this.el = $(el);
     this.tabsEl = this.el.querySelector(".apod__drawer-tabs");
     this.tabs = [];
-    this.tabs.push(
-      new ExplanationTab("#tab-explanation", this),
-      new FavoritesTab("#tab-favorites", this)
-    );
     this.isOpen = false;
     this.currentTabIdx;
-
+    this.createDefaultTabs();
     document.addEventListener("keydown", e => {
       if (e.which === 27 && this.isOpen) {
         this.closeDrawer();
@@ -21,7 +17,13 @@ class Drawer {
     });
   }
 
-  clearKnowMoreTabs() {
+  createDefaultTabs() {
+    new ExplanationTab("#tab-explanation", this);
+    new FavoritesTab("#tab-favorites", this);
+  }
+
+  resetTabs() {
+    this.closeDrawer();
     this.currentTabIdx = null;
     this.tabs = this.tabs.slice(0, 2);
   }

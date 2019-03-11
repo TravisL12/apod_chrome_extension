@@ -25,19 +25,6 @@ function uniqueResults(value, index, self) {
 }
 
 /**
- * Keyword
- * @param {string} name
- * @param {string} category
- * @param {int} index id
- */
-function Keyword(name, category, id) {
-  this.title = name[0].toUpperCase() + name.slice(1);
-  this.query = `${name} ${category}`;
-  this.category = category;
-  this.id = id;
-}
-
-/**
  * KnowMoreComponent
  * @param {string} text
  */
@@ -48,6 +35,7 @@ class KnowMoreComponent {
     this.celestialObjects = this.findCelestialObjects();
     this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
     this.results = this.buildResults();
+    this.maxResults = 5;
   }
 
   findNewGeneralCatalogObjects() {
@@ -78,13 +66,17 @@ class KnowMoreComponent {
 
   createKeywords(match, category) {
     return match.map((name, idx) => {
-      return new Keyword(name, category, idx + 1);
+      return {
+        title: name[0].toUpperCase() + name.slice(1),
+        query: `${name} ${category}`,
+        category: category,
+        id: idx + 1
+      };
     });
   }
 
   buildResults() {
-    const results = [].concat(this.celestialObjects, this.newGeneralCatalog);
-    const resultsToDisplay = 5;
+    const results = this.celestialObjects.concat(this.newGeneralCatalog);
     let frequency = {};
 
     for (let i in results) {
@@ -97,32 +89,28 @@ class KnowMoreComponent {
       .sort((a, b) => {
         return frequency[b.title] > frequency[a.title];
       })
-      .slice(0, resultsToDisplay);
-  }
-
-  buildLinkId(result) {
-    let id =
-      "know-more-tab-" +
-      result.title
-        .replace(/[\s-_.'"]/gi, "")
-        .toLowerCase()
-        .slice(0, 10);
-    let isIdUsed = $("#" + id);
-
-    return id;
+      .slice(0, this.maxResults);
   }
 
   createTab(result, index) {
     const el = htmlToElements(`
-            <div class='tab' id='${this.buildLinkId(result)}'>
+            <div class='tab' id='know-more-tab-${index}'>
                 ${imageDictionary[result.category]()} ${result.title}
             </div>`);
 
-    const googleSearch = e => {
+    const googleSearchOnClick = e => {
       ga({ category: "Know More", action: "clicked", label: result.query });
-      el.removeEventListener("click", googleSearch); // Avoid searching twice!
+      el.removeEventListener("click", googleSearchOnClick); // Avoid searching twice!
 
-      this.search(result.query)
+      reqwest({
+        method: "GET",
+        url: "https://www.googleapis.com/customsearch/v1",
+        data: {
+          key: "AIzaSyAoX7Ec50Nuh8hScDw05App_8XQb2YR-Ts",
+          cx: "012134705583441818934:js43us2h5ua",
+          q: result.query
+        }
+      })
         .then(
           data => {
             knowMoreTab.items = data.items;
@@ -138,27 +126,15 @@ class KnowMoreComponent {
         });
     };
 
-    el.addEventListener("click", googleSearch);
+    el.addEventListener("click", googleSearchOnClick);
     $("#know-more-tabs").appendChild(el);
 
     const knowMoreTab = new KnowMoreTab(
-      "#" + el.id,
+      `#${el.id}`,
       this.drawer,
       index,
-      googleSearch
+      googleSearchOnClick
     );
-  }
-
-  search(query) {
-    return reqwest({
-      method: "GET",
-      url: "https://www.googleapis.com/customsearch/v1",
-      data: {
-        key: "AIzaSyAoX7Ec50Nuh8hScDw05App_8XQb2YR-Ts",
-        cx: "012134705583441818934:js43us2h5ua",
-        q: query
-      }
-    });
   }
 }
 

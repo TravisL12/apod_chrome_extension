@@ -27,20 +27,22 @@ class KnowMoreTab extends DrawerTab {
     const tabs = document.getElementsByClassName(`keyword-${this.index}`);
 
     for (let i = 0; i < tabs.length; i++) {
-      tabs[i].onclick = () => {
+      tabs[i].addEventListener("click", () => {
         this.toggle();
         this.searchFn();
-      };
+      });
     }
   }
 
   constructLinksEl() {
     return this.items.reduce((p, c) => {
-      p += `
+      return (
+        p +
+        `
                 <li>
                     <a href="${c.link}" target="_blank">${c.htmlTitle}</a>
-                </li>`;
-      return p;
+                </li>`
+      );
     }, "");
   }
 

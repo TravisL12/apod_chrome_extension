@@ -1,6 +1,6 @@
 import { $, clearElement } from "scripts/utilities";
 
-const Elements = {
+const ApodElements = {
   // Initialize image & video elements
   image: $("#apod-image"),
   bgImage: $("#apod-image-vertical-bg"),
@@ -19,7 +19,23 @@ const Elements = {
   clearKnowMore: () => {
     const knowMore = $("#know-more-tabs");
     clearElement(knowMore);
+  },
+
+  resetElements: () => {
+    ApodElements.image.style["background-image"] = "";
+    ApodElements.image.style["background-size"] = "";
+    ApodElements.image.classList.add("hide");
+
+    ApodElements.video.classList.add("hide");
+    ApodElements.videoIFrame.src = "";
+
+    ApodElements.bgImage.style["background-image"] = "";
+
+    ApodElements.explanation.classList.add("hide");
+    ApodElements.showHiRes.classList.add("hide");
+    ApodElements.loading.classList.remove("hide");
+    ApodElements.clearKnowMore();
   }
 };
 
-export default Elements;
+export default ApodElements;

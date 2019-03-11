@@ -1,6 +1,6 @@
 import { $, clearElement, htmlToElements } from "../utilities";
 import DrawerTab from "scripts/tabs/DrawerTab";
-import DateManager from "scripts/DateManagement";
+import DateManager from "scripts/DateManager";
 
 export default class FavoritesTab extends DrawerTab {
   constructor(el, drawer) {
