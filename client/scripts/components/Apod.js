@@ -301,6 +301,7 @@ class Apod {
     document.title = title;
     ApodElements.title.textContent = title;
     ApodElements.date.textContent = DateManager.prettyDateFormat(date);
+    ApodElements.datePicker.value = date;
     this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
 
     if (!DateManager.isInPast(date)) {
