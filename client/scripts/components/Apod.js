@@ -7,6 +7,8 @@ import NavigationButton from "scripts/NavigationButton";
 import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
 
+const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
+
 class Apod {
   constructor() {
     this.errorCount = 0;
@@ -171,8 +173,7 @@ class Apod {
     if (this.errorCount < this.errorLimit) {
       this.random();
     } else {
-      ApodElements.error.textContent =
-        "NASA APOD Error: Please reload or try Again Later";
+      ApodElements.error.textContent = ERROR_MESSAGE;
     }
   }
 
