@@ -37,19 +37,19 @@ export default {
   },
 
   adjacentDate(dateString, direction) {
-    let date = _actualDate(dateString),
-      adjDate = new Date(date.getTime());
+    const date = _actualDate(dateString);
+    let adjDate = new Date(date.getTime());
 
     adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
     return _hyphenDateFormat(adjDate);
   },
 
   randomDate() {
-    let start = new Date(1995, 5, 16),
-      end = new Date(),
-      date = new Date(
-        start.getTime() + Math.random() * (end.getTime() - start.getTime())
-      );
+    const start = new Date(1995, 5, 16);
+    const end = new Date();
+    const date = new Date(
+      start.getTime() + Math.random() * (end.getTime() - start.getTime())
+    );
 
     return _hyphenDateFormat(date);
   },

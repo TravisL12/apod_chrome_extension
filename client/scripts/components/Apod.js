@@ -21,7 +21,13 @@ class Apod {
     this.isImageHD = true;
     this.addToHistory = true;
 
-    this.datePicker = flatpickr("#apod-date-picker");
+    this.datePicker = flatpickr(ApodElements.date, {
+      minDate: "1995-6-16",
+      maxDate: "today",
+      onChange: (dates, dateStr) => {
+        this.specificDate(dateStr);
+      }
+    });
 
     document.addEventListener("keyup", e => {
       if (this.addToHistory) {
@@ -152,6 +158,7 @@ class Apod {
       this.history.add(response);
     }
     this.addToHistory = true;
+    this.datePicker.setDate(response.date);
     this.response = response;
     this.errorCount = 0;
     this.populateTabs(response);
@@ -304,7 +311,6 @@ class Apod {
     document.title = title;
     ApodElements.title.textContent = title;
     ApodElements.date.textContent = DateManager.prettyDateFormat(date);
-    ApodElements.datePicker.value = date;
     this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
 
     if (!DateManager.isInPast(date)) {

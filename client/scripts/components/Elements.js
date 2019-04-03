@@ -11,7 +11,7 @@ const ApodElements = {
   // Initialize various elements
   title: $("#apod-title"),
   date: $("#apod-date"),
-  datePicker: $("#apod-date-picker"),
+  // datePicker: $("#apod-date-picker"),
   loading: $("#apod-loading"),
   error: $("#apod-error"),
   imgQuality: $("#img-quality"),
