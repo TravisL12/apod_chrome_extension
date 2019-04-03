@@ -68,18 +68,6 @@ body {
   padding: 0 20px;
   z-index: 1000;
 
-  h1 {
-    @include helvetica-neue-light;
-    display: inline-block;
-    margin: 0;
-  }
-
-  h2 {
-    @include helvetica-neue-light;
-    margin: 0;
-    color: #757575;
-  }
-
   .explanation {
     $explanation-width: 400px;
     @include helvetica-neue-light;
@@ -89,13 +77,39 @@ body {
     color: white;
     padding: 10px 20px;
     transition: 0.2s ease-out opacity, 0.2s linear background-color;
+    border-radius: 3px;
 
     &:hover {
-      background-color: rgba(0, 0, 0, 0.6);
+      background-color: rgba(0, 0, 0, 0.8);
     }
 
     .title {
       position: relative;
+
+      h1 {
+        @include helvetica-neue-light;
+        display: inline-block;
+        margin: 0;
+      }
+
+      h2 {
+        @include helvetica-neue-light;
+        margin: 0;
+        color: #757575;
+        transition: 0.1s linear color;
+
+        &:hover {
+          color: white;
+        }
+
+        &:before {
+          content: "\25bc";
+          color: inherit;
+          font-size: 60%;
+          margin-right: 3px;
+          vertical-align: 1px;
+        }
+      }
 
       #img-quality {
         display: inline-block;
