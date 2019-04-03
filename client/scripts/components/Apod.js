@@ -6,6 +6,7 @@ import History from "scripts/components/History";
 import NavigationButton from "scripts/NavigationButton";
 import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
+import flatpickr from "flatpickr";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 
@@ -19,6 +20,8 @@ class Apod {
     this.hiResOnly = false;
     this.isImageHD = true;
     this.addToHistory = true;
+
+    this.datePicker = flatpickr("#apod-date-picker");
 
     document.addEventListener("keyup", e => {
       if (this.addToHistory) {
