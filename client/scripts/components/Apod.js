@@ -9,12 +9,12 @@ import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
-const RANDOM_COUNT = 30;
+const RANDOM_COUNT = 15;
+const ERROR_LIMIT = 3;
 
 class Apod {
   constructor() {
     this.errorCount = 0;
-    this.errorLimit = 3;
     this.delayForHdLoad = 3000;
     this.history = new History();
     this.drawer = new Drawer("#apod-drawer");
@@ -148,23 +148,21 @@ class Apod {
 
   requestSpecific(date) {
     return reqwest({
+      url: "https://api.nasa.gov/planetary/apod",
       data: {
         date,
         api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
-      },
-      method: "GET",
-      url: "https://api.nasa.gov/planetary/apod"
+      }
     });
   }
 
   requestRandom() {
     return reqwest({
+      url: "https://api.nasa.gov/planetary/apod",
       data: {
         api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447",
         count: RANDOM_COUNT
-      },
-      method: "GET",
-      url: "https://api.nasa.gov/planetary/apod"
+      }
     });
   }
 
@@ -174,7 +172,7 @@ class Apod {
       this.response = this.randomData[this.randomIdx];
     } else {
       this.response = data;
-      if (!this.randomIdx || this.randomIdx < RANDOM_COUNT - 1) {
+      if (!this.randomIdx || this.randomIdx >= RANDOM_COUNT - 1) {
         // preload some random APODs in case you hit random next
         this.requestRandom().then(this.initiateRandomData.bind(this));
       }
@@ -207,7 +205,7 @@ class Apod {
     this.errorCount++;
     console.log(`Error: APOD API response (${this.errorCount})`);
     this.isRequestInProgress = false;
-    if (this.errorCount < this.errorLimit) {
+    if (this.errorCount < ERROR_LIMIT) {
       this.random();
     } else {
       ApodElements.error.textContent = ERROR_MESSAGE;
