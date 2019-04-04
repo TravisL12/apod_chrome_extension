@@ -35,7 +35,6 @@ class KnowMoreComponent {
     this.celestialObjects = this.findCelestialObjects();
     this.newGeneralCatalog = this.findNewGeneralCatalogObjects();
     this.results = this.buildResults();
-    this.maxResults = 5;
   }
 
   findNewGeneralCatalogObjects() {
@@ -77,19 +76,19 @@ class KnowMoreComponent {
 
   buildResults() {
     const results = this.celestialObjects.concat(this.newGeneralCatalog);
-    let frequency = {};
-
-    for (let i in results) {
-      const re = new RegExp("\\b" + results[i].title + "\\b", "gi");
-      frequency[results[i].title] = this.text.match(re).length;
-    }
+    const maxResults = 5;
+    const frequency = results.reduce((freq, result) => {
+      const re = new RegExp("\\b" + result.title + "\\b", "gi");
+      freq[result.title] = this.text.match(re).length;
+      return freq;
+    }, {});
 
     return results
       .filter(uniqueResults)
       .sort((a, b) => {
         return frequency[b.title] > frequency[a.title];
       })
-      .slice(0, this.maxResults);
+      .slice(0, maxResults);
   }
 
   createTab(result, index) {
