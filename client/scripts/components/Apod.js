@@ -9,11 +9,12 @@ import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
+const RANDOM_COUNT = 15;
+const ERROR_LIMIT = 3;
 
 class Apod {
   constructor() {
     this.errorCount = 0;
-    this.errorLimit = 3;
     this.delayForHdLoad = 3000;
     this.history = new History();
     this.drawer = new Drawer("#apod-drawer");
@@ -73,7 +74,13 @@ class Apod {
   }
 
   random() {
-    this.getApod(DateManager.randomDate());
+    if (this.randomData && this.randomIdx < RANDOM_COUNT - 1) {
+      this.randomIdx += 1;
+      this._setLoadingView();
+      this.formatResponse(this.randomData[this.randomIdx]);
+    } else {
+      this.getApod();
+    }
   }
 
   previous() {
@@ -134,56 +141,94 @@ class Apod {
       console.log("Request in Progress!");
       return;
     }
-
-    if (!DateManager.isDateValid(date)) {
-      this.isRequestInProgress = false;
-      return;
-    }
-
     this._setLoadingView();
+    const request = date ? this.requestSpecific(date) : this.requestRandom();
+    request.then(this.formatResponse.bind(this), this.errorResponse.bind(this));
+  }
 
-    reqwest({
-      method: "GET",
+  requestSpecific(date) {
+    return reqwest({
+      url: "https://api.nasa.gov/planetary/apod",
+      data: {
+        date,
+        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+      }
+    });
+  }
+
+  requestRandom() {
+    return reqwest({
       url: "https://api.nasa.gov/planetary/apod",
       data: {
         api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447",
-        date: date
+        count: RANDOM_COUNT
       }
-    }).then(this.formatResponse.bind(this), this.errorResponse.bind(this));
+    });
   }
 
-  formatResponse(response) {
-    ga({ category: "APOD", action: "viewed", label: response.date });
+  formatResponse(data) {
+    if (Array.isArray(data)) {
+      this.initiateRandomData(data);
+      this.response = this.randomData[this.randomIdx];
+    } else {
+      this.response = data;
+      if (!this.randomIdx || this.randomIdx >= RANDOM_COUNT - 1) {
+        // preload some random APODs in case you hit random next
+        this.requestRandom().then(this.initiateRandomData.bind(this));
+      }
+    }
+
+    ga({ category: "APOD", action: "viewed", label: this.response.date });
+
     if (this.addToHistory) {
-      this.history.add(response);
+      this.history.add(this.response);
     }
     this.addToHistory = true;
-    this.datePicker.setDate(response.date);
-    this.response = response;
+    this.datePicker.setDate(this.response.date);
     this.errorCount = 0;
-    this.populateTabs(response);
+    this.populateTabs(this.response);
 
-    const isMediaImage = response.media_type === "image";
+    const isMediaImage = this.response.media_type === "image";
     ApodElements.image.classList.toggle("hide", !isMediaImage);
     ApodElements.video.classList.toggle("hide", isMediaImage);
 
     if (isMediaImage) {
       this.preLoadImage(this.hiResOnly);
-    } else if (response.media_type === "video") {
+    } else if (this.response.media_type === "video") {
       this.apodVideo();
     } else {
       this.random();
     }
   }
 
-  errorResponse(error) {
+  errorResponse() {
     this.errorCount++;
     console.log(`Error: APOD API response (${this.errorCount})`);
     this.isRequestInProgress = false;
-    if (this.errorCount < this.errorLimit) {
+    if (this.errorCount < ERROR_LIMIT) {
       this.random();
     } else {
       ApodElements.error.textContent = ERROR_MESSAGE;
+    }
+  }
+
+  initiateRandomData(data) {
+    this.randomData = data;
+    this.randomIdx = 0;
+    this.preloadRandoms();
+  }
+
+  preloadRandoms() {
+    for (let i in this.randomData) {
+      const random = this.randomData[i];
+
+      const ImgHd = new Image();
+      ImgHd.src = random.hdurl;
+
+      if (!this.hiResOnly) {
+        const ImgSd = new Image();
+        ImgSd.src = random.url;
+      }
     }
   }
 
@@ -223,37 +268,26 @@ class Apod {
   }
 
   preLoadImage(forceHighDef = false) {
-    const Img = new Image();
+    this.loadedImage = new Image();
     const { hdurl, url } = this.response;
 
-    if (!/(jpg|jpeg|png|gif)$/i.test(hdurl)) {
-      Img.src = url;
-      this.isImageHD = false;
-    } else {
-      Img.src = hdurl;
-      this.isImageHD = true;
-    }
-
     // If the urls are identical just mark it HD
-    if (hdurl === url) {
-      Img.src = hdurl;
-      this.isImageHD = true;
-    }
+    this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
+    this.loadedImage.src = this.isImageHD ? hdurl : url;
 
     const timeout = setTimeout(() => {
-      if (!Img.complete && !forceHighDef) {
-        Img.src = url;
+      if (!this.loadedImage.complete && !forceHighDef) {
+        this.loadedImage.src = url;
         this.isImageHD = false;
       }
     }, this.delayForHdLoad);
 
-    Img.onload = () => {
+    this.loadedImage.onload = () => {
       clearTimeout(timeout);
-      this.loadedImage = Img;
       this.apodImage();
     };
 
-    Img.onerror = () => {
+    this.loadedImage.onerror = () => {
       console.log("Error: image load");
       clearTimeout(timeout);
       this.isRequestInProgress = false;
@@ -313,14 +347,10 @@ class Apod {
     ApodElements.date.textContent = DateManager.prettyDateFormat(date);
     this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
 
-    if (!DateManager.isInPast(date)) {
-      this.isRequestInProgress = false;
-      this.current();
-    } else {
-      const isToday = DateManager.isToday(date);
-      this.navigation.current.el.classList.toggle("current", isToday);
-      this.navigation.next.el.classList.toggle("hide", isToday);
-    }
+    const isToday = DateManager.isToday(date);
+    this.navigation.current.el.classList.toggle("current", isToday);
+    this.navigation.next.el.classList.toggle("hide", isToday);
+    this.navigation.next.toggle(!isToday);
 
     ApodElements.loading.classList.add("hide");
     ApodElements.explanation.classList.remove("hide");
