@@ -6,6 +6,9 @@ import History from "scripts/components/History";
 import NavigationButton from "scripts/NavigationButton";
 import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
+import flatpickr from "flatpickr";
+
+const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 
 class Apod {
   constructor() {
@@ -17,6 +20,14 @@ class Apod {
     this.hiResOnly = false;
     this.isImageHD = true;
     this.addToHistory = true;
+
+    this.datePicker = flatpickr(ApodElements.date, {
+      minDate: "1995-6-16",
+      maxDate: "today",
+      onChange: (dates, dateStr) => {
+        this.specificDate(dateStr);
+      }
+    });
 
     document.addEventListener("keyup", e => {
       if (this.addToHistory) {
@@ -147,6 +158,7 @@ class Apod {
       this.history.add(response);
     }
     this.addToHistory = true;
+    this.datePicker.setDate(response.date);
     this.response = response;
     this.errorCount = 0;
     this.populateTabs(response);
@@ -171,8 +183,7 @@ class Apod {
     if (this.errorCount < this.errorLimit) {
       this.random();
     } else {
-      ApodElements.error.textContent =
-        "NASA APOD Error: Please reload or try Again Later";
+      ApodElements.error.textContent = ERROR_MESSAGE;
     }
   }
 

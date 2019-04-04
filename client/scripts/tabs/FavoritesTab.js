@@ -27,8 +27,13 @@ export default class FavoritesTab extends DrawerTab {
   checkFavorite() {
     const favoriteDates = Object.keys(this.favorites);
     const isFavorite = favoriteDates.indexOf(this.date) > 0;
-    $(".add-favorite .favorite").classList.toggle("hide", !isFavorite);
-    $(".add-favorite .not-favorite").classList.toggle("hide", isFavorite);
+    const favoritesEl = $(".add-favorite");
+    const display = isFavorite
+      ? htmlToElements(`<span class="favorite">Favorite</span>`)
+      : htmlToElements(`<span class="not-favorite">Save</span>`);
+
+    clearElement(favoritesEl);
+    favoritesEl.appendChild(display);
   }
 
   save() {
