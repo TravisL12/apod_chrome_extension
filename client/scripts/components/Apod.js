@@ -254,37 +254,26 @@ class Apod {
   }
 
   preLoadImage(forceHighDef = false) {
-    const Img = new Image();
+    this.loadedImage = new Image();
     const { hdurl, url } = this.response;
 
-    if (!/(jpg|jpeg|png|gif)$/i.test(hdurl)) {
-      Img.src = url;
-      this.isImageHD = false;
-    } else {
-      Img.src = hdurl;
-      this.isImageHD = true;
-    }
-
     // If the urls are identical just mark it HD
-    if (hdurl === url) {
-      Img.src = hdurl;
-      this.isImageHD = true;
-    }
+    this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
+    this.loadedImage.src = this.isImageHD ? hdurl : url;
 
     const timeout = setTimeout(() => {
-      if (!Img.complete && !forceHighDef) {
-        Img.src = url;
+      if (!this.loadedImage.complete && !forceHighDef) {
+        this.loadedImage.src = url;
         this.isImageHD = false;
       }
     }, this.delayForHdLoad);
 
-    Img.onload = () => {
+    this.loadedImage.onload = () => {
       clearTimeout(timeout);
-      this.loadedImage = Img;
       this.apodImage();
     };
 
-    Img.onerror = () => {
+    this.loadedImage.onerror = () => {
       console.log("Error: image load");
       clearTimeout(timeout);
       this.isRequestInProgress = false;
