@@ -6,6 +6,7 @@ class NavigationButton {
     this.el = $(el);
     this.keycode = keycode;
     this.action = action;
+    this.isEnabled = true;
 
     this.el.addEventListener("click", e => {
       ga({ category: "Button", action: "clicked", label: this.el.id });
@@ -13,11 +14,15 @@ class NavigationButton {
     });
 
     document.addEventListener("keyup", e => {
-      if (e.which === this.keycode) {
+      if (e.which === this.keycode && this.isEnabled) {
         ga({ category: "Keydown", action: "pressed", label: this.el.id });
         apod[this.action]();
       }
     });
+  }
+
+  toggle(isEnabled) {
+    this.isEnabled = isEnabled;
   }
 }
 

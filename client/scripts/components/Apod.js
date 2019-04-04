@@ -9,7 +9,7 @@ import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
-
+const RANDOM_COUNT = 100;
 class Apod {
   constructor() {
     this.errorCount = 0;
@@ -73,7 +73,13 @@ class Apod {
   }
 
   random() {
-    this.getApod(DateManager.randomDate());
+    if (this.randomData && this.randomIdx < RANDOM_COUNT) {
+      this.randomIdx += 1;
+      this._setLoadingView();
+      this.formatResponse(this.randomData[this.randomIdx]);
+    } else {
+      this.getApod();
+    }
   }
 
   previous() {
@@ -137,18 +143,25 @@ class Apod {
 
     this._setLoadingView();
 
+    const data = {
+      api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+    };
+
+    if (date) {
+      data.date = date;
+    } else {
+      data.count = RANDOM_COUNT;
+    }
+
     reqwest({
+      data,
       method: "GET",
-      url: "https://api.nasa.gov/planetary/apod",
-      data: {
-        date,
-        // count: 100,
-        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
-      }
+      url: "https://api.nasa.gov/planetary/apod"
     }).then(this.formatResponse.bind(this), this.errorResponse.bind(this));
   }
 
-  formatResponse(response) {
+  formatResponse(data) {
+    const response = Array.isArray(data) ? this.loadRandom(data) : data;
     ga({ category: "APOD", action: "viewed", label: response.date });
     if (this.addToHistory) {
       this.history.add(response);
@@ -181,6 +194,12 @@ class Apod {
     } else {
       ApodElements.error.textContent = ERROR_MESSAGE;
     }
+  }
+
+  loadRandom(data) {
+    this.randomData = data;
+    this.randomIdx = 0;
+    return this.randomData[this.randomIdx];
   }
 
   populateTabs(response) {
@@ -312,6 +331,7 @@ class Apod {
     const isToday = DateManager.isToday(date);
     this.navigation.current.el.classList.toggle("current", isToday);
     this.navigation.next.el.classList.toggle("hide", isToday);
+    this.navigation.next.toggle(!isToday);
 
     ApodElements.loading.classList.add("hide");
     ApodElements.explanation.classList.remove("hide");

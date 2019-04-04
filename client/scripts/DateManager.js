@@ -30,8 +30,7 @@ export default {
   },
 
   adjacentDate(dateString, direction) {
-    const date = _actualDate(dateString);
-    let adjDate = new Date(date.getTime());
+    let adjDate = new Date(_actualDate(dateString).getTime());
 
     adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
     return flatpickr.formatDate(adjDate, DATE_FORMAT);
@@ -48,6 +47,6 @@ export default {
   },
 
   isToday(date) {
-    return new Date(_getToday()).getTime() === _actualDate(date).getTime();
+    return _actualDate(_getToday()).getTime() === _actualDate(date).getTime();
   }
 };
