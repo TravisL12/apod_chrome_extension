@@ -9,7 +9,8 @@ import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
-const RANDOM_COUNT = 100;
+const RANDOM_COUNT = 5;
+
 class Apod {
   constructor() {
     this.errorCount = 0;
@@ -73,7 +74,7 @@ class Apod {
   }
 
   random() {
-    if (this.randomData && this.randomIdx < RANDOM_COUNT) {
+    if (this.randomData && this.randomIdx < RANDOM_COUNT - 1) {
       this.randomIdx += 1;
       this._setLoadingView();
       this.formatResponse(this.randomData[this.randomIdx]);
@@ -199,7 +200,22 @@ class Apod {
   loadRandom(data) {
     this.randomData = data;
     this.randomIdx = 0;
+    this.preloadRandoms();
     return this.randomData[this.randomIdx];
+  }
+
+  preloadRandoms() {
+    for (let i in this.randomData) {
+      const random = this.randomData[i];
+
+      const ImgHd = new Image();
+      ImgHd.src = random.hdurl;
+
+      if (!this.forceHighDef) {
+        const ImgSd = new Image();
+        ImgSd.src = random.url;
+      }
+    }
   }
 
   populateTabs(response) {
