@@ -102,11 +102,10 @@ body {
           color: white;
         }
 
-        &:before {
-          content: "\25bc";
+        &:after {
+          content: "\25be";
           color: inherit;
-          font-size: 60%;
-          margin-right: 3px;
+          margin-left: 3px;
           vertical-align: 1px;
         }
       }
