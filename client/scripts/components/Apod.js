@@ -135,19 +135,15 @@ class Apod {
       return;
     }
 
-    if (!DateManager.isDateValid(date)) {
-      this.isRequestInProgress = false;
-      return;
-    }
-
     this._setLoadingView();
 
     reqwest({
       method: "GET",
       url: "https://api.nasa.gov/planetary/apod",
       data: {
-        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447",
-        date: date
+        date,
+        // count: 100,
+        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
       }
     }).then(this.formatResponse.bind(this), this.errorResponse.bind(this));
   }
@@ -313,14 +309,9 @@ class Apod {
     ApodElements.date.textContent = DateManager.prettyDateFormat(date);
     this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
 
-    if (!DateManager.isInPast(date)) {
-      this.isRequestInProgress = false;
-      this.current();
-    } else {
-      const isToday = DateManager.isToday(date);
-      this.navigation.current.el.classList.toggle("current", isToday);
-      this.navigation.next.el.classList.toggle("hide", isToday);
-    }
+    const isToday = DateManager.isToday(date);
+    this.navigation.current.el.classList.toggle("current", isToday);
+    this.navigation.next.el.classList.toggle("hide", isToday);
 
     ApodElements.loading.classList.add("hide");
     ApodElements.explanation.classList.remove("hide");

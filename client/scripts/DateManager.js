@@ -1,12 +1,6 @@
-/**
- * Formats the Date "2017-01-31"
- *
- * @param  {Date}
- * @return {string}
- */
-function _hyphenDateFormat(date = new Date()) {
-  return [date.getFullYear(), date.getMonth() + 1, date.getDate()].join("-");
-}
+import flatpickr from "flatpickr";
+
+const DATE_FORMAT = "Y-m-d";
 
 /**
  * Gives the actual date (with timezone) at midnight
@@ -15,12 +9,11 @@ function _hyphenDateFormat(date = new Date()) {
  * @return {Date}
  */
 function _actualDate(date) {
-  let split = date.split("-");
-  return new Date(split[0], split[1] - 1, split[2]);
+  return new Date(flatpickr.parseDate(date, DATE_FORMAT));
 }
 
 function _getToday() {
-  return _hyphenDateFormat(_actualDate(_hyphenDateFormat()));
+  return flatpickr.formatDate(new Date(), DATE_FORMAT);
 }
 
 export default {
@@ -41,7 +34,7 @@ export default {
     let adjDate = new Date(date.getTime());
 
     adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
-    return _hyphenDateFormat(adjDate);
+    return flatpickr.formatDate(adjDate, DATE_FORMAT);
   },
 
   randomDate() {
@@ -51,19 +44,10 @@ export default {
       start.getTime() + Math.random() * (end.getTime() - start.getTime())
     );
 
-    return _hyphenDateFormat(date);
+    return flatpickr.formatDate(date, DATE_FORMAT);
   },
 
   isToday(date) {
     return new Date(_getToday()).getTime() === _actualDate(date).getTime();
-  },
-
-  isInPast(date) {
-    return _actualDate(_getToday()).getTime() >= _actualDate(date).getTime();
-  },
-
-  isDateValid(date) {
-    date = date || _getToday();
-    return this.isInPast(date);
   }
 };
