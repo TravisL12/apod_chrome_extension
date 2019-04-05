@@ -21,6 +21,7 @@ class Apod {
     this.hiResOnly = false;
     this.isImageHD = true;
     this.addToHistory = true;
+    this.randomData = [];
 
     this.datePicker = flatpickr(ApodElements.date, {
       minDate: "1995-6-16",
@@ -74,7 +75,11 @@ class Apod {
   }
 
   random() {
-    if (this.randomData && this.randomIdx < RANDOM_COUNT - 1) {
+    if (this.randomData.length && this.randomIdx < this.randomData.length - 1) {
+      if (this.randomIdx >= this.randomData.length - 3) {
+        this.requestRandom().then(this.preloadRandoms.bind(this));
+      }
+
       this.randomIdx += 1;
       this._setLoadingView();
       this.formatResponse(this.randomData[this.randomIdx]);
@@ -147,34 +152,35 @@ class Apod {
   }
 
   requestSpecific(date) {
-    return reqwest({
-      url: "https://api.nasa.gov/planetary/apod",
-      data: {
-        date,
-        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
-      }
+    return this.createRequest({
+      date,
+      api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
     });
   }
 
   requestRandom() {
+    return this.createRequest({
+      count: RANDOM_COUNT,
+      api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+    });
+  }
+
+  createRequest(data) {
     return reqwest({
-      url: "https://api.nasa.gov/planetary/apod",
-      data: {
-        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447",
-        count: RANDOM_COUNT
-      }
+      data,
+      url: "https://api.nasa.gov/planetary/apod"
     });
   }
 
   formatResponse(data) {
     if (Array.isArray(data)) {
-      this.initiateRandomData(data);
+      this.preloadRandoms(data);
       this.response = this.randomData[this.randomIdx];
     } else {
       this.response = data;
-      if (!this.randomIdx || this.randomIdx >= RANDOM_COUNT - 1) {
+      if (!this.randomIdx || this.randomIdx >= this.randomData.length - 1) {
         // preload some random APODs in case you hit random next
-        this.requestRandom().then(this.initiateRandomData.bind(this));
+        this.requestRandom().then(this.preloadRandoms.bind(this));
       }
     }
 
@@ -212,15 +218,12 @@ class Apod {
     }
   }
 
-  initiateRandomData(data) {
-    this.randomData = data;
-    this.randomIdx = 0;
-    this.preloadRandoms();
-  }
+  preloadRandoms(data) {
+    this.randomData = this.randomData.concat(data);
+    this.randomIdx = this.randomIdx ? this.randomIdx : 0;
 
-  preloadRandoms() {
-    for (let i in this.randomData) {
-      const random = this.randomData[i];
+    for (let i in data) {
+      const random = data[i];
 
       const ImgHd = new Image();
       ImgHd.src = random.hdurl;
