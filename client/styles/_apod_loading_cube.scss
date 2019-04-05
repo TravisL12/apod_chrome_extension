@@ -29,7 +29,7 @@ $transform: $size-px / 2;
     position: absolute;
     width: $size-px;
     height: $size-px;
-    background-color: black;
+    background-color: $black;
     opacity: 0.99;
     background-size: contain;
     background-repeat: no-repeat;

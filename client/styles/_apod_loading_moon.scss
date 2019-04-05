@@ -78,7 +78,7 @@
                 background: $moon-color;
             }
             &.shade-to-light {
-                background: black;
+                background: $black;
                 opacity: $shadow-opacity;
             }
         }

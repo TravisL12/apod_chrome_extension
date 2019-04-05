@@ -21,7 +21,7 @@
 }
 
 body {
-  background: black;
+  background: $black; /* Old browsers */
   margin: 0;
   overflow: hidden;
   width: 100%;
