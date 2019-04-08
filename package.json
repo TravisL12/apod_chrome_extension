@@ -24,7 +24,8 @@
     "uglifyjs-webpack-plugin": "^1.2.5",
     "webpack": "^3.8.1",
     "webpack-dev-server": ">=3.1.11",
-    "webpack-merge": "^4.1.2"
+    "webpack-merge": "^4.1.2",
+    "workbox-webpack-plugin": "^4.2.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

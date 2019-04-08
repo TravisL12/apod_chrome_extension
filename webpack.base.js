@@ -4,6 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
+const WorkboxPlugin = require("workbox-webpack-plugin");
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
   template: "./client/apod-by-trav.html",
@@ -83,6 +84,31 @@ module.exports = {
     CopyWebpackPluginConfig,
     new ExtractTextPlugin("styles/[name].css", {
       allChunks: false
+    }),
+    new WorkboxPlugin.GenerateSW({
+      // Exclude images from the precache
+      exclude: [/\.(?:png|jpg|jpeg|svg)$/],
+
+      // Define runtime caching rules.
+      runtimeCaching: [
+        {
+          // Match any request ends with .png, .jpg, .jpeg or .svg.
+          urlPattern: /\.(?:png|jpg|jpeg|svg)$/,
+
+          // Apply a cache-first strategy.
+          handler: "CacheFirst",
+
+          options: {
+            // Use a custom cache name.
+            cacheName: "images",
+
+            // Only cache 10 images.
+            expiration: {
+              maxEntries: 10
+            }
+          }
+        }
+      ]
     })
   ]
 };

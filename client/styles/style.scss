@@ -20,6 +20,15 @@
   background-repeat: no-repeat;
 }
 
+.load-title {
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  width: 100vw;
+  align-items: center;
+  color: white;
+}
+
 body {
   background: $black; /* Old browsers */
   margin: 0;

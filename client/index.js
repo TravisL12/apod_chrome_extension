@@ -11,14 +11,23 @@
 import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
 import ga from "./scripts/utilities/ga";
-import { $ } from "./scripts/utilities";
-import { SunLoader } from "./scripts/LoadingSpinner";
+import { $, htmlToElements } from "./scripts/utilities";
 
 import "styles/style.scss";
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/service-worker.js").then(() => {
+      console.log("[SW] has loaded!!!!");
+    });
+  });
+}
+
 const apod = new Apod();
-const loader = new SunLoader();
-$("#apod-loading").appendChild(loader.render());
+const loader = htmlToElements(
+  `<div class="load-title"><h1>APOD by The Trav</h1></div>`
+);
+$("#apod-loading").appendChild(loader);
 
 document.addEventListener("DOMContentLoaded", function() {
   topSites();
