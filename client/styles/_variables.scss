@@ -1,7 +1,7 @@
 $black: #111111;
 $gray: rgba(#333333, 0.8);
 $light-gray: rgba(#C7C7C7, 0.8);
-$highlight-blue: lightblue;
+$highlight-blue: rgb(96, 187, 218);
 
 @mixin helvetica-neue-light($weight:300) {
     font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 

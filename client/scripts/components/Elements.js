@@ -18,8 +18,7 @@ const ApodElements = {
   showHiRes: $(".nav-buttons #show-hi-res"),
 
   clearKnowMore: () => {
-    const knowMore = $("#know-more-tabs");
-    clearElement(knowMore);
+    clearElement($("#know-more-tabs"));
   },
 
   resetElements: () => {

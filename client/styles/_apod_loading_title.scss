@@ -1,4 +1,4 @@
-$sizzle-delay: 1s;
+$sizzle-delay: 5s;
 @keyframes underline {
   0% {
     width: 0;
@@ -37,7 +37,7 @@ $sizzle-delay: 1s;
     position: relative;
     animation: underline $sizzle-delay infinite;
     height: 3px;
-    background: #b73131;
+    background: $highlight-blue;
     border-radius: 10px;
   }
 

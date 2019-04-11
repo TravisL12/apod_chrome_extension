@@ -27,9 +27,7 @@ const loader = htmlToElements(`
 `);
 $("#apod-loading").appendChild(loader);
 
-document.addEventListener("DOMContentLoaded", function() {
-  topSites();
-});
+document.addEventListener("DOMContentLoaded", topSites);
 
 chrome.storage.onChanged.addListener((changes, name) => {
   if (changes.hiResOnly) {
@@ -38,9 +36,11 @@ chrome.storage.onChanged.addListener((changes, name) => {
 });
 
 // Fetch chrome storage settings from options and load
-chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
-  ga({ type: "pageview", category: "v2.3.2", page: "apod-by-trav" });
-  apod.hiResOnly = items.hiResOnly;
-  const apodOptionType = items.apodType || "today";
-  apodOptionType === "today" ? apod.current() : apod.random();
-});
+chrome.storage.sync.get(
+  ["apodType", "hiResOnly"],
+  ({ hiResOnly, apodType }) => {
+    ga({ type: "pageview", category: "v2.3.2", page: "apod-by-trav" });
+    apod.hiResOnly = hiResOnly;
+    apodType === "today" ? apod.current() : apod.random();
+  }
+);

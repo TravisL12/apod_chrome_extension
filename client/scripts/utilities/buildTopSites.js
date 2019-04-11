@@ -13,10 +13,11 @@ function buildPopupDom(data) {
     }`;
     const topSiteList = htmlToElements(`
     <li>
-    <a href='${site.url}' title='${site.title}'>
-    <img class='thumb-img' src='${imgSource}'/>
-    </a>
-        </li>`);
+      <a href='${site.url}' title='${site.title}'>
+        <img class='thumb-img' src='${imgSource}'/>
+      </a>
+    </li>
+    `);
 
     siteList.appendChild(topSiteList);
   }
@@ -24,9 +25,6 @@ function buildPopupDom(data) {
   popupDiv.appendChild(siteList);
 }
 
-function buildTypedUrlList() {
-  chrome.topSites.get(function(data) {
-    buildPopupDom(data.slice(0, 10));
-  });
-}
-export default buildTypedUrlList;
+export default () => {
+  chrome.topSites.get(buildPopupDom);
+};
