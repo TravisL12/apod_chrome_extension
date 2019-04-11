@@ -1,0 +1,64 @@
+$sizzle-delay: 1s;
+@keyframes underline {
+  0% {
+    width: 0;
+  }
+  10%,
+  70% {
+    width: 100%;
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes trav {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  30%,
+  90% {
+    opacity: 1;
+  }
+}
+
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: black;
+  color: white;
+  height: 100vh;
+  width: 100vw;
+
+  .sizzle {
+    position: relative;
+    animation: underline $sizzle-delay infinite;
+    height: 3px;
+    background: #b73131;
+    border-radius: 10px;
+  }
+
+  .title {
+    width: 200px;
+  }
+
+  h1,
+  h2 {
+    margin: 0;
+  }
+
+  h1 {
+    font-weight: 700;
+  }
+
+  h2 {
+    animation: trav $sizzle-delay infinite;
+    color: #616161;
+    font-weight: 100;
+    font-size: 20px;
+    text-align: right;
+  }
+}

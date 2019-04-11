@@ -16,9 +16,15 @@ import { $, htmlToElements } from "./scripts/utilities";
 import "styles/style.scss";
 
 const apod = new Apod();
-const loader = htmlToElements(
-  `<div class="load-title"><h1>APOD <span>by The Trav</span></h1></div>`
-);
+const loader = htmlToElements(`
+  <div class='loader-container'>
+    <div class='title'>
+      <div><h1>APOD</h1></div>
+      <div><div class='sizzle' /></div>
+      <div><h2>by The Trav</h2></div>
+    </div>
+  </div>
+`);
 $("#apod-loading").appendChild(loader);
 
 document.addEventListener("DOMContentLoaded", function() {
