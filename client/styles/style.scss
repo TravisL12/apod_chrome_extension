@@ -1,7 +1,6 @@
 @import "../../node_modules/flatpickr/dist/themes/dark.css";
 @import "variables";
 @import "drawer";
-@import "apod_loading_title";
 
 .hide {
   @extend %hide;
@@ -22,16 +21,19 @@
 }
 
 .load-title {
-  display: flex;
-  justify-content: center;
+  @include flexCenter;
   height: 100vh;
   width: 100vw;
-  align-items: center;
-  color: white;
-  font-weight: bolder;
+  color: $gray;
 
-  span {
-    @include helvetica-neue-light;
+  h1 {
+    font-size: 40px;
+    margin: 0;
+
+    span {
+      @include helvetica-neue-light;
+      font-size: 55%;
+    }
   }
 }
 
@@ -172,27 +174,29 @@ body {
 
   .apod__top-sites {
     padding-top: 10px;
+
     ul {
       display: flex;
-      justify-content: space-between;
-      width: 450px;
+      justify-content: flex-start;
+
+      li + li {
+        margin-left: 20px;
+      }
 
       li {
-        position: relative;
         @include flexCenter;
-        flex-direction: column;
         cursor: pointer;
 
         a {
           @include apod-button;
-          background-color: transparent;
           display: inline-block;
+          background-color: transparent;
           padding: 6px;
 
           .thumb-img {
+            display: block;
             width: 16px;
             height: 16px;
-            display: block;
           }
         }
 
