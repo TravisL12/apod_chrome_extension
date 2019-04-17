@@ -23,7 +23,7 @@ class ApodOptions {
     chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
       let type = items.apodType;
       if (!type) {
-        type = "today";
+        type = "random";
         chrome.storage.sync.set({
           apodType: type
         });
