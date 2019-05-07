@@ -27,6 +27,18 @@ Tab Shortcuts:
 * Toggle Explanation - `e`
 * Toggle Favorites - `f`
 
+## Development
+
+If you want to fork, develop and build this extension locally then follow these steps:
+
+* Fork/Download the repository and using the terminal navigate to the directory.
+
+* Build the dependencies by running `yarn` or `npm install` ([Yarn is recommended](https://yarnpkg.com/en/)).
+
+* For active development use `yarn watch` or `npm watch` to rebuild the extension. Each time you make a save the extension will be rebuilt and then reload your web browser and the changes will be reflected.
+
+* Add the unpacked extension in Chrome (after running `yarn watch` or `yarn build`). Do this by opening up Chrome and heading to `chrome://extensions/`. Select `Load Unpacked` at the top left of the page, navigate to the `dist` folder inside the project directory. Go open a new tab in Chrome and you'll now be running the development version.
+
 ## Reviewer notes for APOD By The Trav
 
 #### Firefox validation warnings
