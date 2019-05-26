@@ -18,7 +18,12 @@ import "styles/style.scss";
 const apod = new Apod();
 const loader = htmlToElements(`
   <div class="load-title">
-    <h1>APOD <span>by The Trav</span></h1>
+    <div class='title-container'>  
+      <h1>Astronomy</h1>
+      <h1>Picture</h1>
+      <h1>Of the</h1>
+      <h1>Day</h1>
+    </div>
   </div>
 `);
 $("#apod-loading").appendChild(loader);

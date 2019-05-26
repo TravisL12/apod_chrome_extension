@@ -20,15 +20,33 @@
   background-repeat: no-repeat;
 }
 
+@keyframes slide {
+  0% {
+    background-position: -100% 100%;
+  }
+  100% {
+    background-position: 100% -50%;
+  }
+}
+
 .load-title {
   @include flexCenter;
   height: 100vh;
   width: 100vw;
   color: $gray;
 
+  .title-container {
+    display: inline-block;
+  }
   h1 {
     font-size: 40px;
     margin: 0;
+
+    animation: slide 10s infinite linear;
+    background-image: url("https://apod.nasa.gov/apod/image/0706/rosette_torregrosa.jpg");
+    -webkit-text-fill-color: transparent;
+    -webkit-background-clip: text;
+    text-shadow: none;
 
     span {
       @include helvetica-neue-light;
