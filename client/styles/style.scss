@@ -25,7 +25,7 @@
     background-position: -100% 100%;
   }
   100% {
-    background-position: 100% -50%;
+    background-position: 100% 100%;
   }
 }
 
@@ -36,14 +36,20 @@
   color: $gray;
 
   .title-container {
-    display: inline-block;
+    text-align: center;
+
+    p {
+      font-size: 32px;
+      font-weight: 700;
+    }
   }
+
   h1 {
     font-size: 40px;
     margin: 0;
 
     animation: slide 10s infinite linear;
-    background-image: url("https://apod.nasa.gov/apod/image/0706/rosette_torregrosa.jpg");
+    background: url("https://apod.nasa.gov/apod/image/0706/rosette_torregrosa.jpg");
     -webkit-text-fill-color: transparent;
     -webkit-background-clip: text;
     text-shadow: none;

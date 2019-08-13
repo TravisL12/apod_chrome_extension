@@ -22,7 +22,6 @@ class Apod {
     this.isImageHD = true;
     this.addToHistory = true;
     this.randomData = [];
-
     this.datePicker = flatpickr(ApodElements.date, {
       minDate: "1995-6-16",
       maxDate: "today",
@@ -251,6 +250,7 @@ class Apod {
       url: response.url,
       specificDate: this.specificDate.bind(this)
     });
+
     this.drawer.tabs[1].checkFavorite();
   }
 
@@ -272,8 +272,9 @@ class Apod {
 
   preLoadImage(forceHighDef = false) {
     this.loadedImage = new Image();
-    const { hdurl, url } = this.response;
+    const { hdurl, url, title } = this.response;
 
+    ApodElements.loading.updateTitle(title);
     // If the urls are identical just mark it HD
     this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
     this.loadedImage.src = this.isImageHD ? hdurl : url;
@@ -355,7 +356,7 @@ class Apod {
     this.navigation.next.el.classList.toggle("hide", isToday);
     this.navigation.next.toggle(!isToday);
 
-    ApodElements.loading.classList.add("hide");
+    ApodElements.loading.toggle(true);
     ApodElements.explanation.classList.remove("hide");
   }
 }

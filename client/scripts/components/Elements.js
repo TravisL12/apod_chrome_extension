@@ -1,18 +1,18 @@
 import { $, clearElement } from "scripts/utilities";
+import { TitleLoader } from "scripts/LoadingSpinner";
 
 const ApodElements = {
   // Initialize image & video elements
   image: $("#apod-image"),
   bgImage: $("#apod-image-vertical-bg"),
-  video: $("#apod-video"),
-  videoIFrame: $("#apod-video iframe"),
+  video: $("#apod-image"),
+  videoIFrame: $("#apod-image iframe"),
   explanation: $(".apod__header .explanation"),
 
   // Initialize various elements
   title: $("#apod-title"),
   date: $("#apod-date"),
-  // datePicker: $("#apod-date-picker"),
-  loading: $("#apod-loading"),
+  loading: new TitleLoader($("#apod-loading")),
   error: $("#apod-error"),
   imgQuality: $("#img-quality"),
   showHiRes: $(".nav-buttons #show-hi-res"),
@@ -33,7 +33,7 @@ const ApodElements = {
 
     ApodElements.explanation.classList.add("hide");
     ApodElements.showHiRes.classList.add("hide");
-    ApodElements.loading.classList.remove("hide");
+    ApodElements.loading.toggle(false);
     ApodElements.clearKnowMore();
   }
 };

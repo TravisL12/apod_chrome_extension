@@ -49,4 +49,35 @@ class MoonLoader {
   }
 }
 
-export { SunLoader, MoonLoader };
+class TitleLoader {
+  constructor(el) {
+    this.el = el;
+  }
+
+  updateTitle(title) {
+    this.title = title || "Loading";
+    this.render();
+  }
+
+  toggle(force) {
+    this.updateTitle();
+    this.el.classList.toggle("hide", !!force);
+  }
+
+  render() {
+    this.el.innerHTML = "";
+
+    const body = htmlToElements(`
+    <div class="load-title">
+      <div class='title-container'>  
+        <p>APOD by Trav</p>
+        <h1>${this.title}</h1>
+      </div>
+    </div>
+  `);
+
+    this.el.appendChild(body);
+  }
+}
+
+export { SunLoader, MoonLoader, TitleLoader };
