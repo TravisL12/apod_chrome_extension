@@ -100,8 +100,6 @@ body {
 }
 
 .apod__header {
-  position: absolute;
-  top: 15px;
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -234,22 +232,29 @@ body {
   }
 }
 
-.apod__image,
-.apod__video {
-  @include flexCenter;
+.apod-body {
   position: absolute;
-  width: 100%;
-  height: 100%;
   top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 
-  &.hide {
-    @extend %hide-display;
+  .apod__image {
+    @include flexCenter;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+
+    &.hide {
+      @extend %hide-display;
+    }
   }
-}
 
-.apod__image {
-  background-position: center center;
-  background-repeat: no-repeat;
+  .apod__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
 }
 
 .keyword {

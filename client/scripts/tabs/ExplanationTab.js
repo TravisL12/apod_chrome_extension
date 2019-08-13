@@ -6,6 +6,7 @@ export default class ExplanationTab extends DrawerTab {
   constructor(el, drawer) {
     super(el, drawer);
     this.keycode = 69;
+    this.title = "";
     this.date = "";
     this.urls = {
       hdurl: "",
@@ -14,7 +15,7 @@ export default class ExplanationTab extends DrawerTab {
     this.explanation = "";
     this.template = htmlToElements(`
             <div class='explanation'>
-                <h2 class='title'>Explanation</h2>
+                <h2 class='title'></h2>
 
                 <div id='apod-explanation'></div>
 
@@ -57,6 +58,7 @@ export default class ExplanationTab extends DrawerTab {
     const origin = this.baseView.querySelector("#apod-origin");
     const hiRes = this.baseView.querySelector("#apod-hires");
     const lowRes = this.baseView.querySelector("#apod-lowres");
+    const title = this.baseView.querySelector("h2.title");
     const explanation = $("#apod-explanation");
     clearElement(explanation);
 
@@ -74,6 +76,7 @@ export default class ExplanationTab extends DrawerTab {
     );
     hiRes.setAttribute("href", this.urls.hdurl);
     lowRes.setAttribute("href", this.urls.url);
+    title.textContent = this.title;
     explanation.appendChild(htmlToElements(this.explanation, true));
 
     this.knowMoreKeywordListeners();

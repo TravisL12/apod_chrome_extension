@@ -240,6 +240,7 @@ class Apod {
         hdurl: response.hdurl,
         url: response.url
       },
+      title: response.title,
       explanation: response.explanation,
       date: response.date
     });
