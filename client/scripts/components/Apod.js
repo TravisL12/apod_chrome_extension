@@ -305,7 +305,7 @@ class Apod {
     ApodElements.image.style["background-image"] = `url(${
       this.loadedImage.src
     })`;
-    ApodElements.image.classList.add(`bg-${this.backgroundSize()}`);
+    ApodElements.image.style["background-size"] = this.backgroundSize();
 
     ApodElements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
 
@@ -329,7 +329,7 @@ class Apod {
   }
 
   apodVideo() {
-    ApodElements.image.classList = "apod__image";
+    ApodElements.image.classList.remove("hide");
     this.response.url = this.response.url.replace(";autoplay=1", "");
 
     if (!/^http(s?)/i.test(this.response.url)) {
