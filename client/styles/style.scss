@@ -104,6 +104,7 @@ body {
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
+  margin-top: 10px;
   padding: 0 20px;
   z-index: 1000;
 
@@ -234,6 +235,7 @@ body {
 
 .apod-body {
   position: absolute;
+  z-index: -1; // put it behind everything else
   top: 0;
   left: 0;
   width: 100vw;

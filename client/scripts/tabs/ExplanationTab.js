@@ -42,6 +42,8 @@ export default class ExplanationTab extends DrawerTab {
    * @return {String} "2011-02-15"
    */
   apodSource() {
+    if (!this.date) return;
+
     const date = this.date.split("-");
     return `ap${date[0].slice(-2)}${zeroPad(date[1])}${zeroPad(date[2])}.html`;
   }

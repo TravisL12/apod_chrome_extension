@@ -1,12 +1,14 @@
 $drawer-width: 400px;
+$top-offset: 100px;
 
 .apod__drawer {
   position: absolute;
   z-index: 1000;
-  top: 20px;
+  top: $top-offset;
   right: 0;
   width: $drawer-width;
-  height: calc(100vh - 40px);
+  max-height: 800px;
+  height: calc(100vh - 2 * #{$top-offset});
   transform: translate3d($drawer-width, 0px, 0px);
   transition: 0.4s transform ease-out;
 
@@ -86,7 +88,7 @@ $drawer-width: 400px;
 
       .external-links,
       #apod-explanation {
-        font-size: 18px;
+        font-size: 16px;
         margin-bottom: 10px;
         text-rendering: optimizeLegibility;
 

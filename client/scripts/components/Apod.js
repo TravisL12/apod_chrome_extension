@@ -7,6 +7,7 @@ import NavigationButton from "scripts/NavigationButton";
 import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
+import { htmlToElements } from "../utilities";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const RANDOM_COUNT = 15;
@@ -194,8 +195,6 @@ class Apod {
     this.populateTabs(this.response);
 
     const isMediaImage = this.response.media_type === "image";
-    ApodElements.image.classList.toggle("hide", !isMediaImage);
-    ApodElements.video.classList.toggle("hide", isMediaImage);
 
     if (isMediaImage) {
       this.preLoadImage(this.hiResOnly);
@@ -293,7 +292,6 @@ class Apod {
     };
 
     this.loadedImage.onerror = () => {
-      console.log("Error: image load");
       clearTimeout(timeout);
       this.isRequestInProgress = false;
       this.random();
@@ -331,6 +329,7 @@ class Apod {
   }
 
   apodVideo() {
+    ApodElements.image.classList = "apod__image";
     this.response.url = this.response.url.replace(";autoplay=1", "");
 
     if (!/^http(s?)/i.test(this.response.url)) {
@@ -339,7 +338,12 @@ class Apod {
 
     const url = new URL(this.response.url);
     url.search = "autopause=1&autoplay=0";
-    ApodElements.videoIFrame.src = url.href;
+    const iFrame = htmlToElements(
+      `<iframe width="960" height="540" src='${
+        url.href
+      }' frameborder="0"></iframe>`
+    );
+    ApodElements.image.appendChild(iFrame);
     this.constructApod();
   }
 

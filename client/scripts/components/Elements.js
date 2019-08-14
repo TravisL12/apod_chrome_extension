@@ -5,8 +5,6 @@ const ApodElements = {
   // Initialize image & video elements
   image: $("#apod-image"),
   bgImage: $("#apod-image-vertical-bg"),
-  video: $("#apod-image"),
-  videoIFrame: $("#apod-image iframe"),
   explanation: $(".apod__header .explanation"),
 
   // Initialize various elements
@@ -25,12 +23,8 @@ const ApodElements = {
     ApodElements.image.style["background-image"] = "";
     ApodElements.image.style["background-size"] = "";
     ApodElements.image.classList.add("hide");
-
-    ApodElements.video.classList.add("hide");
-    ApodElements.videoIFrame.src = "";
-
+    ApodElements.image.innerHTML = "";
     ApodElements.bgImage.style["background-image"] = "";
-
     ApodElements.explanation.classList.add("hide");
     ApodElements.showHiRes.classList.add("hide");
     ApodElements.loading.toggle(false);
