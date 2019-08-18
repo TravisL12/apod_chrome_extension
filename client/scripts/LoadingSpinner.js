@@ -52,15 +52,16 @@ class MoonLoader {
 class TitleLoader {
   constructor(el) {
     this.el = el;
+    this.backgroundImg = "/images/stars.png";
   }
 
-  updateTitle(title) {
-    this.title = title || "Loading";
+  updateBg(backgroundImg) {
+    this.backgroundImg = backgroundImg || this.backgroundImg;
     this.render();
   }
 
   toggle(force) {
-    this.updateTitle();
+    this.updateBg();
     this.el.classList.toggle("hide", !!force);
   }
 
@@ -70,8 +71,7 @@ class TitleLoader {
     const body = htmlToElements(`
     <div class="load-title">
       <div class='title-container'>  
-        <p>APOD by Trav</p>
-        <h1>${this.title}</h1>
+        <h1 class="apod-name">APOD</h1>
       </div>
     </div>
   `);

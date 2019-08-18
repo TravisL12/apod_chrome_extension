@@ -274,7 +274,7 @@ class Apod {
     this.loadedImage = new Image();
     const { hdurl, url, title } = this.response;
 
-    ApodElements.loading.updateTitle(title);
+    // ApodElements.loading.updateBg(this.history.recall(-1).url);
     // If the urls are identical just mark it HD
     this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
     this.loadedImage.src = this.isImageHD ? hdurl : url;

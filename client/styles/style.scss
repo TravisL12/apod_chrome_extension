@@ -22,10 +22,10 @@
 
 @keyframes slide {
   0% {
-    background-position: -100% 100%;
+    background-position: 0% 50%;
   }
   100% {
-    background-position: 100% 100%;
+    background-position: 100% 50%;
   }
 }
 
@@ -33,30 +33,22 @@
   @include flexCenter;
   height: 100vh;
   width: 100vw;
-  color: $gray;
+  background-color: $gray;
+  color: $black;
 
   .title-container {
     text-align: center;
 
-    p {
-      font-size: 32px;
-      font-weight: 700;
-    }
-  }
-
-  h1 {
-    font-size: 40px;
-    margin: 0;
-
-    animation: slide 10s infinite linear;
-    background: url("https://apod.nasa.gov/apod/image/0706/rosette_torregrosa.jpg");
-    -webkit-text-fill-color: transparent;
-    -webkit-background-clip: text;
-    text-shadow: none;
-
-    span {
-      @include helvetica-neue-light;
-      font-size: 55%;
+    h1 {
+      animation: slide 50s infinite linear;
+      margin: 0;
+      font-size: 200px;
+      background-image: url("/images/stars.png"); // default
+      background-size: 50%;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-stroke-width: 3px;
+      -webkit-text-stroke-color: $light-gray;
     }
   }
 }
