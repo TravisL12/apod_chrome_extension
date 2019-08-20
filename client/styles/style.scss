@@ -22,10 +22,10 @@
 
 @keyframes slide {
   0% {
-    background-position: 0% 50%;
+    background-position: 0%;
   }
   100% {
-    background-position: 100% 50%;
+    background-position: 1000%;
   }
 }
 
@@ -37,14 +37,24 @@
   color: $black;
 
   .title-container {
-    text-align: center;
+    text-align: right;
+
+    p {
+      margin: 0;
+      margin-right: 25px;
+      font-size: 20px;
+      font-weight: 500;
+      color: #585858;
+      line-height: 0;
+    }
 
     h1 {
-      animation: slide 50s infinite linear;
+      animation: slide 20s infinite linear;
       margin: 0;
       font-size: 200px;
+      line-height: 200px;
       background-image: url("/images/stars.png"); // default
-      background-size: 50%;
+      background-size: 110%;
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
       -webkit-text-stroke-width: 3px;

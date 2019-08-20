@@ -72,6 +72,7 @@ class TitleLoader {
     <div class="load-title">
       <div class='title-container'>  
         <h1 class="apod-name">APOD</h1>
+        <p>By The Trav</p>
       </div>
     </div>
   `);
