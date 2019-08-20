@@ -37,13 +37,13 @@
   color: $black;
 
   .title-container {
+    @include helvetica-neue-light;
     text-align: right;
 
     p {
       margin: 0;
-      margin-right: 25px;
+      margin-right: 35px;
       font-size: 20px;
-      font-weight: 500;
       color: #585858;
       line-height: 0;
     }
