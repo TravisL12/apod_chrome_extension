@@ -1,18 +1,16 @@
 import { $, clearElement } from "scripts/utilities";
+import { TitleLoader } from "scripts/LoadingSpinner";
 
 const ApodElements = {
   // Initialize image & video elements
   image: $("#apod-image"),
   bgImage: $("#apod-image-vertical-bg"),
-  video: $("#apod-video"),
-  videoIFrame: $("#apod-video iframe"),
   explanation: $(".apod__header .explanation"),
 
   // Initialize various elements
   title: $("#apod-title"),
   date: $("#apod-date"),
-  // datePicker: $("#apod-date-picker"),
-  loading: $("#apod-loading"),
+  loading: new TitleLoader($("#apod-loading")),
   error: $("#apod-error"),
   imgQuality: $("#img-quality"),
   showHiRes: $(".nav-buttons #show-hi-res"),
@@ -25,15 +23,11 @@ const ApodElements = {
     ApodElements.image.style["background-image"] = "";
     ApodElements.image.style["background-size"] = "";
     ApodElements.image.classList.add("hide");
-
-    ApodElements.video.classList.add("hide");
-    ApodElements.videoIFrame.src = "";
-
+    ApodElements.image.innerHTML = "";
     ApodElements.bgImage.style["background-image"] = "";
-
     ApodElements.explanation.classList.add("hide");
     ApodElements.showHiRes.classList.add("hide");
-    ApodElements.loading.classList.remove("hide");
+    ApodElements.loading.toggle(false);
     ApodElements.clearKnowMore();
   }
 };

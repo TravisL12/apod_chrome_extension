@@ -20,19 +20,45 @@
   background-repeat: no-repeat;
 }
 
+@keyframes slide {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 1000%;
+  }
+}
+
 .load-title {
   @include flexCenter;
   height: 100vh;
   width: 100vw;
-  color: $gray;
+  background-color: $gray;
+  color: $black;
 
-  h1 {
-    font-size: 40px;
-    margin: 0;
+  .title-container {
+    @include helvetica-neue-light;
+    text-align: right;
 
-    span {
-      @include helvetica-neue-light;
-      font-size: 55%;
+    p {
+      margin: 0;
+      margin-right: 35px;
+      font-size: 20px;
+      color: #585858;
+      line-height: 0;
+    }
+
+    h1 {
+      animation: slide 20s infinite linear;
+      margin: 0;
+      font-size: 200px;
+      line-height: 200px;
+      background-image: url("/images/stars.png"); // default
+      background-size: 110%;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-stroke-width: 3px;
+      -webkit-text-stroke-color: $light-gray;
     }
   }
 }
@@ -45,19 +71,7 @@ body {
   height: 100%;
 }
 
-.bg-contain {
-  background-size: contain;
-}
-
-.bg-cover {
-  background-size: cover;
-}
-
-.bg-auto {
-  background-size: auto;
-}
-
-.cover-vertical {
+.apod__background-image {
   opacity: 0.3;
   position: absolute;
   top: 0;
@@ -65,6 +79,7 @@ body {
   width: 100%;
   background-position: 50%;
   background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .apod__error {
@@ -76,12 +91,11 @@ body {
 }
 
 .apod__header {
-  position: absolute;
-  top: 15px;
   display: flex;
   justify-content: space-between;
   width: 100%;
   box-sizing: border-box;
+  margin-top: 10px;
   padding: 0 20px;
   z-index: 1000;
 
@@ -210,22 +224,30 @@ body {
   }
 }
 
-.apod__image,
-.apod__video {
-  @include flexCenter;
+.apod-body {
   position: absolute;
-  width: 100%;
-  height: 100%;
+  z-index: -1; // put it behind everything else
   top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
 
-  &.hide {
-    @extend %hide-display;
+  .apod__image {
+    @include flexCenter;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+
+    &.hide {
+      @extend %hide-display;
+    }
   }
-}
 
-.apod__image {
-  background-position: center center;
-  background-repeat: no-repeat;
+  .apod__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
 }
 
 .keyword {

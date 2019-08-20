@@ -11,17 +11,10 @@
 import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
 import ga from "./scripts/utilities/ga";
-import { $, htmlToElements } from "./scripts/utilities";
 
 import "styles/style.scss";
 
 const apod = new Apod();
-const loader = htmlToElements(`
-  <div class="load-title">
-    <h1>APOD <span>by The Trav</span></h1>
-  </div>
-`);
-$("#apod-loading").appendChild(loader);
 
 document.addEventListener("DOMContentLoaded", topSites);
 

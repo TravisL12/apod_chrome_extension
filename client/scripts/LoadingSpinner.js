@@ -49,4 +49,36 @@ class MoonLoader {
   }
 }
 
-export { SunLoader, MoonLoader };
+class TitleLoader {
+  constructor(el) {
+    this.el = el;
+    this.backgroundImg = "/images/stars.png";
+  }
+
+  updateBg(backgroundImg) {
+    this.backgroundImg = backgroundImg || this.backgroundImg;
+    this.render();
+  }
+
+  toggle(force) {
+    this.updateBg();
+    this.el.classList.toggle("hide", !!force);
+  }
+
+  render() {
+    this.el.innerHTML = "";
+
+    const body = htmlToElements(`
+    <div class="load-title">
+      <div class='title-container'>  
+        <h1 class="apod-name">APOD</h1>
+        <p>By The Trav</p>
+      </div>
+    </div>
+  `);
+
+    this.el.appendChild(body);
+  }
+}
+
+export { SunLoader, MoonLoader, TitleLoader };

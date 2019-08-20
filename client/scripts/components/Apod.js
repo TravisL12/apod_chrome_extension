@@ -7,6 +7,7 @@ import NavigationButton from "scripts/NavigationButton";
 import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
+import { htmlToElements } from "../utilities";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const RANDOM_COUNT = 15;
@@ -22,7 +23,6 @@ class Apod {
     this.isImageHD = true;
     this.addToHistory = true;
     this.randomData = [];
-
     this.datePicker = flatpickr(ApodElements.date, {
       minDate: "1995-6-16",
       maxDate: "today",
@@ -195,8 +195,6 @@ class Apod {
     this.populateTabs(this.response);
 
     const isMediaImage = this.response.media_type === "image";
-    ApodElements.image.classList.toggle("hide", !isMediaImage);
-    ApodElements.video.classList.toggle("hide", isMediaImage);
 
     if (isMediaImage) {
       this.preLoadImage(this.hiResOnly);
@@ -241,6 +239,7 @@ class Apod {
         hdurl: response.hdurl,
         url: response.url
       },
+      title: response.title,
       explanation: response.explanation,
       date: response.date
     });
@@ -251,6 +250,7 @@ class Apod {
       url: response.url,
       specificDate: this.specificDate.bind(this)
     });
+
     this.drawer.tabs[1].checkFavorite();
   }
 
@@ -272,8 +272,9 @@ class Apod {
 
   preLoadImage(forceHighDef = false) {
     this.loadedImage = new Image();
-    const { hdurl, url } = this.response;
+    const { hdurl, url, title } = this.response;
 
+    // ApodElements.loading.updateBg(this.history.recall(-1).url);
     // If the urls are identical just mark it HD
     this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
     this.loadedImage.src = this.isImageHD ? hdurl : url;
@@ -291,7 +292,6 @@ class Apod {
     };
 
     this.loadedImage.onerror = () => {
-      console.log("Error: image load");
       clearTimeout(timeout);
       this.isRequestInProgress = false;
       this.random();
@@ -305,7 +305,7 @@ class Apod {
     ApodElements.image.style["background-image"] = `url(${
       this.loadedImage.src
     })`;
-    ApodElements.image.classList.add(`bg-${this.backgroundSize()}`);
+    ApodElements.image.style["background-size"] = this.backgroundSize();
 
     ApodElements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
 
@@ -329,6 +329,7 @@ class Apod {
   }
 
   apodVideo() {
+    ApodElements.image.classList.remove("hide");
     this.response.url = this.response.url.replace(";autoplay=1", "");
 
     if (!/^http(s?)/i.test(this.response.url)) {
@@ -337,7 +338,12 @@ class Apod {
 
     const url = new URL(this.response.url);
     url.search = "autopause=1&autoplay=0";
-    ApodElements.videoIFrame.src = url.href;
+    const iFrame = htmlToElements(
+      `<iframe width="960" height="540" src='${
+        url.href
+      }' frameborder="0"></iframe>`
+    );
+    ApodElements.image.appendChild(iFrame);
     this.constructApod();
   }
 
@@ -355,7 +361,7 @@ class Apod {
     this.navigation.next.el.classList.toggle("hide", isToday);
     this.navigation.next.toggle(!isToday);
 
-    ApodElements.loading.classList.add("hide");
+    ApodElements.loading.toggle(true);
     ApodElements.explanation.classList.remove("hide");
   }
 }
