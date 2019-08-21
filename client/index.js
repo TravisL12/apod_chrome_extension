@@ -1,3 +1,5 @@
+/*global chrome*/
+
 /**
  * Astronomy Picture of the Day - Chrome Extension
  * Author: Travis Lawrence
