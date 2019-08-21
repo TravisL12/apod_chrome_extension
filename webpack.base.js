@@ -2,7 +2,7 @@ const path = require("path");
 
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const CleanWebpackPlugin = require("clean-webpack-plugin");
 
 const IndexHtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -44,35 +44,45 @@ module.exports = {
     mainFiles: ["index"]
   },
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.(js|jsx)$/,
         loader: "babel-loader",
         exclude: /node_modules/
-      }
-    ],
-    rules: [
+      },
       {
         test: /\.scss$/,
-        use: ExtractTextPlugin.extract({
-          fallback: "style-loader",
-          use: [
-            {
-              loader: "css-loader",
-              options: {
-                minimize: true,
-                sourceMap: false
-              }
-            },
-            {
-              loader: "sass-loader",
-              options: {
-                minimize: true,
-                sourceMap: false
-              }
+        use: [
+          {
+            loader: MiniCssExtractPlugin.loader,
+            options: {
+              // you can specify a publicPath here
+              // by default it uses publicPath in webpackOptions.output
+              // publicPath: "../",
+              minimize: true,
+              sourceMap: false
             }
-          ]
-        })
+          },
+          "sass-loader"
+        ]
+
+        // test: /\.scss$/,
+        // use: MiniCssExtractPlugin.extract({
+        //   fallback: "style-loader",
+        //   use: [
+        //     {
+        //       loader: "css-loader",
+        //       options: {}
+        //     },
+        //     {
+        //       loader: "sass-loader",
+        //       options: {
+        //         minimize: true,
+        //         sourceMap: false
+        //       }
+        //     }
+        //   ]
+        // })
       }
     ]
   },
@@ -81,7 +91,8 @@ module.exports = {
     IndexHtmlWebpackPluginConfig,
     OptionsHtmlWebpackPluginConfig,
     CopyWebpackPluginConfig,
-    new ExtractTextPlugin("styles/[name].css", {
+    new MiniCssExtractPlugin({
+      filename: "styles/[name].css",
       allChunks: false
     })
   ]
