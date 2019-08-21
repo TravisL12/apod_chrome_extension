@@ -8,6 +8,8 @@
  * Utilizing the NASA API - https://api.nasa.gov/api.html#apod
  */
 
+import React from "react";
+import ReactDOM from "react-dom";
 import Apod from "./scripts/components/Apod";
 import topSites from "./scripts/utilities/buildTopSites";
 import ga from "./scripts/utilities/ga";
@@ -31,5 +33,9 @@ chrome.storage.sync.get(
     ga({ type: "pageview", category: "v2.3.2", page: "apod-by-trav" });
     apod.hiResOnly = hiResOnly;
     apodType === "today" ? apod.current() : apod.random();
+    ReactDOM.render(
+      <Apod selection={apodType} />,
+      document.getElementById("root")
+    );
   }
 );

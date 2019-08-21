@@ -1,3 +1,5 @@
+import React, { Component } from "react";
+import { string } from "prop-types";
 import reqwest from "reqwest";
 import ga from "scripts/utilities/ga";
 import DateManager from "scripts/DateManager";
@@ -8,362 +10,372 @@ import ApodElements from "scripts/components/Elements";
 import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
 import { htmlToElements } from "../utilities";
+import { stringify } from "querystring";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const RANDOM_COUNT = 15;
 const ERROR_LIMIT = 3;
 
-class Apod {
-  constructor() {
-    this.errorCount = 0;
-    this.delayForHdLoad = 3000;
-    this.history = new History();
-    this.drawer = new Drawer("#apod-drawer");
-    this.hiResOnly = false;
-    this.isImageHD = true;
-    this.addToHistory = true;
-    this.randomData = [];
-    this.datePicker = flatpickr(ApodElements.date, {
+class Apod extends Component {
+  static propType = {
+    selection: string
+  };
+
+  state = {
+    errorCount: 0,
+    delayForHdLoad: 3000,
+    history: new History(),
+    drawer: new Drawer("#apod-drawer"),
+    hiResOnly: false,
+    isImageHD: true,
+    addToHistory: true,
+    randomData: [],
+    datePicker: flatpickr(ApodElements.date, {
       minDate: "1995-6-16",
       maxDate: "today",
       onChange: (dates, dateStr) => {
         this.specificDate(dateStr);
       }
-    });
+    })
+  };
 
-    document.addEventListener("keyup", e => {
-      if (this.addToHistory) {
-        let recalledResponse = false;
-
-        if (e.which === 37) {
-          // left arrow key
-          recalledResponse = this.history.recall(-1);
-        } else if (e.which === 39) {
-          // right arrow key
-          recalledResponse = this.history.recall(1);
-        }
-
-        if (recalledResponse) {
-          this._setLoadingView();
-          this.addToHistory = false;
-          this.formatResponse(recalledResponse);
-        }
-      }
-    });
-
-    // Initialize button objects
-    this.navigation = {
-      random: new NavigationButton(".nav-buttons .random", 82, "random", this),
-      previous: new NavigationButton(
-        ".nav-buttons .previous",
-        74,
-        "previous",
-        this
-      ),
-      current: new NavigationButton(
-        ".nav-buttons .current",
-        84,
-        "current",
-        this
-      ),
-      next: new NavigationButton(".nav-buttons .next", 75, "next", this)
-    };
+  render() {
+    return <h1>Apod</h1>;
   }
 
-  specificDate(date) {
-    this.getApod(date);
-  }
+  // document.addEventListener("keyup", e => {
+  //   if (this.addToHistory) {
+  //     let recalledResponse = false;
 
-  random() {
-    if (this.randomData.length && this.randomIdx < this.randomData.length - 1) {
-      if (this.randomIdx >= this.randomData.length - 3) {
-        this.requestRandom().then(this.preloadRandoms.bind(this));
-      }
+  //     if (e.which === 37) {
+  //       // left arrow key
+  //       recalledResponse = this.history.recall(-1);
+  //     } else if (e.which === 39) {
+  //       // right arrow key
+  //       recalledResponse = this.history.recall(1);
+  //     }
 
-      this.randomIdx += 1;
-      this._setLoadingView();
-      this.formatResponse(this.randomData[this.randomIdx]);
-    } else {
-      this.getApod();
-    }
-  }
+  //     if (recalledResponse) {
+  //       this._setLoadingView();
+  //       this.addToHistory = false;
+  //       this.formatResponse(recalledResponse);
+  //     }
+  //   }
+  // });
 
-  previous() {
-    this.getApod(DateManager.adjacentDate(this.response.date, -1));
-  }
+  // Initialize button objects
+  //   this.navigation = {
+  //     random: new NavigationButton(".nav-buttons .random", 82, "random", this),
+  //     previous: new NavigationButton(
+  //       ".nav-buttons .previous",
+  //       74,
+  //       "previous",
+  //       this
+  //     ),
+  //     current: new NavigationButton(
+  //       ".nav-buttons .current",
+  //       84,
+  //       "current",
+  //       this
+  //     ),
+  //     next: new NavigationButton(".nav-buttons .next", 75, "next", this)
+  //   };
+  // }
 
-  next() {
-    this.getApod(DateManager.adjacentDate(this.response.date, 1));
-  }
+  // specificDate(date) {
+  //   this.getApod(date);
+  // }
 
-  current() {
-    this.getApod(DateManager.today);
-  }
+  // random() {
+  //   if (this.randomData.length && this.randomIdx < this.randomData.length - 1) {
+  //     if (this.randomIdx >= this.randomData.length - 3) {
+  //       this.requestRandom().then(this.preloadRandoms.bind(this));
+  //     }
 
-  addFadedBackground() {
-    ApodElements.bgImage.style["background-image"] = `url(${
-      this.loadedImage.src
-    })`;
-    ApodElements.bgImage.classList.remove("hide");
-  }
+  //     this.randomIdx += 1;
+  //     this._setLoadingView();
+  //     this.formatResponse(this.randomData[this.randomIdx]);
+  //   } else {
+  //     this.getApod();
+  //   }
+  // }
 
-  backgroundSize() {
-    const widthGTwindow = this.loadedImage.width > window.innerWidth;
-    const heightGTwindow = this.loadedImage.height > window.innerHeight;
-    const aspectRatio = this.loadedImage.width / this.loadedImage.height;
+  // previous() {
+  //   this.getApod(DateManager.adjacentDate(this.response.date, -1));
+  // }
 
-    if (widthGTwindow || heightGTwindow) {
-      this.addFadedBackground();
-      return aspectRatio >= 1.3 ? "cover" : "contain";
-    }
+  // next() {
+  //   this.getApod(DateManager.adjacentDate(this.response.date, 1));
+  // }
 
-    if (
-      this.loadedImage.width / window.innerWidth > 0.5 ||
-      this.loadedImage.height / window.innerHeight > 0.5
-    ) {
-      this.addFadedBackground();
-    }
+  // current() {
+  //   this.getApod(DateManager.today);
+  // }
 
-    return "auto";
-  }
+  // addFadedBackground() {
+  //   ApodElements.bgImage.style["background-image"] = `url(${
+  //     this.loadedImage.src
+  //   })`;
+  //   ApodElements.bgImage.classList.remove("hide");
+  // }
 
-  _setLoadingView() {
-    ApodElements.resetElements();
-    this.drawer.resetTabs();
-  }
+  // backgroundSize() {
+  //   const widthGTwindow = this.loadedImage.width > window.innerWidth;
+  //   const heightGTwindow = this.loadedImage.height > window.innerHeight;
+  //   const aspectRatio = this.loadedImage.width / this.loadedImage.height;
 
-  get isRequestValid() {
-    if (this.isRequestInProgress) {
-      return false;
-    }
+  //   if (widthGTwindow || heightGTwindow) {
+  //     this.addFadedBackground();
+  //     return aspectRatio >= 1.3 ? "cover" : "contain";
+  //   }
 
-    this.isRequestInProgress = true;
-    return this.isRequestInProgress;
-  }
+  //   if (
+  //     this.loadedImage.width / window.innerWidth > 0.5 ||
+  //     this.loadedImage.height / window.innerHeight > 0.5
+  //   ) {
+  //     this.addFadedBackground();
+  //   }
 
-  getApod(date) {
-    if (!this.isRequestValid) {
-      console.log("Request in Progress!");
-      return;
-    }
-    this._setLoadingView();
-    const request = date ? this.requestSpecific(date) : this.requestRandom();
-    request.then(this.formatResponse.bind(this), this.errorResponse.bind(this));
-  }
+  //   return "auto";
+  // }
 
-  requestSpecific(date) {
-    return this.createRequest({
-      date,
-      api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
-    });
-  }
+  // _setLoadingView() {
+  //   ApodElements.resetElements();
+  //   this.drawer.resetTabs();
+  // }
 
-  requestRandom() {
-    return this.createRequest({
-      count: RANDOM_COUNT,
-      api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
-    });
-  }
+  // get isRequestValid() {
+  //   if (this.isRequestInProgress) {
+  //     return false;
+  //   }
 
-  createRequest(data) {
-    return reqwest({
-      data,
-      url: "https://api.nasa.gov/planetary/apod"
-    });
-  }
+  //   this.isRequestInProgress = true;
+  //   return this.isRequestInProgress;
+  // }
 
-  formatResponse(data) {
-    if (Array.isArray(data)) {
-      this.preloadRandoms(data);
-      this.response = this.randomData[this.randomIdx];
-    } else {
-      this.response = data;
-      if (!this.randomIdx || this.randomIdx >= this.randomData.length - 1) {
-        // preload some random APODs in case you hit random next
-        this.requestRandom().then(this.preloadRandoms.bind(this));
-      }
-    }
+  // getApod(date) {
+  //   if (!this.isRequestValid) {
+  //     console.log("Request in Progress!");
+  //     return;
+  //   }
+  //   this._setLoadingView();
+  //   const request = date ? this.requestSpecific(date) : this.requestRandom();
+  //   request.then(this.formatResponse.bind(this), this.errorResponse.bind(this));
+  // }
 
-    ga({ category: "APOD", action: "viewed", label: this.response.date });
+  // requestSpecific(date) {
+  //   return this.createRequest({
+  //     date,
+  //     api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+  //   });
+  // }
 
-    if (this.addToHistory) {
-      this.history.add(this.response);
-    }
-    this.addToHistory = true;
-    this.datePicker.setDate(this.response.date);
-    this.errorCount = 0;
-    this.populateTabs(this.response);
+  // requestRandom() {
+  //   return this.createRequest({
+  //     count: RANDOM_COUNT,
+  //     api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+  //   });
+  // }
 
-    const isMediaImage = this.response.media_type === "image";
+  // createRequest(data) {
+  //   return reqwest({
+  //     data,
+  //     url: "https://api.nasa.gov/planetary/apod"
+  //   });
+  // }
 
-    if (isMediaImage) {
-      this.preLoadImage(this.hiResOnly);
-    } else if (this.response.media_type === "video") {
-      this.apodVideo();
-    } else {
-      this.random();
-    }
-  }
+  // formatResponse(data) {
+  //   if (Array.isArray(data)) {
+  //     this.preloadRandoms(data);
+  //     this.response = this.randomData[this.randomIdx];
+  //   } else {
+  //     this.response = data;
+  //     if (!this.randomIdx || this.randomIdx >= this.randomData.length - 1) {
+  //       // preload some random APODs in case you hit random next
+  //       this.requestRandom().then(this.preloadRandoms.bind(this));
+  //     }
+  //   }
 
-  errorResponse() {
-    this.errorCount++;
-    console.log(`Error: APOD API response (${this.errorCount})`);
-    this.isRequestInProgress = false;
-    if (this.errorCount < ERROR_LIMIT) {
-      this.random();
-    } else {
-      ApodElements.error.textContent = ERROR_MESSAGE;
-    }
-  }
+  //   ga({ category: "APOD", action: "viewed", label: this.response.date });
 
-  preloadRandoms(data) {
-    this.randomData = this.randomData.concat(data);
-    this.randomIdx = this.randomIdx ? this.randomIdx : 0;
+  //   if (this.addToHistory) {
+  //     this.history.add(this.response);
+  //   }
+  //   this.addToHistory = true;
+  //   this.datePicker.setDate(this.response.date);
+  //   this.errorCount = 0;
+  //   this.populateTabs(this.response);
 
-    for (let i in data) {
-      const random = data[i];
+  //   const isMediaImage = this.response.media_type === "image";
 
-      const ImgHd = new Image();
-      ImgHd.src = random.hdurl;
+  //   if (isMediaImage) {
+  //     this.preLoadImage(this.hiResOnly);
+  //   } else if (this.response.media_type === "video") {
+  //     this.apodVideo();
+  //   } else {
+  //     this.random();
+  //   }
+  // }
 
-      if (!this.hiResOnly) {
-        const ImgSd = new Image();
-        ImgSd.src = random.url;
-      }
-    }
-  }
+  // errorResponse() {
+  //   this.errorCount++;
+  //   console.log(`Error: APOD API response (${this.errorCount})`);
+  //   this.isRequestInProgress = false;
+  //   if (this.errorCount < ERROR_LIMIT) {
+  //     this.random();
+  //   } else {
+  //     ApodElements.error.textContent = ERROR_MESSAGE;
+  //   }
+  // }
 
-  populateTabs(response) {
-    Object.assign(this.drawer.tabs[0], {
-      urls: {
-        hdurl: response.hdurl,
-        url: response.url
-      },
-      title: response.title,
-      explanation: response.explanation,
-      date: response.date
-    });
+  // preloadRandoms(data) {
+  //   this.randomData = this.randomData.concat(data);
+  //   this.randomIdx = this.randomIdx ? this.randomIdx : 0;
 
-    Object.assign(this.drawer.tabs[1], {
-      date: response.date,
-      title: response.title,
-      url: response.url,
-      specificDate: this.specificDate.bind(this)
-    });
+  //   for (let i in data) {
+  //     const random = data[i];
 
-    this.drawer.tabs[1].checkFavorite();
-  }
+  //     const ImgHd = new Image();
+  //     ImgHd.src = random.hdurl;
 
-  wouldYouLikeToKnowMore(text) {
-    const knowMore = new KnowMoreComponent(text, this.drawer);
-    const { results } = knowMore;
+  //     if (!this.hiResOnly) {
+  //       const ImgSd = new Image();
+  //       ImgSd.src = random.url;
+  //     }
+  //   }
+  // }
 
-    if (results.length) {
-      // Don't draw duplicate tabs beyond the default tabs (i.e. Explanation and Favorite tabs)
-      if (this.drawer.tabs.length > 2) {
-        return;
-      }
-      for (let i in results) {
-        this.drawer.tabs[0].highlightKeywords(results[i].title, i);
-        knowMore.createTab(results[i], i);
-      }
-    }
-  }
+  // populateTabs(response) {
+  //   Object.assign(this.drawer.tabs[0], {
+  //     urls: {
+  //       hdurl: response.hdurl,
+  //       url: response.url
+  //     },
+  //     title: response.title,
+  //     explanation: response.explanation,
+  //     date: response.date
+  //   });
 
-  preLoadImage(forceHighDef = false) {
-    this.loadedImage = new Image();
-    const { hdurl, url, title } = this.response;
+  //   Object.assign(this.drawer.tabs[1], {
+  //     date: response.date,
+  //     title: response.title,
+  //     url: response.url,
+  //     specificDate: this.specificDate.bind(this)
+  //   });
 
-    // ApodElements.loading.updateBg(this.history.recall(-1).url);
-    // If the urls are identical just mark it HD
-    this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
-    this.loadedImage.src = this.isImageHD ? hdurl : url;
+  //   this.drawer.tabs[1].checkFavorite();
+  // }
 
-    const timeout = setTimeout(() => {
-      if (!this.loadedImage.complete && !forceHighDef) {
-        this.loadedImage.src = url;
-        this.isImageHD = false;
-      }
-    }, this.delayForHdLoad);
+  // wouldYouLikeToKnowMore(text) {
+  //   const knowMore = new KnowMoreComponent(text, this.drawer);
+  //   const { results } = knowMore;
 
-    this.loadedImage.onload = () => {
-      clearTimeout(timeout);
-      this.apodImage();
-    };
+  //   if (results.length) {
+  //     // Don't draw duplicate tabs beyond the default tabs (i.e. Explanation and Favorite tabs)
+  //     if (this.drawer.tabs.length > 2) {
+  //       return;
+  //     }
+  //     for (let i in results) {
+  //       this.drawer.tabs[0].highlightKeywords(results[i].title, i);
+  //       knowMore.createTab(results[i], i);
+  //     }
+  //   }
+  // }
 
-    this.loadedImage.onerror = () => {
-      clearTimeout(timeout);
-      this.isRequestInProgress = false;
-      this.random();
-    };
-  }
+  // preLoadImage(forceHighDef = false) {
+  //   this.loadedImage = new Image();
+  //   const { hdurl, url, title } = this.response;
 
-  apodImage() {
-    ApodElements.image.classList = "apod__image";
-    ApodElements.imgQuality.classList.remove("spin-loader");
+  //   // ApodElements.loading.updateBg(this.history.recall(-1).url);
+  //   // If the urls are identical just mark it HD
+  //   this.isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
+  //   this.loadedImage.src = this.isImageHD ? hdurl : url;
 
-    ApodElements.image.style["background-image"] = `url(${
-      this.loadedImage.src
-    })`;
-    ApodElements.image.style["background-size"] = this.backgroundSize();
+  //   const timeout = setTimeout(() => {
+  //     if (!this.loadedImage.complete && !forceHighDef) {
+  //       this.loadedImage.src = url;
+  //       this.isImageHD = false;
+  //     }
+  //   }, this.delayForHdLoad);
 
-    ApodElements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
+  //   this.loadedImage.onload = () => {
+  //     clearTimeout(timeout);
+  //     this.apodImage();
+  //   };
 
-    if (!this.isImageHD) {
-      const forceLoadHighDefImg = e => {
-        this.isRequestInProgress = true;
-        ApodElements.showHiRes.classList.add("hide");
-        ApodElements.showHiRes.removeEventListener(
-          "click",
-          forceLoadHighDefImg
-        );
-        ApodElements.imgQuality.textContent = "";
-        ApodElements.imgQuality.classList.add("spin-loader");
-        this.preLoadImage(true);
-      };
-      ApodElements.showHiRes.classList.remove("hide");
-      ApodElements.showHiRes.addEventListener("click", forceLoadHighDefImg);
-    }
+  //   this.loadedImage.onerror = () => {
+  //     clearTimeout(timeout);
+  //     this.isRequestInProgress = false;
+  //     this.random();
+  //   };
+  // }
 
-    this.constructApod();
-  }
+  // apodImage() {
+  //   ApodElements.image.classList = "apod__image";
+  //   ApodElements.imgQuality.classList.remove("spin-loader");
 
-  apodVideo() {
-    ApodElements.image.classList.remove("hide");
-    this.response.url = this.response.url.replace(";autoplay=1", "");
+  //   ApodElements.image.style["background-image"] = `url(${
+  //     this.loadedImage.src
+  //   })`;
+  //   ApodElements.image.style["background-size"] = this.backgroundSize();
 
-    if (!/^http(s?)/i.test(this.response.url)) {
-      this.response.url = `https:${this.response.url}`;
-    }
+  //   ApodElements.imgQuality.textContent = this.isImageHD ? "HD" : "SD";
 
-    const url = new URL(this.response.url);
-    url.search = "autopause=1&autoplay=0";
-    const iFrame = htmlToElements(
-      `<iframe width="960" height="540" src='${
-        url.href
-      }' frameborder="0"></iframe>`
-    );
-    ApodElements.image.appendChild(iFrame);
-    this.constructApod();
-  }
+  //   if (!this.isImageHD) {
+  //     const forceLoadHighDefImg = e => {
+  //       this.isRequestInProgress = true;
+  //       ApodElements.showHiRes.classList.add("hide");
+  //       ApodElements.showHiRes.removeEventListener(
+  //         "click",
+  //         forceLoadHighDefImg
+  //       );
+  //       ApodElements.imgQuality.textContent = "";
+  //       ApodElements.imgQuality.classList.add("spin-loader");
+  //       this.preLoadImage(true);
+  //     };
+  //     ApodElements.showHiRes.classList.remove("hide");
+  //     ApodElements.showHiRes.addEventListener("click", forceLoadHighDefImg);
+  //   }
 
-  constructApod() {
-    const { date, title, explanation } = this.response;
+  //   this.constructApod();
+  // }
 
-    this.isRequestInProgress = false;
-    document.title = title;
-    ApodElements.title.textContent = title;
-    ApodElements.date.textContent = DateManager.prettyDateFormat(date);
-    this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
+  // apodVideo() {
+  //   ApodElements.image.classList.remove("hide");
+  //   this.response.url = this.response.url.replace(";autoplay=1", "");
 
-    const isToday = DateManager.isToday(date);
-    this.navigation.current.el.classList.toggle("current", isToday);
-    this.navigation.next.el.classList.toggle("hide", isToday);
-    this.navigation.next.toggle(!isToday);
+  //   if (!/^http(s?)/i.test(this.response.url)) {
+  //     this.response.url = `https:${this.response.url}`;
+  //   }
 
-    ApodElements.loading.toggle(true);
-    ApodElements.explanation.classList.remove("hide");
-  }
+  //   const url = new URL(this.response.url);
+  //   url.search = "autopause=1&autoplay=0";
+  //   const iFrame = htmlToElements(
+  //     `<iframe width="960" height="540" src='${
+  //       url.href
+  //     }' frameborder="0"></iframe>`
+  //   );
+  //   ApodElements.image.appendChild(iFrame);
+  //   this.constructApod();
+  // }
+
+  // constructApod() {
+  //   const { date, title, explanation } = this.response;
+
+  //   this.isRequestInProgress = false;
+  //   document.title = title;
+  //   ApodElements.title.textContent = title;
+  //   ApodElements.date.textContent = DateManager.prettyDateFormat(date);
+  //   this.wouldYouLikeToKnowMore(`${title} ${explanation}`);
+
+  //   const isToday = DateManager.isToday(date);
+  //   this.navigation.current.el.classList.toggle("current", isToday);
+  //   this.navigation.next.el.classList.toggle("hide", isToday);
+  //   this.navigation.next.toggle(!isToday);
+
+  //   ApodElements.loading.toggle(true);
+  //   ApodElements.explanation.classList.remove("hide");
+  // }
 }
 
 export default Apod;
