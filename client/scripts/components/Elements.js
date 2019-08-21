@@ -20,8 +20,6 @@ const ApodElements = {
   },
 
   resetElements: () => {
-    ApodElements.image.style["background-image"] = "";
-    ApodElements.image.style["background-size"] = "";
     ApodElements.image.classList.add("hide");
     ApodElements.image.innerHTML = "";
     ApodElements.bgImage.style["background-image"] = "";
