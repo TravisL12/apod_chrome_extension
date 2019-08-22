@@ -1,5 +1,12 @@
 import React from "react";
+import TopSites from "./TopSites";
+import Title from "./Title";
 
 export default function Header() {
-  return <h1>Header</h1>;
+  return (
+    <>
+      <TopSites />
+      <Title />
+    </>
+  );
 }
