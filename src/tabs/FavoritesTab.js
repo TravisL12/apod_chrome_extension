@@ -1,6 +1,8 @@
+/*global chrome*/
+
 import { $, clearElement, htmlToElements } from "../utilities";
-import DrawerTab from "scripts/tabs/DrawerTab";
-import DateManager from "scripts/DateManager";
+import DrawerTab from "./DrawerTab";
+import DateManager from "../DateManager";
 
 export default class FavoritesTab extends DrawerTab {
   constructor(el, drawer) {

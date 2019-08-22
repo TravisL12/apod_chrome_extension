@@ -1,6 +1,6 @@
-import { $ } from "scripts/utilities";
-import ExplanationTab from "scripts/tabs/ExplanationTab";
-import FavoritesTab from "scripts/tabs/FavoritesTab";
+import { $ } from "../utilities";
+import ExplanationTab from "../tabs/ExplanationTab";
+import FavoritesTab from "../tabs/FavoritesTab";
 
 class Drawer {
   constructor(el) {
@@ -8,7 +8,7 @@ class Drawer {
     this.tabsEl = this.el.querySelector(".apod__drawer-tabs");
     this.tabs = [];
     this.isOpen = false;
-    this.currentTabIdx;
+    this.currentTabIdx = 0;
     this.createDefaultTabs();
     document.addEventListener("keydown", e => {
       if (e.which === 27 && this.isOpen) {

@@ -1,6 +1,6 @@
-import { $, clearElement, htmlToElements, zeroPad } from "scripts/utilities";
-import ga from "scripts/utilities/ga";
-import DrawerTab from "scripts/tabs/DrawerTab";
+import { $, clearElement, htmlToElements, zeroPad } from "../utilities";
+import ga from "../utilities/ga";
+import DrawerTab from "./DrawerTab";
 
 export default class ExplanationTab extends DrawerTab {
   constructor(el, drawer) {
@@ -68,7 +68,7 @@ export default class ExplanationTab extends DrawerTab {
       ga({
         category: "Outbound Link",
         action: "clicked",
-        label: event.target.id
+        label: e.target.id
       });
     });
 

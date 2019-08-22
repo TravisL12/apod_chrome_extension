@@ -1,3 +1,5 @@
+/*global chrome*/
+
 const GA_TRACKING_ID = "UA-91390132-1";
 const analyticsSendInterval = 5 * 1000;
 let parameters = [],

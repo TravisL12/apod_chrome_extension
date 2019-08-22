@@ -1,4 +1,4 @@
-import { htmlToElements } from "scripts/utilities";
+import { htmlToElements } from "./utilities";
 
 class SunLoader {
   constructor() {

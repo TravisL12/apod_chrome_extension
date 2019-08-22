@@ -1,5 +1,5 @@
-import { $, clearElement } from "scripts/utilities";
-import { TitleLoader } from "scripts/LoadingSpinner";
+import { $, clearElement } from "../utilities";
+import { TitleLoader } from "../LoadingSpinner";
 
 const ApodElements = {
   // Initialize image & video elements

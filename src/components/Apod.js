@@ -1,16 +1,17 @@
 import React, { Component } from "react";
 import { string } from "prop-types";
 import reqwest from "reqwest";
-import ga from "scripts/utilities/ga";
-import DateManager from "scripts/DateManager";
-import KnowMoreComponent from "scripts/components/KnowMore";
-import History from "scripts/components/History";
-import NavigationButton from "scripts/NavigationButton";
-import ApodElements from "scripts/components/Elements";
-import Drawer from "scripts/components/Drawer";
 import flatpickr from "flatpickr";
-import { htmlToElements } from "../utilities";
 import { stringify } from "querystring";
+
+import ga from "../utilities/ga";
+import DateManager from "../DateManager";
+import KnowMoreComponent from "./KnowMore";
+import History from "./History";
+import NavigationButton from "../NavigationButton";
+import ApodElements from "./Elements";
+import Drawer from "./Drawer";
+import { htmlToElements } from "../utilities";
 
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const RANDOM_COUNT = 15;
