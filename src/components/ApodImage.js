@@ -1,5 +1,7 @@
 import React from "react";
 
+const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
+
 export default function ApodImage({ loadedImage }) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
@@ -22,6 +24,9 @@ export default function ApodImage({ loadedImage }) {
 
   return (
     <div className="apod-body">
+      <div class="apod__loading" />
+      <div class="apod__error" />
+
       {showFadedBackground && (
         <div
           class="apod__background-image"
