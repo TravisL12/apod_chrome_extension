@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import reqwest from "reqwest";
 import { string } from "prop-types";
 
 import Header from "./Header";
@@ -19,6 +20,21 @@ class Apod extends Component {
     addToHistory: true,
     randomData: [],
     randomIdx: 0
+  };
+
+  componentDidMount() {
+    this.getImage().then(resp => {
+      console.log(resp);
+    });
+  }
+
+  getImage = () => {
+    return reqwest({
+      data: {
+        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+      },
+      url: "https://api.nasa.gov/planetary/apod"
+    });
   };
 
   render() {
