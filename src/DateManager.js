@@ -16,37 +16,35 @@ function _getToday() {
   return flatpickr.formatDate(new Date(), DATE_FORMAT);
 }
 
-export default {
-  get today() {
-    return _getToday();
-  },
+export function today() {
+  return _getToday();
+}
 
-  prettyDateFormat(date) {
-    return _actualDate(date).toLocaleDateString("en", {
-      year: "numeric",
-      month: "long",
-      day: "numeric"
-    });
-  },
+export function prettyDateFormat(date) {
+  return _actualDate(date).toLocaleDateString("en", {
+    year: "numeric",
+    month: "long",
+    day: "numeric"
+  });
+}
 
-  adjacentDate(dateString, direction) {
-    let adjDate = new Date(_actualDate(dateString).getTime());
+export function adjacentDate(dateString, direction) {
+  let adjDate = new Date(_actualDate(dateString).getTime());
 
-    adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
-    return flatpickr.formatDate(adjDate, DATE_FORMAT);
-  },
+  adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
+  return flatpickr.formatDate(adjDate, DATE_FORMAT);
+}
 
-  randomDate() {
-    const start = new Date(1995, 5, 16);
-    const end = new Date();
-    const date = new Date(
-      start.getTime() + Math.random() * (end.getTime() - start.getTime())
-    );
+export function randomDate() {
+  const start = new Date(1995, 5, 16);
+  const end = new Date();
+  const date = new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  );
 
-    return flatpickr.formatDate(date, DATE_FORMAT);
-  },
+  return flatpickr.formatDate(date, DATE_FORMAT);
+}
 
-  isToday(date) {
-    return _actualDate(_getToday()).getTime() === _actualDate(date).getTime();
-  }
-};
+export function isToday(date) {
+  return _actualDate(_getToday()).getTime() === _actualDate(date).getTime();
+}

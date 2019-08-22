@@ -5,9 +5,11 @@ import { string } from "prop-types";
 import Header from "./Header";
 import ApodImage from "./ApodImage";
 import Drawer from "./Drawer";
-import DateManager from "../DateManager";
+import { randomDate } from "../DateManager";
 
 const DELAY_FOR_HD_LOAD = 3000;
+const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
+const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
 
 class Apod extends Component {
   static propType = {
@@ -16,31 +18,34 @@ class Apod extends Component {
   };
 
   state = {
-    errorCount: 0,
-    isImageHD: true,
     addToHistory: true,
     randomData: [],
     randomIdx: 0,
-    showBackgroundImage: false,
     apodImage: null,
-    response: null
+    response: null,
+    isLoading: true
   };
 
   componentDidMount() {
-    this.getImage().then(response => {
-      console.log(response);
-      this.preLoadImage(response, this.props.resolution === "HD");
-    });
+    const date = this.props.selection === "random" ? randomDate() : undefined;
+    this.getImage(date);
   }
 
-  getImage = () => {
-    return reqwest({
-      data: {
-        date: DateManager.randomDate(),
-        api_key: "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447"
+  getImage = (date, errorCount = 0) => {
+    this.setState({ isLoading: true });
+    const data = { date, api_key: API_KEY };
+
+    reqwest({ data, url: APOD_API_URL }).then(
+      response => {
+        console.log(response);
+        this.preLoadImage(response, this.props.resolution === "HD");
       },
-      url: "https://api.nasa.gov/planetary/apod"
-    });
+      () => {
+        errorCount++;
+        console.log(errorCount, "error count!!!");
+        this.getImage(randomDate(), errorCount);
+      }
+    );
   };
 
   preLoadImage = (response, forceHighDef = false) => {
@@ -60,7 +65,7 @@ class Apod extends Component {
 
     loadedImage.onload = () => {
       clearTimeout(timeout);
-      this.setState({ response, apodImage: loadedImage });
+      this.setState({ response, isLoading: false, apodImage: loadedImage });
     };
 
     // loadedImage.onerror = () => {
@@ -71,7 +76,7 @@ class Apod extends Component {
   };
 
   render() {
-    if (!this.state.response) {
+    if (this.state.isLoading) {
       return <h1 style={{ color: "white" }}>Loading</h1>;
     }
 
@@ -82,7 +87,7 @@ class Apod extends Component {
 
     return (
       <>
-        <Header title={title} date={date} />
+        <Header title={title} date={date} getImage={this.getImage} />
         <ApodImage loadedImage={apodImage} />
         <Drawer />
       </>
