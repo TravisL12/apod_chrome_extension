@@ -1,7 +1,7 @@
 /*global chrome*/
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
 import Apod from "./components/Apod";
 // import topSites from "./scripts/utilities/buildTopSites";
