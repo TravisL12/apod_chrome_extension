@@ -16,7 +16,6 @@ chrome.storage.sync.get(
   ["apodType", "hiResOnly"],
   ({ hiResOnly, apodType }) => {
     // ga({ type: "pageview", category: "v3.0.0", page: "apod-by-trav" });
-    console.log('hello apod')
     ReactDOM.render(
       <Apod selection={apodType} resolution={hiResOnly} />,
       document.getElementById("root")

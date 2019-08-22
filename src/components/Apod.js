@@ -26,18 +26,19 @@ class Apod extends Component {
     errorCount: 0,
     delayForHdLoad: 3000,
     history: new History(),
-    drawer: new Drawer("#apod-drawer"),
+    // drawer: new Drawer("#apod-drawer"),
     hiResOnly: false,
     isImageHD: true,
     addToHistory: true,
     randomData: [],
-    datePicker: flatpickr(ApodElements.date, {
-      minDate: "1995-6-16",
-      maxDate: "today",
-      onChange: (dates, dateStr) => {
-        this.specificDate(dateStr);
-      }
-    })
+    randomIdx: 0,
+    // datePicker: flatpickr(ApodElements.date, {
+    //   minDate: "1995-6-16",
+    //   maxDate: "today",
+    //   onChange: (dates, dateStr) => {
+    //     this.specificDate(dateStr);
+    //   }
+    // })
   };
 
   render() {
@@ -83,35 +84,36 @@ class Apod extends Component {
   //   };
   // }
 
-  // specificDate(date) {
-  //   this.getApod(date);
-  // }
+  specificDate = (date) =>{
+    this.getApod(date);
+  }
 
-  // random() {
-  //   if (this.randomData.length && this.randomIdx < this.randomData.length - 1) {
-  //     if (this.randomIdx >= this.randomData.length - 3) {
+  // random = () => {
+  //   const {randomData, randomIdx} = this.state;
+  //   if (randomData.length && randomIdx < randomData.length - 1) {
+  //     if (randomIdx >= randomData.length - 3) {
   //       this.requestRandom().then(this.preloadRandoms.bind(this));
   //     }
 
-  //     this.randomIdx += 1;
+  //     randomIdx += 1;
   //     this._setLoadingView();
-  //     this.formatResponse(this.randomData[this.randomIdx]);
+  //     this.formatResponse(randomData[randomIdx]);
   //   } else {
   //     this.getApod();
   //   }
   // }
 
-  // previous() {
-  //   this.getApod(DateManager.adjacentDate(this.response.date, -1));
-  // }
+  previous = () => {
+    this.getApod(DateManager.adjacentDate(this.response.date, -1));
+  }
 
-  // next() {
-  //   this.getApod(DateManager.adjacentDate(this.response.date, 1));
-  // }
+  next = () => {
+    this.getApod(DateManager.adjacentDate(this.response.date, 1));
+  }
 
-  // current() {
-  //   this.getApod(DateManager.today);
-  // }
+  current = () => {
+    this.getApod(DateManager.today);
+  }
 
   // addFadedBackground() {
   //   ApodElements.bgImage.style["background-image"] = `url(${
@@ -154,15 +156,15 @@ class Apod extends Component {
   //   return this.isRequestInProgress;
   // }
 
-  // getApod(date) {
-  //   if (!this.isRequestValid) {
-  //     console.log("Request in Progress!");
-  //     return;
-  //   }
-  //   this._setLoadingView();
-  //   const request = date ? this.requestSpecific(date) : this.requestRandom();
-  //   request.then(this.formatResponse.bind(this), this.errorResponse.bind(this));
-  // }
+  getApod = (date) => {
+    if (!this.isRequestValid) {
+      console.log("Request in Progress!");
+      return;
+    }
+    this._setLoadingView();
+    const request = date ? this.requestSpecific(date) : this.requestRandom();
+    request.then(this.formatResponse.bind(this), this.errorResponse.bind(this));
+  }
 
   // requestSpecific(date) {
   //   return this.createRequest({
@@ -229,7 +231,7 @@ class Apod extends Component {
   //   }
   // }
 
-  // preloadRandoms(data) {
+  // preloadRandoms = (data) => {
   //   this.randomData = this.randomData.concat(data);
   //   this.randomIdx = this.randomIdx ? this.randomIdx : 0;
 
