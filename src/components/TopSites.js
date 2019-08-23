@@ -20,7 +20,7 @@ function TopSites() {
           return (
             <li key={idx}>
               <a href={site.url} title={site.title}>
-                <img class="thumb-img" src={imgSource} />
+                <img class="thumb-img" alt={site.title} src={imgSource} />
               </a>
             </li>
           );
