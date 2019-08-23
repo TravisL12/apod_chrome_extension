@@ -15,7 +15,7 @@ const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
 class Apod extends Component {
   static propType = {
     selection: string,
-    resolution: string
+    isHighRes: string
   };
 
   state = {
@@ -54,11 +54,12 @@ class Apod extends Component {
 
   getImage = (date, errorCount = 0) => {
     this.setState({ isLoading: true });
+    const { isHighRes } = this.props;
     const data = { date, api_key: API_KEY };
 
     reqwest({ data, url: APOD_API_URL }).then(
       response => {
-        this.preLoadImage(response, this.props.resolution === "HD");
+        this.preLoadImage(response, isHighRes);
       },
       () => {
         errorCount++;

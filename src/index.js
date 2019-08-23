@@ -14,7 +14,7 @@ chrome.storage.sync.get(
   ({ hiResOnly, apodType }) => {
     ga({ type: "pageview", category: "v3.0.0", page: "apod-by-trav" });
     ReactDOM.render(
-      <Apod selection={apodType} resolution={hiResOnly} />,
+      <Apod selection={apodType} isHighRes={hiResOnly} />,
       document.getElementById("root")
     );
   }
