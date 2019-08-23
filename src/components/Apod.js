@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import reqwest from "reqwest";
-import { string } from "prop-types";
+import { string, arrayOf, shape } from "prop-types";
 
 import Header from "./Header";
 import ApodImage from "./ApodImage";
@@ -15,7 +15,13 @@ const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
 class Apod extends Component {
   static propType = {
     selection: string,
-    isHighRes: string
+    isHighRes: string,
+    favorites: arrayOf(
+      shape({
+        url: string,
+        title: string
+      })
+    )
   };
 
   state = {
@@ -145,7 +151,10 @@ class Apod extends Component {
           dateNavigation={dateNavigation}
         />
         <ApodImage loadedImage={apodImage} />
-        <Drawer response={this.state.response} />
+        <Drawer
+          response={this.state.response}
+          favorites={this.props.favorites}
+        />
       </div>
     );
   }

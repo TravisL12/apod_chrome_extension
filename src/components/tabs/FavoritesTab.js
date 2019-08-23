@@ -1,17 +1,8 @@
-/*global chrome*/
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { isEmpty, keys } from "lodash";
 import { prettyDateFormat } from "../../DateManager";
 
-function FavoritesTab() {
-  const [favorites, setFavorites] = useState({});
-
-  useEffect(() => {
-    chrome.storage.sync.get(["apodFavorites"], favorites => {
-      setFavorites(favorites.apodFavorites);
-    });
-  }, []);
-
+function FavoritesTab({ favorites }) {
   return (
     <div class="favorites">
       <h2>Favorite APOD's</h2>

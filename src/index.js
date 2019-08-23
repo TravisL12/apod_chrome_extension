@@ -11,11 +11,15 @@ import "./styles/style.scss";
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(
-  ["apodType", "hiResOnly"],
-  ({ hiResOnly, apodType }) => {
+  ["apodType", "hiResOnly", "apodFavorites"],
+  ({ hiResOnly, apodType, apodFavorites }) => {
     ga({ type: "pageview", category: "v3.0.0", page: "apod-by-trav" });
     ReactDOM.render(
-      <Apod selection={apodType} isHighRes={hiResOnly} />,
+      <Apod
+        selection={apodType}
+        favorites={apodFavorites}
+        isHighRes={hiResOnly}
+      />,
       document.getElementById("root")
     );
   }

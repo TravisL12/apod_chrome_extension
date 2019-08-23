@@ -2,23 +2,28 @@ import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 
-export default function Drawer({ response }) {
-  const [openTab, setOpenTab] = useState(false);
-  const explanationTab = <ExplanationTab response={response} />;
-  const favoritesTab = <FavoritesTab />;
+export default function Drawer({ response, favorites }) {
+  const [openTabName, setOpenTabName] = useState(false);
 
-  const updateDrawer = tab => {
-    openTab ? setOpenTab(false) : setOpenTab(tab);
+  const tabs = {
+    explanation: <ExplanationTab response={response} />,
+    favorites: <FavoritesTab favorites={favorites} />
+  };
+
+  const updateDrawer = tabName => {
+    openTabName && tabName === openTabName
+      ? setOpenTabName(false)
+      : setOpenTabName(tabName);
   };
 
   return (
-    <div className={`apod__drawer ${openTab ? "show" : ""}`}>
+    <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
       <div className="apod__drawer-tabs">
         <div className="default-tabs">
           <div
             className="tab"
             onClick={() => {
-              updateDrawer(favoritesTab);
+              updateDrawer("favorites");
             }}
           >
             Favorites
@@ -26,7 +31,7 @@ export default function Drawer({ response }) {
           <div
             className="tab"
             onClick={() => {
-              updateDrawer(explanationTab);
+              updateDrawer("explanation");
             }}
           >
             Explanation
@@ -35,7 +40,7 @@ export default function Drawer({ response }) {
 
         <div className="apod__know-more" />
       </div>
-      <div className="apod__drawer-view">{openTab}</div>
+      <div className="apod__drawer-view">{tabs[openTabName]}</div>
     </div>
   );
 }
