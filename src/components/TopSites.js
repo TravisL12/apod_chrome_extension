@@ -1,5 +1,33 @@
-import React from "react";
+/*global chrome*/
+import React, { useState } from "react";
 
-export default function TopSites() {
-  return <h1>TopSites</h1>;
+function TopSites() {
+  const [sites, setSites] = useState([]);
+
+  if (sites.length === 0) {
+    chrome.topSites.get(data => {
+      setSites(data);
+    });
+  }
+
+  return (
+    <div class="apod__top-sites">
+      <ul>
+        {sites.map((site, idx) => {
+          const imgSource = `http://www.google.com/s2/favicons?domain_url=${
+            site.url
+          }`;
+          return (
+            <li key={idx}>
+              <a href={site.url} title={site.title}>
+                <img class="thumb-img" src={imgSource} />
+              </a>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
 }
+
+export default TopSites;
