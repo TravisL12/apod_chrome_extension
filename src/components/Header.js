@@ -3,7 +3,7 @@ import TopSites from "./TopSites";
 import { prettyDateFormat } from "../DateManager";
 
 export default function Header({ title, date, isImageHD, dateNavigation }) {
-  const { previous, next, current, random } = dateNavigation;
+  const { previous, next, current, random, forceHighDef } = dateNavigation;
 
   return (
     <div className="apod__header">
@@ -20,8 +20,8 @@ export default function Header({ title, date, isImageHD, dateNavigation }) {
           <li onClick={random}>Random</li>
           <li onClick={previous}>Previous</li>
           <li onClick={next}>Next</li>
-          <li className="add-favorite" />
-          <li>Force HD</li>
+          {/* <li className="add-favorite" /> */}
+          <li onClick={forceHighDef}>Force HD</li>
         </ul>
       </div>
     </div>

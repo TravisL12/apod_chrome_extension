@@ -1,70 +1,49 @@
 import React from "react";
 
-// class SunLoader {
-//   constructor() {
-//     this.bigRayCount = 12;
-//     this.littleRayCount = 8;
-//     this.template = `
-//             <div class='sun-container'>
-//                 <div class='rays-big' id='big-rays'>${this.buildRays(
-//                   this.bigRayCount
-//                 )}</div>
-//                 <div class='rays-small' id='small-rays'>${this.buildRays(
-//                   this.littleRayCount
-//                 )}</div>
-//                 <div class='sun-light'></div>
-//             </div>`;
-//   }
+export function SunLoader() {
+  const bigRayCount = 12;
+  const littleRayCount = 8;
 
-//   buildRays(num) {
-//     const rayEl = "<div class='ray'></div>";
-//     let rays = "";
+  function buildRays(num) {
+    const rays = [];
 
-//     for (let i = 0; i < num; i++) {
-//       rays += rayEl;
-//     }
+    for (let i = 0; i < num; i++) {
+      rays.push(<div class="ray" />);
+    }
 
-//     return rays;
-//   }
+    return rays;
+  }
 
-//   render() {
-//     return htmlToElements(this.template);
-//   }
-// }
+  return (
+    <div class="sun-container">
+      <div class="rays-big" id="big-rays">
+        {buildRays(bigRayCount)}
+      </div>
+      <div class="rays-small" id="small-rays">
+        {buildRays(littleRayCount)}
+      </div>
+      <div class="sun-light" />
+    </div>
+  );
+}
 
-// class MoonLoader {
-//   render() {
-//     return htmlToElements(`
-//             <div class='moon-container'>
-//                 <div class='mask-left'>
-//                     <div class='moon shade-to-light'></div>
-//                     <div class='moon light-to-shade'></div>
-//                 </div>
+export function MoonLoader() {
+  return (
+    <div class="moon-container">
+      <div class="mask-left">
+        <div class="moon shade-to-light" />
+        <div class="moon light-to-shade" />
+      </div>
 
-//                 <div class='mask-right'>
-//                     <div class='moon shade-to-light'></div>
-//                     <div class='moon light-to-shade'></div>
-//                 </div>
-//             </div>`);
-//   }
-// }
+      <div class="mask-right">
+        <div class="moon shade-to-light" />
+        <div class="moon light-to-shade" />
+      </div>
+    </div>
+  );
+}
 
 export function TitleLoader() {
-  // constructor(el) {
-  //   this.el = el;
-  //   this.backgroundImg = "/images/stars.png";
-  // }
-
-  // updateBg(backgroundImg) {
-  //   this.backgroundImg = backgroundImg || this.backgroundImg;
-  //   this.render();
-  // }
-
-  // toggle(force) {
-  //   this.updateBg();
-  //   this.el.classList.toggle("hide", !!force);
-  // }
-
   return (
     <div class="load-title">
       <div class="title-container">
@@ -74,5 +53,3 @@ export function TitleLoader() {
     </div>
   );
 }
-
-// export { SunLoader, MoonLoader, TitleLoader };

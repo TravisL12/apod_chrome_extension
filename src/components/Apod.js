@@ -47,6 +47,11 @@ class Apod extends Component {
     this.getImage(randomDate());
   };
 
+  forceHighDef = () => {
+    this.setState({ isLoading: true });
+    this.preLoadImage(this.state.response, true);
+  };
+
   getImage = (date, errorCount = 0) => {
     this.setState({ isLoading: true });
     const data = { date, api_key: API_KEY };
@@ -121,7 +126,8 @@ class Apod extends Component {
       previous: this.previous,
       next: this.next,
       current: this.current,
-      random: this.random
+      random: this.random,
+      forceHighDef: this.forceHighDef
     };
 
     const {
