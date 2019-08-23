@@ -5,6 +5,7 @@ import { string } from "prop-types";
 import Header from "./Header";
 import ApodImage from "./ApodImage";
 import Drawer from "./Drawer";
+import { SunLoader, MoonLoader, TitleLoader } from "./LoadingSpinner";
 import { randomDate } from "../DateManager";
 
 const DELAY_FOR_HD_LOAD = 3000;
@@ -77,7 +78,7 @@ class Apod extends Component {
 
   render() {
     if (this.state.isLoading) {
-      return <h1 style={{ color: "white" }}>Loading</h1>;
+      return <TitleLoader />;
     }
 
     const {
