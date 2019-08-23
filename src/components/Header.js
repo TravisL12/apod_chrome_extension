@@ -1,28 +1,9 @@
 import React from "react";
 import TopSites from "./TopSites";
-import {
-  adjacentDate,
-  today,
-  randomDate,
-  prettyDateFormat
-} from "../DateManager";
+import { prettyDateFormat } from "../DateManager";
 
-export default function Header({ title, date, getImage }) {
-  function previous() {
-    getImage(adjacentDate(date, -1));
-  }
-
-  function next() {
-    getImage(adjacentDate(date, 1));
-  }
-
-  function current() {
-    getImage(today);
-  }
-
-  function random() {
-    getImage(randomDate());
-  }
+export default function Header({ title, date, isImageHD, dateNavigation }) {
+  const { previous, next, current, random } = dateNavigation;
 
   return (
     <div className="apod__header">
@@ -31,7 +12,7 @@ export default function Header({ title, date, getImage }) {
         <div className="title">
           <h2>{prettyDateFormat(date)}</h2>
           <h1>{title}</h1>
-          <span className="img-quality">HD</span>
+          <span className="img-quality">{isImageHD ? "HD" : "SD"}</span>
         </div>
 
         <ul className="nav-buttons">

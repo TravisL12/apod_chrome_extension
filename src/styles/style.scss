@@ -16,7 +16,7 @@
 .spin-loader {
   width: 16px;
   height: 16px;
-  background: url("/images/ajax-loader-black.gif");
+  background: url("../ajax-loader-black.gif");
   background-size: contain;
   background-repeat: no-repeat;
 }
@@ -54,7 +54,7 @@
       margin: 0;
       font-size: 200px;
       line-height: 200px;
-      background-image: url("/images/stars.png"); // default
+      background-image: url("../stars.png"); // default
       background-size: 110%;
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;

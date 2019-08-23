@@ -6,7 +6,7 @@ import Header from "./Header";
 import ApodImage from "./ApodImage";
 import Drawer from "./Drawer";
 import { TitleLoader } from "./LoadingSpinner";
-import { randomDate } from "../DateManager";
+import { adjacentDate, today, randomDate } from "../DateManager";
 
 const DELAY_FOR_HD_LOAD = 3000;
 const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
@@ -20,11 +20,10 @@ class Apod extends Component {
 
   state = {
     addToHistory: true,
-    randomData: [],
-    randomIdx: 0,
     apodImage: null,
     response: null,
-    isLoading: true
+    isLoading: true,
+    isImageHD: false
   };
 
   componentDidMount() {
@@ -32,13 +31,28 @@ class Apod extends Component {
     this.getImage(date);
   }
 
+  previous = () => {
+    this.getImage(adjacentDate(this.state.response.date, -1));
+  };
+
+  next = () => {
+    this.getImage(adjacentDate(this.state.response.date, 1));
+  };
+
+  current = () => {
+    this.getImage(today);
+  };
+
+  random = () => {
+    this.getImage(randomDate());
+  };
+
   getImage = (date, errorCount = 0) => {
     this.setState({ isLoading: true });
     const data = { date, api_key: API_KEY };
 
     reqwest({ data, url: APOD_API_URL }).then(
       response => {
-        console.log(response);
         this.preLoadImage(response, this.props.resolution === "HD");
       },
       () => {
@@ -66,14 +80,36 @@ class Apod extends Component {
 
     loadedImage.onload = () => {
       clearTimeout(timeout);
-      this.setState({ response, isLoading: false, apodImage: loadedImage });
+      this.setState({
+        response,
+        isImageHD,
+        isLoading: false,
+        apodImage: loadedImage
+      });
     };
 
-    // loadedImage.onerror = () => {
-    //   clearTimeout(timeout);
-    //   this.isRequestInProgress = false;
-    //   this.random();
-    // };
+    loadedImage.onerror = () => {
+      clearTimeout(timeout);
+    };
+  };
+
+  navigateDates = event => {
+    switch (event.which) {
+      case 82: // r
+        this.random();
+        break;
+      case 74: // j
+        this.previous();
+        break;
+      case 84: // (t)oday
+        this.current();
+        break;
+      case 75: // k
+        this.next();
+        break;
+      default:
+        return;
+    }
   };
 
   render() {
@@ -81,17 +117,34 @@ class Apod extends Component {
       return <TitleLoader />;
     }
 
+    const dateNavigation = {
+      previous: this.previous,
+      next: this.next,
+      current: this.current,
+      random: this.random
+    };
+
     const {
       response: { title, date },
-      apodImage
+      apodImage,
+      isImageHD
     } = this.state;
 
     return (
-      <>
-        <Header title={title} date={date} getImage={this.getImage} />
+      <div
+        style={{ outline: "none" }}
+        tabIndex={0}
+        onKeyUp={this.navigateDates}
+      >
+        <Header
+          title={title}
+          date={date}
+          isImageHD={isImageHD}
+          dateNavigation={dateNavigation}
+        />
         <ApodImage loadedImage={apodImage} />
         <Drawer />
-      </>
+      </div>
     );
   }
 }
