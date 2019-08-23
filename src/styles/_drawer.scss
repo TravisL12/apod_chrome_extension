@@ -83,11 +83,15 @@ $top-offset: 100px;
       font-weight: 400;
     }
 
-    .explanation {
-      text-align: left;
+    .explanation-tab {
+      .explanation {
+        text-align: left;
+        font-size: 16px;
+        margin-bottom: 10px;
+        text-rendering: optimizeLegibility;
+      }
 
-      .external-links,
-      #apod-explanation {
+      .external-links {
         font-size: 16px;
         margin-bottom: 10px;
         text-rendering: optimizeLegibility;

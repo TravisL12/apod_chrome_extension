@@ -1,14 +1,14 @@
 /*global chrome*/
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 function TopSites() {
   const [sites, setSites] = useState([]);
 
-  if (sites.length === 0) {
+  useEffect(() => {
     chrome.topSites.get(data => {
       setSites(data);
     });
-  }
+  }, []);
 
   return (
     <div class="apod__top-sites">

@@ -2,7 +2,7 @@ import React from "react";
 import TopSites from "./TopSites";
 import { prettyDateFormat } from "../DateManager";
 
-export default function Header({ title, date, isImageHD, dateNavigation }) {
+function Header({ response: { title, date }, isImageHD, dateNavigation }) {
   const { previous, next, current, random, forceHighDef } = dateNavigation;
 
   return (
@@ -27,3 +27,5 @@ export default function Header({ title, date, isImageHD, dateNavigation }) {
     </div>
   );
 }
+
+export default Header;

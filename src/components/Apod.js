@@ -130,11 +130,7 @@ class Apod extends Component {
       forceHighDef: this.forceHighDef
     };
 
-    const {
-      response: { title, date },
-      apodImage,
-      isImageHD
-    } = this.state;
+    const { response, apodImage, isImageHD } = this.state;
 
     return (
       <div
@@ -143,13 +139,12 @@ class Apod extends Component {
         onKeyUp={this.navigateDates}
       >
         <Header
-          title={title}
-          date={date}
+          response={response}
           isImageHD={isImageHD}
           dateNavigation={dateNavigation}
         />
         <ApodImage loadedImage={apodImage} />
-        <Drawer />
+        <Drawer response={this.state.response} />
       </div>
     );
   }

@@ -33,3 +33,12 @@ export function clearElement(el) {
     el.removeChild(el.firstChild);
   }
 }
+
+export function apodSourceLink(date) {
+  if (!date) return;
+
+  const dateStr = date.split("-");
+  return `ap${dateStr[0].slice(-2)}${zeroPad(dateStr[1])}${zeroPad(
+    dateStr[2]
+  )}.html`;
+}
