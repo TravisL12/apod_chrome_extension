@@ -12,12 +12,8 @@ function _actualDate(date) {
   return new Date(flatpickr.parseDate(date, DATE_FORMAT));
 }
 
-function _getToday() {
-  return flatpickr.formatDate(new Date(), DATE_FORMAT);
-}
-
 export function today() {
-  return _getToday();
+  return flatpickr.formatDate(new Date(), DATE_FORMAT);
 }
 
 export function prettyDateFormat(date) {
@@ -46,5 +42,5 @@ export function randomDate() {
 }
 
 export function isToday(date) {
-  return _actualDate(_getToday()).getTime() === _actualDate(date).getTime();
+  return _actualDate(today()).getTime() === _actualDate(date).getTime();
 }
