@@ -71,6 +71,10 @@ body {
   height: 100%;
 }
 
+.apod-container {
+  outline: none;
+}
+
 .apod__background-image {
   opacity: 0.3;
   position: absolute;
@@ -91,6 +95,7 @@ body {
 }
 
 .apod__header {
+  position: absolute;
   display: flex;
   justify-content: space-between;
   width: 100%;

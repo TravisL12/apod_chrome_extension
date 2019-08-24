@@ -1,11 +1,10 @@
 import React from "react";
 
-// const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
-
 export default function ApodImage({ loadedImage }) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
 
+  const backgroundImage = `url(${loadedImage.src})`;
   const widthGTwindow = loadedImage.width > window.innerWidth;
   const heightGTwindow = loadedImage.height > window.innerHeight;
   const aspectRatio = loadedImage.width / loadedImage.height;
@@ -24,18 +23,12 @@ export default function ApodImage({ loadedImage }) {
 
   return (
     <div className="apod-body">
-      <div class="apod__loading" />
-      <div class="apod__error" />
-
       {showFadedBackground && (
-        <div
-          class="apod__background-image"
-          style={{ backgroundImage: `url(${loadedImage.src})` }}
-        />
+        <div class="apod__background-image" style={{ backgroundImage }} />
       )}
       <div
         className="apod__image"
-        style={{ backgroundImage: `url(${loadedImage.src})`, backgroundSize }}
+        style={{ backgroundImage, backgroundSize }}
       />
     </div>
   );

@@ -3,12 +3,15 @@ import React, { Component } from "react";
 import reqwest from "reqwest";
 import { string, arrayOf, shape } from "prop-types";
 
-import Header from "./Header";
+import Title from "./Title";
 import ApodImage from "./ApodImage";
 import Drawer from "./Drawer";
 import { TitleLoader } from "./LoadingSpinner";
 import { adjacentDate, today, randomDate } from "../DateManager";
+import TopSites from "./TopSites";
 
+const MAX_ERROR_TRIES = 3;
+const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const DELAY_FOR_HD_LOAD = 3000;
 const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
 const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
@@ -30,7 +33,8 @@ class Apod extends Component {
     apodImage: null,
     response: null,
     isLoading: true,
-    isImageHD: false
+    isImageHD: false,
+    hasLoadingError: false
   };
 
   componentDidMount() {
@@ -90,9 +94,13 @@ class Apod extends Component {
         this.preLoadImage(response, isHighRes);
       },
       () => {
-        errorCount++;
-        console.log(errorCount, "error count!!!");
-        this.getImage(randomDate(), errorCount);
+        if (errorCount >= MAX_ERROR_TRIES) {
+          this.setState({ hasLoadingError: true });
+        } else {
+          errorCount++;
+          console.log(errorCount, "error count!!!");
+          this.getImage(randomDate(), errorCount);
+        }
       }
     );
   };
@@ -147,9 +155,14 @@ class Apod extends Component {
   };
 
   render() {
-    if (this.state.isLoading) {
-      return <TitleLoader />;
-    }
+    const { favorites } = this.props;
+    const {
+      response,
+      apodImage,
+      isImageHD,
+      isLoading,
+      hasLoadingError
+    } = this.state;
 
     const dateNavigation = {
       previous: this.previous,
@@ -160,23 +173,23 @@ class Apod extends Component {
       saveFavorite: this.saveFavorite
     };
 
-    const { response, apodImage, isImageHD } = this.state;
-
     return (
-      <div
-        style={{ outline: "none" }}
-        tabIndex={0}
-        onKeyUp={this.navigateDates}
-      >
-        <Header
-          response={response}
-          isImageHD={isImageHD}
-          dateNavigation={dateNavigation}
-        />
-        <ApodImage loadedImage={apodImage} />
+      <div className="apod-container" tabIndex={0} onKeyUp={this.navigateDates}>
+        <div className="apod__header">
+          <TopSites />
+          {!isLoading && (
+            <Title
+              response={response}
+              isImageHD={isImageHD}
+              dateNavigation={dateNavigation}
+            />
+          )}
+        </div>
+        {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
+        {isLoading ? <TitleLoader /> : <ApodImage loadedImage={apodImage} />}
         <Drawer
-          response={this.state.response}
-          favorites={this.props.favorites}
+          response={response}
+          favorites={favorites}
           specificDate={this.specificDate}
         />
       </div>
