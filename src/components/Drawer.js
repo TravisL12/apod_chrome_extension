@@ -2,6 +2,19 @@ import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 
+function Tab({ name, updateDrawer }) {
+  return (
+    <div
+      className="tab"
+      onClick={() => {
+        updateDrawer(name);
+      }}
+    >
+      {name}
+    </div>
+  );
+}
+
 export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
 
@@ -22,22 +35,8 @@ export default function Drawer({ response, favorites, specificDate }) {
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
       <div className="apod__drawer-tabs">
         <div className="default-tabs">
-          <div
-            className="tab"
-            onClick={() => {
-              updateDrawer("favorites");
-            }}
-          >
-            Favorites
-          </div>
-          <div
-            className="tab"
-            onClick={() => {
-              updateDrawer("explanation");
-            }}
-          >
-            Explanation
-          </div>
+          <Tab name={"favorites"} updateDrawer={updateDrawer} />
+          <Tab name={"explanation"} updateDrawer={updateDrawer} />
         </div>
 
         <div className="apod__know-more" />
