@@ -1,3 +1,4 @@
+/*global chrome*/
 import React, { Component } from "react";
 import reqwest from "reqwest";
 import { string, arrayOf, shape } from "prop-types";
@@ -37,6 +38,10 @@ class Apod extends Component {
     this.getImage(date);
   }
 
+  specificDate = date => {
+    this.getImage(date);
+  };
+
   previous = () => {
     this.getImage(adjacentDate(this.state.response.date, -1));
   };
@@ -56,6 +61,23 @@ class Apod extends Component {
   forceHighDef = () => {
     this.setState({ isLoading: true });
     this.preLoadImage(this.state.response, true);
+  };
+
+  saveFavorite = () => {
+    const { favorites } = this.props;
+    const { date, title, url } = this.state.response;
+
+    if (!favorites || !favorites[date]) {
+      chrome.storage.sync.set({
+        apodFavorites: {
+          ...favorites,
+          [date]: {
+            title,
+            imgUrl: url
+          }
+        }
+      });
+    }
   };
 
   getImage = (date, errorCount = 0) => {
@@ -134,7 +156,8 @@ class Apod extends Component {
       next: this.next,
       current: this.current,
       random: this.random,
-      forceHighDef: this.forceHighDef
+      forceHighDef: this.forceHighDef,
+      saveFavorite: this.saveFavorite
     };
 
     const { response, apodImage, isImageHD } = this.state;
@@ -154,6 +177,7 @@ class Apod extends Component {
         <Drawer
           response={this.state.response}
           favorites={this.props.favorites}
+          specificDate={this.specificDate}
         />
       </div>
     );

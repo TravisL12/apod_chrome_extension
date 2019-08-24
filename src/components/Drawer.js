@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 
-export default function Drawer({ response, favorites }) {
+export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
 
   const tabs = {
     explanation: <ExplanationTab response={response} />,
-    favorites: <FavoritesTab favorites={favorites} />
+    favorites: (
+      <FavoritesTab favorites={favorites} specificDate={specificDate} />
+    )
   };
 
   const updateDrawer = tabName => {
