@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
+import { startCase } from "lodash";
 
 function Tab({ name, updateDrawer }) {
   return (
@@ -10,7 +11,7 @@ function Tab({ name, updateDrawer }) {
         updateDrawer(name);
       }}
     >
-      {name}
+      {startCase(name)}
     </div>
   );
 }

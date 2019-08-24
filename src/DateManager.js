@@ -2,6 +2,10 @@ import flatpickr from "flatpickr";
 
 const DATE_FORMAT = "Y-m-d";
 
+export function formatDate(date) {
+  return flatpickr.formatDate(date, DATE_FORMAT);
+}
+
 /**
  * Gives the actual date (with timezone) at midnight
  *

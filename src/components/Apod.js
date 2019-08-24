@@ -182,6 +182,7 @@ class Apod extends Component {
               response={response}
               isImageHD={isImageHD}
               dateNavigation={dateNavigation}
+              specificDate={this.specificDate}
             />
           )}
         </div>

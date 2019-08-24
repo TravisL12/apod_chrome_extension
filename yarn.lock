@@ -4042,7 +4042,7 @@ flat-cache@^2.0.1:
     rimraf "2.6.3"
     write "1.0.3"
 
-flatpickr@^4.6.2:
+flatpickr@^4.5.7:
   version "4.6.2"
   resolved "https://unpm.uberinternal.com/flatpickr/-/flatpickr-4.6.2.tgz#50e1b4fc84fbf67c5b0919ba3ddc330221f126da"
   integrity sha512-bRfBPyxohUQWgCTg6jPALUO1t/x+sRJ/S/RVti/NzYvHqGRpCAesKSWKLzOuLmpu+vGHfXBld4SXvOCLFgYb+g==
@@ -7931,7 +7931,7 @@ prompts@^2.0.1:
     kleur "^3.0.3"
     sisteransi "^1.0.3"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://unpm.uberinternal.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -8149,6 +8149,14 @@ react-error-overlay@^6.0.1:
   version "6.0.1"
   resolved "https://unpm.uberinternal.com/react-error-overlay/-/react-error-overlay-6.0.1.tgz#b8d3cf9bb991c02883225c48044cb3ee20413e0f"
   integrity sha512-V9yoTr6MeZXPPd4nV/05eCBvGH9cGzc52FN8fs0O0TVQ3HYYf1n7EgZVtHbldRq5xU9zEzoXIITjYNIfxDDdUw==
+
+react-flatpickr@^3.9.1:
+  version "3.9.1"
+  resolved "https://unpm.uberinternal.com/react-flatpickr/-/react-flatpickr-3.9.1.tgz#2fcee71a2664df9c9290ea3550cb40fe06c99305"
+  integrity sha512-g3FdnrYfFWOj/cWuPwHhYigpchu8GwAJvUzxUrba20dhrAdW1+dwAQxE+3aGe6eFYhYlTosVYTP8XAefnn5kxg==
+  dependencies:
+    flatpickr "^4.5.7"
+    prop-types "^15.5.10"
 
 react-is@^16.8.1, react-is@^16.8.4:
   version "16.9.0"

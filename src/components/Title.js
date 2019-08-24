@@ -1,7 +1,13 @@
 import React from "react";
-import { prettyDateFormat } from "../DateManager";
+import Flatpickr from "react-flatpickr";
+import { prettyDateFormat, formatDate } from "../DateManager";
 
-function Title({ response: { title, date }, isImageHD, dateNavigation }) {
+function Title({
+  response: { title, date },
+  isImageHD,
+  dateNavigation,
+  specificDate
+}) {
   const {
     previous,
     next,
@@ -14,7 +20,14 @@ function Title({ response: { title, date }, isImageHD, dateNavigation }) {
   return (
     <div className="explanation">
       <div className="title">
-        <h2>{prettyDateFormat(date)}</h2>
+        <Flatpickr
+          value={date}
+          onChange={date => {
+            specificDate(formatDate(date[0]));
+          }}
+        >
+          <h2 data-toggle>{prettyDateFormat(date)}</h2>
+        </Flatpickr>
         <h1>{title}</h1>
         <span className="img-quality">{isImageHD ? "HD" : "SD"}</span>
       </div>
