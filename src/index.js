@@ -7,6 +7,7 @@ import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 
 import "./styles/style.scss";
+import "react-datepicker/dist/react-datepicker.css";
 
 class App extends Component {
   state = this.props;

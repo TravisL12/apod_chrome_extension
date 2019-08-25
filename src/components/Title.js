@@ -1,6 +1,6 @@
 import React from "react";
-import Flatpickr from "react-flatpickr";
-import { prettyDateFormat, formatDate } from "../DateManager";
+import DatePicker from "react-datepicker";
+import { actualDate, prettyDateFormat, formatDate } from "../DateManager";
 
 function Title({
   response: { title, date },
@@ -20,14 +20,18 @@ function Title({
   return (
     <div className="explanation">
       <div className="title">
-        <Flatpickr
-          value={date}
-          onChange={date => {
-            specificDate(formatDate(date[0]));
-          }}
-        >
-          <h2 data-toggle>{prettyDateFormat(date)}</h2>
-        </Flatpickr>
+        <div className="date">
+          <DatePicker
+            showYearDropdown
+            scrollableYearDropdown
+            customInput={<h2>{prettyDateFormat(date)}</h2>}
+            selected={actualDate(date)}
+            onChange={date => {
+              specificDate(formatDate(date));
+            }}
+          />
+        </div>
+
         <h1>{title}</h1>
         <span className="img-quality">{isImageHD ? "HD" : "SD"}</span>
       </div>

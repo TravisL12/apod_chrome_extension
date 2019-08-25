@@ -12,7 +12,7 @@ export function formatDate(date) {
  * @param  {string} date
  * @return {Date}
  */
-function _actualDate(date) {
+export function actualDate(date) {
   return new Date(flatpickr.parseDate(date, DATE_FORMAT));
 }
 
@@ -21,7 +21,7 @@ export function today() {
 }
 
 export function prettyDateFormat(date) {
-  return _actualDate(date).toLocaleDateString("en", {
+  return actualDate(date).toLocaleDateString("en", {
     year: "numeric",
     month: "long",
     day: "numeric"
@@ -29,7 +29,7 @@ export function prettyDateFormat(date) {
 }
 
 export function adjacentDate(dateString, direction) {
-  let adjDate = new Date(_actualDate(dateString).getTime());
+  let adjDate = new Date(actualDate(dateString).getTime());
 
   adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
   return flatpickr.formatDate(adjDate, DATE_FORMAT);
@@ -46,5 +46,5 @@ export function randomDate() {
 }
 
 export function isToday(date) {
-  return _actualDate(today()).getTime() === _actualDate(date).getTime();
+  return actualDate(today()).getTime() === actualDate(date).getTime();
 }

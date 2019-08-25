@@ -12,7 +12,18 @@
     "default_popup": "options.html"
   },
 
-  "icons": { "16": "sun_icon.png", "128": "sun_icon.png" },
+  "icons": [
+    {
+      "src": "sun_icon.png",
+      "sizes": "16x16",
+      "type": "image/png"
+    },
+    {
+      "src": "sun_icon.png",
+      "sizes": "128x128",
+      "type": "image/png"
+    }
+  ],
 
   "chrome_url_overrides": {
     "newtab": "index.html"
