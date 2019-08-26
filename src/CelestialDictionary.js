@@ -1,5 +1,3 @@
-"use strict";
-
 const celestialDictionary = {
   planet: [
     "mercury",

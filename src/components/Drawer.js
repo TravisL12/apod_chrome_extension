@@ -1,7 +1,27 @@
 import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
-import { startCase } from "lodash";
+import { keys, startCase } from "lodash";
+import celestialDictionary from "../CelestialDictionary";
+
+function findCelestialObjects(explanation) {
+  const celestialObjects = keys(celestialDictionary).reduce(
+    (result, category) => {
+      const match = celestialDictionary[category].filter(constellation => {
+        const re = new RegExp("\\b" + constellation + "\\b", "gi");
+        return explanation.match(re);
+      });
+
+      return result.concat(match);
+    },
+    []
+  );
+
+  const ngcObjects = explanation.match(/NGC(-|\s)?\d{1,7}/gi) || [];
+
+  const results = new Set(celestialObjects.concat(ngcObjects)); // get unique values
+  return [...results];
+}
 
 function Tab({ name, updateDrawer }) {
   return (
@@ -31,6 +51,10 @@ export default function Drawer({ response, favorites, specificDate }) {
       ? setOpenTabName(false)
       : setOpenTabName(tabName);
   };
+
+  if (response) {
+    console.log(findCelestialObjects(response.explanation));
+  }
 
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>

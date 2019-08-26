@@ -85,7 +85,7 @@ class Apod extends Component {
   };
 
   getImage = (date, errorCount = 0) => {
-    this.setState({ isLoading: true });
+    this.setState({ isLoading: true, response: null });
     const { isHighRes } = this.props;
     const data = { date, api_key: API_KEY };
 
