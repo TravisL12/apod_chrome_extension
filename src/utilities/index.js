@@ -12,6 +12,11 @@ export function zeroPad(num) {
   return num.slice(-2);
 }
 
+// export function thumbSourceLink(params) {
+// https://apod.nasa.gov/apod/calendar/S_011007.jpg
+// Filename is S_YYMMDD.jpg
+// }
+
 export function apodSourceLink(date) {
   if (!date) return;
 

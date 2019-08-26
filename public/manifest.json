@@ -12,18 +12,7 @@
     "default_popup": "options.html"
   },
 
-  "icons": [
-    {
-      "src": "sun_icon.png",
-      "sizes": "16x16",
-      "type": "image/png"
-    },
-    {
-      "src": "sun_icon.png",
-      "sizes": "128x128",
-      "type": "image/png"
-    }
-  ],
+  "icons": { "16": "sun_icon.png", "128": "sun_icon.png" },
 
   "chrome_url_overrides": {
     "newtab": "index.html"
@@ -33,6 +22,7 @@
     "topSites",
     "storage",
     "https://api.nasa.gov/*",
+    "https://apod.nasa.gov/cgi-bin/apod/apod_search",
     "https://www.googleapis.com/customsearch/*",
     "https://www.google-analytics.com/collect"
   ]
