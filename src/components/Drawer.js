@@ -6,6 +6,10 @@ import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 import celestialDictionary from "../CelestialDictionary";
 import KnowMoreTab from "./tabs/KnowMoreTab";
+import { formatDate } from "../DateManager";
+
+const MAX_CELESTIAL_MATCHES = 5;
+const MAX_CELESTIAL_DISPLAYED = 20;
 
 function findCelestialObjects(explanation) {
   const celestialObjects = keys(celestialDictionary).reduce(
@@ -41,13 +45,14 @@ function Tab({ name, updateDrawer }) {
 
 export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
+  const [knowMoreResults, setKnowMoreResults] = useState(null);
 
   const tabs = {
     explanation: <ExplanationTab response={response} />,
     favorites: (
       <FavoritesTab favorites={favorites} specificDate={specificDate} />
     ),
-    knowMore: <KnowMoreTab />
+    knowMore: <KnowMoreTab results={knowMoreResults} />
   };
 
   const updateDrawer = tabName => {
@@ -56,7 +61,7 @@ export default function Drawer({ response, favorites, specificDate }) {
       : setOpenTabName(tabName);
   };
 
-  const knowMoreDisplay = keyword => {
+  const knowMoreMatch = keyword => {
     reqwest({
       method: "POST",
       url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
@@ -68,18 +73,25 @@ export default function Drawer({ response, favorites, specificDate }) {
       const searchHtml = searchDom.parseFromString(resp, "text/html");
       const searches = searchHtml.querySelectorAll("p");
       const searchResult = [];
-      for (let i = 0; i < searches.length; i++) {
+
+      for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
         const search = searches[i];
         const parse = search.querySelectorAll("a")[1];
 
         if (parse) {
+          const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
+          const title = parse.textContent.replace(/(\r\n|\n|\r)/gm, "").trim(); // remove line breaks Regex
+
           searchResult.push({
-            title: parse.textContent.replace(/(\r\n|\n|\r)/gm, "").trim(), // remove line breaks Regex
-            url: parse.href
+            title,
+            url: parse.href,
+            date: formatDate(new Date(date))
           });
         }
       }
-      console.log(searchResult);
+
+      setKnowMoreResults(searchResult);
+      setOpenTabName("knowMore");
     });
   };
 
@@ -91,8 +103,8 @@ export default function Drawer({ response, favorites, specificDate }) {
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
       <div className="apod__drawer-tabs">
         <div className="default-tabs">
-          {celestialObjects.slice(0, 5).map((obj, idx) => {
-            return <Tab name={obj} updateDrawer={knowMoreDisplay} />;
+          {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((obj, idx) => {
+            return <Tab key={idx} name={obj} updateDrawer={knowMoreMatch} />;
           })}
           <Tab name={"favorites"} updateDrawer={updateDrawer} />
           <Tab name={"explanation"} updateDrawer={updateDrawer} />

@@ -12,16 +12,19 @@ export function zeroPad(num) {
   return num.slice(-2);
 }
 
-// export function thumbSourceLink(params) {
+function linkDateFormat(date) {
+  const dateStr = date.split("-");
+  return `${dateStr[0].slice(-2)}${zeroPad(dateStr[1])}${zeroPad(dateStr[2])}`;
+}
+
 // https://apod.nasa.gov/apod/calendar/S_011007.jpg
-// Filename is S_YYMMDD.jpg
-// }
+export function thumbSourceLink(date) {
+  if (!date) return;
+
+  return `S_${linkDateFormat(date)}.jpg`;
+}
 
 export function apodSourceLink(date) {
   if (!date) return;
-
-  const dateStr = date.split("-");
-  return `ap${dateStr[0].slice(-2)}${zeroPad(dateStr[1])}${zeroPad(
-    dateStr[2]
-  )}.html`;
+  return `ap${linkDateFormat(date)}.html`;
 }
