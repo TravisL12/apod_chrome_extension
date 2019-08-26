@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
-import { keys, startCase } from "lodash";
+import { keys, startCase, countBy } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
 function findCelestialObjects(explanation) {
@@ -52,14 +52,17 @@ export default function Drawer({ response, favorites, specificDate }) {
       : setOpenTabName(tabName);
   };
 
-  if (response) {
-    console.log(findCelestialObjects(response.explanation));
-  }
+  const celestialObjects = response
+    ? keys(countBy(findCelestialObjects(response.explanation)))
+    : [];
 
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
       <div className="apod__drawer-tabs">
         <div className="default-tabs">
+          {celestialObjects.slice(0, 5).map((obj, idx) => {
+            return <Tab name={obj} updateDrawer={updateDrawer} />;
+          })}
           <Tab name={"favorites"} updateDrawer={updateDrawer} />
           <Tab name={"explanation"} updateDrawer={updateDrawer} />
         </div>
