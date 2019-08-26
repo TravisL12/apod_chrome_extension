@@ -52,7 +52,9 @@ export default function Drawer({ response, favorites, specificDate }) {
     favorites: (
       <FavoritesTab favorites={favorites} specificDate={specificDate} />
     ),
-    knowMore: <KnowMoreTab results={knowMoreResults} />
+    knowMore: (
+      <KnowMoreTab results={knowMoreResults} specificDate={specificDate} />
+    )
   };
 
   const updateDrawer = tabName => {

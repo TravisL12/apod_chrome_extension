@@ -1,7 +1,7 @@
 import React from "react";
 import { thumbSourceLink } from "../../utilities";
 
-function KnowMoreTab({ results }) {
+function KnowMoreTab({ results, specificDate }) {
   return (
     <div className="explanation-tab">
       {results.map((result, idx) => {
@@ -11,7 +11,11 @@ function KnowMoreTab({ results }) {
 
         return (
           <div key={idx}>
-            <img src={imgSrc} />
+            <img
+              alt="Thumb"
+              onClick={() => specificDate(result.date)}
+              src={imgSrc}
+            />
             <p>{result.title}</p>
           </div>
         );
