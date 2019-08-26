@@ -27,12 +27,12 @@ function findCelestialObjects(explanation) {
   return [...results];
 }
 
-function Tab({ name, updateDrawer }) {
+function Tab({ name, onClickHandler }) {
   return (
     <div
       className="tab"
       onClick={() => {
-        updateDrawer(name);
+        onClickHandler(name);
       }}
     >
       {startCase(name)}
@@ -78,10 +78,10 @@ export default function Drawer({ response, favorites, specificDate }) {
       <div className="apod__drawer-tabs">
         <div className="tabs">
           {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((name, idx) => {
-            return <Tab key={idx} name={name} updateDrawer={knowMoreMatch} />;
+            return <Tab key={idx} name={name} onClickHandler={knowMoreMatch} />;
           })}
-          <Tab name={"favorites"} updateDrawer={updateDrawer} />
-          <Tab name={"explanation"} updateDrawer={updateDrawer} />
+          <Tab name={"favorites"} onClickHandler={updateDrawer} />
+          <Tab name={"explanation"} onClickHandler={updateDrawer} />
         </div>
       </div>
       <div className="apod__drawer-view">{tabs[openTabName]}</div>

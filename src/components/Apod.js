@@ -155,6 +155,8 @@ class Apod extends Component {
   };
 
   render() {
+    // TYPE FOR VIDEO????
+
     const { favorites } = this.props;
     const {
       response,
