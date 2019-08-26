@@ -12,7 +12,7 @@ function findCelestialObjects(explanation) {
   const celestialObjects = keys(celestialDictionary).reduce(
     (result, category) => {
       const match = celestialDictionary[category].filter(constellation => {
-        const re = new RegExp("\\b" + constellation + "\\b", "gi");
+        const re = new RegExp(`\\b${constellation}\\b`, "gi");
         return explanation.match(re);
       });
 
@@ -55,13 +55,13 @@ export default function Drawer({ response, favorites, specificDate }) {
   };
 
   const updateDrawer = tabName => {
-    openTabName && tabName === openTabName
+    (openTabName && tabName === openTabName) || !response
       ? setOpenTabName(false)
       : setOpenTabName(tabName);
   };
 
   const knowMoreMatch = keyword => {
-    if (!openTabName) {
+    if (!openTabName && response) {
       setKnowMoreKeyword(keyword);
       setOpenTabName("knowMore");
     } else {
@@ -76,15 +76,13 @@ export default function Drawer({ response, favorites, specificDate }) {
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
       <div className="apod__drawer-tabs">
-        <div className="default-tabs">
+        <div className="tabs">
           {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((name, idx) => {
             return <Tab key={idx} name={name} updateDrawer={knowMoreMatch} />;
           })}
           <Tab name={"favorites"} updateDrawer={updateDrawer} />
           <Tab name={"explanation"} updateDrawer={updateDrawer} />
         </div>
-
-        <div className="apod__know-more" />
       </div>
       <div className="apod__drawer-view">{tabs[openTabName]}</div>
     </div>

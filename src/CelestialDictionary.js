@@ -415,7 +415,7 @@ const celestialDictionary = {
 
 // Add Messier Objects (110 total)
 for (let i = 1; i <= 110; i++) {
-  celestialDictionary.galaxy.push("M" + i);
+  celestialDictionary.galaxy.push(`M${i}`);
 }
 
 export default celestialDictionary;

@@ -8,7 +8,7 @@ export function randomizer(max, min) {
 
 // Zero pad dates
 export function zeroPad(num) {
-  num = "0" + num.toString();
+  num = `0${num.toString()}`;
   return num.slice(-2);
 }
 
