@@ -1,5 +1,5 @@
 import React from "react";
-import DatePicker from "react-datepicker";
+import Flatpickr from "react-flatpickr";
 import { actualDate, prettyDateFormat, formatDate } from "../DateManager";
 
 function Title({
@@ -22,15 +22,16 @@ function Title({
     <div className="explanation">
       <div className="title">
         <div className="date">
-          <DatePicker
-            showYearDropdown
-            scrollableYearDropdown
-            customInput={<h2>{prettyDateFormat(date)}</h2>}
-            selected={actualDate(date)}
-            onChange={date => {
-              specificDate(formatDate(date));
+          <Flatpickr
+            value={actualDate(date)}
+            options={{ wrap: true, static: true }}
+            onChange={(dates, dateStr) => {
+              specificDate(dateStr);
             }}
-          />
+          >
+            <input type="text" data-input style={{ display: "none" }} />
+            <h2 data-toggle>{prettyDateFormat(date)}</h2>
+          </Flatpickr>
         </div>
 
         <h1>{title}</h1>
