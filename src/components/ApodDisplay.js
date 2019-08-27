@@ -35,14 +35,15 @@ function Image({ loadedImage }) {
   );
 }
 
-function Video({ response }) {
-  const url = new URL(response.url);
+function Video({ videoUrl }) {
+  const url = new URL(videoUrl);
   url.search = "autopause=1&autoplay=0";
 
   return (
     <div className="apod-body">
       <div className="apod__image">
         <iframe
+          title="APOD Video"
           width="960"
           height="540"
           src={url.href}
@@ -58,8 +59,10 @@ export default function ApodDisplay({ response, isLoading, loadedImage }) {
     return <TitleLoader />;
   }
 
-  return response.media_type === "video" ? (
-    <Video response={response} />
+  const { media_type, url } = response;
+
+  return media_type === "video" ? (
+    <Video videoUrl={url} />
   ) : (
     <Image loadedImage={loadedImage} />
   );
