@@ -1,6 +1,6 @@
 {
   "name": "apod",
-  "version": "0.1.0",
+  "version": "3.0.0",
   "private": true,
   "dependencies": {
     "flatpickr": "^4.6.2",
