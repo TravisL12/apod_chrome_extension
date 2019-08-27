@@ -1,3 +1,5 @@
+import celestialDictionary from "../CelestialDictionary";
+
 /* Randomizer */
 export function randomizer(max, min) {
   min = min || 0;
@@ -27,4 +29,46 @@ export function thumbSourceLink(date) {
 export function apodSourceLink(date) {
   if (!date) return;
   return `https://apod.nasa.gov/apod/ap${linkDateFormat(date)}.html`;
+}
+
+export function getImageDimensions(loadedImage) {
+  let showFadedBackground = false;
+  let backgroundSize = "auto";
+
+  const { width, height } = loadedImage;
+  const { innerWidth, innerHeight } = window;
+
+  const widthGTwindow = width > innerWidth;
+  const heightGTwindow = height > innerHeight;
+  const aspectRatio = width / height;
+
+  if (widthGTwindow || heightGTwindow) {
+    showFadedBackground = true;
+    backgroundSize = aspectRatio >= 1.3 ? "cover" : "contain";
+  }
+
+  if (width / innerWidth > 0.5 || height / innerHeight > 0.5) {
+    showFadedBackground = true;
+  }
+
+  return { showFadedBackground, backgroundSize };
+}
+
+export function findCelestialObjects(explanation) {
+  const celestialObjects = keys(celestialDictionary).reduce(
+    (result, category) => {
+      const match = celestialDictionary[category].filter(constellation => {
+        const re = new RegExp(`\\b${constellation}\\b`, "gi");
+        return explanation.match(re);
+      });
+
+      return result.concat(match);
+    },
+    []
+  );
+
+  const ngcObjects = explanation.match(/NGC(-|\s)?\d{1,7}/gi) || [];
+
+  const results = new Set(celestialObjects.concat(ngcObjects)); // get unique values
+  return [...results];
 }

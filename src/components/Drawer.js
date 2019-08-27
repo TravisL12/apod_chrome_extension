@@ -3,29 +3,10 @@ import { keys, startCase, countBy } from "lodash";
 
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
-import celestialDictionary from "../CelestialDictionary";
 import KnowMoreTab from "./tabs/KnowMoreTab";
+import { findCelestialObjects } from "../utilities";
 
 const MAX_CELESTIAL_MATCHES = 5;
-
-function findCelestialObjects(explanation) {
-  const celestialObjects = keys(celestialDictionary).reduce(
-    (result, category) => {
-      const match = celestialDictionary[category].filter(constellation => {
-        const re = new RegExp(`\\b${constellation}\\b`, "gi");
-        return explanation.match(re);
-      });
-
-      return result.concat(match);
-    },
-    []
-  );
-
-  const ngcObjects = explanation.match(/NGC(-|\s)?\d{1,7}/gi) || [];
-
-  const results = new Set(celestialObjects.concat(ngcObjects)); // get unique values
-  return [...results];
-}
 
 function Tab({ name, onClickHandler }) {
   return (

@@ -25,7 +25,7 @@ function Title({
           <Flatpickr
             value={actualDate(date)}
             options={{ wrap: true, static: true }}
-            onChange={(dates, dateStr) => {
+            onChange={(date, dateStr) => {
               specificDate(dateStr);
             }}
           >

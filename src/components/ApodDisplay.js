@@ -1,28 +1,6 @@
 import React from "react";
 import { TitleLoader } from "./LoadingSpinner";
-
-function getImageDimensions(loadedImage) {
-  let showFadedBackground = false;
-  let backgroundSize = "auto";
-
-  const { width, height } = loadedImage;
-  const { innerWidth, innerHeight } = window;
-
-  const widthGTwindow = width > innerWidth;
-  const heightGTwindow = height > innerHeight;
-  const aspectRatio = width / height;
-
-  if (widthGTwindow || heightGTwindow) {
-    showFadedBackground = true;
-    backgroundSize = aspectRatio >= 1.3 ? "cover" : "contain";
-  }
-
-  if (width / innerWidth > 0.5 || height / innerHeight > 0.5) {
-    showFadedBackground = true;
-  }
-
-  return { showFadedBackground, backgroundSize };
-}
+import { getImageDimensions } from "../utilities";
 
 function Image({ loadedImage }) {
   const backgroundImage = `url(${loadedImage.src})`;
