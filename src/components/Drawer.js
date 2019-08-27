@@ -61,10 +61,15 @@ export default function Drawer({ response, favorites, specificDate }) {
   };
 
   const knowMoreMatch = keyword => {
-    if (!openTabName && response) {
+    if (
+      !openTabName ||
+      (openTabName && knowMoreKeyword !== keyword) ||
+      (openTabName && openTabName !== "knowMore")
+    ) {
       setKnowMoreKeyword(keyword);
       setOpenTabName("knowMore");
     } else {
+      setKnowMoreKeyword(null);
       setOpenTabName(false);
     }
   };

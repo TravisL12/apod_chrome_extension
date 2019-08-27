@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
 
 import { formatDate } from "../../DateManager";
@@ -10,7 +10,7 @@ const MAX_CELESTIAL_DISPLAYED = 20;
 function KnowMoreTab({ keyword, specificDate }) {
   const [results, setResults] = useState(null);
 
-  if (!results) {
+  useEffect(() => {
     reqwest({
       method: "POST",
       url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
@@ -41,11 +41,11 @@ function KnowMoreTab({ keyword, specificDate }) {
 
       setResults(searchResult);
     });
+  }, [keyword]);
 
-    return <SunLoader />;
-  }
-
-  return (
+  return !results ? (
+    <SunLoader />
+  ) : (
     <div className="explanation-tab">
       {results.map((result, idx) => {
         const imgSrc = `https://apod.nasa.gov/apod/calendar/${thumbSourceLink(
