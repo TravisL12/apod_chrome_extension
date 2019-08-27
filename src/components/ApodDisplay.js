@@ -1,11 +1,10 @@
 import React from "react";
 import { TitleLoader } from "./LoadingSpinner";
 
-function Image({ loadedImage }) {
+function getImageDimensions(loadedImage) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
 
-  const backgroundImage = `url(${loadedImage.src})`;
   const widthGTwindow = loadedImage.width > window.innerWidth;
   const heightGTwindow = loadedImage.height > window.innerHeight;
   const aspectRatio = loadedImage.width / loadedImage.height;
@@ -21,6 +20,15 @@ function Image({ loadedImage }) {
   ) {
     showFadedBackground = true;
   }
+
+  return { showFadedBackground, backgroundSize };
+}
+
+function Image({ loadedImage }) {
+  const backgroundImage = `url(${loadedImage.src})`;
+  const { showFadedBackground, backgroundSize } = getImageDimensions(
+    loadedImage
+  );
 
   return (
     <div className="apod-body">
