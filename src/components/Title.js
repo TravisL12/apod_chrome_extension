@@ -6,7 +6,8 @@ function Title({
   response: { title, date },
   isImageHD,
   dateNavigation,
-  specificDate
+  specificDate,
+  isFavorite
 }) {
   const {
     previous,
@@ -41,9 +42,11 @@ function Title({
         <li onClick={random}>Random</li>
         <li onClick={previous}>Previous</li>
         <li onClick={next}>Next</li>
-        <li onClick={saveFavorite} className="add-favorite">
-          Save
-        </li>
+        {isFavorite ? (
+          <li className="favorite">Favorite!</li>
+        ) : (
+          <li onClick={saveFavorite}>Save</li>
+        )}
         {!isImageHD && <li onClick={forceHighDef}>Force HD</li>}
       </ul>
     </div>

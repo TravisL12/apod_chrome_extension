@@ -171,18 +171,10 @@ body {
         cursor: pointer;
         font-size: 12px;
 
-        &.hide {
-          @extend %hide-display;
-        }
-
         &.current,
-        span.favorite {
+        &.favorite {
           color: $highlight-blue;
           font-weight: 600;
-        }
-
-        span.hide {
-          @extend %hide-display;
         }
 
         &.hover,

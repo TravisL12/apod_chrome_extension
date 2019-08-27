@@ -186,6 +186,7 @@ class Apod extends Component {
             <Title
               response={response}
               isImageHD={isImageHD}
+              isFavorite={!!favorites[response.date]}
               dateNavigation={dateNavigation}
               specificDate={this.specificDate}
             />
