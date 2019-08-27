@@ -16,6 +16,10 @@ $top-offset: 100px;
     transform: translate3d(1px, 0px, 0px);
   }
 
+  .similar-apod-item {
+    cursor: pointer;
+  }
+
   .apod__drawer-tabs {
     position: absolute;
     top: 465px;

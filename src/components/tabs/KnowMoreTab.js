@@ -10,38 +10,40 @@ const MAX_CELESTIAL_DISPLAYED = 20;
 function KnowMoreTab({ keyword, specificDate }) {
   const [results, setResults] = useState(null);
 
-  reqwest({
-    method: "POST",
-    url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
-    data: {
-      tquery: keyword
-    }
-  }).then(resp => {
-    const searchDom = new DOMParser();
-    const searchHtml = searchDom.parseFromString(resp, "text/html");
-    const searches = searchHtml.querySelectorAll("p");
-    const searchResult = [];
-
-    for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
-      const search = searches[i];
-      const parse = search.querySelectorAll("a")[1];
-
-      if (parse) {
-        const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
-        const title = parse.textContent.replace(/(\r\n|\n|\r)/gm, "").trim(); // remove line breaks Regex
-
-        searchResult.push({
-          title,
-          url: parse.href,
-          date: formatDate(new Date(date))
-        });
+  if (!results) {
+    reqwest({
+      method: "POST",
+      url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
+      data: {
+        tquery: keyword
       }
-    }
+    }).then(resp => {
+      const searchDom = new DOMParser();
+      const searchHtml = searchDom.parseFromString(resp, "text/html");
+      const searches = searchHtml.querySelectorAll("p");
+      const searchResult = [];
 
-    setResults(searchResult);
-  });
+      for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
+        const search = searches[i];
+        const parse = search.querySelectorAll("a")[1];
 
-  if (!results) return <SunLoader />;
+        if (parse) {
+          const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
+          const title = parse.textContent.replace(/(\r\n|\n|\r)/gm, "").trim(); // remove line breaks Regex
+
+          searchResult.push({
+            title,
+            url: parse.href,
+            date: formatDate(new Date(date))
+          });
+        }
+      }
+
+      setResults(searchResult);
+    });
+
+    return <SunLoader />;
+  }
 
   return (
     <div className="explanation-tab">
@@ -51,7 +53,7 @@ function KnowMoreTab({ keyword, specificDate }) {
         )}`;
 
         return (
-          <div key={idx}>
+          <div className="similar-apod-item" key={idx}>
             <img
               alt="Thumb"
               onClick={() => specificDate(result.date)}

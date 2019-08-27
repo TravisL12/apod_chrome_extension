@@ -4,7 +4,7 @@ import reqwest from "reqwest";
 import { string, arrayOf, shape } from "prop-types";
 
 import Title from "./Title";
-import ApodImage from "./ApodImage";
+import ApodDisplay from "./ApodDisplay";
 import Drawer from "./Drawer";
 import { TitleLoader } from "./LoadingSpinner";
 import { adjacentDate, today, randomDate } from "../DateManager";
@@ -91,7 +91,11 @@ class Apod extends Component {
 
     reqwest({ data, url: APOD_API_URL }).then(
       response => {
-        this.preLoadImage(response, isHighRes);
+        if (response.media_type === "video") {
+          this.random();
+        } else {
+          this.preLoadImage(response, isHighRes);
+        }
       },
       () => {
         if (errorCount >= MAX_ERROR_TRIES) {
@@ -155,8 +159,6 @@ class Apod extends Component {
   };
 
   render() {
-    // TYPE FOR VIDEO????
-
     const { favorites } = this.props;
     const {
       response,
@@ -189,7 +191,7 @@ class Apod extends Component {
           )}
         </div>
         {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
-        {isLoading ? <TitleLoader /> : <ApodImage loadedImage={apodImage} />}
+        {isLoading ? <TitleLoader /> : <ApodDisplay loadedImage={apodImage} />}
         <Drawer
           response={response}
           favorites={favorites}

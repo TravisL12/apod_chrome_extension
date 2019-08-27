@@ -15,29 +15,33 @@ export function SunLoader() {
   }
 
   return (
-    <div class="sun-container">
-      <div class="rays-big" id="big-rays">
-        {buildRays(bigRayCount)}
+    <div className="apod__loading">
+      <div class="sun-container">
+        <div class="rays-big" id="big-rays">
+          {buildRays(bigRayCount)}
+        </div>
+        <div class="rays-small" id="small-rays">
+          {buildRays(littleRayCount)}
+        </div>
+        <div class="sun-light" />
       </div>
-      <div class="rays-small" id="small-rays">
-        {buildRays(littleRayCount)}
-      </div>
-      <div class="sun-light" />
     </div>
   );
 }
 
 export function MoonLoader() {
   return (
-    <div class="moon-container">
-      <div class="mask-left">
-        <div class="moon shade-to-light" />
-        <div class="moon light-to-shade" />
-      </div>
+    <div className="apod__loading">
+      <div class="moon-container">
+        <div class="mask-left">
+          <div class="moon shade-to-light" />
+          <div class="moon light-to-shade" />
+        </div>
 
-      <div class="mask-right">
-        <div class="moon shade-to-light" />
-        <div class="moon light-to-shade" />
+        <div class="mask-right">
+          <div class="moon shade-to-light" />
+          <div class="moon light-to-shade" />
+        </div>
       </div>
     </div>
   );
