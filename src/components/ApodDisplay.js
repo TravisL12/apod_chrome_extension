@@ -5,19 +5,19 @@ function getImageDimensions(loadedImage) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
 
-  const widthGTwindow = loadedImage.width > window.innerWidth;
-  const heightGTwindow = loadedImage.height > window.innerHeight;
-  const aspectRatio = loadedImage.width / loadedImage.height;
+  const { width, height } = loadedImage;
+  const { innerWidth, innerHeight } = window;
+
+  const widthGTwindow = width > innerWidth;
+  const heightGTwindow = height > innerHeight;
+  const aspectRatio = width / height;
 
   if (widthGTwindow || heightGTwindow) {
     showFadedBackground = true;
     backgroundSize = aspectRatio >= 1.3 ? "cover" : "contain";
   }
 
-  if (
-    loadedImage.width / window.innerWidth > 0.5 ||
-    loadedImage.height / window.innerHeight > 0.5
-  ) {
+  if (width / innerWidth > 0.5 || height / innerHeight > 0.5) {
     showFadedBackground = true;
   }
 
