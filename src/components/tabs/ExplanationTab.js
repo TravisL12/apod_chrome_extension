@@ -12,7 +12,7 @@ function ExplanationTab({
 
       <div className="external-links">
         <a
-          href={`https://apod.nasa.gov/apod/${apodSourceLink(date)}`}
+          href={apodSourceLink(date)}
           target="_blank"
           rel="noopener noreferrer"
         >

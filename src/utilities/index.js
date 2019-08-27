@@ -21,10 +21,10 @@ function linkDateFormat(date) {
 export function thumbSourceLink(date) {
   if (!date) return;
 
-  return `S_${linkDateFormat(date)}.jpg`;
+  return `https://apod.nasa.gov/apod/calendar/S_${linkDateFormat(date)}.jpg`;
 }
 
 export function apodSourceLink(date) {
   if (!date) return;
-  return `ap${linkDateFormat(date)}.html`;
+  return `https://apod.nasa.gov/apod/ap${linkDateFormat(date)}.html`;
 }

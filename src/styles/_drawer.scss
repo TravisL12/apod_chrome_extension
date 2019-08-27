@@ -16,8 +16,32 @@ $top-offset: 100px;
     transform: translate3d(1px, 0px, 0px);
   }
 
-  .similar-apod-item {
+  .similar-apod {
+    display: flex;
+    margin: 10px 0;
+    padding: 5px;
+    background: rgba(27, 27, 27, 0.5);
     cursor: pointer;
+
+    &:hover {
+      background: rgba(51, 51, 51, 0.5);
+    }
+
+    .similar-apod-thumb {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 60px;
+      width: 60px;
+    }
+
+    .similar-apod-title {
+      margin-left: 10px;
+
+      p {
+        margin: 5px 0 0;
+      }
+    }
   }
 
   .apod__drawer-tabs {
@@ -86,24 +110,22 @@ $top-offset: 100px;
       font-weight: 400;
     }
 
-    .explanation-tab {
-      .explanation {
-        text-align: left;
-        font-size: 16px;
-        margin-bottom: 10px;
-        text-rendering: optimizeLegibility;
-      }
+    .explanation {
+      text-align: left;
+      font-size: 16px;
+      margin-bottom: 10px;
+      text-rendering: optimizeLegibility;
+    }
 
-      .external-links {
-        font-size: 16px;
-        margin-bottom: 10px;
-        text-rendering: optimizeLegibility;
+    .external-links {
+      font-size: 16px;
+      margin-bottom: 10px;
+      text-rendering: optimizeLegibility;
 
-        a {
-          color: white;
-          & + a {
-            margin-left: 5px;
-          }
+      a {
+        color: white;
+        & + a {
+          margin-left: 5px;
         }
       }
     }
@@ -122,6 +144,7 @@ $top-offset: 100px;
 
         .favorite {
           position: relative;
+          display: flex;
           cursor: pointer;
           width: 100%;
           margin-bottom: 10px;
@@ -137,16 +160,20 @@ $top-offset: 100px;
           }
 
           .favorite__image {
-            float: left;
             margin-right: 10px;
 
             .favorite__image-image {
-              width: 100px;
+              display: flex;
+              justify-content: center;
+              align-items: center;
               height: 60px;
+              width: 60px;
               background-color: $black;
-              background-size: contain;
-              background-repeat: no-repeat;
-              background-position: center;
+
+              img {
+                max-height: 100%;
+                max-width: 100%;
+              }
             }
           }
           .favorite__title {

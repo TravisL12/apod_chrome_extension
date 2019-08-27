@@ -44,7 +44,7 @@ function Title({
         <li onClick={saveFavorite} className="add-favorite">
           Save
         </li>
-        <li onClick={forceHighDef}>Force HD</li>
+        {!isImageHD && <li onClick={forceHighDef}>Force HD</li>}
       </ul>
     </div>
   );

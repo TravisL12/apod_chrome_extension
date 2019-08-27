@@ -9,6 +9,7 @@ import Drawer from "./Drawer";
 import { TitleLoader } from "./LoadingSpinner";
 import { adjacentDate, today, randomDate } from "../DateManager";
 import TopSites from "./TopSites";
+import { thumbSourceLink } from "../utilities";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
@@ -69,7 +70,7 @@ class Apod extends Component {
 
   saveFavorite = () => {
     const { favorites } = this.props;
-    const { date, title, url } = this.state.response;
+    const { date, title } = this.state.response;
 
     if (!favorites || !favorites[date]) {
       chrome.storage.sync.set({
@@ -77,7 +78,7 @@ class Apod extends Component {
           ...favorites,
           [date]: {
             title,
-            imgUrl: url
+            imgUrl: thumbSourceLink(date)
           }
         }
       });

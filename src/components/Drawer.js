@@ -44,13 +44,25 @@ export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
   const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
 
+  const closeDrawer = () => {
+    setOpenTabName(false);
+  };
+
   const tabs = {
     explanation: <ExplanationTab response={response} />,
     favorites: (
-      <FavoritesTab favorites={favorites} specificDate={specificDate} />
+      <FavoritesTab
+        favorites={favorites}
+        closeDrawer={closeDrawer}
+        specificDate={specificDate}
+      />
     ),
     knowMore: (
-      <KnowMoreTab keyword={knowMoreKeyword} specificDate={specificDate} />
+      <KnowMoreTab
+        keyword={knowMoreKeyword}
+        closeDrawer={closeDrawer}
+        specificDate={specificDate}
+      />
     )
   };
 

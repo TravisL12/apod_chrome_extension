@@ -3,7 +3,7 @@ import React from "react";
 import { isEmpty, keys } from "lodash";
 import { prettyDateFormat } from "../../DateManager";
 
-function FavoritesTab({ favorites, specificDate }) {
+function FavoritesTab({ favorites, specificDate, closeDrawer }) {
   function deleteFavorite(date) {
     const updatedFavorites = { ...favorites };
     delete updatedFavorites[date];
@@ -14,10 +14,10 @@ function FavoritesTab({ favorites, specificDate }) {
   }
 
   return (
-    <div class="favorites">
+    <div className="favorites">
       <h2>Favorite APOD's</h2>
       {isEmpty(favorites) ? (
-        <li class="no-favorites">
+        <li className="no-favorites">
           <h4>You don't have any favorites yet!</h4>
           <h4>
             Click the "Save Favorite" button at the top right of the page!
@@ -29,20 +29,30 @@ function FavoritesTab({ favorites, specificDate }) {
             const favorite = favorites[date];
 
             return (
-              <li class="favorite" key={idx}>
-                <div onClick={() => specificDate(date)} class="favorite__image">
-                  <div
-                    class="favorite__image-image"
-                    style={{ backgroundImage: `url(${favorite.imgUrl})` }}
-                  />
+              <li className="favorite" key={idx}>
+                <div
+                  onClick={() => {
+                    specificDate(date);
+                    closeDrawer();
+                  }}
+                  className="favorite__image"
+                >
+                  <div className="favorite__image-image">
+                    <img alt="Favorite" src={favorite.imgUrl} />
+                  </div>
                 </div>
-                <div onClick={() => specificDate(date)} class="favorite__title">
-                  <p class="favorite__title-date">{prettyDateFormat(date)}</p>
-                  <p class="favorite__title-title">{favorite.title}</p>
+                <div
+                  onClick={() => specificDate(date)}
+                  className="favorite__title"
+                >
+                  <p className="favorite__title-date">
+                    {prettyDateFormat(date)}
+                  </p>
+                  <p className="favorite__title-title">{favorite.title}</p>
                 </div>
                 <div
                   onClick={() => deleteFavorite(date)}
-                  class="remove-favorite"
+                  className="remove-favorite"
                 >
                   Remove
                 </div>
