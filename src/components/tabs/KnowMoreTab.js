@@ -25,6 +25,8 @@ function KnowMoreTab({ keyword, specificDate }) {
 
       for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
         const search = searches[i];
+        if (!search) continue;
+
         const parse = search.querySelectorAll("a")[1];
 
         if (parse) {
