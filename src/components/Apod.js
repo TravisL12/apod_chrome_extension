@@ -6,7 +6,6 @@ import { string, arrayOf, shape } from "prop-types";
 import Title from "./Title";
 import ApodDisplay from "./ApodDisplay";
 import Drawer from "./Drawer";
-import { TitleLoader } from "./LoadingSpinner";
 import { adjacentDate, today, randomDate } from "../DateManager";
 import TopSites from "./TopSites";
 import { thumbSourceLink } from "../utilities";
@@ -93,7 +92,10 @@ class Apod extends Component {
     reqwest({ data, url: APOD_API_URL }).then(
       response => {
         if (response.media_type === "video") {
-          this.random();
+          this.setState({
+            response,
+            isLoading: false
+          });
         } else {
           this.preLoadImage(response, isHighRes);
         }
@@ -193,7 +195,11 @@ class Apod extends Component {
           )}
         </div>
         {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
-        {isLoading ? <TitleLoader /> : <ApodDisplay loadedImage={apodImage} />}
+        <ApodDisplay
+          response={response}
+          isLoading={isLoading}
+          loadedImage={apodImage}
+        />
         {!isLoading && (
           <Drawer
             response={response}

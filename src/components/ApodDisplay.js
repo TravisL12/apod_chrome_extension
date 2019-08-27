@@ -1,6 +1,7 @@
 import React from "react";
+import { TitleLoader } from "./LoadingSpinner";
 
-export default function ApodDisplay({ loadedImage }) {
+function Image({ loadedImage }) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
 
@@ -31,5 +32,35 @@ export default function ApodDisplay({ loadedImage }) {
         style={{ backgroundImage, backgroundSize }}
       />
     </div>
+  );
+}
+
+function Video({ response }) {
+  const url = new URL(response.url);
+  url.search = "autopause=1&autoplay=0";
+
+  return (
+    <div className="apod-body">
+      <div className="apod__image">
+        <iframe
+          width="960"
+          height="540"
+          src={url.href}
+          frameborder="0"
+        ></iframe>
+      </div>
+    </div>
+  );
+}
+
+export default function ApodDisplay({ response, isLoading, loadedImage }) {
+  if (isLoading) {
+    return <TitleLoader />;
+  }
+
+  return response.media_type === "video" ? (
+    <Video response={response} />
+  ) : (
+    <Image loadedImage={loadedImage} />
   );
 }
