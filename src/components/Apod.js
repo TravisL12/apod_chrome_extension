@@ -157,7 +157,9 @@ class Apod extends Component {
 
     const handlers = {
       TODAY: this.current,
-      RANDOM: this.random
+      RANDOM_DAY: this.random,
+      PREVIOUS_DAY: this.previous,
+      NEXT_DAY: this.next
     };
 
     const dateNavigation = {

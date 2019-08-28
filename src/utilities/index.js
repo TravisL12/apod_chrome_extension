@@ -2,8 +2,10 @@ import { keys } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
 export const KEY_MAP = {
-  RANDOM: "r",
+  RANDOM_DAY: "r",
   TODAY: "t",
+  PREVIOUS_DAY: "j",
+  NEXT_DAY: "k",
   EXPLANATION_TAB: "e",
   FAVORITES_TAB: "f",
   CLOSE_DRAWER: "esc"
