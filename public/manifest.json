@@ -12,6 +12,11 @@
     "default_popup": "options.html"
   },
 
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+
   "icons": { "16": "sun_icon.png", "128": "sun_icon.png" },
 
   "chrome_url_overrides": {
