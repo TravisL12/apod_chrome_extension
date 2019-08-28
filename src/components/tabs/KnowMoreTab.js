@@ -36,19 +36,18 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
         if (!search) continue;
 
         const parse = search.querySelectorAll("a")[1];
+        if (!parse) continue;
 
-        if (parse) {
-          const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
-          const title = parse.textContent
-            .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
-            .trim(); // remove line breaks Regex
+        const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
+        const title = parse.textContent
+          .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
+          .trim(); // remove line breaks Regex
 
-          searchResult.push({
-            title,
-            url: parse.href,
-            date: formatDate(new Date(date))
-          });
-        }
+        searchResult.push({
+          title,
+          url: parse.href,
+          date: formatDate(new Date(date))
+        });
       }
 
       cachedResults[keyword] = searchResult;
