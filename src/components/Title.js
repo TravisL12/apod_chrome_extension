@@ -1,6 +1,6 @@
 import React from "react";
 import Flatpickr from "react-flatpickr";
-import { actualDate, prettyDateFormat, formatDate } from "../DateManager";
+import { actualDate, prettyDateFormat } from "../DateManager";
 
 function Title({
   response: { title, date },

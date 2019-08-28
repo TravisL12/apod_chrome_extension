@@ -8,10 +8,10 @@ import { findCelestialObjects } from "../utilities";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
-function Tab({ name, onClickHandler }) {
+function Tab({ name, onClickHandler, isActive }) {
   return (
     <div
-      className="tab"
+      className={`tab ${isActive ? "is-open" : ""}`}
       onClick={() => {
         onClickHandler(name);
       }}
@@ -24,12 +24,13 @@ function Tab({ name, onClickHandler }) {
 export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
   const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
+  const [isActive, setIsActive] = useState(false);
 
   const closeDrawer = () => {
     setOpenTabName(false);
   };
 
-  const tabs = {
+  const tabViews = {
     explanation: <ExplanationTab response={response} />,
     favorites: (
       <FavoritesTab
@@ -48,9 +49,13 @@ export default function Drawer({ response, favorites, specificDate }) {
   };
 
   const updateDrawer = tabName => {
-    (openTabName && tabName === openTabName) || !response
-      ? setOpenTabName(false)
-      : setOpenTabName(tabName);
+    if ((openTabName && tabName === openTabName) || !response) {
+      setOpenTabName(false);
+      setIsActive(false);
+    } else {
+      setOpenTabName(tabName);
+      setIsActive(tabName);
+    }
   };
 
   const knowMoreMatch = keyword => {
@@ -61,9 +66,11 @@ export default function Drawer({ response, favorites, specificDate }) {
     ) {
       setKnowMoreKeyword(keyword);
       setOpenTabName("knowMore");
+      setIsActive(keyword);
     } else {
       setKnowMoreKeyword(null);
       setOpenTabName(false);
+      setIsActive(false);
     }
   };
 
@@ -76,13 +83,28 @@ export default function Drawer({ response, favorites, specificDate }) {
       <div className="apod__drawer-tabs">
         <div className="tabs">
           {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((name, idx) => {
-            return <Tab key={idx} name={name} onClickHandler={knowMoreMatch} />;
+            return (
+              <Tab
+                key={idx}
+                name={name}
+                isActive={isActive === name}
+                onClickHandler={knowMoreMatch}
+              />
+            );
           })}
-          <Tab name={"favorites"} onClickHandler={updateDrawer} />
-          <Tab name={"explanation"} onClickHandler={updateDrawer} />
+          <Tab
+            name={"favorites"}
+            isActive={isActive === "favorites"}
+            onClickHandler={updateDrawer}
+          />
+          <Tab
+            name={"explanation"}
+            isActive={isActive === "explanation"}
+            onClickHandler={updateDrawer}
+          />
         </div>
       </div>
-      <div className="apod__drawer-view">{tabs[openTabName]}</div>
+      <div className="apod__drawer-view">{tabViews[openTabName]}</div>
     </div>
   );
 }
