@@ -215,10 +215,6 @@ $top-offset: 100px;
       .loading-spinner {
         opacity: 0.5;
         @include sun-loader(80px);
-
-        &.hide {
-          display: none;
-        }
       }
     }
   }

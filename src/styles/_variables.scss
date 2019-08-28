@@ -37,16 +37,6 @@ $highlight-blue: rgb(117, 221, 255);
   align-items: center;
 }
 
-%hide {
-  opacity: 0;
-  height: 0;
-  width: 0;
-}
-
-%hide-display {
-  display: none;
-}
-
 %center-div {
   position: absolute;
   top: 0;
