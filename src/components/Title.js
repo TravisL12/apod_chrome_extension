@@ -1,6 +1,12 @@
 import React from "react";
 import Flatpickr from "react-flatpickr";
-import { actualDate, prettyDateFormat } from "../DateManager";
+import {
+  actualDate,
+  prettyDateFormat,
+  isToday,
+  today,
+  MIN_APOD_DATE
+} from "../DateManager";
 
 function Title({
   response: { title, date },
@@ -24,7 +30,12 @@ function Title({
         <div className="date">
           <Flatpickr
             value={actualDate(date)}
-            options={{ wrap: true, static: true }}
+            options={{
+              wrap: true,
+              static: true,
+              minDate: MIN_APOD_DATE,
+              maxDate: today()
+            }}
             onChange={(date, dateStr) => {
               specificDate(dateStr);
             }}
@@ -41,8 +52,8 @@ function Title({
       <ul className="nav-buttons">
         <li onClick={current}>Today</li>
         <li onClick={random}>Random</li>
-        <li onClick={previous}>Previous</li>
-        <li onClick={next}>Next</li>
+        {date !== MIN_APOD_DATE && <li onClick={previous}>Previous</li>}
+        {!isToday(date) && <li onClick={next}>Next</li>}
         {isFavorite ? (
           <li className="favorite">Favorite!</li>
         ) : (

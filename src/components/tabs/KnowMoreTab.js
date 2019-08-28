@@ -62,6 +62,7 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
     <SunLoader />
   ) : (
     <div>
+      <h2 className="title">Other APOD's containing: "{keyword}"</h2>
       {results.map((result, idx) => {
         const imgSrc = thumbSourceLink(result.date);
 

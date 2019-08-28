@@ -1,6 +1,7 @@
 import flatpickr from "flatpickr";
 
 const DATE_FORMAT = "Y-m-d";
+export const MIN_APOD_DATE = "1995-06-16";
 
 export function formatDate(date) {
   return flatpickr.formatDate(date, DATE_FORMAT);
@@ -36,7 +37,7 @@ export function adjacentDate(dateString, direction) {
 }
 
 export function randomDate() {
-  const start = new Date(1995, 5, 16);
+  const start = new Date(MIN_APOD_DATE.split("-"));
   const end = new Date();
   const date = new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
