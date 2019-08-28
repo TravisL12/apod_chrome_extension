@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
+import { first } from "lodash";
 
 import { prettyDateFormat, formatDate } from "../../DateManager";
 import { thumbSourceLink } from "../../utilities";
@@ -38,7 +39,9 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
         const parse = search.querySelectorAll("a")[1];
         if (!parse) continue;
 
-        const date = parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/)[0];
+        const date = first(parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/));
+        if (!date) continue;
+
         const title = parse.textContent
           .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
           .trim(); // remove line breaks Regex
