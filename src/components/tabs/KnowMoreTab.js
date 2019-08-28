@@ -6,12 +6,18 @@ import { thumbSourceLink } from "../../utilities";
 import { SunLoader } from "../LoadingSpinner";
 
 const MAX_CELESTIAL_DISPLAYED = 20;
+const cachedResults = {};
 
 function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
     setResults(null);
+
+    if (cachedResults[keyword]) {
+      setResults(cachedResults[keyword]);
+      return;
+    }
 
     reqwest({
       method: "POST",
@@ -45,6 +51,7 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
         }
       }
 
+      cachedResults[keyword] = searchResult;
       setResults(searchResult);
     });
   }, [keyword]);
