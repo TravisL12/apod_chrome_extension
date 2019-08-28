@@ -4,12 +4,13 @@ import reqwest from "reqwest";
 import { string, arrayOf, shape } from "prop-types";
 import { GlobalHotKeys } from "react-hotkeys";
 
-import Title from "./Title";
 import ApodDisplay from "./ApodDisplay";
 import Drawer from "./Drawer";
-import { adjacentDate, today, randomDate } from "../DateManager";
+import Title from "./Title";
 import TopSites from "./TopSites";
+import { TitleLoader } from "./LoadingSpinner";
 import { thumbSourceLink, KEY_MAP } from "../utilities";
+import { adjacentDate, today, randomDate } from "../DateManager";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
@@ -95,6 +96,7 @@ class Apod extends Component {
         if (response.media_type === "video") {
           this.setState({
             response,
+            apodImage: null,
             isLoading: false
           });
         } else {
@@ -183,6 +185,7 @@ class Apod extends Component {
             )}
           </div>
           {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
+          {isLoading && <TitleLoader />}
           <ApodDisplay
             response={response}
             isLoading={isLoading}

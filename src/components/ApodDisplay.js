@@ -1,5 +1,4 @@
 import React from "react";
-import { TitleLoader } from "./LoadingSpinner";
 import { getImageDimensions } from "../utilities";
 
 function Image({ loadedImage }) {
@@ -40,16 +39,12 @@ function Video({ videoUrl }) {
   );
 }
 
-export default function ApodDisplay({ response, isLoading, loadedImage }) {
-  if (isLoading) {
-    return <TitleLoader />;
+export default function ApodDisplay({ response, loadedImage }) {
+  if (loadedImage) {
+    return <Image loadedImage={loadedImage} />;
+  } else if (response && response.media_type === "video") {
+    return <Video videoUrl={response.url} />;
   }
 
-  const { media_type, url } = response;
-
-  return media_type === "video" ? (
-    <Video videoUrl={url} />
-  ) : (
-    <Image loadedImage={loadedImage} />
-  );
+  return null;
 }
