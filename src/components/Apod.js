@@ -9,7 +9,7 @@ import ApodDisplay from "./ApodDisplay";
 import Drawer from "./Drawer";
 import { adjacentDate, today, randomDate } from "../DateManager";
 import TopSites from "./TopSites";
-import { thumbSourceLink } from "../utilities";
+import { thumbSourceLink, KEY_MAP } from "../utilities";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
@@ -168,7 +168,7 @@ class Apod extends Component {
     };
 
     return (
-      <GlobalHotKeys handlers={handlers}>
+      <GlobalHotKeys keyMap={KEY_MAP} handlers={handlers}>
         <div className="apod-container" tabIndex={0}>
           <div className="apod__header">
             <TopSites />

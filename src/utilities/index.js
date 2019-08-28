@@ -1,6 +1,14 @@
 import { keys } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
+export const KEY_MAP = {
+  RANDOM: "r",
+  TODAY: "t",
+  EXPLANATION_TAB: "e",
+  FAVORITES_TAB: "f",
+  CLOSE_DRAWER: "esc"
+};
+
 /* Randomizer */
 export function randomizer(max, min) {
   min = min || 0;

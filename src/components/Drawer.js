@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { keys, startCase, countBy } from "lodash";
+import { GlobalHotKeys } from "react-hotkeys";
 
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 import KnowMoreTab from "./tabs/KnowMoreTab";
-import { findCelestialObjects } from "../utilities";
+import { findCelestialObjects, KEY_MAP } from "../utilities";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -24,7 +25,7 @@ function Tab({ name, onClickHandler, isActive }) {
 export default function Drawer({ response, favorites, specificDate }) {
   const [openTabName, setOpenTabName] = useState(false);
   const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
-  const [isActive, setIsActive] = useState(false);
+  const [activeTabName, setActiveTabName] = useState(false);
 
   const closeDrawer = () => {
     setOpenTabName(false);
@@ -51,10 +52,10 @@ export default function Drawer({ response, favorites, specificDate }) {
   const updateDrawer = tabName => {
     if ((openTabName && tabName === openTabName) || !response) {
       setOpenTabName(false);
-      setIsActive(false);
+      setActiveTabName(false);
     } else {
       setOpenTabName(tabName);
-      setIsActive(tabName);
+      setActiveTabName(tabName);
     }
   };
 
@@ -66,11 +67,11 @@ export default function Drawer({ response, favorites, specificDate }) {
     ) {
       setKnowMoreKeyword(keyword);
       setOpenTabName("knowMore");
-      setIsActive(keyword);
+      setActiveTabName(keyword);
     } else {
       setKnowMoreKeyword(null);
       setOpenTabName(false);
-      setIsActive(false);
+      setActiveTabName(false);
     }
   };
 
@@ -78,8 +79,19 @@ export default function Drawer({ response, favorites, specificDate }) {
     ? keys(countBy(findCelestialObjects(response.explanation)))
     : [];
 
+  const handlers = {
+    EXPLANATION_TAB: () => {
+      updateDrawer("explanation");
+    },
+    FAVORITES_TAB: () => {
+      updateDrawer("favorites");
+    },
+    CLOSE_DRAWER: closeDrawer
+  };
+
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
+      <GlobalHotKeys allowChanges={true} keyMap={KEY_MAP} handlers={handlers} />
       <div className="apod__drawer-tabs">
         <div className="tabs">
           {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((name, idx) => {
@@ -87,19 +99,19 @@ export default function Drawer({ response, favorites, specificDate }) {
               <Tab
                 key={idx}
                 name={name}
-                isActive={isActive === name}
+                isActive={activeTabName === name}
                 onClickHandler={knowMoreMatch}
               />
             );
           })}
           <Tab
             name={"favorites"}
-            isActive={isActive === "favorites"}
+            isActive={activeTabName === "favorites"}
             onClickHandler={updateDrawer}
           />
           <Tab
             name={"explanation"}
-            isActive={isActive === "explanation"}
+            isActive={activeTabName === "explanation"}
             onClickHandler={updateDrawer}
           />
         </div>
