@@ -2,6 +2,7 @@
 import React, { Component } from "react";
 import reqwest from "reqwest";
 import { string, arrayOf, shape } from "prop-types";
+import { GlobalHotKeys } from "react-hotkeys";
 
 import Title from "./Title";
 import ApodDisplay from "./ApodDisplay";
@@ -142,25 +143,6 @@ class Apod extends Component {
     };
   };
 
-  navigateDates = event => {
-    switch (event.which) {
-      case 82: // r
-        this.random();
-        break;
-      case 74: // j
-        this.previous();
-        break;
-      case 84: // (t)oday
-        this.current();
-        break;
-      case 75: // k
-        this.next();
-        break;
-      default:
-        return;
-    }
-  };
-
   render() {
     const { favorites } = this.props;
     const {
@@ -170,6 +152,11 @@ class Apod extends Component {
       isLoading,
       hasLoadingError
     } = this.state;
+
+    const handlers = {
+      TODAY: this.current,
+      RANDOM: this.random
+    };
 
     const dateNavigation = {
       previous: this.previous,
@@ -181,33 +168,35 @@ class Apod extends Component {
     };
 
     return (
-      <div className="apod-container" tabIndex={0} onKeyUp={this.navigateDates}>
-        <div className="apod__header">
-          <TopSites />
+      <GlobalHotKeys handlers={handlers}>
+        <div className="apod-container" tabIndex={0}>
+          <div className="apod__header">
+            <TopSites />
+            {!isLoading && (
+              <Title
+                response={response}
+                isImageHD={isImageHD}
+                isFavorite={!!favorites[response.date]}
+                dateNavigation={dateNavigation}
+                specificDate={this.specificDate}
+              />
+            )}
+          </div>
+          {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
+          <ApodDisplay
+            response={response}
+            isLoading={isLoading}
+            loadedImage={apodImage}
+          />
           {!isLoading && (
-            <Title
+            <Drawer
               response={response}
-              isImageHD={isImageHD}
-              isFavorite={!!favorites[response.date]}
-              dateNavigation={dateNavigation}
+              favorites={favorites}
               specificDate={this.specificDate}
             />
           )}
         </div>
-        {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
-        <ApodDisplay
-          response={response}
-          isLoading={isLoading}
-          loadedImage={apodImage}
-        />
-        {!isLoading && (
-          <Drawer
-            response={response}
-            favorites={favorites}
-            specificDate={this.specificDate}
-          />
-        )}
-      </div>
+      </GlobalHotKeys>
     );
   }
 }

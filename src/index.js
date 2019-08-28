@@ -1,12 +1,20 @@
 /*global chrome*/
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { GlobalHotKeys } from "react-hotkeys";
 
 // import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 
 import "./styles/style.scss";
+
+const KEY_MAP = {
+  RANDOM: "r",
+  TODAY: "t",
+  EXPLANATION_TAB: "e",
+  FAVORITES_TAB: "f"
+};
 
 class App extends Component {
   state = this.props;
@@ -26,11 +34,13 @@ class App extends Component {
     const { apodType, apodFavorites, hiResOnly } = this.state;
 
     return (
-      <Apod
-        selection={apodType}
-        favorites={apodFavorites}
-        isHighRes={hiResOnly}
-      />
+      <GlobalHotKeys keyMap={KEY_MAP}>
+        <Apod
+          selection={apodType}
+          favorites={apodFavorites}
+          isHighRes={hiResOnly}
+        />
+      </GlobalHotKeys>
     );
   }
 }
