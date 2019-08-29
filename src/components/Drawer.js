@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { isEmpty, keys, startCase, countBy } from "lodash";
 import { GlobalHotKeys } from "react-hotkeys";
 
-import ExplanationTab from "./tabs/ExplanationTab";
-import FavoritesTab from "./tabs/FavoritesTab";
-import KnowMoreTab from "./tabs/KnowMoreTab";
+import ExplanationView from "./drawerViews/ExplanationView";
+import FavoritesView from "./drawerViews/FavoritesView";
+import SearchView from "./drawerViews/SearchView";
 import { findCelestialObjects, KEY_MAP } from "../utilities";
-import HistoryTab from "./tabs/HistoryTab";
+import HistoryTab from "./drawerViews/HistoryView";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -33,9 +33,9 @@ export default function Drawer({ response, favorites, specificDate, history }) {
   };
 
   const tabViews = {
-    explanation: <ExplanationTab response={response} />,
+    explanation: <ExplanationView response={response} />,
     favorites: (
-      <FavoritesTab
+      <FavoritesView
         favorites={favorites}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
@@ -49,7 +49,7 @@ export default function Drawer({ response, favorites, specificDate, history }) {
       />
     ),
     knowMore: (
-      <KnowMoreTab
+      <SearchView
         keyword={knowMoreKeyword}
         closeDrawer={closeDrawer}
         specificDate={specificDate}

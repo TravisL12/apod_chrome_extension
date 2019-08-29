@@ -2,14 +2,14 @@ import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
 import { first, startCase } from "lodash";
 
-import { prettyDateFormat, formatDate } from "../../utilities/dateUtility";
-import { thumbSourceLink } from "../../utilities";
+import ViewItem from "./ViewItem";
+import { formatDate } from "../../utilities/dateUtility";
 import { SunLoader } from "../LoadingSpinner";
 
 const MAX_CELESTIAL_DISPLAYED = 20;
 const cachedResults = {};
 
-function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
+function SearchView({ keyword, specificDate, closeDrawer }) {
   const [results, setResults] = useState(null);
 
   useEffect(() => {
@@ -63,30 +63,19 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
   ) : (
     <div>
       <h2 className="title">Other APOD's containing: "{startCase(keyword)}"</h2>
-      {results.map((result, idx) => {
-        const imgSrc = thumbSourceLink(result.date);
-
+      {results.map(({ title, date }, idx) => {
         return (
-          <div
-            className="similar-apod"
+          <ViewItem
             key={idx}
-            onClick={() => {
-              specificDate(result.date);
-              closeDrawer();
-            }}
-          >
-            <div className="similar-apod-thumb">
-              <img alt="Thumb" src={imgSrc} />
-            </div>
-            <div className="similar-apod-title">
-              <p>{prettyDateFormat(result.date)}</p>
-              <p>{result.title}</p>
-            </div>
-          </div>
+            title={title}
+            date={date}
+            specificDate={specificDate}
+            closeDrawer={closeDrawer}
+          />
         );
       })}
     </div>
   );
 }
 
-export default KnowMoreTab;
+export default SearchView;
