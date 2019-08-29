@@ -6,7 +6,7 @@ import {
   isToday,
   today,
   MIN_APOD_DATE
-} from "../DateManager";
+} from "../utilities/dateUtility";
 
 function Title({
   response: { title, date },

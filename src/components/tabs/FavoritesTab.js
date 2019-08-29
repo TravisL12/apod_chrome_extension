@@ -1,7 +1,7 @@
 /*global chrome*/
 import React from "react";
 import { isEmpty, keys } from "lodash";
-import { prettyDateFormat } from "../../DateManager";
+import { prettyDateFormat } from "../../utilities/dateUtility";
 
 function FavoritesTab({ favorites, specificDate, closeDrawer }) {
   function deleteFavorite(date) {

@@ -10,13 +10,15 @@ import Title from "./Title";
 import TopSites from "./TopSites";
 import { TitleLoader } from "./LoadingSpinner";
 import { thumbSourceLink, KEY_MAP } from "../utilities";
-import { adjacentDate, today, randomDate } from "../DateManager";
+import { adjacentDate, today, randomDate } from "../utilities/dateUtility";
+import History from "../utilities/historyUtility";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const DELAY_FOR_HD_LOAD = 3000;
 const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
 const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
+const history = new History();
 
 class Apod extends Component {
   static propType = {
@@ -31,7 +33,6 @@ class Apod extends Component {
   };
 
   state = {
-    addToHistory: true,
     apodImage: null,
     response: null,
     isLoading: true,
@@ -88,31 +89,34 @@ class Apod extends Component {
 
   getImage = (date, errorCount = 0) => {
     this.setState({ isLoading: true, response: null });
-    const { isHighRes } = this.props;
     const data = { date, api_key: API_KEY };
-
-    reqwest({ data, url: APOD_API_URL }).then(
-      response => {
-        if (response.media_type === "video") {
-          this.setState({
-            response,
-            apodImage: null,
-            isLoading: false
-          });
-        } else {
-          this.preLoadImage(response, isHighRes);
-        }
-      },
-      () => {
-        if (errorCount >= MAX_ERROR_TRIES) {
-          this.setState({ hasLoadingError: true });
-        } else {
-          errorCount++;
-          console.log(errorCount, "error count!!!");
-          this.getImage(randomDate(), errorCount);
-        }
-      }
+    reqwest({ data, url: APOD_API_URL }).then(this.loadApod, () =>
+      this.errorApod(errorCount)
     );
+  };
+
+  loadApod = response => {
+    const { isHighRes } = this.props;
+    history.add(response);
+    if (response.media_type === "video") {
+      this.setState({
+        response,
+        apodImage: null,
+        isLoading: false
+      });
+    } else {
+      this.preLoadImage(response, isHighRes);
+    }
+  };
+
+  errorApod = errorCount => {
+    if (errorCount >= MAX_ERROR_TRIES) {
+      this.setState({ hasLoadingError: true });
+    } else {
+      errorCount++;
+      console.log(errorCount, "error count!!!");
+      this.getImage(randomDate(), errorCount);
+    }
   };
 
   preLoadImage = (response, forceHighDef = false) => {
@@ -159,7 +163,9 @@ class Apod extends Component {
       TODAY: this.current,
       RANDOM_DAY: this.random,
       PREVIOUS_DAY: this.previous,
-      NEXT_DAY: this.next
+      NEXT_DAY: this.next,
+      PREVIOUS_HISTORY: history.getPreviousDate,
+      NEXT_HISTORY: history.getNextDate
     };
 
     const dateNavigation = {

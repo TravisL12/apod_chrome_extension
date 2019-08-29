@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
 import { first, startCase } from "lodash";
 
-import { prettyDateFormat, formatDate } from "../../DateManager";
+import { prettyDateFormat, formatDate } from "../../utilities/dateUtility";
 import { thumbSourceLink } from "../../utilities";
 import { SunLoader } from "../LoadingSpinner";
 
