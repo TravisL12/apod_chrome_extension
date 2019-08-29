@@ -75,12 +75,9 @@ export default function Drawer({ response, favorites, specificDate }) {
     }
   };
 
-  const celestialObjects = response
-    ? keys(countBy(findCelestialObjects(response.explanation))).slice(
-        0,
-        MAX_CELESTIAL_MATCHES
-      )
-    : [];
+  const celestialObjects = keys(
+    countBy(findCelestialObjects(response.explanation))
+  ).slice(0, MAX_CELESTIAL_MATCHES);
 
   const { keyMap, handlers } = celestialObjects.reduce(
     (result, keyword, idx) => {
