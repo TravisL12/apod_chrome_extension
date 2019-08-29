@@ -76,25 +76,40 @@ export default function Drawer({ response, favorites, specificDate }) {
   };
 
   const celestialObjects = response
-    ? keys(countBy(findCelestialObjects(response.explanation)))
+    ? keys(countBy(findCelestialObjects(response.explanation))).slice(
+        0,
+        MAX_CELESTIAL_MATCHES
+      )
     : [];
 
-  const handlers = {
-    EXPLANATION_TAB: () => {
-      updateDrawer("explanation");
+  const { keyMap, handlers } = celestialObjects.reduce(
+    (result, keyword, idx) => {
+      result.keyMap[`KEYWORD_${keyword}`] = String(idx + 1);
+      result.handlers[`KEYWORD_${keyword}`] = () => {
+        knowMoreMatch(keyword);
+      };
+      return result;
     },
-    FAVORITES_TAB: () => {
-      updateDrawer("favorites");
-    },
-    CLOSE_DRAWER: closeDrawer
-  };
+    {
+      keyMap: { ...KEY_MAP },
+      handlers: {
+        EXPLANATION_TAB: () => {
+          updateDrawer("explanation");
+        },
+        FAVORITES_TAB: () => {
+          updateDrawer("favorites");
+        },
+        CLOSE_DRAWER: closeDrawer
+      }
+    }
+  );
 
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
-      <GlobalHotKeys allowChanges={true} keyMap={KEY_MAP} handlers={handlers} />
+      <GlobalHotKeys allowChanges={true} keyMap={keyMap} handlers={handlers} />
       <div className="apod__drawer-tabs">
         <div className="tabs">
-          {celestialObjects.slice(0, MAX_CELESTIAL_MATCHES).map((name, idx) => {
+          {celestialObjects.map((name, idx) => {
             return (
               <Tab
                 key={idx}
