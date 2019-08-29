@@ -62,9 +62,7 @@ $top-offset: 100px;
 
     .tabs {
       display: flex;
-      justify-content: flex-end;
-      align-content: flex-start;
-      align-items: flex-start;
+      flex-direction: row-reverse;
     }
 
     .tab {

@@ -106,6 +106,16 @@ export default function Drawer({ response, favorites, specificDate }) {
       <GlobalHotKeys allowChanges={true} keyMap={keyMap} handlers={handlers} />
       <div className="apod__drawer-tabs">
         <div className="tabs">
+          <Tab
+            name={"explanation"}
+            isActive={activeTabName === "explanation"}
+            onClickHandler={updateDrawer}
+          />
+          <Tab
+            name={"favorites"}
+            isActive={activeTabName === "favorites"}
+            onClickHandler={updateDrawer}
+          />
           {celestialObjects.map((name, idx) => {
             return (
               <Tab
@@ -116,16 +126,6 @@ export default function Drawer({ response, favorites, specificDate }) {
               />
             );
           })}
-          <Tab
-            name={"favorites"}
-            isActive={activeTabName === "favorites"}
-            onClickHandler={updateDrawer}
-          />
-          <Tab
-            name={"explanation"}
-            isActive={activeTabName === "explanation"}
-            onClickHandler={updateDrawer}
-          />
         </div>
       </div>
       <div className="apod__drawer-view">{tabViews[openTabName]}</div>
