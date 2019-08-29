@@ -57,6 +57,14 @@ class Apod extends Component {
     this.getImage(adjacentDate(this.state.response.date, 1));
   };
 
+  previousHistory = () => {
+    this.loadApod(history.getPreviousDate());
+  };
+
+  nextHistory = () => {
+    this.loadApod(history.getNextDate());
+  };
+
   current = () => {
     this.getImage(today);
   };
@@ -164,8 +172,8 @@ class Apod extends Component {
       RANDOM_DAY: this.random,
       PREVIOUS_DAY: this.previous,
       NEXT_DAY: this.next,
-      PREVIOUS_HISTORY: history.getPreviousDate,
-      NEXT_HISTORY: history.getNextDate
+      PREVIOUS_HISTORY: this.previousHistory,
+      NEXT_HISTORY: this.nextHistory
     };
 
     const dateNavigation = {
