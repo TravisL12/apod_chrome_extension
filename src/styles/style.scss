@@ -108,11 +108,12 @@ body {
   padding: 0 20px;
   z-index: 1000;
 
-  .explanation {
-    $explanation-width: 400px;
+  .title-container {
     @include helvetica-neue-light;
-    width: auto;
-    min-width: $explanation-width;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: $explanation-title-width;
     box-sizing: border-box;
     color: white;
     padding: 10px 20px;
@@ -163,11 +164,14 @@ body {
     }
 
     .nav-buttons {
-      float: right;
-      width: $explanation-width;
+      min-width: $explanation-title-width;
+      text-align: right;
+
+      li + li {
+        margin-left: 15px;
+      }
 
       li {
-        margin-right: 15px;
         color: $light-gray;
         transition: 0.2s linear background-color;
         cursor: pointer;

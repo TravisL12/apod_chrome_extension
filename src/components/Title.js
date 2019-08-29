@@ -25,7 +25,7 @@ function Title({
   } = dateNavigation;
 
   return (
-    <div className="explanation">
+    <div className="title-container">
       <div className="title">
         <div className="date">
           <Flatpickr
@@ -50,7 +50,7 @@ function Title({
       </div>
 
       <ul className="nav-buttons">
-        <li onClick={current}>Today</li>
+        {!isToday(date) && <li onClick={current}>Today</li>}
         <li onClick={random}>Random</li>
         {date !== MIN_APOD_DATE && <li onClick={previous}>Previous</li>}
         {!isToday(date) && <li onClick={next}>Next</li>}

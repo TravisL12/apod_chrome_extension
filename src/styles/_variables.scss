@@ -2,6 +2,7 @@ $black: #111111;
 $gray: rgba(#333333, 0.8);
 $light-gray: rgba(#c7c7c7, 0.8);
 $highlight-blue: rgb(117, 221, 255);
+$explanation-title-width: 250px;
 
 @mixin helvetica-neue-light($weight: 300) {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
