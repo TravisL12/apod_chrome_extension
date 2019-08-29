@@ -9,6 +9,7 @@ export default class History {
     if (!this.doesExist(response.date)) {
       this.dates.push(response.date);
       this.responses[response.date] = response;
+      this.currentIdx += this.dates.length - 1;
     }
   }
 
@@ -19,15 +20,15 @@ export default class History {
 
   getPreviousDate() {
     if (this.currentIdx === 0) {
-      return;
+      return false;
     }
     this.currentIdx -= 1;
     return this.getResponse();
   }
 
   getNextDate() {
-    if (this.currentIdx === this.dates.length) {
-      return;
+    if (this.currentIdx === this.dates.length - 1) {
+      return false;
     }
     this.currentIdx += 1;
     return this.getResponse();
