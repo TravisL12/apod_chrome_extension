@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { keys, startCase, countBy } from "lodash";
+import { isEmpty, keys, startCase, countBy } from "lodash";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import ExplanationTab from "./tabs/ExplanationTab";
 import FavoritesTab from "./tabs/FavoritesTab";
 import KnowMoreTab from "./tabs/KnowMoreTab";
 import { findCelestialObjects, KEY_MAP } from "../utilities";
+import HistoryTab from "./tabs/HistoryTab";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -22,7 +23,7 @@ function Tab({ name, onClickHandler, isActive }) {
   );
 }
 
-export default function Drawer({ response, favorites, specificDate }) {
+export default function Drawer({ response, favorites, specificDate, history }) {
   const [openTabName, setOpenTabName] = useState(false);
   const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
   const [activeTabName, setActiveTabName] = useState(false);
@@ -36,6 +37,13 @@ export default function Drawer({ response, favorites, specificDate }) {
     favorites: (
       <FavoritesTab
         favorites={favorites}
+        closeDrawer={closeDrawer}
+        specificDate={specificDate}
+      />
+    ),
+    history: (
+      <HistoryTab
+        history={history}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
       />
@@ -96,6 +104,9 @@ export default function Drawer({ response, favorites, specificDate }) {
         FAVORITES_TAB: () => {
           updateDrawer("favorites");
         },
+        HISTORY_TAB: () => {
+          updateDrawer("history");
+        },
         CLOSE_DRAWER: closeDrawer
       }
     }
@@ -116,6 +127,13 @@ export default function Drawer({ response, favorites, specificDate }) {
             isActive={activeTabName === "favorites"}
             onClickHandler={updateDrawer}
           />
+          {!isEmpty(history.dates) && (
+            <Tab
+              name={"history"}
+              isActive={activeTabName === "history"}
+              onClickHandler={updateDrawer}
+            />
+          )}
           {celestialObjects.map((name, idx) => {
             return (
               <Tab

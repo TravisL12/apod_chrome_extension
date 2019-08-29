@@ -217,6 +217,7 @@ class Apod extends Component {
               response={response}
               favorites={favorites}
               specificDate={this.specificDate}
+              history={history}
             />
           )}
         </div>

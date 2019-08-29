@@ -6,10 +6,14 @@ export default class History {
   }
 
   add(response) {
-    if (!this.doesExist(response.date)) {
+    const dateIndex = this.dates.indexOf(response.date);
+
+    if (dateIndex === -1) {
       this.dates.push(response.date);
       this.responses[response.date] = response;
       this.currentIdx += this.dates.length - 1;
+    } else {
+      this.currentIdx = dateIndex;
     }
   }
 
@@ -32,9 +36,5 @@ export default class History {
     }
     this.currentIdx += 1;
     return this.getResponse();
-  }
-
-  doesExist(date) {
-    return this.dates.includes(date);
   }
 }
