@@ -122,6 +122,9 @@ body {
 
     &:hover {
       background-color: rgba(0, 0, 0, 0.8);
+      .nav-buttons {
+        opacity: 1;
+      }
     }
 
     .date {
@@ -164,8 +167,10 @@ body {
     }
 
     .nav-buttons {
+      opacity: 0;
       min-width: $explanation-title-width;
       text-align: right;
+      transition: 0.2s ease-out opacity;
 
       li + li {
         margin-left: 15px;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
-import { first } from "lodash";
+import { first, startCase } from "lodash";
 
 import { prettyDateFormat, formatDate } from "../../DateManager";
 import { thumbSourceLink } from "../../utilities";
@@ -62,7 +62,7 @@ function KnowMoreTab({ keyword, specificDate, closeDrawer }) {
     <SunLoader />
   ) : (
     <div>
-      <h2 className="title">Other APOD's containing: "{keyword}"</h2>
+      <h2 className="title">Other APOD's containing: "{startCase(keyword)}"</h2>
       {results.map((result, idx) => {
         const imgSrc = thumbSourceLink(result.date);
 
