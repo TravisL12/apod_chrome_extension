@@ -16,7 +16,7 @@ $top-offset: 100px;
     transform: translate3d(1px, 0px, 0px);
   }
 
-  .similar-apod {
+  .drawer-view {
     position: relative;
     display: flex;
     margin: 10px 0;
@@ -28,7 +28,7 @@ $top-offset: 100px;
       background: rgba(51, 51, 51, 0.5);
     }
 
-    .similar-apod-thumb {
+    .drawer-view-thumb {
       display: flex;
       justify-content: center;
       align-items: center;
@@ -36,7 +36,7 @@ $top-offset: 100px;
       width: 60px;
     }
 
-    .similar-apod-title {
+    .drawer-view-title {
       margin-left: 10px;
 
       p {

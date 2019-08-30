@@ -11,16 +11,16 @@ function DrawerViewItem({
 }) {
   return (
     <div
-      className="similar-apod"
+      className="drawer-view"
       onClick={() => {
         specificDate(date);
         closeDrawer();
       }}
     >
-      <div className="similar-apod-thumb">
+      <div className="drawer-view-thumb">
         <img alt="Thumb" src={thumbSourceLink(date)} />
       </div>
-      <div className="similar-apod-title">
+      <div className="drawer-view-title">
         <p>{prettyDateFormat(date)}</p>
         <p>{title}</p>
       </div>
