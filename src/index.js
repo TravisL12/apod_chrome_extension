@@ -2,7 +2,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 
-import * as serviceWorker from "./serviceWorker";
+// import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 import "./styles/style.scss";
@@ -50,4 +50,4 @@ chrome.storage.sync.get(
   }
 );
 
-serviceWorker.register();
+// serviceWorker.register();
