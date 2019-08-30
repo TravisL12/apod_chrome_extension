@@ -603,7 +603,7 @@ module.exports = function(webpackEnv) {
           ],
           runtimeCaching: [
             {
-              urlPattern: /\.(?:png|gif|jpg|jpeg|svg)$'/,
+              urlPattern: new RegExp('^https://apod.nasa.gov/apod/.*(?:png|gif|jpg|jpeg)$'),
               handler: 'StaleWhileRevalidate',
               options: {
                 cacheName: 'apod-trav-images',
