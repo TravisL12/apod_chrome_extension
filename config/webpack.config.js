@@ -589,8 +589,8 @@ module.exports = function(webpackEnv) {
       isEnvProduction &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true,
-          exclude: [/.*/, /\.map$/, /asset-manifest\.json$/],
-          importWorkboxFrom: 'cdn',
+          exclude: [/.*/, /\.map$/, /asset-manifest\.json$/,/\.(?:png|jpg|jpeg|svg)$/],
+          importWorkboxFrom: 'local',
           navigateFallback: publicUrl + '/index.html',
           navigateFallbackBlacklist: [
             // Exclude URLs starting with /_, as they're likely an API call
@@ -599,8 +599,35 @@ module.exports = function(webpackEnv) {
             // as they're likely a resource and not a SPA route.
             // URLs containing a "?" character won't be blacklisted as they're likely
             // a route with query params (e.g. auth callbacks).
-            new RegExp('/[^/?]+\\.[^/]+$'),
+            // new RegExp('/[^/?]+\\.[^/]+$'),
           ],
+          runtimeCaching: [
+            {
+              urlPattern: /\.(?:png|gif|jpg|jpeg|svg)$'/,
+              handler: 'StaleWhileRevalidate',
+              options: {
+                cacheName: 'apod-trav-images',
+                expiration: {
+                  maxEntries: 100,
+                  maxAgeSeconds: 60 * 60 * 24, // 1 day
+                },
+              },
+            },
+            {
+            urlPattern: new RegExp('^https://api.nasa.gov/'),
+            handler: 'StaleWhileRevalidate',
+            options: {
+              cacheName: 'apod-trav-cache',
+              cacheableResponse: {
+                statuses: [0, 200]
+              },
+              expiration: {
+                maxEntries: 50,
+                maxAgeSeconds: 86400,
+              },
+            }
+          },
+        ],
         }),
       // TypeScript type checking
       useTypeScript &&
