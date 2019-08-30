@@ -1,0 +1,270 @@
+@import "../../node_modules/flatpickr/dist/themes/dark.css";
+@import "variables";
+@import "drawer";
+@import "apod_loading_sun";
+@import "apod_loading_moon";
+
+.apod__loading {
+  @include sun-loader;
+  @include moon-loader;
+  @import "apod_loading_cube";
+}
+
+.spin-loader {
+  width: 16px;
+  height: 16px;
+  background: url("../ajax-loader-black.gif");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+@keyframes slide {
+  0% {
+    background-position: 0%;
+  }
+  100% {
+    background-position: 1000%;
+  }
+}
+
+.load-title {
+  @include flexCenter;
+  height: 100vh;
+  width: 100vw;
+  color: $black;
+  background: $black;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 0, 0, 0) 0%,
+    rgba(0, 0, 0, 0.8) 60%,
+    rgba(0, 0, 0, 0.95) 90%
+  );
+
+  .title-container {
+    @include helvetica-neue-light;
+    text-align: right;
+
+    p {
+      margin: 0;
+      margin-right: 35px;
+      font-size: 20px;
+      color: #585858;
+      line-height: 0;
+    }
+
+    h1 {
+      animation: slide 20s infinite linear;
+      margin: 0;
+      font-size: 200px;
+      line-height: 200px;
+      background-image: url("../stars.png"); // default
+      background-size: 110%;
+      -webkit-text-fill-color: transparent;
+      -webkit-background-clip: text;
+      -webkit-text-stroke-width: 3px;
+      -webkit-text-stroke-color: $light-gray;
+    }
+  }
+}
+
+body {
+  background: $black; /* Old browsers */
+  margin: 0;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.apod-container {
+  outline: none;
+}
+
+.apod__background-image {
+  opacity: 0.3;
+  position: absolute;
+  top: 0;
+  height: 100%;
+  width: 100%;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.apod__error {
+  @extend %center-div;
+  color: white;
+  font-size: 18px;
+  margin-top: 200px;
+  text-align: center;
+}
+
+.apod__header {
+  position: absolute;
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  box-sizing: border-box;
+  margin-top: 10px;
+  padding: 0 20px;
+  z-index: 1000;
+
+  .title-container {
+    @include helvetica-neue-light;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    min-width: $explanation-title-width;
+    box-sizing: border-box;
+    color: white;
+    padding: 10px 20px;
+    transition: 0.2s ease-out opacity, 0.2s linear background-color;
+    border-radius: 3px;
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.8);
+      .nav-buttons {
+        opacity: 1;
+      }
+    }
+
+    .date {
+      display: block;
+    }
+
+    .title {
+      position: relative;
+
+      h1 {
+        @include helvetica-neue-light;
+        display: inline-block;
+        margin: 0;
+      }
+
+      h2 {
+        @include helvetica-neue-light;
+        margin: 0;
+        color: #757575;
+        transition: 0.1s linear color;
+
+        &:hover {
+          color: white;
+        }
+
+        &:after {
+          content: "\25be";
+          color: inherit;
+          margin-left: 3px;
+          vertical-align: 1px;
+        }
+      }
+
+      .img-quality {
+        display: inline-block;
+        font-size: 14px;
+        color: #757575;
+        margin-left: 10px;
+      }
+    }
+
+    .nav-buttons {
+      opacity: 0;
+      min-width: $explanation-title-width;
+      text-align: right;
+      transition: 0.2s ease-out opacity;
+
+      li + li {
+        margin-left: 15px;
+      }
+
+      li {
+        color: $light-gray;
+        transition: 0.2s linear background-color;
+        cursor: pointer;
+        font-size: 12px;
+
+        &.current,
+        &.favorite {
+          color: $highlight-blue;
+          font-weight: 600;
+        }
+
+        &.hover,
+        &:hover {
+          color: lighten($gray, 20%);
+        }
+
+        &:active {
+          color: gold;
+        }
+      }
+    }
+  }
+
+  .apod__top-sites {
+    padding-top: 10px;
+
+    ul {
+      display: flex;
+      justify-content: flex-start;
+
+      li + li {
+        margin-left: 20px;
+      }
+
+      li {
+        @include flexCenter;
+        cursor: pointer;
+
+        a {
+          @include apod-button;
+          display: inline-block;
+          background-color: transparent;
+          padding: 6px;
+
+          .thumb-img {
+            display: block;
+            width: 16px;
+            height: 16px;
+          }
+        }
+
+        &:hover {
+          a {
+            background-color: $light-gray;
+          }
+        }
+      }
+    }
+  }
+}
+
+.apod-body {
+  position: absolute;
+  z-index: -1; // put it behind everything else
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+
+  .apod__image {
+    @include flexCenter;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+  }
+
+  .apod__image {
+    background-position: center center;
+    background-repeat: no-repeat;
+  }
+}
+
+.keyword {
+  color: $highlight-blue;
+  font-weight: bold;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+  }
+}
