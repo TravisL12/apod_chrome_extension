@@ -9,16 +9,16 @@ import Drawer from "./Drawer";
 import Title from "./Title";
 import TopSites from "./TopSites";
 import { TitleLoader } from "./LoadingSpinner";
-import { thumbSourceLink, KEY_MAP } from "../utilities";
+import { thumbSourceLink, KEY_MAP, APOD_API_URL, API_KEY } from "../utilities";
 import { adjacentDate, today, randomDate } from "../utilities/dateUtility";
-import History from "../utilities/historyUtility";
+import History from "../utilities/history";
+import Preload from "../utilities/preload-utility";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const DELAY_FOR_HD_LOAD = 3000;
-const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
-const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
 const history = new History();
+const preload = new Preload();
 
 class Apod extends Component {
   static propType = {
@@ -62,6 +62,17 @@ class Apod extends Component {
   };
 
   random = () => {
+    if (preload.hasPreloaded && preload.dates.length > 0) {
+      const response = preload.getPreloadImage();
+      console.log(response, "random response!");
+
+      if (response) {
+        this.loadApod(response);
+        return;
+      }
+    }
+
+    console.log("NO random response!");
     this.getImage(randomDate());
   };
 

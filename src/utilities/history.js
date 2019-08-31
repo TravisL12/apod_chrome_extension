@@ -11,7 +11,7 @@ export default class History {
     if (dateIndex === -1) {
       this.dates.push(response.date);
       this.responses[response.date] = response;
-      this.currentIdx += this.dates.length - 1;
+      this.currentIdx = this.dates.length - 1;
     } else {
       this.currentIdx = dateIndex;
     }
