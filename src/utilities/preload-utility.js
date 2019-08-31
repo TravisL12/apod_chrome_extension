@@ -1,60 +1,75 @@
 import reqwest from "reqwest";
 
-import { randomDate } from "./dateUtility";
 import { API_KEY, APOD_API_URL } from ".";
 
-const PRELOAD_VALUE = 5;
+const PRELOAD_VALUE = 30;
+const RELOAD_THRESHOLD = 5;
 
 export default class Preload {
   constructor() {
+    this.loadingCount = 0;
+    this.currentIdx = 0;
     this.dates = [];
     this.responses = {};
-    this.currentIdx = 0;
-    this.hasPreloaded = false;
-    this.init();
+    this.getImages();
   }
 
-  init = () => {
-    for (let i = 0; i < PRELOAD_VALUE; i++) {
-      const date = randomDate();
-      this.dates.push(date);
-      this.getImage(date);
+  increaseLoadCount = () => {
+    this.loadingCount += 1;
+  };
+
+  decreaseLoadCount = () => {
+    if (this.loadingCount > 0) {
+      this.loadingCount -= 1;
     }
   };
 
-  getImage = date => {
-    const data = { date, api_key: API_KEY };
-    reqwest({ data, url: APOD_API_URL }).then(this.load);
+  getImages = (count = PRELOAD_VALUE) => {
+    const data = { count, api_key: API_KEY };
+
+    reqwest({ data, url: APOD_API_URL }).then(responses => {
+      responses.forEach(response => {
+        this.increaseLoadCount();
+        !this.dates.includes(response.date)
+          ? this.load(response)
+          : this.decreaseLoadCount();
+      });
+    });
   };
 
   load = response => {
     if (response.media_type === "video") {
-      this.responses[response.date] = response;
-    } else {
-      let loadedImage = new Image();
-      const { hdurl, url } = response;
-
-      // If the urls are identical just mark it HD
-      let isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
-      loadedImage.src = isImageHD ? hdurl : url;
-
-      loadedImage.onload = () => {
-        this.responses[response.date] = response;
-        this.hasPreloaded = true;
-      };
-
-      loadedImage.onerror = () => {
-        console.log("Preload image didn't work");
-      };
+      this.addImage(response);
+      return;
     }
+
+    const loadedImage = new Image();
+    const { hdurl } = response;
+    loadedImage.src = hdurl;
+
+    loadedImage.onload = () => {
+      const { width } = loadedImage;
+      width >= 1200 ? this.addImage(response) : this.decreaseLoadCount();
+    };
+
+    loadedImage.onerror = this.decreaseLoadCount;
+  };
+
+  addImage = response => {
+    this.dates.push(response.date);
+    this.responses[response.date] = response;
+    this.decreaseLoadCount();
   };
 
   getPreloadImage = () => {
     const dateKey = this.dates[this.currentIdx];
     this.currentIdx += 1;
 
-    if (this.dates.length - this.currentIdx <= 3) {
-      this.init();
+    if (
+      this.dates.length - this.currentIdx <= RELOAD_THRESHOLD &&
+      this.loadingCount === 0
+    ) {
+      this.getImages();
     }
 
     return this.responses[dateKey];

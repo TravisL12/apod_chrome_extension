@@ -74,7 +74,7 @@ class Apod extends Component {
   };
 
   random = () => {
-    if (preload.hasPreloaded && preload.dates.length > 0) {
+    if (preload.dates.length > 0) {
       const response = preload.getPreloadImage();
       if (response) {
         this.setState({ isLoading: true, response: null });
@@ -82,7 +82,6 @@ class Apod extends Component {
         return;
       }
     }
-
     this.getImage(randomDate());
   };
 
