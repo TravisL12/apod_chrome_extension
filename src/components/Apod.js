@@ -57,15 +57,6 @@ class Apod extends Component {
     this.getImage(adjacentDate(this.state.response.date, 1));
   };
 
-  recallHistory = direction => {
-    const response =
-      direction === "next" ? history.getNextDate() : history.getPreviousDate();
-    if (response) {
-      this.setState({ isLoading: true, response: null });
-      this.loadApod(response);
-    }
-  };
-
   current = () => {
     this.getImage(today);
   };
@@ -77,6 +68,15 @@ class Apod extends Component {
   forceHighDef = () => {
     this.setState({ isLoading: true });
     this.preLoadImage(this.state.response, true);
+  };
+
+  recallHistory = direction => {
+    const response =
+      direction === "next" ? history.getNextDate() : history.getPreviousDate();
+    if (response) {
+      this.setState({ isLoading: true, response: null });
+      this.loadApod(response);
+    }
   };
 
   saveFavorite = () => {

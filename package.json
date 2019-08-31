@@ -18,13 +18,12 @@
     "dotenv": "6.2.0",
     "dotenv-expand": "4.2.0",
     "eslint": "^6.1.0",
-    "eslint-config-react-app": "^5.0.1",
     "eslint-loader": "2.2.1",
     "eslint-plugin-flowtype": "3.13.0",
     "eslint-plugin-import": "2.18.2",
     "eslint-plugin-jsx-a11y": "6.2.3",
     "eslint-plugin-react": "7.14.3",
-    "eslint-plugin-react-hooks": "^1.6.1",
+    "eslint-plugin-react-hooks": "^2.0.1",
     "file-loader": "3.0.1",
     "flatpickr": "^4.6.2",
     "fs-extra": "7.0.1",
@@ -82,9 +81,6 @@
       "last 1 safari version"
     ]
   },
-  "devDependencies": {
-    "eslint-plugin-react-hooks": "^2.0.1"
-  },
   "jest": {
     "roots": [
       "<rootDir>/src"
@@ -140,5 +136,8 @@
   },
   "eslintConfig": {
     "extends": "react-app"
+  },
+  "devDependencies": {
+    "eslint-config-react-app": "^5.0.1"
   }
 }
