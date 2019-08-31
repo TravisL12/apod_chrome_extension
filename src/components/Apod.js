@@ -10,7 +10,13 @@ import Title from "./Title";
 import TopSites from "./TopSites";
 import { TitleLoader } from "./LoadingSpinner";
 import { thumbSourceLink, KEY_MAP, APOD_API_URL, API_KEY } from "../utilities";
-import { adjacentDate, today, randomDate } from "../utilities/dateUtility";
+import {
+  adjacentDate,
+  isToday,
+  today,
+  randomDate,
+  MIN_APOD_DATE
+} from "../utilities/dateUtility";
 import History from "../utilities/history";
 import Preload from "../utilities/preload-utility";
 
@@ -50,11 +56,17 @@ class Apod extends Component {
   };
 
   previous = () => {
-    this.getImage(adjacentDate(this.state.response.date, -1));
+    const { date } = this.state.response;
+    if (date !== MIN_APOD_DATE) {
+      this.getImage(adjacentDate(date, -1));
+    }
   };
 
   next = () => {
-    this.getImage(adjacentDate(this.state.response.date, 1));
+    const { date } = this.state.response;
+    if (!isToday(date)) {
+      this.getImage(adjacentDate(date, 1));
+    }
   };
 
   current = () => {
@@ -65,6 +77,7 @@ class Apod extends Component {
     if (preload.hasPreloaded && preload.dates.length > 0) {
       const response = preload.getPreloadImage();
       if (response) {
+        this.setState({ isLoading: true, response: null });
         this.loadApod(response);
         return;
       }

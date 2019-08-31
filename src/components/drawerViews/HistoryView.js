@@ -7,7 +7,7 @@ function HistoryView({ history, specificDate, closeDrawer }) {
   return (
     <div className="favorites">
       <h2>Recent Viewed APOD's</h2>
-      <ul id="drawer-list">
+      <div className="drawer-list">
         {dates.map((date, idx) => {
           const { title } = responses[date];
 
@@ -21,7 +21,7 @@ function HistoryView({ history, specificDate, closeDrawer }) {
             />
           );
         })}
-      </ul>
+      </div>
     </div>
   );
 }

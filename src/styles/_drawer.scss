@@ -123,6 +123,7 @@ $top-offset: 100px;
       text-align: left;
       font-size: 16px;
       margin-bottom: 10px;
+      line-height: 22px;
       text-rendering: optimizeLegibility;
     }
 
@@ -142,7 +143,7 @@ $top-offset: 100px;
     .favorites {
       margin-bottom: 20px;
 
-      ul#drawer-list {
+      .drawer-list {
         clear: both;
         width: 100%;
 

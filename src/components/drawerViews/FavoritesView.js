@@ -24,7 +24,7 @@ function FavoritesView({ favorites, specificDate, closeDrawer }) {
           </h4>
         </li>
       ) : (
-        <ul id="drawer-list">
+        <div className="drawer-list">
           {keys(favorites).map((date, idx) => {
             const { title } = favorites[date];
 
@@ -39,7 +39,7 @@ function FavoritesView({ favorites, specificDate, closeDrawer }) {
               />
             );
           })}
-        </ul>
+        </div>
       )}
     </div>
   );
