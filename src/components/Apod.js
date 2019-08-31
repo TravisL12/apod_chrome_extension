@@ -64,15 +64,12 @@ class Apod extends Component {
   random = () => {
     if (preload.hasPreloaded && preload.dates.length > 0) {
       const response = preload.getPreloadImage();
-      console.log(response, "random response!");
-
       if (response) {
         this.loadApod(response);
         return;
       }
     }
 
-    console.log("NO random response!");
     this.getImage(randomDate());
   };
 

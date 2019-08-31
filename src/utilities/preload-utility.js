@@ -12,23 +12,22 @@ export default class Preload {
     this.currentIdx = 0;
     this.hasPreloaded = false;
     this.init();
-    console.log(this.dates, "dates");
   }
 
-  init() {
+  init = () => {
     for (let i = 0; i < PRELOAD_VALUE; i++) {
       const date = randomDate();
       this.dates.push(date);
       this.getImage(date);
     }
-  }
+  };
 
-  getImage(date) {
+  getImage = date => {
     const data = { date, api_key: API_KEY };
     reqwest({ data, url: APOD_API_URL }).then(this.load);
-  }
+  };
 
-  load(response) {
+  load = response => {
     if (response.media_type === "video") {
       this.responses[response.date] = response;
     } else {
@@ -38,10 +37,8 @@ export default class Preload {
       // If the urls are identical just mark it HD
       let isImageHD = /(jpg|jpeg|png|gif)$/i.test(hdurl) || hdurl === url;
       loadedImage.src = isImageHD ? hdurl : url;
-      console.log(loadedImage, "loading image");
 
       loadedImage.onload = () => {
-        console.log(response.date, "loaded image!");
         this.responses[response.date] = response;
         this.hasPreloaded = true;
       };
@@ -50,14 +47,16 @@ export default class Preload {
         console.log("Preload image didn't work");
       };
     }
-  }
+  };
 
-  getPreloadImage() {
+  getPreloadImage = () => {
     const dateKey = this.dates[this.currentIdx];
     this.currentIdx += 1;
-    console.log(dateKey, "fetching date key!");
-    console.log(this.responses);
+
+    if (this.dates.length - this.currentIdx <= 3) {
+      this.init();
+    }
 
     return this.responses[dateKey];
-  }
+  };
 }
