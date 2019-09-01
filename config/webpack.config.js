@@ -588,27 +588,14 @@ module.exports = function(webpackEnv) {
       isEnvProduction &&
         new WorkboxWebpackPlugin.GenerateSW({
           clientsClaim: true,
-          exclude: [
-            /.*/,
-            /\.map$/,
-            /asset-manifest\.json$/,
-            /\.(?:png|jpg|jpeg|svg)$/
-          ],
+          exclude: [/.*/],
           importWorkboxFrom: "local",
           navigateFallback: publicUrl + "/index.html",
-          navigateFallbackBlacklist: [
-            // Exclude URLs starting with /_, as they're likely an API call
-            new RegExp("^/_")
-            // Exclude any URLs whose last part seems to be a file extension
-            // as they're likely a resource and not a SPA route.
-            // URLs containing a "?" character won't be blacklisted as they're likely
-            // a route with query params (e.g. auth callbacks).
-            // new RegExp('/[^/?]+\\.[^/]+$'),
-          ],
+          navigateFallbackBlacklist: [],
           runtimeCaching: [
             {
               urlPattern: new RegExp(
-                "^https://apod.nasa.gov/apod/.*(?:png|gif|jpg|jpeg)$"
+                "^https://apod.nasa.gov/apod/.*(png|gif|jpg|jpeg)$"
               ),
               handler: "StaleWhileRevalidate",
               options: {

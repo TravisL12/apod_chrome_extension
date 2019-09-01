@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import reqwest from "reqwest";
-import { first, startCase } from "lodash";
+import { startCase } from "lodash";
 
 import ViewItem from "./ViewItem";
 import { formatDate } from "../../utilities/dateUtility";
@@ -39,8 +39,8 @@ function SearchView({ keyword, specificDate, closeDrawer }) {
         const parse = search.querySelectorAll("a")[1];
         if (!parse) continue;
 
-        const date = first(parse.textContent.match(/(?<=APOD:\s).*(?=\s-)/));
-        if (!date) continue;
+        const date = parse.textContent.match(/^\s?APOD:\s(.*?)\s-/);
+        if (!date[1]) continue;
 
         const title = parse.textContent
           .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
@@ -49,7 +49,7 @@ function SearchView({ keyword, specificDate, closeDrawer }) {
         searchResult.push({
           title,
           url: parse.href,
-          date: formatDate(new Date(date))
+          date: formatDate(new Date(date[1]))
         });
       }
 

@@ -19,8 +19,6 @@ class ApodOptions {
 
   restoreOptions() {
     chrome.storage.sync.get(["apodType", "hiResOnly"], items => {
-      console.log(items, "items");
-
       let type = items.apodType;
       if (!type) {
         type = "random";
