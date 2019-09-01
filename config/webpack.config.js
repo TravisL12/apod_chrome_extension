@@ -607,7 +607,9 @@ module.exports = function(webpackEnv) {
               }
             },
             {
-              urlPattern: new RegExp("^https://api.nasa.gov/"),
+              urlPattern: new RegExp(
+                "^https://api.nasa.gov/planetary/apod?date"
+              ),
               handler: "StaleWhileRevalidate",
               options: {
                 cacheName: "apod-trav-cache",

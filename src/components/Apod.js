@@ -47,7 +47,7 @@ class Apod extends Component {
   };
 
   componentDidMount() {
-    const date = this.props.selection === "random" ? randomDate() : undefined;
+    const date = this.props.selection === "random" ? randomDate() : today;
     this.getImage(date);
   }
 
