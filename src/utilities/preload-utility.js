@@ -44,12 +44,12 @@ export default class Preload {
     }
 
     const loadedImage = new Image();
-    const { hdurl } = response;
+    const { hdurl, media_type } = response;
     loadedImage.src = hdurl;
 
     loadedImage.onload = () => {
       const { width, height } = loadedImage;
-      width >= 1200 || height >= 900
+      media_type === "image" && (width >= 1200 || height >= 900)
         ? this.addImage(response)
         : this.decreaseLoadCount();
     };

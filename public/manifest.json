@@ -4,9 +4,7 @@
   "name": "APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
-  "version": "3.0.2",
-
-  "content_security_policy": "script-src 'self' https://storage.googleapis.com; object-src 'self'",
+  "version": "3.0.3",
 
   "browser_action": {
     "default_icon": "sun_icon.png",
@@ -29,9 +27,7 @@
     "topSites",
     "storage",
     "https://api.nasa.gov/*",
-    "https://storage.googleapis.com/workbox-cdn/releases/*",
     "https://apod.nasa.gov/cgi-bin/apod/apod_search",
-    "https://www.googleapis.com/customsearch/*",
     "https://www.google-analytics.com/collect"
   ]
 }
