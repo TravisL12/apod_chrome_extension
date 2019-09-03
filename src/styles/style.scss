@@ -25,8 +25,14 @@
 
   .title-container {
     @include helvetica-neue-light;
-    .apod__loading {
-      @include sun-loader(80px);
+    .loader {
+      position: absolute;
+      right: 113px;
+      top: 31px;
+
+      .apod__loading {
+        @include sun-loader(80px);
+      }
     }
 
     position: absolute;
@@ -34,6 +40,7 @@
     bottom: 40px;
 
     h1 {
+      letter-spacing: 10px;
       animation: slide 20s infinite linear;
       margin: 0;
       font-size: 50px;
