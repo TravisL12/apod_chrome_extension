@@ -25,6 +25,10 @@
 
   .title-container {
     @include helvetica-neue-light;
+    .apod__loading {
+      @include sun-loader(80px);
+    }
+
     position: absolute;
     left: 50px;
     bottom: 40px;
