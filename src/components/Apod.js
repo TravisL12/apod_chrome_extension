@@ -132,18 +132,18 @@ class Apod extends Component {
     const { isHighRes } = this.props;
     history.add(response);
     if (response.media_type === "video") {
-      const videoUrl = new URL(response.url);
-
-      if (!videoUrl) {
+      try {
+        const videoUrl = new URL(response.url);
+        this.setState({
+          response,
+          videoUrl,
+          apodImage: null,
+          isLoading: false
+        });
+      } catch (err) {
+        console.log(err);
         this.random();
       }
-
-      this.setState({
-        response,
-        videoUrl,
-        apodImage: null,
-        isLoading: false
-      });
     } else {
       this.preLoadImage(response, isHighRes);
     }
