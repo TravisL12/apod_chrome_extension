@@ -39,12 +39,12 @@ class Apod extends Component {
   };
 
   state = {
-    apodImage: null,
-    response: null,
+    apodImage: undefined,
+    response: undefined,
     isLoading: true,
     isImageHD: false,
     hasLoadingError: false,
-    videoUrl: null
+    videoUrl: undefined
   };
 
   componentDidMount() {
@@ -75,7 +75,7 @@ class Apod extends Component {
   };
 
   setLoading = () => {
-    this.setState({ isLoading: true, response: null });
+    this.setState({ isLoading: true, response: undefined });
   };
 
   random = () => {
@@ -137,7 +137,7 @@ class Apod extends Component {
         this.setState({
           response,
           videoUrl,
-          apodImage: null,
+          apodImage: undefined,
           isLoading: false
         });
       } catch (err) {
