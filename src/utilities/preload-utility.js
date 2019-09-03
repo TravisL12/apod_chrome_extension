@@ -49,7 +49,9 @@ export default class Preload {
 
     loadedImage.onload = () => {
       const { width } = loadedImage;
-      width >= 1200 ? this.addImage(response) : this.decreaseLoadCount();
+      width >= 1200 || height >= 900
+        ? this.addImage(response)
+        : this.decreaseLoadCount();
     };
 
     loadedImage.onerror = this.decreaseLoadCount;

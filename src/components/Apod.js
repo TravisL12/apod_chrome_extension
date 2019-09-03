@@ -74,11 +74,15 @@ class Apod extends Component {
     this.getImage(today);
   };
 
+  setLoading = () => {
+    this.setState({ isLoading: true, response: null });
+  };
+
   random = () => {
     if (preload.dates.length > 0) {
       const response = preload.getPreloadImage();
       if (response) {
-        this.setState({ isLoading: true, response: null });
+        this.setLoading();
         this.loadApod(response);
         return;
       }
@@ -87,7 +91,6 @@ class Apod extends Component {
   };
 
   forceHighDef = () => {
-    this.setState({ isLoading: true });
     this.preLoadImage(this.state.response, true);
   };
 
@@ -95,7 +98,7 @@ class Apod extends Component {
     const response =
       direction === "next" ? history.getNextDate() : history.getPreviousDate();
     if (response) {
-      this.setState({ isLoading: true, response: null });
+      this.setLoading();
       this.loadApod(response);
     }
   };
@@ -118,7 +121,7 @@ class Apod extends Component {
   };
 
   getImage = (date, errorCount = 0) => {
-    this.setState({ isLoading: true, response: null });
+    this.setLoading();
     const data = { date, api_key: API_KEY };
     reqwest({ data, url: APOD_API_URL }).then(this.loadApod, () =>
       this.errorApod(errorCount)
@@ -130,7 +133,6 @@ class Apod extends Component {
     history.add(response);
     if (response.media_type === "video") {
       const videoUrl = new URL(response.url);
-      videoUrl.search = "autopause=1&autoplay=0";
 
       if (!videoUrl) {
         this.random();
