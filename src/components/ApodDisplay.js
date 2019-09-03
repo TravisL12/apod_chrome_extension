@@ -20,10 +20,7 @@ function Image({ loadedImage }) {
   );
 }
 
-function Video({ videoUrl }) {
-  const url = new URL(videoUrl);
-  url.search = "autopause=1&autoplay=0";
-
+function Video({ url }) {
   return (
     <div className="apod-body">
       <div className="apod__image">
@@ -39,11 +36,11 @@ function Video({ videoUrl }) {
   );
 }
 
-export default function ApodDisplay({ response, loadedImage }) {
+export default function ApodDisplay({ videoUrl, loadedImage }) {
   if (loadedImage) {
     return <Image loadedImage={loadedImage} />;
-  } else if (response && response.media_type === "video") {
-    return <Video videoUrl={response.url} />;
+  } else if (videoUrl) {
+    return <Video url={videoUrl} />;
   }
 
   return null;

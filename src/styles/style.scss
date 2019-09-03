@@ -18,51 +18,40 @@
   background-repeat: no-repeat;
 }
 
-@keyframes slide {
-  0% {
-    background-position: 0%;
-  }
-  100% {
-    background-position: 1000%;
-  }
-}
-
 .load-title {
-  @include flexCenter;
+  position: relative;
   height: 100vh;
   width: 100vw;
-  color: $black;
-  background: $black;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(0, 0, 0, 0) 0%,
-    rgba(0, 0, 0, 0.8) 60%,
-    rgba(0, 0, 0, 0.95) 90%
-  );
 
   .title-container {
     @include helvetica-neue-light;
-    text-align: right;
+    .loader {
+      position: absolute;
+      right: 113px;
+      top: 31px;
 
-    p {
-      margin: 0;
-      margin-right: 35px;
-      font-size: 20px;
-      color: #585858;
-      line-height: 0;
+      .apod__loading {
+        @include sun-loader(80px);
+      }
     }
 
+    position: absolute;
+    left: 50px;
+    bottom: 40px;
+
     h1 {
+      letter-spacing: 10px;
       animation: slide 20s infinite linear;
       margin: 0;
-      font-size: 200px;
-      line-height: 200px;
-      background-image: url("../stars.png"); // default
-      background-size: 110%;
+      font-size: 50px;
+      font-weight: 500;
+      background: linear-gradient(
+        to bottom,
+        rgba(212, 228, 239, 1) 0%,
+        rgba(134, 174, 204, 1) 100%
+      );
       -webkit-text-fill-color: transparent;
       -webkit-background-clip: text;
-      -webkit-text-stroke-width: 3px;
-      -webkit-text-stroke-color: $light-gray;
     }
   }
 }

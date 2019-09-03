@@ -43,7 +43,8 @@ class Apod extends Component {
     response: null,
     isLoading: true,
     isImageHD: false,
-    hasLoadingError: false
+    hasLoadingError: false,
+    videoUrl: null
   };
 
   componentDidMount() {
@@ -73,11 +74,15 @@ class Apod extends Component {
     this.getImage(today);
   };
 
+  setLoading = () => {
+    this.setState({ isLoading: true, response: null });
+  };
+
   random = () => {
     if (preload.dates.length > 0) {
       const response = preload.getPreloadImage();
       if (response) {
-        this.setState({ isLoading: true, response: null });
+        this.setLoading();
         this.loadApod(response);
         return;
       }
@@ -86,7 +91,6 @@ class Apod extends Component {
   };
 
   forceHighDef = () => {
-    this.setState({ isLoading: true });
     this.preLoadImage(this.state.response, true);
   };
 
@@ -94,7 +98,7 @@ class Apod extends Component {
     const response =
       direction === "next" ? history.getNextDate() : history.getPreviousDate();
     if (response) {
-      this.setState({ isLoading: true, response: null });
+      this.setLoading();
       this.loadApod(response);
     }
   };
@@ -117,7 +121,7 @@ class Apod extends Component {
   };
 
   getImage = (date, errorCount = 0) => {
-    this.setState({ isLoading: true, response: null });
+    this.setLoading();
     const data = { date, api_key: API_KEY };
     reqwest({ data, url: APOD_API_URL }).then(this.loadApod, () =>
       this.errorApod(errorCount)
@@ -128,11 +132,18 @@ class Apod extends Component {
     const { isHighRes } = this.props;
     history.add(response);
     if (response.media_type === "video") {
-      this.setState({
-        response,
-        apodImage: null,
-        isLoading: false
-      });
+      try {
+        const videoUrl = new URL(response.url);
+        this.setState({
+          response,
+          videoUrl,
+          apodImage: null,
+          isLoading: false
+        });
+      } catch (err) {
+        console.log(err);
+        this.random();
+      }
     } else {
       this.preLoadImage(response, isHighRes);
     }
@@ -185,7 +196,8 @@ class Apod extends Component {
       apodImage,
       isImageHD,
       isLoading,
-      hasLoadingError
+      hasLoadingError,
+      videoUrl
     } = this.state;
 
     const handlers = {
@@ -228,7 +240,7 @@ class Apod extends Component {
           {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
           {isLoading && <TitleLoader />}
           <ApodDisplay
-            response={response}
+            videoUrl={videoUrl}
             isLoading={isLoading}
             loadedImage={apodImage}
           />
