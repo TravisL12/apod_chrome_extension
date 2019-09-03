@@ -4,7 +4,7 @@
   "name": "APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
-  "version": "3.0.1",
+  "version": "3.0.2",
 
   "content_security_policy": "script-src 'self' https://storage.googleapis.com; object-src 'self'",
 

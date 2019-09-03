@@ -43,7 +43,8 @@ class Apod extends Component {
     response: null,
     isLoading: true,
     isImageHD: false,
-    hasLoadingError: false
+    hasLoadingError: false,
+    videoUrl: null
   };
 
   componentDidMount() {
@@ -128,8 +129,16 @@ class Apod extends Component {
     const { isHighRes } = this.props;
     history.add(response);
     if (response.media_type === "video") {
+      const videoUrl = new URL(response.url);
+      videoUrl.search = "autopause=1&autoplay=0";
+
+      if (!videoUrl) {
+        this.random();
+      }
+
       this.setState({
         response,
+        videoUrl,
         apodImage: null,
         isLoading: false
       });
@@ -185,7 +194,8 @@ class Apod extends Component {
       apodImage,
       isImageHD,
       isLoading,
-      hasLoadingError
+      hasLoadingError,
+      videoUrl
     } = this.state;
 
     const handlers = {
@@ -228,7 +238,7 @@ class Apod extends Component {
           {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
           {isLoading && <TitleLoader />}
           <ApodDisplay
-            response={response}
+            videoUrl={videoUrl}
             isLoading={isLoading}
             loadedImage={apodImage}
           />
