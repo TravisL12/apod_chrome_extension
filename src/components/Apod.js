@@ -56,6 +56,8 @@ class Apod extends Component {
   };
 
   previous = () => {
+    if (!this.state.response) return;
+
     const { date } = this.state.response;
     if (date !== MIN_APOD_DATE) {
       this.getImage(adjacentDate(date, -1));
@@ -63,6 +65,8 @@ class Apod extends Component {
   };
 
   next = () => {
+    if (!this.state.response) return;
+
     const { date } = this.state.response;
     if (!isToday(date)) {
       this.getImage(adjacentDate(date, 1));
