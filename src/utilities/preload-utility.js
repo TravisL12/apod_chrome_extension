@@ -1,5 +1,5 @@
+/*global chrome*/
 import reqwest from "reqwest";
-
 import { API_KEY, APOD_API_URL } from ".";
 
 const PRELOAD_VALUE = 30;
@@ -11,7 +11,13 @@ export default class Preload {
     this.currentIdx = 0;
     this.dates = [];
     this.responses = {};
-    this.getImages();
+    chrome.storage.sync.get(["preloadResponse"], ({ preloadResponse }) => {
+      if (preloadResponse) {
+        this.dates.push(preloadResponse.date);
+        this.responses[preloadResponse.date] = preloadResponse;
+      }
+      this.getImages();
+    });
   }
 
   increaseLoadCount = () => {
@@ -38,18 +44,19 @@ export default class Preload {
   };
 
   load = response => {
-    if (response.media_type === "video") {
-      this.addImage(response);
+    const { hdurl, media_type } = response;
+
+    if (media_type === "video") {
+      this.decreaseLoadCount();
       return;
     }
 
     const loadedImage = new Image();
-    const { hdurl, media_type } = response;
     loadedImage.src = hdurl;
 
     loadedImage.onload = () => {
       const { width, height } = loadedImage;
-      media_type === "image" && (width >= 1200 || height >= 900)
+      width >= 1200 || height >= 900 // these dimensions are fairly are arbitrary
         ? this.addImage(response)
         : this.decreaseLoadCount();
     };
@@ -58,6 +65,9 @@ export default class Preload {
   };
 
   addImage = response => {
+    chrome.storage.sync.set({
+      preloadResponse: response
+    });
     this.dates.push(response.date);
     this.responses[response.date] = response;
     this.decreaseLoadCount();

@@ -48,8 +48,7 @@ class Apod extends Component {
   };
 
   componentDidMount() {
-    const date = this.props.selection === "random" ? randomDate() : today;
-    this.getImage(date);
+    this.props.selection === "random" ? this.random() : this.current();
   }
 
   specificDate = date => {
@@ -81,12 +80,14 @@ class Apod extends Component {
   random = () => {
     if (preload.dates.length > 0) {
       const response = preload.getPreloadImage();
+
       if (response) {
         this.setLoading();
         this.loadApod(response);
         return;
       }
     }
+
     this.getImage(randomDate());
   };
 
