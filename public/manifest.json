@@ -1,10 +1,10 @@
 {
   "manifest_version": 2,
 
-  "name": "APOD by The Trav",
+  "name": "Astronomy Picture of the Day (APOD) by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
-  "version": "3.0.4",
+  "version": "3.0.5",
 
   "browser_action": {
     "default_icon": "sun_icon.png",
