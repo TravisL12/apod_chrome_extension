@@ -73,11 +73,12 @@ export default class Preload {
     this.decreaseLoadCount();
   };
 
-  getPreloadImage = () => {
+  getPreloadImage = (bypassLoadCount = false) => {
     const dateKey = this.dates[this.currentIdx];
     this.currentIdx += 1;
 
     if (
+      !bypassLoadCount &&
       this.dates.length - this.currentIdx <= RELOAD_THRESHOLD &&
       this.loadingCount === 0
     ) {

@@ -48,7 +48,10 @@ class Apod extends Component {
   };
 
   componentDidMount() {
-    this.props.selection === "random" ? this.random() : this.current();
+    const bypassLoadCount = true;
+    this.props.selection === "random"
+      ? this.random(bypassLoadCount)
+      : this.current();
   }
 
   specificDate = date => {
@@ -81,9 +84,9 @@ class Apod extends Component {
     this.setState({ isLoading: true, response: undefined });
   };
 
-  random = () => {
+  random = (bypassLoadCount = false) => {
     if (preload.dates.length > 0) {
-      const response = preload.getPreloadImage();
+      const response = preload.getPreloadImage(bypassLoadCount);
 
       if (response) {
         this.setLoading();
