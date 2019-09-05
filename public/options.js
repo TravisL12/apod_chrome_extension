@@ -1,3 +1,9 @@
+const defaultOptions = {
+  apodType: "random",
+  hiResOnly: false,
+  showTopSites: true
+};
+
 class ApodOptions {
   constructor() {
     this.form = document.getElementById("apod-options");
@@ -12,17 +18,17 @@ class ApodOptions {
   setDefaultValues = ({ apodType, hiResOnly, showTopSites }) => {
     if (!apodType) {
       chrome.storage.sync.set({
-        apodType: "random"
+        apodType: defaultOptions.apodType
       });
     }
-    if (!hiResOnly) {
+    if (hiResOnly === undefined) {
       chrome.storage.sync.set({
-        hiResOnly: false
+        hiResOnly: defaultOptions.hiResOnly
       });
     }
-    if (!showTopSites) {
+    if (showTopSites === undefined) {
       chrome.storage.sync.set({
-        showTopSites: true
+        showTopSites: defaultOptions.showTopSites
       });
     }
   };
