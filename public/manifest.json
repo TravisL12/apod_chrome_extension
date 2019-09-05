@@ -1,9 +1,9 @@
 {
   "manifest_version": 2,
 
-  "name": "Astronomy Picture of the Day (APOD) by The Trav",
+  "name": "Astronomy Picture of the Day by The Trav",
   "short_name": "APOD by The Trav",
-  "description": "Displays the Astronomy Picture of the Day (APOD) as your new tab page",
+  "description": "Displays the Astronomy Picture of the Day (APOD) and allows you to review similar images of planets, stars, galaxies and nebulas",
   "version": "3.0.5",
 
   "browser_action": {
