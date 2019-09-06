@@ -1,3 +1,5 @@
+/*global chrome*/
+
 const defaultOptions = {
   apodType: "random",
   hiResOnly: false,
@@ -10,12 +12,12 @@ class ApodOptions {
     this.restoreOptions();
   }
 
-  save = obj => {
+  save(obj) {
     chrome.storage.sync.set(obj);
     setTimeout(window.close, 350);
-  };
+  }
 
-  setDefaultValues = ({ apodType, hiResOnly, showTopSites }) => {
+  setDefaultValues({ apodType, hiResOnly, showTopSites }) {
     if (!apodType) {
       chrome.storage.sync.set({
         apodType: defaultOptions.apodType
@@ -31,19 +33,19 @@ class ApodOptions {
         showTopSites: defaultOptions.showTopSites
       });
     }
-  };
+  }
 
-  saveApodType = () => {
+  saveApodType() {
     this.save({ apodType: this.form["choose-apod"].value });
-  };
+  }
 
-  saveHiResOnly = () => {
+  saveHiResOnly() {
     this.save({ hiResOnly: this.form["high-res-only"].checked });
-  };
+  }
 
-  saveTopSitesToggle = () => {
+  saveTopSitesToggle() {
     this.save({ showTopSites: this.form["show-top-sites"].checked });
-  };
+  }
 
   restoreOptions() {
     chrome.storage.sync.get(
@@ -58,22 +60,22 @@ class ApodOptions {
 
         this.form["choose-apod"][0].addEventListener(
           "change",
-          this.saveApodType
+          this.saveApodType.bind(this)
         );
 
         this.form["choose-apod"][1].addEventListener(
           "change",
-          this.saveApodType
+          this.saveApodType.bind(this)
         );
 
         this.form["high-res-only"].addEventListener(
           "change",
-          this.saveHiResOnly
+          this.saveHiResOnly.bind(this)
         );
 
         this.form["show-top-sites"].addEventListener(
           "change",
-          this.saveTopSitesToggle
+          this.saveTopSitesToggle.bind(this)
         );
       }
     );
