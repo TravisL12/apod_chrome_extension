@@ -7,7 +7,7 @@ import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 import "./styles/style.scss";
 
-class App extends Component {
+export default class App extends Component {
   state = this.props;
 
   componentDidMount() {
