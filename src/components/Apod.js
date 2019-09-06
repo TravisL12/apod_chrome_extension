@@ -1,6 +1,6 @@
 /*global chrome*/
 import React, { Component } from "react";
-import reqwest from "reqwest";
+import axios from "axios";
 import { bool, string, arrayOf, shape } from "prop-types";
 import { GlobalHotKeys } from "react-hotkeys";
 
@@ -17,13 +17,13 @@ import {
   randomDate,
   MIN_APOD_DATE
 } from "../utilities/dateUtility";
-import History from "../utilities/history";
+import HistoryHelper from "../utilities/history";
 import Preload from "../utilities/preload-utility";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
 const DELAY_FOR_HD_LOAD = 3000;
-const history = new History();
+const historyHelper = new HistoryHelper();
 const preload = new Preload();
 
 class Apod extends Component {
@@ -105,7 +105,9 @@ class Apod extends Component {
 
   recallHistory = direction => {
     const response =
-      direction === "next" ? history.getNextDate() : history.getPreviousDate();
+      direction === "next"
+        ? historyHelper.getNextDate()
+        : historyHelper.getPreviousDate();
     if (response) {
       this.setLoading();
       this.loadApod(response);
@@ -131,15 +133,15 @@ class Apod extends Component {
 
   getImage = (date, errorCount = 0) => {
     this.setLoading();
-    const data = { date, api_key: API_KEY };
-    reqwest({ data, url: APOD_API_URL }).then(this.loadApod, () =>
-      this.errorApod(errorCount)
-    );
+    const params = { date, api_key: API_KEY };
+    axios
+      .get(APOD_API_URL, { params })
+      .then(this.loadApod, () => this.errorApod(errorCount));
   };
 
   loadApod = response => {
     const { isHighRes } = this.props;
-    history.add(response);
+    historyHelper.add(response);
     if (response.media_type === "video") {
       try {
         const videoUrl = new URL(response.url);
@@ -262,7 +264,7 @@ class Apod extends Component {
               response={response}
               favorites={favorites}
               specificDate={this.specificDate}
-              history={history}
+              historyHelper={historyHelper}
             />
           )}
         </div>

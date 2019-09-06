@@ -1,8 +1,8 @@
 import React from "react";
 import ViewItem from "./ViewItem";
 
-function HistoryView({ history, specificDate, closeDrawer }) {
-  const { dates, responses } = history;
+function HistoryView({ historyHelper, specificDate, closeDrawer }) {
+  const { dates, responses } = historyHelper;
 
   return (
     <div className="favorites">

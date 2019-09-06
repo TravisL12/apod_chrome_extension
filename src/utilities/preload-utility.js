@@ -1,5 +1,5 @@
 /*global chrome*/
-import reqwest from "reqwest";
+import axios from "axios";
 import { API_KEY, APOD_API_URL } from ".";
 
 const PRELOAD_VALUE = 30;
@@ -31,9 +31,9 @@ export default class Preload {
   };
 
   getImages = (count = PRELOAD_VALUE) => {
-    const data = { count, api_key: API_KEY };
+    const params = { count, api_key: API_KEY };
 
-    reqwest({ data, url: APOD_API_URL }).then(responses => {
+    axios.get(APOD_API_URL, { params }).then(responses => {
       responses.forEach(response => {
         this.increaseLoadCount();
         !this.dates.includes(response.date)

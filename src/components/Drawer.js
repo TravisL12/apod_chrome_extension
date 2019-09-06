@@ -6,7 +6,7 @@ import ExplanationView from "./drawerViews/ExplanationView";
 import FavoritesView from "./drawerViews/FavoritesView";
 import SearchView from "./drawerViews/SearchView";
 import { findCelestialObjects, KEY_MAP } from "../utilities";
-import HistoryTab from "./drawerViews/HistoryView";
+import HistoryView from "./drawerViews/HistoryView";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -23,7 +23,12 @@ function Tab({ name, onClickHandler, isActive }) {
   );
 }
 
-export default function Drawer({ response, favorites, specificDate, history }) {
+export default function Drawer({
+  response,
+  favorites,
+  specificDate,
+  historyHelper
+}) {
   const [openTabName, setOpenTabName] = useState(false);
   const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
   const [activeTabName, setActiveTabName] = useState(false);
@@ -42,8 +47,8 @@ export default function Drawer({ response, favorites, specificDate, history }) {
       />
     ),
     history: (
-      <HistoryTab
-        history={history}
+      <HistoryView
+        historyHelper={historyHelper}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
       />
@@ -127,7 +132,7 @@ export default function Drawer({ response, favorites, specificDate, history }) {
             isActive={activeTabName === "favorites"}
             onClickHandler={updateDrawer}
           />
-          {!isEmpty(history.dates) && (
+          {!isEmpty(historyHelper.dates) && (
             <Tab
               name={"history"}
               isActive={activeTabName === "history"}
