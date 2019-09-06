@@ -22,13 +22,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { apodType, apodFavorites, hiResOnly } = this.state;
+    const { apodType, apodFavorites, hiResOnly, showTopSites } = this.state;
 
     return (
       <Apod
         selection={apodType}
         favorites={apodFavorites}
         isHighRes={hiResOnly}
+        showTopSites={showTopSites}
       />
     );
   }
@@ -36,14 +37,15 @@ export default class App extends Component {
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(
-  ["apodType", "hiResOnly", "apodFavorites"],
-  ({ hiResOnly, apodType, apodFavorites }) => {
+  ["apodType", "hiResOnly", "apodFavorites", "showTopSites"],
+  ({ hiResOnly, apodType, apodFavorites, showTopSites }) => {
     ga({ type: "pageview", category: "v3.0.0", page: "apod-by-trav" });
     ReactDOM.render(
       <App
         apodType={apodType || "today"}
         apodFavorites={apodFavorites || {}}
         hiResOnly={hiResOnly || false}
+        showTopSites={showTopSites || false}
       />,
       document.getElementById("root")
     );

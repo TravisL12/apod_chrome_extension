@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from "react";
 import reqwest from "reqwest";
-import { string, arrayOf, shape } from "prop-types";
+import { bool, string, arrayOf, shape } from "prop-types";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import ApodDisplay from "./ApodDisplay";
@@ -30,6 +30,7 @@ class Apod extends Component {
   static propType = {
     selection: string,
     isHighRes: string,
+    showTopSites: bool,
     favorites: arrayOf(
       shape({
         url: string,
@@ -198,7 +199,7 @@ class Apod extends Component {
   };
 
   render() {
-    const { favorites } = this.props;
+    const { favorites, showTopSites } = this.props;
     const {
       response,
       apodImage,
@@ -230,11 +231,15 @@ class Apod extends Component {
       saveFavorite: this.saveFavorite
     };
 
+    const headerStyle = {
+      justifyContent: showTopSites ? "space-between" : "flex-end"
+    };
+
     return (
       <GlobalHotKeys keyMap={KEY_MAP} handlers={handlers}>
         <div className="apod-container" tabIndex={0}>
-          <div className="apod__header">
-            <TopSites />
+          <div className="apod__header" style={headerStyle}>
+            {showTopSites && <TopSites />}
             {!isLoading && (
               <Title
                 response={response}
