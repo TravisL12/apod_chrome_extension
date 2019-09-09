@@ -27,6 +27,11 @@ class SearchView extends Component {
   checkMemo = () => {
     const { keyword } = this.props;
 
+    if (!keyword) {
+      this.setState({ results: [] });
+      return;
+    }
+
     if (cachedResults[keyword]) {
       this.setState({
         results: cachedResults[keyword],
