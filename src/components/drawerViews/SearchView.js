@@ -87,10 +87,8 @@ class SearchView extends Component {
     const { specificDate, closeDrawer } = this.props;
     const { results, searchKeyword } = this.state;
 
-    return !results ? (
-      <SunLoader />
-    ) : (
-      <div>
+    return (
+      <div className="search-view">
         <form
           onSubmit={event => {
             event.preventDefault();
@@ -100,23 +98,30 @@ class SearchView extends Component {
           <input
             type="text"
             value={searchKeyword}
+            placeholder={"Search the Heavens!"}
             onChange={event =>
               this.setState({ searchKeyword: event.target.value })
             }
           />
-          <button type="submit">Search!</button>
+          <button type="submit">
+            <span role="image">&#x1F50E;</span>
+          </button>
         </form>
-        {results.map(({ title, date }, idx) => {
-          return (
-            <ViewItem
-              key={idx}
-              title={title}
-              date={date}
-              specificDate={specificDate}
-              closeDrawer={closeDrawer}
-            />
-          );
-        })}
+        {!results ? (
+          <SunLoader />
+        ) : (
+          results.map(({ title, date }, idx) => {
+            return (
+              <ViewItem
+                key={idx}
+                title={title}
+                date={date}
+                specificDate={specificDate}
+                closeDrawer={closeDrawer}
+              />
+            );
+          })
+        )}
       </div>
     );
   }

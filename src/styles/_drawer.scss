@@ -141,6 +141,34 @@ $top-offset: 100px;
       }
     }
 
+    .search-view {
+      form {
+        height: 35px;
+        display: flex;
+        margin: 0 20px;
+
+        input {
+          flex: 1;
+          padding: 5px;
+          height: 100%;
+          font-size: 18px;
+          box-sizing: border-box;
+          border: 1px solid $light-gray;
+          border-right: none;
+          border-top-left-radius: 3px;
+          border-bottom-left-radius: 3px;
+          background: rgba(115, 115, 115, 0.35);
+          font-weight: 100;
+          color: $light-gray;
+        }
+        button {
+          height: 100%;
+          border-top-right-radius: 3px;
+          border-bottom-right-radius: 3px;
+        }
+      }
+    }
+
     .favorites {
       margin-bottom: 20px;
 
