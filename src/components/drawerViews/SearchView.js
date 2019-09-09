@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/accessible-emoji */
+/* eslint-disable jsx-a11y/aria-role */
+
 import React, { Component } from "react";
 import axios from "axios";
 

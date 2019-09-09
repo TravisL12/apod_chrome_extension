@@ -2,7 +2,7 @@ import React from "react";
 import { apodSourceLink } from "../../utilities";
 
 function ExplanationTab({
-  response: { title, date, explanation, hdurl, url },
+  response: { title, date, explanation, hdurl, url, copyright },
   celestialObjects,
   openSearchView
 }) {
@@ -28,6 +28,8 @@ function ExplanationTab({
           );
         })}
       </div>
+
+      {copyright && <div className="copyright">Copyright: {copyright}</div>}
 
       <div className="external-links">
         <a
