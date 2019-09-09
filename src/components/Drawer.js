@@ -30,15 +30,32 @@ export default function Drawer({
   historyHelper
 }) {
   const [openTabName, setOpenTabName] = useState(false);
-  const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState(null);
   const [activeTabName, setActiveTabName] = useState(false);
 
   const closeDrawer = () => {
     setOpenTabName(false);
   };
 
+  const celestialObjects = keys(
+    countBy(findCelestialObjects(response.explanation))
+  )
+    .slice(0, MAX_CELESTIAL_MATCHES)
+    .map(match => match.toLowerCase());
+
+  const openSearchView = keyword => {
+    setSearchKeyword(keyword);
+    updateDrawer("search");
+  };
+
   const tabViews = {
-    explanation: <ExplanationView response={response} />,
+    explanation: (
+      <ExplanationView
+        response={response}
+        celestialObjects={celestialObjects}
+        openSearchView={openSearchView}
+      />
+    ),
     favorites: (
       <FavoritesView
         favorites={favorites}
@@ -55,7 +72,7 @@ export default function Drawer({
     ),
     search: (
       <SearchView
-        keyword={knowMoreKeyword}
+        keyword={searchKeyword}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
       />
@@ -71,10 +88,6 @@ export default function Drawer({
       setActiveTabName(tabName);
     }
   };
-
-  const celestialObjects = keys(
-    countBy(findCelestialObjects(response.explanation))
-  ).slice(0, MAX_CELESTIAL_MATCHES);
 
   const { keyMap, handlers } = {
     keyMap: { ...KEY_MAP },

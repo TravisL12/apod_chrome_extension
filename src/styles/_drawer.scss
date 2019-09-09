@@ -126,6 +126,22 @@ $top-offset: 100px;
       margin-bottom: 10px;
       line-height: 22px;
       text-rendering: optimizeLegibility;
+
+      .highlight {
+        cursor: pointer;
+        background: linear-gradient(
+          to bottom,
+          #ffffff 0%,
+          #a0d7fc 40%,
+          #86c7f8 100%
+        );
+        -webkit-text-fill-color: transparent;
+        -webkit-background-clip: text;
+        &:hover {
+          text-decoration: underline;
+          text-decoration-color: #86c7f8;
+        }
+      }
     }
 
     .external-links {
