@@ -20,40 +20,41 @@ function SearchView({ keyword, specificDate, closeDrawer }) {
       return;
     }
 
-    axios
-      .post("https://apod.nasa.gov/cgi-bin/apod/apod_search", {
-        tquery: keyword
-      })
-      .then(resp => {
-        const searchDom = new DOMParser();
-        const searchHtml = searchDom.parseFromString(resp, "text/html");
-        const searches = searchHtml.querySelectorAll("p");
-        const searchResult = [];
+    axios({
+      method: "post",
+      url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
+      headers: { "content-type": "application/x-www-form-urlencoded" },
+      data: `tquery=${keyword}`
+    }).then(({ data }) => {
+      const searchDom = new DOMParser();
+      const searchHtml = searchDom.parseFromString(data, "text/html");
+      const searches = searchHtml.querySelectorAll("p");
+      const searchResult = [];
 
-        for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
-          const search = searches[i];
-          if (!search) continue;
+      for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
+        const search = searches[i];
+        if (!search) continue;
 
-          const parse = search.querySelectorAll("a")[1];
-          if (!parse) continue;
+        const parse = search.querySelectorAll("a")[1];
+        if (!parse) continue;
 
-          const date = parse.textContent.match(/^\s?APOD:\s(.*?)\s-/);
-          if (!date[1]) continue;
+        const date = parse.textContent.match(/^\s?APOD:\s(.*?)\s-/);
+        if (!date[1]) continue;
 
-          const title = parse.textContent
-            .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
-            .trim(); // remove line breaks Regex
+        const title = parse.textContent
+          .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
+          .trim();
 
-          searchResult.push({
-            title,
-            url: parse.href,
-            date: formatDate(new Date(date[1]))
-          });
-        }
+        searchResult.push({
+          title,
+          url: parse.href,
+          date: formatDate(new Date(date[1]))
+        });
+      }
 
-        cachedResults[keyword] = searchResult;
-        setResults(searchResult);
-      });
+      cachedResults[keyword] = searchResult;
+      setResults(searchResult);
+    });
   }, [keyword]);
 
   return !results ? (

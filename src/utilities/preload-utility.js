@@ -33,8 +33,8 @@ export default class Preload {
   getImages = (count = PRELOAD_VALUE) => {
     const params = { count, api_key: API_KEY };
 
-    axios.get(APOD_API_URL, { params }).then(responses => {
-      responses.forEach(response => {
+    axios.get(APOD_API_URL, { params }).then(({ data }) => {
+      data.forEach(response => {
         this.increaseLoadCount();
         !this.dates.includes(response.date)
           ? this.load(response)

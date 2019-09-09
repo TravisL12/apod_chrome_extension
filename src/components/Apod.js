@@ -78,7 +78,7 @@ class Apod extends Component {
   };
 
   current = () => {
-    this.getImage(today);
+    this.getImage(today());
   };
 
   setLoading = () => {
@@ -136,7 +136,10 @@ class Apod extends Component {
     const params = { date, api_key: API_KEY };
     axios
       .get(APOD_API_URL, { params })
-      .then(this.loadApod, () => this.errorApod(errorCount));
+      .then(
+        ({ data }) => this.loadApod(data),
+        () => this.errorApod(errorCount)
+      );
   };
 
   loadApod = response => {
