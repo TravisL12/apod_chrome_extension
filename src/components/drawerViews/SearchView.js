@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { Component } from "react";
 import axios from "axios";
-import { startCase } from "lodash";
 
 import ViewItem from "./ViewItem";
 import { formatDate } from "../../utilities/dateUtility";
@@ -9,19 +8,46 @@ import { SunLoader } from "../LoadingSpinner";
 const MAX_CELESTIAL_DISPLAYED = 20;
 const cachedResults = {};
 
-function SearchView({ keyword, specificDate, closeDrawer }) {
-  const [results, setResults] = useState(null);
+class SearchView extends Component {
+  state = {
+    results: undefined,
+    searchKeyword: this.props.keyword
+  };
 
-  useEffect(() => {
-    setResults(null);
+  componentDidMount() {
+    this.checkMemo();
+  }
 
-    if (cachedResults[keyword]) {
-      setResults(cachedResults[keyword]);
+  componentDidUpdate(prevProps) {
+    if (prevProps.keyword !== this.props.keyword) {
+      this.checkMemo();
+    }
+  }
+
+  checkMemo = () => {
+    const { keyword } = this.props;
+
+    if (!keyword) {
+      this.setState({ results: [] });
       return;
     }
 
+    if (cachedResults[keyword]) {
+      this.setState({
+        results: cachedResults[keyword],
+        searchKeyword: keyword
+      });
+      return;
+    }
+
+    this.fetchApod(keyword);
+  };
+
+  fetchApod = keyword => {
+    this.setState({ results: undefined }); // set loading view
+
     axios({
-      method: "post",
+      method: "POST",
       url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data: `tquery=${keyword}`
@@ -29,7 +55,7 @@ function SearchView({ keyword, specificDate, closeDrawer }) {
       const searchDom = new DOMParser();
       const searchHtml = searchDom.parseFromString(data, "text/html");
       const searches = searchHtml.querySelectorAll("p");
-      const searchResult = [];
+      const results = [];
 
       for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
         const search = searches[i];
@@ -45,36 +71,60 @@ function SearchView({ keyword, specificDate, closeDrawer }) {
           .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
           .trim();
 
-        searchResult.push({
+        results.push({
           title,
           url: parse.href,
           date: formatDate(new Date(date[1]))
         });
       }
 
-      cachedResults[keyword] = searchResult;
-      setResults(searchResult);
+      cachedResults[keyword] = results;
+      this.setState({ results, searchKeyword: keyword });
     });
-  }, [keyword]);
+  };
 
-  return !results ? (
-    <SunLoader />
-  ) : (
-    <div>
-      <h2 className="title">Other APOD's containing: "{startCase(keyword)}"</h2>
-      {results.map(({ title, date }, idx) => {
-        return (
-          <ViewItem
-            key={idx}
-            title={title}
-            date={date}
-            specificDate={specificDate}
-            closeDrawer={closeDrawer}
+  render() {
+    const { specificDate, closeDrawer } = this.props;
+    const { results, searchKeyword } = this.state;
+
+    return (
+      <div className="search-view">
+        <form
+          onSubmit={event => {
+            event.preventDefault();
+            this.fetchApod(searchKeyword);
+          }}
+        >
+          <input
+            type="text"
+            value={searchKeyword}
+            placeholder={"Search the Heavens!"}
+            onChange={event =>
+              this.setState({ searchKeyword: event.target.value })
+            }
           />
-        );
-      })}
-    </div>
-  );
+          <button type="submit">
+            <span role="image">&#x1F50E;</span>
+          </button>
+        </form>
+        {!results ? (
+          <SunLoader />
+        ) : (
+          results.map(({ title, date }, idx) => {
+            return (
+              <ViewItem
+                key={idx}
+                title={title}
+                date={date}
+                specificDate={specificDate}
+                closeDrawer={closeDrawer}
+              />
+            );
+          })
+        )}
+      </div>
+    );
+  }
 }
 
 export default SearchView;

@@ -30,15 +30,32 @@ export default function Drawer({
   historyHelper
 }) {
   const [openTabName, setOpenTabName] = useState(false);
-  const [knowMoreKeyword, setKnowMoreKeyword] = useState(null);
+  const [searchKeyword, setSearchKeyword] = useState(null);
   const [activeTabName, setActiveTabName] = useState(false);
 
   const closeDrawer = () => {
     setOpenTabName(false);
   };
 
+  const celestialObjects = keys(
+    countBy(findCelestialObjects(response.explanation))
+  )
+    .slice(0, MAX_CELESTIAL_MATCHES)
+    .map(match => match.toLowerCase());
+
+  const openSearchView = keyword => {
+    setSearchKeyword(keyword);
+    updateDrawer("search");
+  };
+
   const tabViews = {
-    explanation: <ExplanationView response={response} />,
+    explanation: (
+      <ExplanationView
+        response={response}
+        celestialObjects={celestialObjects}
+        openSearchView={openSearchView}
+      />
+    ),
     favorites: (
       <FavoritesView
         favorites={favorites}
@@ -53,9 +70,9 @@ export default function Drawer({
         specificDate={specificDate}
       />
     ),
-    knowMore: (
+    search: (
       <SearchView
-        keyword={knowMoreKeyword}
+        keyword={searchKeyword}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
       />
@@ -72,50 +89,24 @@ export default function Drawer({
     }
   };
 
-  const knowMoreMatch = keyword => {
-    if (
-      !openTabName ||
-      (openTabName && knowMoreKeyword !== keyword) ||
-      (openTabName && openTabName !== "knowMore")
-    ) {
-      setKnowMoreKeyword(keyword);
-      setOpenTabName("knowMore");
-      setActiveTabName(keyword);
-    } else {
-      setKnowMoreKeyword(null);
-      setOpenTabName(false);
-      setActiveTabName(false);
+  const { keyMap, handlers } = {
+    keyMap: { ...KEY_MAP },
+    handlers: {
+      EXPLANATION_TAB: () => {
+        updateDrawer("explanation");
+      },
+      FAVORITES_TAB: () => {
+        updateDrawer("favorites");
+      },
+      HISTORY_TAB: () => {
+        updateDrawer("history");
+      },
+      SEARCH_TAB: () => {
+        updateDrawer("search");
+      },
+      CLOSE_DRAWER: closeDrawer
     }
   };
-
-  const celestialObjects = keys(
-    countBy(findCelestialObjects(response.explanation))
-  ).slice(0, MAX_CELESTIAL_MATCHES);
-
-  const { keyMap, handlers } = celestialObjects.reduce(
-    (result, keyword, idx) => {
-      result.keyMap[`KEYWORD_${keyword}`] = String(idx + 1);
-      result.handlers[`KEYWORD_${keyword}`] = () => {
-        knowMoreMatch(keyword);
-      };
-      return result;
-    },
-    {
-      keyMap: { ...KEY_MAP },
-      handlers: {
-        EXPLANATION_TAB: () => {
-          updateDrawer("explanation");
-        },
-        FAVORITES_TAB: () => {
-          updateDrawer("favorites");
-        },
-        HISTORY_TAB: () => {
-          updateDrawer("history");
-        },
-        CLOSE_DRAWER: closeDrawer
-      }
-    }
-  );
 
   return (
     <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
@@ -139,16 +130,11 @@ export default function Drawer({
               onClickHandler={updateDrawer}
             />
           )}
-          {celestialObjects.map((name, idx) => {
-            return (
-              <Tab
-                key={idx}
-                name={name}
-                isActive={activeTabName === name}
-                onClickHandler={knowMoreMatch}
-              />
-            );
-          })}
+          <Tab
+            name={"search"}
+            isActive={activeTabName === "search"}
+            onClickHandler={updateDrawer}
+          />
         </div>
       </div>
       <div className="apod__drawer-view">{tabViews[openTabName]}</div>
