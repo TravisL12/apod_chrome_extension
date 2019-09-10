@@ -8,13 +8,11 @@ const RELOAD_THRESHOLD = 5;
 export default class Preload {
   constructor() {
     this.loadingCount = 0;
-    this.currentIdx = 0;
     this.dates = [];
-    this.responses = {};
+
     chrome.storage.sync.get(["preloadResponse"], ({ preloadResponse }) => {
       if (preloadResponse) {
-        this.dates.push(preloadResponse.date);
-        this.responses[preloadResponse.date] = preloadResponse;
+        this.dates.push(preloadResponse);
       }
       this.getImages();
     });
@@ -68,23 +66,21 @@ export default class Preload {
     chrome.storage.sync.set({
       preloadResponse: response
     });
-    this.dates.push(response.date);
-    this.responses[response.date] = response;
+    this.dates.push(response);
     this.decreaseLoadCount();
   };
 
   getPreloadImage = (bypassLoadCount = false) => {
-    const dateKey = this.dates[this.currentIdx];
-    this.currentIdx += 1;
+    const response = this.dates.shift();
 
     if (
       !bypassLoadCount &&
-      this.dates.length - this.currentIdx <= RELOAD_THRESHOLD &&
-      this.loadingCount === 0
+      this.dates.length <= RELOAD_THRESHOLD &&
+      this.loadingCount < 3
     ) {
       this.getImages();
     }
 
-    return this.responses[dateKey];
+    return response;
   };
 }
