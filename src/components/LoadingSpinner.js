@@ -47,17 +47,19 @@ export function MoonLoader() {
   );
 }
 
-export function TitleLoader() {
+export function TitleLoader({ isLoading }) {
   return (
-    <div class="load-title">
-      <div class="title-container">
-        <div className="loader">
-          <SunLoader />
-        </div>
-        <div className="title">
-          <h1 class="apod-name">APOD</h1>
+    isLoading && (
+      <div class="load-title">
+        <div class="title-container">
+          <div className="loader">
+            <SunLoader />
+          </div>
+          <div className="title">
+            <h1 class="apod-name">APOD</h1>
+          </div>
         </div>
       </div>
-    </div>
+    )
   );
 }

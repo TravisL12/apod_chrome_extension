@@ -256,20 +256,18 @@ class Apod extends Component {
             )}
           </div>
           {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
-          {isLoading && <TitleLoader />}
+          <TitleLoader isLoading={isLoading} />
           <ApodDisplay
             videoUrl={videoUrl}
             isLoading={isLoading}
             loadedImage={apodImage}
           />
-          {!isLoading && (
-            <Drawer
-              response={response}
-              favorites={favorites}
-              specificDate={this.specificDate}
-              historyHelper={historyHelper}
-            />
-          )}
+          <Drawer
+            response={response}
+            favorites={favorites}
+            specificDate={this.specificDate}
+            historyHelper={historyHelper}
+          />
         </div>
       </GlobalHotKeys>
     );

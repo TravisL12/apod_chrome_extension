@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { isEmpty, keys, startCase, countBy } from "lodash";
+import { keys, startCase, countBy } from "lodash";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import ExplanationView from "./drawerViews/ExplanationView";
@@ -29,13 +29,17 @@ export default function Drawer({
   specificDate,
   historyHelper
 }) {
+  const [isOpen, setIsOpen] = useState(false);
   const [openTabName, setOpenTabName] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState(null);
-  const [activeTabName, setActiveTabName] = useState(false);
 
   const closeDrawer = () => {
-    setOpenTabName(false);
+    setIsOpen(false);
   };
+
+  if (!response) {
+    return null;
+  }
 
   const celestialObjects = keys(
     countBy(findCelestialObjects(response.explanation))
@@ -43,7 +47,7 @@ export default function Drawer({
     .slice(0, MAX_CELESTIAL_MATCHES)
     .map(match => match.toLowerCase());
 
-  const openSearchView = keyword => {
+  const openSearchView = (keyword = searchKeyword) => {
     setSearchKeyword(keyword);
     updateDrawer("search");
   };
@@ -75,17 +79,17 @@ export default function Drawer({
         keyword={searchKeyword}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
+        setSearchKeyword={setSearchKeyword}
       />
     )
   };
 
   const updateDrawer = tabName => {
-    if ((openTabName && tabName === openTabName) || !response) {
-      setOpenTabName(false);
-      setActiveTabName(false);
+    if ((isOpen && tabName === openTabName) || !response) {
+      setIsOpen(false);
     } else {
+      setIsOpen(true);
       setOpenTabName(tabName);
-      setActiveTabName(tabName);
     }
   };
 
@@ -109,32 +113,18 @@ export default function Drawer({
   };
 
   return (
-    <div className={`apod__drawer ${openTabName ? "show" : ""}`}>
+    <div className={`apod__drawer ${isOpen ? "show" : ""}`}>
       <GlobalHotKeys allowChanges={true} keyMap={keyMap} handlers={handlers} />
       <div className="apod__drawer-tabs">
         <div className="tabs">
-          <Tab
-            name={"explanation"}
-            isActive={activeTabName === "explanation"}
-            onClickHandler={updateDrawer}
-          />
-          <Tab
-            name={"favorites"}
-            isActive={activeTabName === "favorites"}
-            onClickHandler={updateDrawer}
-          />
-          {!isEmpty(historyHelper.dates) && (
+          {keys(tabViews).map((tabName, idx) => (
             <Tab
-              name={"history"}
-              isActive={activeTabName === "history"}
+              key={idx}
+              name={tabName}
+              isActive={isOpen && openTabName === tabName}
               onClickHandler={updateDrawer}
             />
-          )}
-          <Tab
-            name={"search"}
-            isActive={activeTabName === "search"}
-            onClickHandler={updateDrawer}
-          />
+          ))}
         </div>
       </div>
       <div className="apod__drawer-view">{tabViews[openTabName]}</div>

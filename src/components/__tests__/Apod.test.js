@@ -62,16 +62,15 @@ describe("Apod Component", () => {
     component.update();
 
     expect(component.find(Title)).toHaveLength(0);
-    expect(component.find(Drawer)).toHaveLength(0);
+    expect(component.find(Drawer)).toHaveLength(1);
     expect(component.find(TitleLoader)).toHaveLength(1);
   });
 
-  it("hides Drawer and Title when isLoading", () => {
+  it("shows Drawer and Title when isLoading", () => {
     const component = shallow(<Apod {...props} />);
     component.setState({ response: mockResponse, isLoading: false });
     component.update();
 
     expect(component.find(Title)).toHaveLength(1);
-    expect(component.find(Drawer)).toHaveLength(1);
   });
 });
