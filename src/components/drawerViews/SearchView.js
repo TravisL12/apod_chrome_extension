@@ -13,18 +13,11 @@ const cachedResults = {};
 
 class SearchView extends Component {
   state = {
-    results: undefined,
-    searchKeyword: this.props.keyword
+    results: undefined
   };
 
   componentDidMount() {
     this.checkMemo();
-  }
-
-  componentDidUpdate(prevProps) {
-    if (prevProps.keyword !== this.props.keyword) {
-      this.checkMemo();
-    }
   }
 
   checkMemo = () => {
@@ -37,8 +30,7 @@ class SearchView extends Component {
 
     if (cachedResults[keyword]) {
       this.setState({
-        results: cachedResults[keyword],
-        searchKeyword: keyword
+        results: cachedResults[keyword]
       });
       return;
     }
@@ -55,8 +47,8 @@ class SearchView extends Component {
       headers: { "content-type": "application/x-www-form-urlencoded" },
       data: `tquery=${keyword}`
     }).then(({ data }) => {
-      const searchDom = new DOMParser();
-      const searchHtml = searchDom.parseFromString(data, "text/html");
+      const domParse = new DOMParser();
+      const searchHtml = domParse.parseFromString(data, "text/html");
       const searches = searchHtml.querySelectorAll("p");
       const results = [];
 
@@ -82,29 +74,27 @@ class SearchView extends Component {
       }
 
       cachedResults[keyword] = results;
-      this.setState({ results, searchKeyword: keyword });
+      this.setState({ results });
     });
   };
 
   render() {
-    const { specificDate, closeDrawer } = this.props;
-    const { results, searchKeyword } = this.state;
+    const { specificDate, closeDrawer, setSearchKeyword, keyword } = this.props;
+    const { results } = this.state;
 
     return (
       <div className="search-view">
         <form
           onSubmit={event => {
             event.preventDefault();
-            this.fetchApod(searchKeyword);
+            this.fetchApod(keyword);
           }}
         >
           <input
             type="text"
-            value={searchKeyword}
+            value={keyword}
             placeholder={"Search the Heavens!"}
-            onChange={event =>
-              this.setState({ searchKeyword: event.target.value })
-            }
+            onChange={event => setSearchKeyword(event.target.value)}
           />
           <button type="submit">
             <span role="image">&#x1F50E;</span>
