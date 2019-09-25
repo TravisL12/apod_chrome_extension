@@ -51,6 +51,10 @@ function buildParameter(event) {
 }
 
 function sendAnalytics() {
+  if (parameters.length <= 0) {
+    return;
+  }
+
   const xhr = new XMLHttpRequest();
   const url = "http://www.google-analytics.com/batch";
   xhr.open("POST", url, true);
@@ -62,12 +66,12 @@ function sendAnalytics() {
 }
 
 function updateInterval() {
+  if (!intervalFn) {
+    sendAnalytics(); // fire analytics on first load
+  }
+
   window.clearInterval(intervalFn); // debounces
-  intervalFn = window.setInterval(() => {
-    if (parameters.length > 0) {
-      sendAnalytics();
-    }
-  }, analyticsSendInterval);
+  intervalFn = window.setInterval(sendAnalytics, analyticsSendInterval);
 }
 
 export default function(event) {
