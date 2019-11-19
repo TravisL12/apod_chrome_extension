@@ -601,7 +601,7 @@ module.exports = function(webpackEnv) {
               options: {
                 cacheName: "apod-trav-images",
                 expiration: {
-                  maxEntries: 100,
+                  maxEntries: 500,
                   maxAgeSeconds: 60 * 60 * 24 // 1 day
                 }
               }
@@ -617,8 +617,8 @@ module.exports = function(webpackEnv) {
                   statuses: [0, 200]
                 },
                 expiration: {
-                  maxEntries: 50,
-                  maxAgeSeconds: 86400
+                  maxEntries: 500,
+                  maxAgeSeconds: 60 * 60 * 24 // 1 day
                 }
               }
             }

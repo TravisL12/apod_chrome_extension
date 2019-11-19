@@ -1,22 +1,29 @@
 /*global chrome*/
 import axios from "axios";
 import { API_KEY, APOD_API_URL } from ".";
+import { today } from "./dateUtility";
 
-const PRELOAD_VALUE = 30;
+const PRELOAD_VALUE = 50;
 const RELOAD_THRESHOLD = 5;
 
-export default class Preload {
+class Preload {
   constructor() {
     this.loadingCount = 0;
     this.dates = [];
+  }
+
+  initialize = selection => {
+    this.selection = selection;
 
     chrome.storage.sync.get(["preloadResponse"], ({ preloadResponse }) => {
       if (preloadResponse) {
         this.dates.push(preloadResponse);
       }
-      this.getImages();
+      this.selection === "random"
+        ? this.getRandomImages()
+        : this.getDateRangeImages();
     });
-  }
+  };
 
   increaseLoadCount = () => {
     this.loadingCount += 1;
@@ -28,9 +35,18 @@ export default class Preload {
     }
   };
 
-  getImages = (count = PRELOAD_VALUE) => {
+  getRandomImages = (count = PRELOAD_VALUE) => {
     const params = { count, api_key: API_KEY };
+    this.getImages(params);
+  };
 
+  getDateRangeImages = (end_date = today()) => {
+    const start_date = "2019-01-01";
+    const params = { start_date, end_date, api_key: API_KEY };
+    this.getImages(params);
+  };
+
+  getImages = (params = { api_key: API_KEY }) => {
     axios.get(APOD_API_URL, { params }).then(({ data }) => {
       data.forEach(response => {
         this.increaseLoadCount();
@@ -78,9 +94,11 @@ export default class Preload {
       this.dates.length <= RELOAD_THRESHOLD &&
       this.loadingCount < 3
     ) {
-      this.getImages();
+      this.getRandomImages();
     }
 
     return response;
   };
 }
+
+export default Preload;

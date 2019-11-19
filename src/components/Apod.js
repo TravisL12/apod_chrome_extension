@@ -50,10 +50,10 @@ class Apod extends Component {
   };
 
   componentDidMount() {
+    const { selection } = this.props;
+    preload.initialize(selection);
     const bypassLoadCount = true;
-    this.props.selection === "random"
-      ? this.random(bypassLoadCount)
-      : this.current();
+    selection === "random" ? this.random(bypassLoadCount) : this.current();
   }
 
   specificDate = date => {
