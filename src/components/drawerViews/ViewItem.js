@@ -9,18 +9,17 @@ function DrawerViewItem({
   closeDrawer,
   deleteFavorite
 }) {
+  const openSpecific = () => {
+    specificDate(date);
+    closeDrawer();
+  };
+
   return (
-    <div
-      className="drawer-view"
-      onClick={() => {
-        specificDate(date);
-        closeDrawer();
-      }}
-    >
-      <div className="drawer-view-thumb">
+    <div className="drawer-view">
+      <div className="drawer-view-thumb" onClick={openSpecific}>
         <img alt="Thumb" src={thumbSourceLink(date)} />
       </div>
-      <div className="drawer-view-title">
+      <div className="drawer-view-title" onClick={openSpecific}>
         <p>{prettyDateFormat(date)}</p>
         <p>{title}</p>
       </div>
