@@ -1,7 +1,7 @@
 /*global chrome*/
 import axios from "axios";
 import { API_KEY, APOD_API_URL } from ".";
-import { today } from "./dateUtility";
+import { today, subtractDates } from "./dateUtility";
 
 const PRELOAD_VALUE = 50;
 const RELOAD_THRESHOLD = 5;
@@ -10,6 +10,7 @@ class Preload {
   constructor() {
     this.loadingCount = 0;
     this.dates = [];
+    this.dateLookup = {};
   }
 
   initialize = selection => {
@@ -41,8 +42,8 @@ class Preload {
   };
 
   getDateRangeImages = (end_date = today()) => {
-    const start_date = "2019-01-01";
-    const params = { start_date, end_date, api_key: API_KEY };
+    const start_date = subtractDates(50, end_date);
+    const params = { start_date, end_date, api_key: API_KEY }; // snake case for request
     this.getImages(params);
   };
 
@@ -58,7 +59,9 @@ class Preload {
   };
 
   load = response => {
-    const { hdurl, media_type } = response;
+    const { hdurl, media_type, date } = response;
+
+    this.dateLookup[date] = response;
 
     if (media_type === "video") {
       this.decreaseLoadCount();

@@ -56,17 +56,23 @@ class Apod extends Component {
     selection === "random" ? this.random(bypassLoadCount) : this.current();
   }
 
-  specificDate = date => {
+  setLoading = () => {
+    this.setState({ isLoading: true, response: undefined });
+  };
+
+  loadDate = date => {
+    const response = preload.dateLookup[date];
+    if (response) {
+      this.setLoading();
+      this.loadApod(response);
+      return;
+    }
+
     this.getImage(date);
   };
 
-  previous = () => {
-    if (!this.state.response) return;
-
-    const { date } = this.state.response;
-    if (date !== MIN_APOD_DATE) {
-      this.getImage(adjacentDate(date, -1));
-    }
+  current = () => {
+    this.loadDate(today());
   };
 
   next = () => {
@@ -74,22 +80,22 @@ class Apod extends Component {
 
     const { date } = this.state.response;
     if (!isToday(date)) {
-      this.getImage(adjacentDate(date, 1));
+      this.loadDate(adjacentDate(date, 1));
     }
   };
 
-  current = () => {
-    this.getImage(today());
-  };
+  previous = () => {
+    if (!this.state.response) return;
 
-  setLoading = () => {
-    this.setState({ isLoading: true, response: undefined });
+    const { date } = this.state.response;
+    if (date !== MIN_APOD_DATE) {
+      this.loadDate(adjacentDate(date, -1));
+    }
   };
 
   random = (bypassLoadCount = false) => {
     if (preload.dates.length > 0) {
       const response = preload.getPreloadImage(bypassLoadCount);
-
       if (response) {
         this.setLoading();
         this.loadApod(response);
@@ -135,12 +141,10 @@ class Apod extends Component {
   getImage = (date, errorCount = 0) => {
     this.setLoading();
     const params = { date, api_key: API_KEY };
-    axios
-      .get(APOD_API_URL, { params })
-      .then(
-        ({ data }) => this.loadApod(data),
-        () => this.errorApod(errorCount)
-      );
+    axios.get(APOD_API_URL, { params }).then(
+      ({ data }) => this.loadApod(data),
+      () => this.errorApod(errorCount)
+    );
   };
 
   loadApod = response => {
@@ -267,7 +271,7 @@ class Apod extends Component {
                 isImageHD={isImageHD}
                 isFavorite={!!favorites[response.date]}
                 dateNavigation={dateNavigation}
-                specificDate={this.specificDate}
+                specificDate={this.getImage}
               />
             )}
           </div>
@@ -281,7 +285,7 @@ class Apod extends Component {
           <Drawer
             response={response}
             favorites={favorites}
-            specificDate={this.specificDate}
+            specificDate={this.getImage}
             historyHelper={historyHelper}
           />
         </div>

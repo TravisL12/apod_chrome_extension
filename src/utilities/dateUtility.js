@@ -29,6 +29,26 @@ export function prettyDateFormat(date) {
   });
 }
 
+// days: number
+// date: date string
+export function addDates(days, date) {
+  const endDate = date ? new Date(date) : new Date();
+  return flatpickr.formatDate(
+    new Date(endDate.setDate(endDate.getDate() + days)),
+    DATE_FORMAT
+  );
+}
+
+// days: number
+// date: date string
+export function subtractDates(days, date) {
+  const endDate = date ? new Date(date) : new Date();
+  return flatpickr.formatDate(
+    new Date(endDate.setDate(endDate.getDate() - days)),
+    DATE_FORMAT
+  );
+}
+
 export function adjacentDate(dateString, direction) {
   let adjDate = new Date(actualDate(dateString).getTime());
 
