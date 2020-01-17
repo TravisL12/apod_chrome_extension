@@ -56,33 +56,38 @@ class Apod extends Component {
       : this.current();
   }
 
+  setLoading = () => {
+    this.setState({ isLoading: true, response: undefined });
+  };
+
   specificDate = date => {
     this.getImage(date);
   };
 
-  previousNext = (isValid, direction = 1) => {
-    if (!this.state.response) return;
-
-    const { date } = this.state.response;
-    if (isValid) {
-      this.getImage(adjacentDate(date, direction));
-    }
+  current = () => {
+    this.specificDate(today());
   };
 
   previous = () => {
-    previousNext(date !== MIN_APOD_DATE, -1);
+    if (!this.state.response) return;
+
+    const { date } = this.state.response;
+    if (date !== MIN_APOD_DATE) {
+      this.getImage(adjacentDate(date, -1));
+    }
   };
 
   next = () => {
-    previousNext(!isToday(date));
+    if (!this.state.response) return;
+
+    const { date } = this.state.response;
+    if (!isToday(date)) {
+      this.getImage(adjacentDate(date, 1));
+    }
   };
 
-  current = () => {
-    this.getImage(today());
-  };
-
-  setLoading = () => {
-    this.setState({ isLoading: true, response: undefined });
+  forceHighDef = () => {
+    this.preLoadImage(this.state.response, true);
   };
 
   random = (bypassLoadCount = false) => {
@@ -99,15 +104,19 @@ class Apod extends Component {
     this.getImage(randomDate());
   };
 
-  forceHighDef = () => {
-    this.preLoadImage(this.state.response, true);
+  getImage = (date, errorCount = 0) => {
+    this.setLoading();
+    const params = { date, api_key: API_KEY };
+    axios.get(APOD_API_URL, { params }).then(
+      ({ data }) => this.loadApod(data),
+      () => this.errorApod(errorCount)
+    );
   };
 
-  recallHistory = direction => {
-    const response =
-      direction === "next"
-        ? historyHelper.getNextDate()
-        : historyHelper.getPreviousDate();
+  recallHistory = (getNext = false) => {
+    const response = getNext
+      ? historyHelper.getNextDate()
+      : historyHelper.getPreviousDate();
     if (response) {
       this.setLoading();
       this.loadApod(response);
@@ -129,15 +138,6 @@ class Apod extends Component {
         }
       });
     }
-  };
-
-  getImage = (date, errorCount = 0) => {
-    this.setLoading();
-    const params = { date, api_key: API_KEY };
-    axios.get(APOD_API_URL, { params }).then(
-      ({ data }) => this.loadApod(data),
-      () => this.errorApod(errorCount)
-    );
   };
 
   loadApod = response => {
@@ -232,11 +232,11 @@ class Apod extends Component {
       },
       PREVIOUS_HISTORY: () => {
         ga({ category: "Button", action: "clicked", label: "historyPrevious" });
-        this.recallHistory("previous");
+        this.recallHistory();
       },
       NEXT_HISTORY: () => {
         ga({ category: "Button", action: "clicked", label: "historyNext" });
-        this.recallHistory("next");
+        this.recallHistory(true);
       }
     };
 
