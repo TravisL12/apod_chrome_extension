@@ -60,22 +60,21 @@ class Apod extends Component {
     this.getImage(date);
   };
 
-  previous = () => {
+  previousNext = (isValid, direction = 1) => {
     if (!this.state.response) return;
 
     const { date } = this.state.response;
-    if (date !== MIN_APOD_DATE) {
-      this.getImage(adjacentDate(date, -1));
+    if (isValid) {
+      this.getImage(adjacentDate(date, direction));
     }
   };
 
-  next = () => {
-    if (!this.state.response) return;
+  previous = () => {
+    previousNext(date !== MIN_APOD_DATE, -1);
+  };
 
-    const { date } = this.state.response;
-    if (!isToday(date)) {
-      this.getImage(adjacentDate(date, 1));
-    }
+  next = () => {
+    previousNext(!isToday(date));
   };
 
   current = () => {
@@ -135,12 +134,10 @@ class Apod extends Component {
   getImage = (date, errorCount = 0) => {
     this.setLoading();
     const params = { date, api_key: API_KEY };
-    axios
-      .get(APOD_API_URL, { params })
-      .then(
-        ({ data }) => this.loadApod(data),
-        () => this.errorApod(errorCount)
-      );
+    axios.get(APOD_API_URL, { params }).then(
+      ({ data }) => this.loadApod(data),
+      () => this.errorApod(errorCount)
+    );
   };
 
   loadApod = response => {
