@@ -33,11 +33,6 @@ export function adjacentDate(dateString: string, direction: number): string {
 export function randomDate(): string {
   const start = actualDate(MIN_APOD_DATE);
   const end = new Date();
-  console.log(
-    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
-    "date calc"
-  );
-
   const date = new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
