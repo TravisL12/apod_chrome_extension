@@ -9,6 +9,10 @@ function DrawerViewItem({
   closeDrawer,
   deleteFavorite
 }) {
+  const executeDeleteFavorites = event => {
+    event.stopPropagation();
+    deleteFavorite(date);
+  };
   return (
     <div
       className="drawer-view"
@@ -25,7 +29,7 @@ function DrawerViewItem({
         <p>{title}</p>
       </div>
       {deleteFavorite && (
-        <div onClick={() => deleteFavorite(date)} className="remove-favorite">
+        <div onClick={executeDeleteFavorites} className="remove-favorite">
           Remove
         </div>
       )}
