@@ -3,25 +3,19 @@ import flatpickr from "flatpickr";
 const DATE_FORMAT = "Y-m-d";
 export const MIN_APOD_DATE = "1995-06-16";
 
-export function formatDate(date) {
+export function formatDate(date: Date): string {
   return flatpickr.formatDate(date, DATE_FORMAT);
 }
 
-/**
- * Gives the actual date (with timezone) at midnight
- *
- * @param  {string} date
- * @return {Date}
- */
-export function actualDate(date) {
-  return new Date(flatpickr.parseDate(date, DATE_FORMAT));
+export function actualDate(date: string): Date {
+  return flatpickr.parseDate(date, DATE_FORMAT);
 }
 
-export function today() {
-  return flatpickr.formatDate(new Date(), DATE_FORMAT);
+export function today(): string {
+  return formatDate(new Date());
 }
 
-export function prettyDateFormat(date) {
+export function prettyDateFormat(date: string): string {
   return actualDate(date).toLocaleDateString("en", {
     year: "numeric",
     month: "long",
@@ -29,23 +23,28 @@ export function prettyDateFormat(date) {
   });
 }
 
-export function adjacentDate(dateString, direction) {
+export function adjacentDate(dateString: string, direction: number): string {
   let adjDate = new Date(actualDate(dateString).getTime());
 
   adjDate = new Date(adjDate.setDate(adjDate.getDate() + direction));
-  return flatpickr.formatDate(adjDate, DATE_FORMAT);
+  return formatDate(adjDate);
 }
 
-export function randomDate() {
-  const start = new Date(MIN_APOD_DATE.split("-"));
+export function randomDate(): string {
+  const start = actualDate(MIN_APOD_DATE);
   const end = new Date();
+  console.log(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime()),
+    "date calc"
+  );
+
   const date = new Date(
     start.getTime() + Math.random() * (end.getTime() - start.getTime())
   );
 
-  return flatpickr.formatDate(date, DATE_FORMAT);
+  return formatDate(date);
 }
 
-export function isToday(date) {
+export function isToday(date: string): boolean {
   return actualDate(today()).getTime() === actualDate(date).getTime();
 }

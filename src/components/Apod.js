@@ -23,7 +23,7 @@ import ga from "../utilities/ga";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
-const DELAY_FOR_HD_LOAD = 3000;
+const DELAY_FOR_HD_LOAD = 1500;
 const historyHelper = new HistoryHelper();
 const preload = new Preload();
 

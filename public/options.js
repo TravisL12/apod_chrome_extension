@@ -1,5 +1,5 @@
 /*global chrome*/
-
+const SAVED_MESSAGE_DISPLAY_TIME = 1000;
 const defaultOptions = {
   apodType: "random",
   hiResOnly: false,
@@ -23,7 +23,7 @@ function displaySaved() {
   savedAnnounced.classList.remove("hide");
   setTimeout(() => {
     savedAnnounced.classList.add("hide");
-  }, 1000);
+  }, SAVED_MESSAGE_DISPLAY_TIME);
 }
 
 class ApodOptions {

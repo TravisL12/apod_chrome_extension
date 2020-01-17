@@ -129,15 +129,8 @@ $top-offset: 100px;
       text-rendering: optimizeLegibility;
 
       .highlight {
+        @extend %text-gradient;
         cursor: pointer;
-        background: linear-gradient(
-          to bottom,
-          #ffffff 0%,
-          #a0d7fc 40%,
-          #86c7f8 100%
-        );
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
         &:hover {
           text-decoration: underline;
           text-decoration-color: #86c7f8;
@@ -194,88 +187,33 @@ $top-offset: 100px;
     .favorites {
       margin-bottom: 20px;
 
+      .no-favorites {
+        @extend %text-gradient;
+        text-align: center;
+        padding: 0 25px;
+        line-height: 20px;
+      }
+
       .drawer-list {
-        clear: both;
         width: 100%;
-
-        .no-favorites {
-          text-align: center;
-          width: 100%;
-        }
-
-        .favorite {
-          position: relative;
-          display: flex;
-          cursor: pointer;
-          width: 100%;
-          margin-bottom: 10px;
-
-          .remove-favorite {
-            @include apod-button;
-            cursor: pointer;
-            position: absolute;
-            bottom: 10px;
-            right: 10px;
-            padding: 2px 6px;
-            font-size: 11px;
-          }
-
-          .favorite__image {
-            margin-right: 10px;
-
-            .favorite__image-image {
-              display: flex;
-              justify-content: center;
-              align-items: center;
-              height: 60px;
-              width: 60px;
-              background-color: $black;
-
-              img {
-                max-height: 100%;
-                max-width: 100%;
-              }
-            }
-          }
-          .favorite__title {
-            float: left;
-            width: 240px;
-            font-size: 12px;
-
-            .favorite__title-date,
-            .favorite__title-title {
-              margin: 0;
-            }
-            &:hover {
-              color: $light-gray;
-            }
-          }
-        }
-      }
-    }
-    .know-links {
-      ul {
-        display: block;
       }
 
-      ul li {
-        display: block;
+      .favorite {
+        position: relative;
+        display: flex;
+        cursor: pointer;
+        width: 100%;
         margin-bottom: 10px;
-        overflow: hidden;
-        white-space: nowrap;
-        text-overflow: ellipsis;
-        width: 100%;
 
-        a {
-          @include helvetica-neue-light;
-          font-size: 13px;
-          color: white;
+        .remove-favorite {
+          @include apod-button;
+          cursor: pointer;
+          position: absolute;
+          bottom: 10px;
+          right: 10px;
+          padding: 2px 6px;
+          font-size: 11px;
         }
-      }
-
-      .loading-spinner {
-        opacity: 0.5;
-        @include sun-loader(80px);
       }
     }
   }

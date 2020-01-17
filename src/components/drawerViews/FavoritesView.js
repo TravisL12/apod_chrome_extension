@@ -17,12 +17,10 @@ function FavoritesView({ favorites, specificDate, closeDrawer }) {
     <div className="favorites">
       <h2>Favorite APOD's</h2>
       {isEmpty(favorites) ? (
-        <li className="no-favorites">
-          <h4>You don't have any favorites yet!</h4>
-          <h4>
-            Click the "Save Favorite" button at the top right of the page!
-          </h4>
-        </li>
+        <div className="no-favorites">
+          <p>You don't have any favorites yet!</p>
+          <p>Click the "Save Favorite" button at the top right of the page!</p>
+        </div>
       ) : (
         <div className="drawer-list">
           {keys(favorites).map((date, idx) => {

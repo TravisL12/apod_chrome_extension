@@ -58,6 +58,16 @@ $explanation-title-width: 250px;
   transform-origin: bottom;
 }
 
+%text-gradient {
+  background: linear-gradient(to bottom, #ffffff 0%, #a0d7fc 40%, #86c7f8 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+p {
+  margin: 0;
+}
+
 h1 {
   font-size: 24px;
 }
