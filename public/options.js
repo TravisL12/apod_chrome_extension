@@ -6,45 +6,53 @@ const defaultOptions = {
   showTopSites: true
 };
 
+const savedAnnounced = document.getElementById("saved-announced");
+const optionsEl = document.getElementById("apod-options");
+const optionsForm = {
+  chooseApod: optionsEl["choose-apod"],
+  highResOnly: optionsEl["high-res-only"],
+  showTopSites: optionsEl["show-top-sites"]
+};
+
+function saveOption(obj) {
+  chrome.storage.sync.set(obj);
+  displaySaved();
+}
+
+function displaySaved() {
+  savedAnnounced.classList.remove("hide");
+  setTimeout(() => {
+    savedAnnounced.classList.add("hide");
+  }, 1000);
+}
+
 class ApodOptions {
   constructor() {
-    this.form = document.getElementById("apod-options");
     this.restoreOptions();
-  }
-
-  save(obj) {
-    chrome.storage.sync.set(obj);
-    setTimeout(window.close, 350);
   }
 
   setDefaultValues({ apodType, hiResOnly, showTopSites }) {
     if (!apodType) {
-      chrome.storage.sync.set({
-        apodType: defaultOptions.apodType
-      });
+      saveOption({ apodType: defaultOptions.apodType });
     }
     if (hiResOnly === undefined) {
-      chrome.storage.sync.set({
-        hiResOnly: defaultOptions.hiResOnly
-      });
+      saveOption({ hiResOnly: defaultOptions.hiResOnly });
     }
     if (showTopSites === undefined) {
-      chrome.storage.sync.set({
-        showTopSites: defaultOptions.showTopSites
-      });
+      saveOption({ showTopSites: defaultOptions.showTopSites });
     }
   }
 
   saveApodType() {
-    this.save({ apodType: this.form["choose-apod"].value });
+    saveOption({ apodType: optionsForm.chooseApod.value });
   }
 
   saveHiResOnly() {
-    this.save({ hiResOnly: this.form["high-res-only"].checked });
+    saveOption({ hiResOnly: optionsForm.highResOnly.checked });
   }
 
   saveTopSitesToggle() {
-    this.save({ showTopSites: this.form["show-top-sites"].checked });
+    saveOption({ showTopSites: optionsForm.showTopSites.checked });
   }
 
   restoreOptions() {
@@ -54,26 +62,26 @@ class ApodOptions {
         const { apodType, hiResOnly, showTopSites } = items;
         this.setDefaultValues(items);
 
-        this.form[apodType].checked = true;
-        this.form["high-res-only"].checked = hiResOnly;
-        this.form["show-top-sites"].checked = showTopSites;
+        optionsEl[apodType].checked = true;
+        optionsForm.highResOnly.checked = hiResOnly;
+        optionsForm.showTopSites.checked = showTopSites;
 
-        this.form["choose-apod"][0].addEventListener(
+        optionsForm.chooseApod[0].addEventListener(
           "change",
           this.saveApodType.bind(this)
         );
 
-        this.form["choose-apod"][1].addEventListener(
+        optionsForm.chooseApod[1].addEventListener(
           "change",
           this.saveApodType.bind(this)
         );
 
-        this.form["high-res-only"].addEventListener(
+        optionsForm.highResOnly.addEventListener(
           "change",
           this.saveHiResOnly.bind(this)
         );
 
-        this.form["show-top-sites"].addEventListener(
+        optionsForm.showTopSites.addEventListener(
           "change",
           this.saveTopSitesToggle.bind(this)
         );
