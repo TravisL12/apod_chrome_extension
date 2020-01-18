@@ -84,10 +84,7 @@ export default class Preload {
 
   getPreloadImage = (bypassLoadCount = false) => {
     const randomIdx = randomizer(this.dates.length - 1);
-    console.log(randomIdx, "random image idx");
-    console.log(this.dates, "current Dates");
     const response = this.dates.splice(randomIdx, 1)[0];
-    console.log(response, "lucky winner");
 
     if (
       !bypassLoadCount &&
