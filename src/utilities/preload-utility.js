@@ -31,7 +31,7 @@ export default class Preload {
   processResponse = ({ data }) => {
     data.forEach(response => {
       this.loadingCount += 1;
-      !this.dates.includes(response.date)
+      !this.dates.find(date => date === response.date)
         ? this.load(response)
         : this.decreaseLoadCount();
     });
