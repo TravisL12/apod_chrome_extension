@@ -1,6 +1,6 @@
 /*global chrome*/
 import axios from "axios";
-import { API_KEY, APOD_API_URL } from ".";
+import { API_KEY, APOD_API_URL } from "./index";
 
 const PRELOAD_VALUE = 30;
 const RELOAD_THRESHOLD = 5;
@@ -28,17 +28,18 @@ export default class Preload {
     }
   };
 
+  processResponse = ({ data }) => {
+    data.forEach(response => {
+      this.increaseLoadCount();
+      !this.dates.includes(response.date)
+        ? this.load(response)
+        : this.decreaseLoadCount();
+    });
+  };
+
   getImages = (count = PRELOAD_VALUE) => {
     const params = { count, api_key: API_KEY };
-
-    axios.get(APOD_API_URL, { params }).then(({ data }) => {
-      data.forEach(response => {
-        this.increaseLoadCount();
-        !this.dates.includes(response.date)
-          ? this.load(response)
-          : this.decreaseLoadCount();
-      });
-    });
+    axios.get(APOD_API_URL, { params }).then(this.processResponse);
   };
 
   load = response => {

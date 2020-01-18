@@ -14,9 +14,7 @@ function TopSites() {
     <div class="apod__top-sites">
       <ul>
         {sites.map((site, idx) => {
-          const imgSource = `http://www.google.com/s2/favicons?domain_url=${
-            site.url
-          }`;
+          const imgSource = `http://www.google.com/s2/favicons?domain_url=${site.url}`;
           return (
             <li key={idx}>
               <a href={site.url} title={site.title}>

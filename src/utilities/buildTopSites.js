@@ -8,9 +8,7 @@ function buildPopupDom(data) {
 
   for (var i = 0, ie = data.length; i < ie; ++i) {
     const site = data[i];
-    const imgSource = `http://www.google.com/s2/favicons?domain_url=${
-      site.url
-    }`;
+    const imgSource = `http://www.google.com/s2/favicons?domain_url=${site.url}`;
     const topSiteList = htmlToElements(`
     <li>
       <a href='${site.url}' title='${site.title}'>
