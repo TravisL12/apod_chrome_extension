@@ -607,9 +607,8 @@ module.exports = function(webpackEnv) {
               }
             },
             {
-              urlPattern: new RegExp(
-                "^https://api.nasa.gov/planetary/apod?date"
-              ),
+              // cache specific dates and date ranges
+              urlPattern: /^https:\/\/api\.nasa\.gov\/planetary\/apod\?(start_date|date)/gi,
               handler: "StaleWhileRevalidate",
               options: {
                 cacheName: "apod-trav-cache",
@@ -617,7 +616,7 @@ module.exports = function(webpackEnv) {
                   statuses: [0, 200]
                 },
                 expiration: {
-                  maxEntries: 200,
+                  maxEntries: 5000,
                   maxAgeSeconds: 60 * 60 * 24 * 5 // 5 day
                 }
               }

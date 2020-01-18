@@ -15,6 +15,13 @@ export function today(): string {
   return formatDate(new Date());
 }
 
+// days: number
+// date: date string
+export function subtractDates(days, date) {
+  const endDate = date ? new Date(date) : new Date();
+  return formatDate(new Date(endDate.setDate(endDate.getDate() - days)));
+}
+
 export function prettyDateFormat(date: string): string {
   return actualDate(date).toLocaleDateString("en", {
     year: "numeric",

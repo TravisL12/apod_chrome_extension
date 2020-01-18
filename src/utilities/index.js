@@ -19,10 +19,7 @@ export const KEY_MAP = {
 };
 
 /* Randomizer */
-export function randomizer(max, min) {
-  min = min || 0;
-  max = max || 1;
-
+export function randomizer(max = 1, min = 0) {
   return Math.round(Math.random() * (max - min) + min);
 }
 

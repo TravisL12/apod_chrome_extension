@@ -1,12 +1,15 @@
 /*global chrome*/
 import axios from "axios";
-import { API_KEY, APOD_API_URL } from "./index";
+import { API_KEY, APOD_API_URL, randomizer } from "./index";
+import { subtractDates, today } from "./dateUtility";
 
+const CURRENT_DATE_RANGE = 10;
 const PRELOAD_VALUE = 30;
 const RELOAD_THRESHOLD = 5;
 
 export default class Preload {
   constructor() {
+    this.randomRequestPending = false;
     this.loadingCount = 0;
     this.dates = [];
 
@@ -14,13 +17,10 @@ export default class Preload {
       if (preloadResponse) {
         this.dates.push(preloadResponse);
       }
+      this.getDateRangeImages();
       this.getImages();
     });
   }
-
-  increaseLoadCount = () => {
-    this.loadingCount += 1;
-  };
 
   decreaseLoadCount = () => {
     if (this.loadingCount > 0) {
@@ -30,16 +30,27 @@ export default class Preload {
 
   processResponse = ({ data }) => {
     data.forEach(response => {
-      this.increaseLoadCount();
+      this.loadingCount += 1;
       !this.dates.includes(response.date)
         ? this.load(response)
         : this.decreaseLoadCount();
     });
   };
 
-  getImages = (count = PRELOAD_VALUE) => {
-    const params = { count, api_key: API_KEY };
+  getDateRangeImages = (end_date = today()) => {
+    const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
+    const params = { start_date, end_date, api_key: API_KEY }; // snake case for request
     axios.get(APOD_API_URL, { params }).then(this.processResponse);
+  };
+
+  getImages = (count = PRELOAD_VALUE) => {
+    if (this.randomRequestPending) return;
+    this.randomRequestPending = true;
+    const params = { count, api_key: API_KEY };
+    axios.get(APOD_API_URL, { params }).then(response => {
+      this.randomRequestPending = false;
+      this.processResponse(response);
+    });
   };
 
   load = response => {
@@ -55,7 +66,7 @@ export default class Preload {
 
     loadedImage.onload = () => {
       const { width, height } = loadedImage;
-      width >= 1200 || height >= 900 // these dimensions are fairly are arbitrary
+      width >= 1200 || height >= 900 // these dimensions are arbitrary
         ? this.addImage(response)
         : this.decreaseLoadCount();
     };
@@ -72,7 +83,11 @@ export default class Preload {
   };
 
   getPreloadImage = (bypassLoadCount = false) => {
-    const response = this.dates.shift();
+    const randomIdx = randomizer(this.dates.length - 1);
+    console.log(randomIdx, "random image idx");
+    console.log(this.dates, "current Dates");
+    const response = this.dates.splice(randomIdx, 1)[0];
+    console.log(response, "lucky winner");
 
     if (
       !bypassLoadCount &&
