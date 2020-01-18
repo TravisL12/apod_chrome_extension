@@ -28,19 +28,19 @@ export default class Preload {
     }
   };
 
-  processResponse = ({ data }) => {
-    data.forEach(response => {
-      this.loadingCount += 1;
-      !this.dates.find(date => date === response.date)
-        ? this.load(response)
-        : this.decreaseLoadCount();
-    });
-  };
-
+  // Preload APODs from today to {CURRENT_DATE_RANGE } days ago
+  // This doesn't need to be in the this.dates array since these dates
+  // don't need to be specifically navigated to.
   getDateRangeImages = (end_date = today()) => {
     const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
-    const params = { start_date, end_date, api_key: API_KEY }; // snake case for request
-    axios.get(APOD_API_URL, { params }).then(this.processResponse);
+    const params = { start_date, end_date, api_key: API_KEY };
+    axios.get(APOD_API_URL, { params }).then(({ data }) => {
+      data.forEach(response => {
+        const { hdurl } = response;
+        const loadedImage = new Image();
+        loadedImage.src = hdurl;
+      });
+    });
   };
 
   getImages = (count = PRELOAD_VALUE) => {
@@ -50,6 +50,15 @@ export default class Preload {
     axios.get(APOD_API_URL, { params }).then(response => {
       this.randomRequestPending = false;
       this.processResponse(response);
+    });
+  };
+
+  processResponse = ({ data }) => {
+    data.forEach(response => {
+      this.loadingCount += 1;
+      !this.dates.find(date => date === response.date)
+        ? this.load(response)
+        : this.decreaseLoadCount();
     });
   };
 

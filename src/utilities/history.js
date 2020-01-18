@@ -1,25 +1,24 @@
 export default class History {
   constructor() {
-    this.dates = [];
-    this.responses = {};
+    this.responses = [];
     this.currentIdx = 0;
   }
 
   add(response) {
-    const dateIndex = this.dates.indexOf(response.date);
+    const dateIndex = this.responses.findIndex(
+      ({ date }) => date === response.date
+    );
 
     if (dateIndex === -1) {
-      this.dates.push(response.date);
-      this.responses[response.date] = response;
-      this.currentIdx = this.dates.length - 1;
+      this.responses.push(response);
+      this.currentIdx = this.responses.length - 1;
     } else {
       this.currentIdx = dateIndex;
     }
   }
 
   getResponse() {
-    const dateKey = this.dates[this.currentIdx];
-    return this.responses[dateKey];
+    return this.responses[this.currentIdx];
   }
 
   getPreviousDate() {
@@ -31,7 +30,7 @@ export default class History {
   }
 
   getNextDate() {
-    if (this.currentIdx === this.dates.length - 1) {
+    if (this.currentIdx === this.responses.length - 1) {
       return false;
     }
     this.currentIdx += 1;

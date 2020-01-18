@@ -2,14 +2,14 @@ import React from "react";
 import ViewItem from "./ViewItem";
 
 function HistoryView({ historyHelper, specificDate, closeDrawer }) {
-  const { dates, responses } = historyHelper;
+  const { responses } = historyHelper;
 
   return (
     <div className="favorites">
       <h2>Recent Viewed APOD's</h2>
       <div className="drawer-list">
-        {dates.map((date, idx) => {
-          const { title } = responses[date];
+        {responses.map((response, idx) => {
+          const { title, date } = response;
 
           return (
             <ViewItem
