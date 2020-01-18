@@ -1,0 +1,117 @@
+html,
+body {
+  margin: 0;
+}
+h1 {
+  font-size: 24px;
+}
+
+h2 {
+  font-size: 18px;
+}
+
+ul,
+li {
+  margin: 0;
+  padding: 0;
+  display: inline-block;
+}
+.apod-options {
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
+    Helvetica, Arial, "Lucida Grande", sans-serif;
+  font-weight: 300;
+  background: #e9e9e9;
+  padding: 10px;
+  width: 275px;
+  color: rgba(51, 51, 51, 0.8);
+  font-size: 12px;
+}
+.apod-options .title {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 14px;
+}
+.apod-options .title h3 {
+  font-size: inherit;
+  margin: 0;
+  margin-right: 20px;
+}
+.apod-options .title .hide.save-message {
+  opacity: 0;
+}
+.apod-options .title .save-message {
+  color: rgba(51, 51, 51, 0.8);
+  font-weight: bold;
+  padding: 0 2px;
+  opacity: 1;
+  transition: 0.1s linear opacity;
+  font-size: inherit;
+}
+.apod-options .about-apod {
+  padding: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  background-color: lightgray;
+}
+.apod-options .about-apod p {
+  font-weight: bold;
+  margin-top: 0;
+  text-align: center;
+}
+.apod-options .about-apod ul {
+  display: flex;
+  justify-content: space-between;
+}
+.apod-options .about-apod a {
+  color: rgba(51, 51, 51, 0.8);
+  text-decoration: none;
+}
+.apod-options .about-apod a:hover {
+  text-decoration: underline;
+}
+.apod-options #apod-options .option {
+  margin: 10px 0;
+  display: flex;
+  align-content: center;
+  justify-content: space-around;
+}
+.apod-options #apod-options .option .info {
+  width: 200px;
+}
+.apod-options #apod-options .option .info .sub-info {
+  margin: 0;
+  font-size: 11px;
+  color: rgba(51, 51, 51, 0.8);
+}
+.apod-options #apod-options .option .inputs {
+  flex: 1;
+}
+.apod-options #apod-options .option .inputs input[type="radio"] {
+  display: none;
+}
+.apod-options #apod-options .option .inputs label {
+  font-size: 12px;
+  width: 60px;
+  box-sizing: border-box;
+  display: block;
+  text-align: center;
+  background: rgba(198, 198, 198, 0.8);
+  color: rgba(87, 87, 87, 0.8);
+  padding: 5px;
+  transition: 0.2s linear all;
+  cursor: pointer;
+}
+.apod-options #apod-options .option .inputs label:hover {
+  color: rgba(51, 51, 51, 0.8);
+}
+.apod-options
+  #apod-options
+  .option
+  .inputs
+  input[type="radio"]:checked
+  + label {
+  cursor: default;
+  background: #75ddff;
+  color: rgba(51, 51, 51, 0.8);
+}
