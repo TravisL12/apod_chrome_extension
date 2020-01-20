@@ -34,23 +34,31 @@ export default class Preload {
   getDateRangeImages = (end_date = today()) => {
     const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
     const params = { start_date, end_date, api_key: API_KEY };
-    axios.get(APOD_API_URL, { params }).then(({ data }) => {
-      data.forEach(response => {
-        const { hdurl } = response;
-        const loadedImage = new Image();
-        loadedImage.src = hdurl;
-      });
-    });
+    axios.get(APOD_API_URL, { params }).then(
+      ({ data }) => {
+        data.forEach(response => {
+          const { hdurl, url, media_type } = response;
+          if (media_type === "image") {
+            const loadedImage = new Image();
+            loadedImage.src = hdurl || url;
+          }
+        });
+      },
+      err => console.log(err)
+    );
   };
 
   getImages = (count = PRELOAD_VALUE) => {
     if (this.randomRequestPending) return;
     this.randomRequestPending = true;
     const params = { count, api_key: API_KEY };
-    axios.get(APOD_API_URL, { params }).then(response => {
-      this.randomRequestPending = false;
-      this.processResponse(response);
-    });
+    axios.get(APOD_API_URL, { params }).then(
+      response => {
+        this.randomRequestPending = false;
+        this.processResponse(response);
+      },
+      err => console.log(err)
+    );
   };
 
   processResponse = ({ data }) => {
@@ -63,7 +71,7 @@ export default class Preload {
   };
 
   load = response => {
-    const { hdurl, media_type } = response;
+    const { hdurl, url, media_type } = response;
 
     if (media_type === "video") {
       this.decreaseLoadCount();
@@ -71,7 +79,7 @@ export default class Preload {
     }
 
     const loadedImage = new Image();
-    loadedImage.src = hdurl;
+    loadedImage.src = hdurl || url;
 
     loadedImage.onload = () => {
       const { width, height } = loadedImage;
