@@ -33,6 +33,10 @@ body {
 
   .title-container {
     @include helvetica-neue-light;
+    position: absolute;
+    left: 50px;
+    bottom: 40px;
+
     .loader {
       position: absolute;
       right: 113px;
@@ -42,10 +46,6 @@ body {
         @include sun-loader(80px);
       }
     }
-
-    position: absolute;
-    left: 50px;
-    bottom: 40px;
 
     h1 {
       letter-spacing: 10px;
@@ -131,6 +131,7 @@ body {
 
       h2 {
         @include helvetica-neue-light;
+        cursor: pointer;
         margin: 0;
         color: #757575;
         transition: 0.1s linear color;
