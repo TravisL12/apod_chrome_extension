@@ -2,7 +2,7 @@ import React from "react";
 import { downloadImage } from "../../utilities";
 
 function ExplanationTab({
-  response: { title, date, explanation, hdurl, url, copyright },
+  response: { title, explanation, hdurl, url, copyright },
   celestialObjects,
   openSearchView
 }) {
