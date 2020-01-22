@@ -140,10 +140,8 @@ $top-offset: 100px;
     }
 
     .download-image {
+      @extend %text-gradient;
       cursor: pointer;
-      &:hover {
-        text-decoration: underline;
-      }
     }
 
     .search-view {

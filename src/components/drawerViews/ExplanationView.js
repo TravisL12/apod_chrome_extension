@@ -32,10 +32,10 @@ function ExplanationTab({
       {copyright && <div className="copyright">Copyright: {copyright}</div>}
 
       <div onClick={() => downloadImage(hdurl)} className="download-image">
-        Download Hi-res
+        Download High Resolution Image
       </div>
       <div onClick={() => downloadImage(url)} className="download-image">
-        Download Low-res
+        Download Low Resolution Image
       </div>
     </div>
   );
