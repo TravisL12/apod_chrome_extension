@@ -6,6 +6,7 @@ import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 import "./styles/style.scss";
+import { manifest } from "./utilities";
 
 export default class App extends Component {
   state = this.props;
@@ -39,7 +40,11 @@ export default class App extends Component {
 chrome.storage.sync.get(
   ["apodType", "hiResOnly", "apodFavorites", "showTopSites"],
   ({ hiResOnly, apodType, apodFavorites, showTopSites }) => {
-    ga({ type: "pageview", category: "v3.0.0", page: "apod-by-trav" });
+    ga({
+      type: "pageview",
+      category: `v${manifest.version}`,
+      page: "apod-by-trav"
+    });
     ReactDOM.render(
       <App
         apodType={apodType || "today"}

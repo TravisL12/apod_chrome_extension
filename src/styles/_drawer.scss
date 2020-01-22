@@ -133,28 +133,16 @@ $top-offset: 100px;
       }
     }
 
-    .copyright {
+    .copyright,
+    .download-image {
       font-size: inherit;
       margin-bottom: 10px;
     }
 
-    .external-links {
-      display: flex;
-      justify-content: space-around;
-      font-size: inherit;
-
-      a {
-        color: white;
-      }
-      .download-image {
-        cursor: pointer;
-        display: inline-block;
-        width: 55px;
-        font-size: 12px;
-        text-align: center;
-        &:hover {
-          text-decoration: underline;
-        }
+    .download-image {
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
       }
     }
 

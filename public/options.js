@@ -5,7 +5,6 @@ const defaultOptions = {
   hiResOnly: false,
   showTopSites: true
 };
-
 const savedAnnounced = document.getElementById("saved-announced");
 const optionsEl = document.getElementById("apod-options");
 const optionsForm = {
@@ -13,6 +12,9 @@ const optionsForm = {
   highResOnly: optionsEl["high-res-only"],
   showTopSites: optionsEl["show-top-sites"]
 };
+
+const manifest = chrome.runtime.getManifest();
+document.getElementById("version").textContent = `v${manifest.version}`;
 
 function saveOption(obj) {
   chrome.storage.sync.set(obj);
