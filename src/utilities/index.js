@@ -18,6 +18,15 @@ export const KEY_MAP = {
   NEXT_HISTORY: "ArrowRight"
 };
 
+export function downloadImage(url) {
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "image.jpg";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+}
+
 /* Randomizer */
 export function randomizer(max = 1, min = 0) {
   return Math.round(Math.random() * (max - min) + min);

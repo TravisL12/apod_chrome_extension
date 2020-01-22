@@ -1,5 +1,5 @@
 import React from "react";
-import { apodSourceLink } from "../../utilities";
+import { downloadImage } from "../../utilities";
 
 function ExplanationTab({
   response: { title, date, explanation, hdurl, url, copyright },
@@ -32,19 +32,12 @@ function ExplanationTab({
       {copyright && <div className="copyright">Copyright: {copyright}</div>}
 
       <div className="external-links">
-        <a
-          href={apodSourceLink(date)}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          View this APOD
-        </a>
-        <a href={hdurl} target="_blank" rel="noopener noreferrer">
-          Hi-res
-        </a>
-        <a href={url} target="_blank" rel="noopener noreferrer">
-          Low-res
-        </a>
+        <span onClick={() => downloadImage(hdurl)} className="download-image">
+          Download Hi-res
+        </span>
+        <span onClick={() => downloadImage(url)} className="download-image">
+          Download Low-res
+        </span>
       </div>
     </div>
   );

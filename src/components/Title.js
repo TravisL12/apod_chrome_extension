@@ -7,6 +7,7 @@ import {
   today,
   MIN_APOD_DATE
 } from "../utilities/dateUtility";
+import { apodSourceLink } from "../utilities";
 
 function Title({
   response: { title, date },
@@ -59,6 +60,15 @@ function Title({
         ) : (
           <li onClick={saveFavorite}>Save</li>
         )}
+        <li className="apod-link">
+          <a
+            href={apodSourceLink(date)}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            APOD
+          </a>
+        </li>
         {!isImageHD && <li onClick={forceHighDef}>Force HD</li>}
       </ul>
     </div>

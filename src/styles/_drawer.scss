@@ -139,14 +139,20 @@ $top-offset: 100px;
     }
 
     .external-links {
+      display: flex;
+      justify-content: space-around;
       font-size: inherit;
-      margin-bottom: 10px;
-      text-rendering: optimizeLegibility;
 
       a {
         color: white;
-        & + a {
-          margin-left: 5px;
+      }
+      .download-image {
+        cursor: pointer;
+        display: inline-block;
+        width: 55px;
+        font-size: 12px;
+        &:hover {
+          text-decoration: underline;
         }
       }
     }

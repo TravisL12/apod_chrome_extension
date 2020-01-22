@@ -177,14 +177,13 @@ body {
           color: $highlight-blue;
           font-weight: 600;
         }
-
+        &.apod-link a {
+          color: inherit;
+          text-decoration: none;
+        }
         &.hover,
         &:hover {
           color: lighten($gray, 20%);
-        }
-
-        &:active {
-          color: gold;
         }
       }
     }
