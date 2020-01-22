@@ -595,7 +595,7 @@ module.exports = function(webpackEnv) {
           runtimeCaching: [
             {
               urlPattern: new RegExp(
-                "^https://apod.nasa.gov/apod/.*(png|gif|jpg|jpeg)$"
+                "^https://apod.nasa.gov/apod/image/.*(png|gif|jpg|jpeg)$"
               ),
               handler: "StaleWhileRevalidate",
               options: {
