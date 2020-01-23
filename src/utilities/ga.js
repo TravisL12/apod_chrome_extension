@@ -81,8 +81,8 @@ export default function(event) {
       if (items.apodUuid) {
         CLIENT_ID = items.apodUuid;
       } else {
-        const uuid = generateUuid();
-        chrome.storage.sync.set({ apodUuid: uuid });
+        const apodUuid = generateUuid();
+        chrome.storage.sync.set({ apodUuid });
         CLIENT_ID = uuid;
       }
       buildParameter(event);
