@@ -1,6 +1,7 @@
 /*global chrome*/
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
+import { shape, bool, string, object } from "prop-types";
 
 import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
@@ -9,7 +10,25 @@ import "./styles/style.scss";
 import { manifest } from "./utilities";
 
 export default class App extends Component {
-  state = this.props;
+  static propTypes = {
+    options: shape({
+      apodType: string,
+      apodFavorites: object,
+      hiResOnly: bool,
+      showTopSites: bool
+    })
+  };
+
+  static defaultProps = {
+    options: {
+      apodType: "today",
+      apodFavorites: {},
+      hiResOnly: false,
+      showTopSites: false
+    }
+  };
+
+  state = this.props.options;
 
   componentDidMount() {
     chrome.storage.onChanged.addListener(changes => {
@@ -38,22 +57,14 @@ export default class App extends Component {
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(
-  ["apodType", "hiResOnly", "apodFavorites", "showTopSites"],
-  ({ hiResOnly, apodType, apodFavorites, showTopSites }) => {
+  ["apodType", "hiResOnly", "apodFavorites", "showTopSites", "todayCount"],
+  options => {
     ga({
       type: "pageview",
       category: `v${manifest.version}`,
       page: "apod-by-trav"
     });
-    ReactDOM.render(
-      <App
-        apodType={apodType || "today"}
-        apodFavorites={apodFavorites || {}}
-        hiResOnly={hiResOnly || false}
-        showTopSites={showTopSites || false}
-      />,
-      document.getElementById("root")
-    );
+    ReactDOM.render(<App options={options} />, document.getElementById("root"));
   }
 );
 

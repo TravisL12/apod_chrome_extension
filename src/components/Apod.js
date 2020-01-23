@@ -28,7 +28,7 @@ const historyHelper = new HistoryHelper();
 const preload = new Preload();
 
 class Apod extends Component {
-  static propType = {
+  static propTypes = {
     selection: string,
     isHighRes: string,
     showTopSites: bool,
