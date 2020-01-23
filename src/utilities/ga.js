@@ -1,6 +1,7 @@
 /*global chrome*/
 
 const GA_TRACKING_ID = "UA-91390132-1";
+const MAX_BATCH_PARAMS = 20;
 const analyticsSendInterval = 5 * 1000;
 let parameters = [],
   intervalFn,
@@ -66,7 +67,7 @@ function sendAnalytics() {
 }
 
 function updateInterval() {
-  if (!intervalFn) {
+  if (!intervalFn || parameters.length >= MAX_BATCH_PARAMS) {
     sendAnalytics(); // fire analytics on first load
   }
 
