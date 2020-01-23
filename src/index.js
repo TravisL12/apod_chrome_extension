@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
-import { shape, bool, string, object } from "prop-types";
+import { number, shape, bool, string, objectOf } from "prop-types";
 
 import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
@@ -11,24 +11,29 @@ import { manifest } from "./utilities";
 
 export default class App extends Component {
   static propTypes = {
-    options: shape({
-      apodType: string,
-      apodFavorites: object,
-      hiResOnly: bool,
-      showTopSites: bool
-    })
+    apodType: string,
+    apodFavorites: objectOf(
+      shape({
+        url: string,
+        title: string
+      })
+    ),
+    hiResOnly: bool,
+    showTopSites: bool,
+    todayCount: number,
+    todayLimit: number
   };
 
   static defaultProps = {
-    options: {
-      apodType: "today",
-      apodFavorites: {},
-      hiResOnly: false,
-      showTopSites: false
-    }
+    apodType: "today",
+    apodFavorites: {},
+    hiResOnly: false,
+    showTopSites: false,
+    todayCount: 0,
+    todayLimit: undefined
   };
 
-  state = this.props.options;
+  state = this.props;
 
   componentDidMount() {
     chrome.storage.onChanged.addListener(changes => {
@@ -42,7 +47,14 @@ export default class App extends Component {
   }
 
   render() {
-    const { apodType, apodFavorites, hiResOnly, showTopSites } = this.state;
+    const {
+      apodType,
+      apodFavorites,
+      hiResOnly,
+      showTopSites,
+      todayCount,
+      todayLimit
+    } = this.state;
 
     return (
       <Apod
@@ -50,6 +62,8 @@ export default class App extends Component {
         favorites={apodFavorites}
         isHighRes={hiResOnly}
         showTopSites={showTopSites}
+        todayCount={todayCount}
+        todayLimit={todayLimit}
       />
     );
   }
@@ -57,14 +71,36 @@ export default class App extends Component {
 
 // Fetch chrome storage settings from options and load
 chrome.storage.sync.get(
-  ["apodType", "hiResOnly", "apodFavorites", "showTopSites", "todayCount"],
-  options => {
+  [
+    "apodType",
+    "hiResOnly",
+    "apodFavorites",
+    "showTopSites",
+    "todayCount",
+    "todayLimit"
+  ],
+  ({
+    apodType,
+    hiResOnly,
+    apodFavorites,
+    showTopSites,
+    todayCount,
+    todayLimit
+  }) => {
     ga({
       type: "pageview",
       category: `v${manifest.version}`,
       page: "apod-by-trav"
     });
-    ReactDOM.render(<App options={options} />, document.getElementById("root"));
+    const options = {
+      apodType,
+      hiResOnly,
+      apodFavorites,
+      showTopSites,
+      todayCount,
+      todayLimit
+    };
+    ReactDOM.render(<App {...options} />, document.getElementById("root"));
   }
 );
 

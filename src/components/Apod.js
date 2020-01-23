@@ -1,7 +1,7 @@
 /*global chrome*/
 import React, { Component } from "react";
 import axios from "axios";
-import { bool, string, arrayOf, shape } from "prop-types";
+import { number, bool, string, objectOf, shape } from "prop-types";
 import { GlobalHotKeys } from "react-hotkeys";
 
 import ApodDisplay from "./ApodDisplay";
@@ -32,7 +32,9 @@ class Apod extends Component {
     selection: string,
     isHighRes: string,
     showTopSites: bool,
-    favorites: arrayOf(
+    todayCount: number,
+    todayLimit: number,
+    favorites: objectOf(
       shape({
         url: string,
         title: string
@@ -51,9 +53,12 @@ class Apod extends Component {
 
   componentDidMount() {
     const bypassLoadCount = true;
-    this.props.selection === "random"
-      ? this.random(bypassLoadCount)
-      : this.current();
+    const { selection, todayCount, todayLimit } = this.props;
+
+    const chooseRandom =
+      selection === "random" || (todayLimit && todayCount > todayLimit);
+
+    chooseRandom ? this.random(bypassLoadCount) : this.current();
   }
 
   setLoading = () => {
