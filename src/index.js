@@ -28,13 +28,13 @@ export default class App extends Component {
   };
 
   static defaultProps = {
-    apodType: "today",
+    apodType: "random",
     apodFavorites: {},
     hiResOnly: false,
-    showTopSites: false,
+    showTopSites: true,
     currentDate: today(),
     todayCount: 0,
-    todayLimit: 0,
+    todayLimit: 5,
     isTodayLimitOn: false
   };
 
@@ -58,29 +58,20 @@ export default class App extends Component {
   }
 
   render() {
-    const {
-      apodType,
-      apodFavorites,
-      hiResOnly,
-      showTopSites,
-      currentDate,
-      todayCount,
-      todayLimit,
-      isTodayLimitOn
-    } = this.state;
+    const props = {
+      selection: this.state.apodType,
+      favorites: this.state.apodFavorites,
+      isHighRes: this.state.hiResOnly,
+      showTopSites: this.state.showTopSites,
+      currentDate: this.state.currentDate,
+      showTodayOptions: {
+        count: this.state.todayCount,
+        limit: this.state.todayLimit,
+        isLimitOn: this.state.isTodayLimitOn
+      }
+    };
 
-    return (
-      <Apod
-        selection={apodType}
-        favorites={apodFavorites}
-        isHighRes={hiResOnly}
-        showTopSites={showTopSites}
-        currentDate={currentDate}
-        todayCount={todayCount}
-        todayLimit={todayLimit}
-        isTodayLimitOn={isTodayLimitOn}
-      />
-    );
+    return <Apod {...props} />;
   }
 }
 

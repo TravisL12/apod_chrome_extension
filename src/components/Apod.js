@@ -32,9 +32,11 @@ class Apod extends Component {
     selection: string,
     isHighRes: string,
     showTopSites: bool,
-    todayCount: number,
-    todayLimit: number,
-    isTodayLimitOn: bool,
+    showTodayOptions: shape({
+      count: number,
+      limit: number,
+      isLimitOn: bool
+    }),
     favorites: objectOf(
       shape({
         url: string,
@@ -54,13 +56,16 @@ class Apod extends Component {
 
   componentDidMount() {
     const bypassLoadCount = true;
-    const { selection, todayCount, todayLimit, isTodayLimitOn } = this.props;
+    const {
+      selection,
+      showTodayOptions: { count, limit, isLimitOn }
+    } = this.props;
 
     const chooseRandom =
-      selection === "random" || (isTodayLimitOn && todayCount >= todayLimit);
+      selection === "random" || (isLimitOn && count >= limit);
 
-    if (selection === "today" && isTodayLimitOn) {
-      chrome.storage.sync.set({ todayCount: todayCount + 1 });
+    if (selection === "today" && isLimitOn) {
+      chrome.storage.sync.set({ todayCount: count + 1 });
     }
 
     chooseRandom ? this.random(bypassLoadCount) : this.current();

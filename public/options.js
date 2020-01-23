@@ -1,14 +1,16 @@
 /*global chrome*/
 const SAVED_MESSAGE_DISPLAY_TIME = 1000;
+const saveAnnounced = document.getElementById("save-announced");
+const optionsEl = document.getElementById("apod-options");
+const manifest = chrome.runtime.getManifest();
+document.getElementById("version").textContent = `v${manifest.version}`;
 const defaultOptions = {
   apodType: "random",
   hiResOnly: false,
   showTopSites: true,
   isTodayLimitOn: false,
-  todayLimit: 8
+  todayLimit: 5
 };
-const savedAnnounced = document.getElementById("saved-announced");
-const optionsEl = document.getElementById("apod-options");
 const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
@@ -17,32 +19,33 @@ const optionsForm = {
   todayCountInput: optionsEl["today-count-input"]
 };
 
-const manifest = chrome.runtime.getManifest();
-document.getElementById("version").textContent = `v${manifest.version}`;
+const syncGetOptions = [
+  "apodType",
+  "hiResOnly",
+  "showTopSites",
+  "isTodayLimitOn",
+  "todayLimit"
+];
 
-function saveOption(obj) {
-  chrome.storage.sync.set(obj);
+function storageSync(fn) {
+  chrome.storage.sync.get(syncGetOptions, fn);
+}
+
+function saveOption(obj, cb) {
   displaySaved();
+  cb ? chrome.storage.sync.set(obj, cb) : chrome.storage.sync.set(obj);
 }
 
 function displaySaved() {
-  savedAnnounced.classList.remove("hide");
+  saveAnnounced.classList.remove("hide");
   setTimeout(() => {
-    savedAnnounced.classList.add("hide");
+    saveAnnounced.classList.add("hide");
   }, SAVED_MESSAGE_DISPLAY_TIME);
-}
-
-function storageSync(fn) {
-  chrome.storage.sync.get(
-    ["apodType", "hiResOnly", "showTopSites", "isTodayLimitOn", "todayLimit"],
-    fn
-  );
 }
 
 class ApodOptions {
   constructor() {
     this.setDefaultValues();
-    this.restoreOptions();
     this.setListeners();
   }
 
@@ -87,26 +90,30 @@ class ApodOptions {
   setDefaultValues() {
     storageSync(
       ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
+        const options = {};
+
         if (!apodType) {
-          saveOption({ apodType: defaultOptions.apodType });
+          options.apodType = defaultOptions.apodType;
         }
         if (hiResOnly === undefined) {
-          saveOption({ hiResOnly: defaultOptions.hiResOnly });
+          options.hiResOnly = defaultOptions.hiResOnly;
         }
         if (showTopSites === undefined) {
-          saveOption({ showTopSites: defaultOptions.showTopSites });
+          options.showTopSites = defaultOptions.showTopSites;
         }
         if (isTodayLimitOn === undefined) {
-          saveOption({ isTodayLimitOn: defaultOptions.isTodayLimitOn });
+          options.isTodayLimitOn = defaultOptions.isTodayLimitOn;
         }
         if (todayLimit === undefined) {
-          saveOption({ todayLimit: defaultOptions.todayLimit });
+          options.todayLimit = defaultOptions.todayLimit;
         }
+
+        saveOption(options, this.loadOptions.bind(this));
       }
     );
   }
 
-  restoreOptions() {
+  loadOptions() {
     storageSync(
       ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
         optionsEl[apodType].checked = true;
