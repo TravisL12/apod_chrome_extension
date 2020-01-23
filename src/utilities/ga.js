@@ -83,7 +83,7 @@ export default function(event) {
       } else {
         const apodUuid = generateUuid();
         chrome.storage.sync.set({ apodUuid });
-        CLIENT_ID = uuid;
+        CLIENT_ID = apodUuid;
       }
       buildParameter(event);
     });
