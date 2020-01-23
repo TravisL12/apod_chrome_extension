@@ -3,14 +3,18 @@ const SAVED_MESSAGE_DISPLAY_TIME = 1000;
 const defaultOptions = {
   apodType: "random",
   hiResOnly: false,
-  showTopSites: true
+  showTopSites: true,
+  isTodayLimitOn: false,
+  todayLimit: 5
 };
 const savedAnnounced = document.getElementById("saved-announced");
 const optionsEl = document.getElementById("apod-options");
 const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
-  showTopSites: optionsEl["show-top-sites"]
+  showTopSites: optionsEl["show-top-sites"],
+  isTodayLimitOn: optionsEl["is-today-limit-on"],
+  todayCountMax: optionsEl["today-count"]
 };
 
 const manifest = chrome.runtime.getManifest();
@@ -33,7 +37,13 @@ class ApodOptions {
     this.restoreOptions();
   }
 
-  setDefaultValues({ apodType, hiResOnly, showTopSites }) {
+  setDefaultValues({
+    apodType,
+    hiResOnly,
+    showTopSites,
+    isTodayLimitOn,
+    todayLimit
+  }) {
     if (!apodType) {
       saveOption({ apodType: defaultOptions.apodType });
     }
@@ -42,6 +52,12 @@ class ApodOptions {
     }
     if (showTopSites === undefined) {
       saveOption({ showTopSites: defaultOptions.showTopSites });
+    }
+    if (isTodayLimitOn === undefined) {
+      saveOption({ isTodayLimitOn: defaultOptions.isTodayLimitOn });
+    }
+    if (todayLimit === undefined) {
+      saveOption({ todayLimit: defaultOptions.todayLimit });
     }
   }
 
@@ -57,11 +73,21 @@ class ApodOptions {
     saveOption({ showTopSites: optionsForm.showTopSites.checked });
   }
 
+  saveIsTodayLimitOn() {
+    saveOption({ isTodayLimitOn: optionsForm.isTodayLimitOn.checked });
+  }
+
   restoreOptions() {
     chrome.storage.sync.get(
-      ["apodType", "hiResOnly", "showTopSites"],
+      ["apodType", "hiResOnly", "showTopSites", "isTodayLimitOn", "todayLimit"],
       items => {
-        const { apodType, hiResOnly, showTopSites } = items;
+        const {
+          apodType,
+          hiResOnly,
+          showTopSites,
+          isTodayLimitOn,
+          todayLimit
+        } = items;
         this.setDefaultValues(items);
 
         optionsEl[apodType].checked = true;
@@ -86,6 +112,11 @@ class ApodOptions {
         optionsForm.showTopSites.addEventListener(
           "change",
           this.saveTopSitesToggle.bind(this)
+        );
+
+        optionsForm.isTodayLimitOn.addEventListener(
+          "change",
+          this.saveIsTodayLimitOn.bind(this)
         );
       }
     );
