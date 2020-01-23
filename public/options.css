@@ -90,6 +90,11 @@ li {
 .apod-options #apod-options .option .inputs input[type="radio"] {
   display: none;
 }
+.apod-options #apod-options .option .inputs input[type="number"]:disabled {
+  background: #e9e9e9;
+  color: rgba(87, 87, 87, 0.8);
+  border: 0;
+}
 .apod-options #apod-options .option .inputs label {
   font-size: 12px;
   width: 60px;
