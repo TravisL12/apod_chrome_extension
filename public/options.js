@@ -13,8 +13,8 @@ const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
   showTopSites: optionsEl["show-top-sites"],
-  isTodayLimitOn: optionsEl["is-today-limit-on"],
-  todayCountMax: optionsEl["today-count"]
+  isTodayLimitOn: optionsEl["show-today-limit"],
+  todayCountInput: optionsEl["today-count-input"]
 };
 
 const manifest = chrome.runtime.getManifest();
@@ -73,8 +73,14 @@ class ApodOptions {
     saveOption({ showTopSites: optionsForm.showTopSites.checked });
   }
 
+  saveTodayCountInput() {
+    saveOption({ todayLimit: optionsForm.todayCountInput.value });
+  }
+
   saveIsTodayLimitOn() {
-    saveOption({ isTodayLimitOn: optionsForm.isTodayLimitOn.checked });
+    const isChecked = optionsForm.isTodayLimitOn.checked;
+    optionsForm.todayCountInput.disabled = !isChecked;
+    saveOption({ isTodayLimitOn: isChecked });
   }
 
   restoreOptions() {
@@ -93,6 +99,9 @@ class ApodOptions {
         optionsEl[apodType].checked = true;
         optionsForm.highResOnly.checked = hiResOnly;
         optionsForm.showTopSites.checked = showTopSites;
+        optionsForm.isTodayLimitOn.checked = isTodayLimitOn;
+        optionsForm.todayCountInput.value = todayLimit;
+        optionsForm.todayCountInput.disabled = !isTodayLimitOn;
 
         optionsForm.chooseApod[0].addEventListener(
           "change",
@@ -112,6 +121,11 @@ class ApodOptions {
         optionsForm.showTopSites.addEventListener(
           "change",
           this.saveTopSitesToggle.bind(this)
+        );
+
+        optionsForm.todayCountInput.addEventListener(
+          "change",
+          this.saveTodayCountInput.bind(this)
         );
 
         optionsForm.isTodayLimitOn.addEventListener(
