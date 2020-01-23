@@ -34,6 +34,7 @@ class Apod extends Component {
     showTopSites: bool,
     todayCount: number,
     todayLimit: number,
+    isTodayLimitOn: bool,
     favorites: objectOf(
       shape({
         url: string,
@@ -53,10 +54,11 @@ class Apod extends Component {
 
   componentDidMount() {
     const bypassLoadCount = true;
-    const { selection, todayCount, todayLimit } = this.props;
+    const { selection, todayCount, todayLimit, isTodayLimitOn } = this.props;
 
     const chooseRandom =
-      selection === "random" || (todayLimit && todayCount > todayLimit);
+      selection === "random" ||
+      (isTodayLimitOn && todayLimit && todayCount > todayLimit);
 
     chooseRandom ? this.random(bypassLoadCount) : this.current();
   }

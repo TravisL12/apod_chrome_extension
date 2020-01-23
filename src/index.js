@@ -21,7 +21,8 @@ export default class App extends Component {
     hiResOnly: bool,
     showTopSites: bool,
     todayCount: number,
-    todayLimit: number
+    todayLimit: number,
+    isTodayLimitOn: bool
   };
 
   static defaultProps = {
@@ -30,7 +31,8 @@ export default class App extends Component {
     hiResOnly: false,
     showTopSites: false,
     todayCount: 0,
-    todayLimit: undefined
+    todayLimit: undefined,
+    isTodayLimitOn: false
   };
 
   state = this.props;
@@ -53,7 +55,8 @@ export default class App extends Component {
       hiResOnly,
       showTopSites,
       todayCount,
-      todayLimit
+      todayLimit,
+      isTodayLimitOn
     } = this.state;
 
     return (
@@ -64,6 +67,7 @@ export default class App extends Component {
         showTopSites={showTopSites}
         todayCount={todayCount}
         todayLimit={todayLimit}
+        isTodayLimitOn={isTodayLimitOn}
       />
     );
   }
@@ -77,7 +81,8 @@ chrome.storage.sync.get(
     "apodFavorites",
     "showTopSites",
     "todayCount",
-    "todayLimit"
+    "todayLimit",
+    "isTodayLimitOn"
   ],
   ({
     apodType,
@@ -85,7 +90,8 @@ chrome.storage.sync.get(
     apodFavorites,
     showTopSites,
     todayCount,
-    todayLimit
+    todayLimit,
+    isTodayLimitOn
   }) => {
     ga({
       type: "pageview",
@@ -98,7 +104,8 @@ chrome.storage.sync.get(
       apodFavorites,
       showTopSites,
       todayCount,
-      todayLimit
+      todayLimit,
+      isTodayLimitOn
     };
     ReactDOM.render(<App {...options} />, document.getElementById("root"));
   }
