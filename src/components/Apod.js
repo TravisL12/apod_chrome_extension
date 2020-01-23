@@ -57,8 +57,12 @@ class Apod extends Component {
     const { selection, todayCount, todayLimit, isTodayLimitOn } = this.props;
 
     const chooseRandom =
-      selection === "random" ||
-      (isTodayLimitOn && todayLimit && todayCount > todayLimit);
+      selection === "random" || (isTodayLimitOn && todayCount >= todayLimit);
+
+    if (selection === "today" && isTodayLimitOn) {
+      // have to check on the date of "today" and reset on new days
+      chrome.storage.sync.set({ todayCount: todayCount + 1 });
+    }
 
     chooseRandom ? this.random(bypassLoadCount) : this.current();
   }

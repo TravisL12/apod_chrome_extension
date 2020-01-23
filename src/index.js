@@ -31,7 +31,7 @@ export default class App extends Component {
     hiResOnly: false,
     showTopSites: false,
     todayCount: 0,
-    todayLimit: undefined,
+    todayLimit: 0,
     isTodayLimitOn: false
   };
 

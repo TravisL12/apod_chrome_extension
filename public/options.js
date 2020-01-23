@@ -9,6 +9,7 @@ const defaultOptions = {
 };
 const savedAnnounced = document.getElementById("saved-announced");
 const optionsEl = document.getElementById("apod-options");
+const currentCount = document.getElementById("current-count");
 const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
@@ -85,17 +86,25 @@ class ApodOptions {
 
   restoreOptions() {
     chrome.storage.sync.get(
-      ["apodType", "hiResOnly", "showTopSites", "isTodayLimitOn", "todayLimit"],
+      [
+        "apodType",
+        "hiResOnly",
+        "showTopSites",
+        "isTodayLimitOn",
+        "todayLimit",
+        "todayCount"
+      ],
       items => {
         const {
           apodType,
           hiResOnly,
           showTopSites,
           isTodayLimitOn,
-          todayLimit
+          todayLimit,
+          todayCount
         } = items;
         this.setDefaultValues(items);
-
+        currentCount.textContent = todayCount;
         optionsEl[apodType].checked = true;
         optionsForm.highResOnly.checked = hiResOnly;
         optionsForm.showTopSites.checked = showTopSites;
