@@ -8,6 +8,7 @@ import Apod from "./components/Apod";
 import ga from "./utilities/ga";
 import "./styles/style.scss";
 import { manifest } from "./utilities";
+import { today } from "./utilities/dateUtility";
 
 export default class App extends Component {
   static propTypes = {
@@ -20,6 +21,7 @@ export default class App extends Component {
     ),
     hiResOnly: bool,
     showTopSites: bool,
+    currentDate: string,
     todayCount: number,
     todayLimit: number,
     isTodayLimitOn: bool
@@ -30,6 +32,7 @@ export default class App extends Component {
     apodFavorites: {},
     hiResOnly: false,
     showTopSites: false,
+    currentDate: today(),
     todayCount: 0,
     todayLimit: 0,
     isTodayLimitOn: false
@@ -38,6 +41,12 @@ export default class App extends Component {
   state = this.props;
 
   componentDidMount() {
+    if (this.props.currentDate !== today()) {
+      const updateCurrentDateOptions = { currentDate: today(), todayCount: 0 };
+      chrome.storage.sync.set(updateCurrentDateOptions);
+      this.setState(updateCurrentDateOptions);
+    }
+
     chrome.storage.onChanged.addListener(changes => {
       const updatedSettings = Object.keys(changes).reduce((result, setting) => {
         result[setting] = changes[setting].newValue;
@@ -54,6 +63,7 @@ export default class App extends Component {
       apodFavorites,
       hiResOnly,
       showTopSites,
+      currentDate,
       todayCount,
       todayLimit,
       isTodayLimitOn
@@ -65,6 +75,7 @@ export default class App extends Component {
         favorites={apodFavorites}
         isHighRes={hiResOnly}
         showTopSites={showTopSites}
+        currentDate={currentDate}
         todayCount={todayCount}
         todayLimit={todayLimit}
         isTodayLimitOn={isTodayLimitOn}
@@ -80,33 +91,17 @@ chrome.storage.sync.get(
     "hiResOnly",
     "apodFavorites",
     "showTopSites",
+    "currentDate",
     "todayCount",
     "todayLimit",
     "isTodayLimitOn"
   ],
-  ({
-    apodType,
-    hiResOnly,
-    apodFavorites,
-    showTopSites,
-    todayCount,
-    todayLimit,
-    isTodayLimitOn
-  }) => {
+  options => {
     ga({
       type: "pageview",
       category: `v${manifest.version}`,
       page: "apod-by-trav"
     });
-    const options = {
-      apodType,
-      hiResOnly,
-      apodFavorites,
-      showTopSites,
-      todayCount,
-      todayLimit,
-      isTodayLimitOn
-    };
     ReactDOM.render(<App {...options} />, document.getElementById("root"));
   }
 );

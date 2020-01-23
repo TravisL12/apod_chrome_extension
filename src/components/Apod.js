@@ -60,7 +60,6 @@ class Apod extends Component {
       selection === "random" || (isTodayLimitOn && todayCount >= todayLimit);
 
     if (selection === "today" && isTodayLimitOn) {
-      // have to check on the date of "today" and reset on new days
       chrome.storage.sync.set({ todayCount: todayCount + 1 });
     }
 

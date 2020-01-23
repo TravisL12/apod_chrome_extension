@@ -5,11 +5,10 @@ const defaultOptions = {
   hiResOnly: false,
   showTopSites: true,
   isTodayLimitOn: false,
-  todayLimit: 5
+  todayLimit: 8
 };
 const savedAnnounced = document.getElementById("saved-announced");
 const optionsEl = document.getElementById("apod-options");
-const currentCount = document.getElementById("current-count");
 const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
@@ -33,33 +32,22 @@ function displaySaved() {
   }, SAVED_MESSAGE_DISPLAY_TIME);
 }
 
+function storageSync(fn) {
+  chrome.storage.sync.get(
+    ["apodType", "hiResOnly", "showTopSites", "isTodayLimitOn", "todayLimit"],
+    fn
+  );
+}
+
 class ApodOptions {
   constructor() {
+    this.setDefaultValues();
     this.restoreOptions();
+    this.setListeners();
   }
 
-  setDefaultValues({
-    apodType,
-    hiResOnly,
-    showTopSites,
-    isTodayLimitOn,
-    todayLimit
-  }) {
-    if (!apodType) {
-      saveOption({ apodType: defaultOptions.apodType });
-    }
-    if (hiResOnly === undefined) {
-      saveOption({ hiResOnly: defaultOptions.hiResOnly });
-    }
-    if (showTopSites === undefined) {
-      saveOption({ showTopSites: defaultOptions.showTopSites });
-    }
-    if (isTodayLimitOn === undefined) {
-      saveOption({ isTodayLimitOn: defaultOptions.isTodayLimitOn });
-    }
-    if (todayLimit === undefined) {
-      saveOption({ todayLimit: defaultOptions.todayLimit });
-    }
+  createListener(el, fn) {
+    el.addEventListener("change", fn.bind(this));
   }
 
   saveApodType() {
@@ -81,66 +69,52 @@ class ApodOptions {
   saveIsTodayLimitOn() {
     const isChecked = optionsForm.isTodayLimitOn.checked;
     optionsForm.todayCountInput.disabled = !isChecked;
+    if (!isChecked) {
+      saveOption({ todayCount: 0 });
+    }
     saveOption({ isTodayLimitOn: isChecked });
   }
 
+  setListeners() {
+    this.createListener(optionsForm.chooseApod[0], this.saveApodType);
+    this.createListener(optionsForm.chooseApod[1], this.saveApodType);
+    this.createListener(optionsForm.highResOnly, this.saveHiResOnly);
+    this.createListener(optionsForm.showTopSites, this.saveTopSitesToggle);
+    this.createListener(optionsForm.todayCountInput, this.saveTodayCountInput);
+    this.createListener(optionsForm.isTodayLimitOn, this.saveIsTodayLimitOn);
+  }
+
+  setDefaultValues() {
+    storageSync(
+      ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
+        if (!apodType) {
+          saveOption({ apodType: defaultOptions.apodType });
+        }
+        if (hiResOnly === undefined) {
+          saveOption({ hiResOnly: defaultOptions.hiResOnly });
+        }
+        if (showTopSites === undefined) {
+          saveOption({ showTopSites: defaultOptions.showTopSites });
+        }
+        if (isTodayLimitOn === undefined) {
+          saveOption({ isTodayLimitOn: defaultOptions.isTodayLimitOn });
+        }
+        if (todayLimit === undefined) {
+          saveOption({ todayLimit: defaultOptions.todayLimit });
+        }
+      }
+    );
+  }
+
   restoreOptions() {
-    chrome.storage.sync.get(
-      [
-        "apodType",
-        "hiResOnly",
-        "showTopSites",
-        "isTodayLimitOn",
-        "todayLimit",
-        "todayCount"
-      ],
-      items => {
-        const {
-          apodType,
-          hiResOnly,
-          showTopSites,
-          isTodayLimitOn,
-          todayLimit,
-          todayCount
-        } = items;
-        this.setDefaultValues(items);
-        currentCount.textContent = todayCount;
+    storageSync(
+      ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
         optionsEl[apodType].checked = true;
         optionsForm.highResOnly.checked = hiResOnly;
         optionsForm.showTopSites.checked = showTopSites;
         optionsForm.isTodayLimitOn.checked = isTodayLimitOn;
         optionsForm.todayCountInput.value = todayLimit;
         optionsForm.todayCountInput.disabled = !isTodayLimitOn;
-
-        optionsForm.chooseApod[0].addEventListener(
-          "change",
-          this.saveApodType.bind(this)
-        );
-
-        optionsForm.chooseApod[1].addEventListener(
-          "change",
-          this.saveApodType.bind(this)
-        );
-
-        optionsForm.highResOnly.addEventListener(
-          "change",
-          this.saveHiResOnly.bind(this)
-        );
-
-        optionsForm.showTopSites.addEventListener(
-          "change",
-          this.saveTopSitesToggle.bind(this)
-        );
-
-        optionsForm.todayCountInput.addEventListener(
-          "change",
-          this.saveTodayCountInput.bind(this)
-        );
-
-        optionsForm.isTodayLimitOn.addEventListener(
-          "change",
-          this.saveIsTodayLimitOn.bind(this)
-        );
       }
     );
   }
