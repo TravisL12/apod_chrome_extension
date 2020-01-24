@@ -13,8 +13,9 @@ describe("Preload Utility", () => {
   });
 
   it("creates a new object", () => {
-    expect(preload.currentIdx).toBe(0);
+    expect(preload.randomRequestPending).toBe(false);
     expect(preload.loadingCount).toBe(0);
+    expect(preload.dates.length).toBe(0);
   });
 
   it("getImages makes a request", () => {});
