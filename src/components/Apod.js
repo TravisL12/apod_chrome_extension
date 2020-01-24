@@ -30,7 +30,7 @@ const preload = new Preload();
 class Apod extends Component {
   static propTypes = {
     selection: string,
-    isHighRes: string,
+    isHighRes: bool,
     showTopSites: bool,
     showTodayOptions: shape({
       count: number,

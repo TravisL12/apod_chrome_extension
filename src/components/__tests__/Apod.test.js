@@ -20,9 +20,14 @@ const mockResponse = {
 describe("Apod Component", () => {
   const props = {
     selection: "today",
-    favorites: [],
+    favorites: {},
     isHighRes: true,
-    showTopSites: true
+    showTopSites: true,
+    showTodayOptions: {
+      count: 0,
+      limit: 0,
+      isLimitOn: false
+    }
   };
 
   it("renders component", () => {

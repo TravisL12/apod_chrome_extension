@@ -66,7 +66,8 @@ class ApodOptions {
   }
 
   saveTodayCountInput() {
-    saveOption({ todayLimit: optionsForm.todayCountInput.value });
+    const todayLimit = parseInt(optionsForm.todayCountInput.value);
+    saveOption({ todayLimit });
   }
 
   saveIsTodayLimitOn() {

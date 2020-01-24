@@ -32,21 +32,26 @@ export default class App extends Component {
     apodFavorites: {},
     hiResOnly: false,
     showTopSites: true,
-    currentDate: today(),
     todayCount: 0,
     todayLimit: 5,
     isTodayLimitOn: false
   };
 
-  state = this.props;
+  state = {
+    ...this.props,
+    isLoading: !this.props.currentDate || this.props.currentDate !== today()
+  };
 
   componentDidMount() {
-    if (this.props.currentDate !== today()) {
-      const updateCurrentDateOptions = { currentDate: today(), todayCount: 0 };
-      chrome.storage.sync.set(updateCurrentDateOptions);
-      this.setState(updateCurrentDateOptions);
-    }
+    this.updateCurrentDate().then(updateCurrentDateOptions => {
+      if (updateCurrentDateOptions) {
+        this.setState({ ...updateCurrentDateOptions, isLoading: false });
+      }
+    });
+    this.setChromeListener();
+  }
 
+  setChromeListener() {
     chrome.storage.onChanged.addListener(changes => {
       const updatedSettings = Object.keys(changes).reduce((result, setting) => {
         result[setting] = changes[setting].newValue;
@@ -57,21 +62,58 @@ export default class App extends Component {
     });
   }
 
-  render() {
-    const props = {
-      selection: this.state.apodType,
-      favorites: this.state.apodFavorites,
-      isHighRes: this.state.hiResOnly,
-      showTopSites: this.state.showTopSites,
-      currentDate: this.state.currentDate,
-      showTodayOptions: {
-        count: this.state.todayCount,
-        limit: this.state.todayLimit,
-        isLimitOn: this.state.isTodayLimitOn
+  // Setup a promise to wait for chrome storage to sync the updated date
+  // this feels heavy handed
+  updateCurrentDate() {
+    return new Promise(resolve => {
+      if (this.state.isLoading) {
+        const updateCurrentDateOptions = {
+          currentDate: today(),
+          todayCount: 0
+        };
+
+        chrome.storage.sync.set(updateCurrentDateOptions, () => {
+          resolve(updateCurrentDateOptions);
+        });
+      } else {
+        resolve();
       }
+    });
+  }
+
+  render() {
+    const {
+      apodType: selection,
+      apodFavorites: favorites,
+      hiResOnly: isHighRes,
+      showTopSites,
+      currentDate,
+      todayCount: count,
+      todayLimit: limit,
+      isTodayLimitOn: isLimitOn,
+      isLoading
+    } = this.state;
+
+    if (isLoading) {
+      return null;
+    }
+
+    const showTodayOptions = {
+      count,
+      limit,
+      isLimitOn
     };
 
-    return <Apod {...props} />;
+    return (
+      <Apod
+        selection={selection}
+        favorites={favorites}
+        isHighRes={isHighRes}
+        showTopSites={showTopSites}
+        currentDate={currentDate}
+        showTodayOptions={showTodayOptions}
+      />
+    );
   }
 }
 
