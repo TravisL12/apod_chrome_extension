@@ -10,7 +10,7 @@
         <h3>
           Options
         </h3>
-        <span id="saved-announced" class="hide save-message">Saved!</span>
+        <span id="save-announced" class="hide save-message">Saved!</span>
       </div>
       <form id="apod-options">
         <div class="option">
@@ -33,8 +33,8 @@
           <div class="info">
             <span>High Resolution Images Only</span>
             <div class="sub-info">
-              When turned off, the standard res image is loaded if the HD image
-              doesn't load within 3 seconds
+              When turned off, the standard image loads if the HD image takes
+              too long.
             </div>
           </div>
           <div class="inputs">
@@ -50,7 +50,7 @@
           <div class="info">
             <span>Show Top Sites</span>
             <div class="sub-info">
-              This will show/hide the Top Site icons
+              This will show/hide the Top Site icons.
             </div>
           </div>
           <div class="inputs">
@@ -58,6 +58,29 @@
               type="checkbox"
               id="top-sites-toggle"
               name="show-top-sites"
+            />
+          </div>
+        </div>
+
+        <div class="option">
+          <div class="info">
+            <span>Switch from Today to Random</span>
+            <div class="sub-info">
+              Show today's APOD up to this limit and then show random APOD's.
+            </div>
+          </div>
+          <div class="inputs">
+            <input
+              type="checkbox"
+              id="is-today-limit-on"
+              name="show-today-limit"
+            />
+            <input
+              type="number"
+              min="1"
+              max="15"
+              id="today-count"
+              name="today-count-input"
             />
           </div>
         </div>

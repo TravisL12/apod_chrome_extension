@@ -4,7 +4,7 @@ import { API_KEY, APOD_API_URL, randomizer } from "./index";
 import { subtractDates, today } from "./dateUtility";
 
 const CURRENT_DATE_RANGE = 10;
-const PRELOAD_VALUE = 30;
+const PRELOAD_VALUE = 15;
 const RELOAD_THRESHOLD = 5;
 
 export default class Preload {
