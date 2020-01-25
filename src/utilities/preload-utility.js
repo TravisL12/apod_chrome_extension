@@ -34,8 +34,9 @@ export default class Preload {
   getDateRangeImages = (end_date = today()) => {
     const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
     const params = { start_date, end_date, api_key: API_KEY };
-    axios.get(APOD_API_URL, { params }).then(
-      ({ data }) => {
+    axios
+      .get(APOD_API_URL, { params })
+      .then(({ data }) => {
         data.forEach(response => {
           const { hdurl, url, media_type } = response;
           if (media_type === "image") {
@@ -43,22 +44,21 @@ export default class Preload {
             loadedImage.src = hdurl || url;
           }
         });
-      },
-      err => console.log(err)
-    );
+      })
+      .catch(err => err);
   };
 
   getImages = (count = PRELOAD_VALUE) => {
     if (this.randomRequestPending) return;
     this.randomRequestPending = true;
     const params = { count, api_key: API_KEY };
-    axios.get(APOD_API_URL, { params }).then(
-      response => {
+    axios
+      .get(APOD_API_URL, { params })
+      .then(response => {
         this.randomRequestPending = false;
         this.processResponse(response);
-      },
-      err => console.log(err)
-    );
+      })
+      .catch(err => err);
   };
 
   processResponse = ({ data }) => {

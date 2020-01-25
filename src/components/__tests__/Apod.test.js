@@ -6,16 +6,7 @@ import Drawer from "../Drawer";
 import Title from "../Title";
 import { TitleLoader } from "../LoadingSpinner";
 import TopSites from "../TopSites";
-
-const mockResponse = {
-  date: "2007-09-05",
-  explanation: "On September 1, Aurigid meteors filled the sky...",
-  hdurl: "https://apod.nasa.gov/apod/image/0709/AurigidVaubaillon.jpg",
-  media_type: "image",
-  service_version: "v1",
-  title: "Aurigids from 47,000 Feet",
-  url: "https://apod.nasa.gov/apod/image/0709/AurigidVaubaillon720.jpg"
-};
+import mockResponses from "../../../fixtures/mockResponses";
 
 describe("Apod Component", () => {
   const props = {
@@ -73,7 +64,7 @@ describe("Apod Component", () => {
 
   it("shows Drawer and Title when isLoading", () => {
     const component = shallow(<Apod {...props} />);
-    component.setState({ response: mockResponse, isLoading: false });
+    component.setState({ response: mockResponses[0], isLoading: false });
     component.update();
 
     expect(component.find(Title)).toHaveLength(1);

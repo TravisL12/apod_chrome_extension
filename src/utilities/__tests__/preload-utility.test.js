@@ -1,9 +1,9 @@
 /*global chrome*/
+import axios from "axios";
+import mockResponses from "../../../fixtures/mockResponses";
 import Preload from "../preload-utility";
 
-const axiosMock = {
-  get: jest.fn(() => Promise.resolve({ data: {} }))
-};
+jest.mock("axios");
 
 describe("Preload Utility", () => {
   let preload;
@@ -18,5 +18,11 @@ describe("Preload Utility", () => {
     expect(preload.dates.length).toBe(0);
   });
 
-  it("getImages makes a request", () => {});
+  it("getImages makes a request", async () => {
+    axios.get.mockImplementationOnce(() => Promise.resolve(mockResponses));
+    const processSpy = jest.spyOn(preload, "processResponse");
+    await preload.getImages();
+    expect(preload.randomRequestPending).toBe(false);
+    expect(processSpy).toHaveBeenCalledWith(mockResponses);
+  });
 });
