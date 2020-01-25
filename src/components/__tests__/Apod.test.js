@@ -52,6 +52,36 @@ describe("Apod Component", () => {
     expect(spy).toBeCalledTimes(1);
   });
 
+  it("loads today on componentDidMount when isLimitIsOn and under count limit", () => {
+    const showTodayOptions = {
+      count: 0,
+      limit: 5,
+      isLimitOn: true
+    };
+    const component = shallow(
+      <Apod {...props} showTodayOptions={showTodayOptions} />
+    );
+    const spy = jest.spyOn(component.instance(), "current");
+    component.instance().componentDidMount();
+
+    expect(spy).toBeCalledTimes(1);
+  });
+
+  it("loads random on componentDidMount when isLimitIsOn and over count limit", () => {
+    const showTodayOptions = {
+      count: 6,
+      limit: 5,
+      isLimitOn: true
+    };
+    const component = shallow(
+      <Apod {...props} showTodayOptions={showTodayOptions} />
+    );
+    const spy = jest.spyOn(component.instance(), "random");
+    component.instance().componentDidMount();
+
+    expect(spy).toBeCalledTimes(1);
+  });
+
   it("hides Drawer and Title when isLoading", () => {
     const component = shallow(<Apod {...props} />);
     component.setState({ isLoading: true });
