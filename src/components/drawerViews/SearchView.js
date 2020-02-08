@@ -12,8 +12,18 @@ import ga from "../../utilities/ga";
 
 const cachedResults = {};
 
+function checkCachedResults(keyword) {
+  return cachedResults[keyword.toLowerCase()];
+}
+
 const fetchApod = (keyword, setResults) => {
   setResults(undefined); // set loading view
+
+  const cachedResult = checkCachedResults(keyword);
+  if (keyword && cachedResult) {
+    setResults(cachedResult);
+    return;
+  }
 
   axios({
     method: "POST",
@@ -46,10 +56,9 @@ const fetchApod = (keyword, setResults) => {
         date: formatDate(new Date(date[1]))
       });
     }
-    console.log(results);
 
     ga({ category: "Search", action: "request", label: keyword });
-    cachedResults[keyword] = results;
+    cachedResults[keyword.toLowerCase()] = results;
     setResults(results);
   });
 };
@@ -63,8 +72,9 @@ function SearchView({ specificDate, closeDrawer, setSearchKeyword, keyword }) {
       return;
     }
 
-    if (cachedResults[keyword]) {
-      setResults(cachedResults[keyword]);
+    const cachedResult = checkCachedResults(keyword);
+    if (cachedResult) {
+      setResults(cachedResult);
       return;
     }
 
