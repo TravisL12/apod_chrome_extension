@@ -1,5 +1,13 @@
 $drawer-width: 400px;
 $top-offset: 100px;
+@mixin blue-link {
+  @extend %text-gradient;
+  cursor: pointer;
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: #86c7f8;
+  }
+}
 
 .apod__drawer {
   position: absolute;
@@ -124,24 +132,27 @@ $top-offset: 100px;
       text-rendering: optimizeLegibility;
 
       .highlight {
-        @extend %text-gradient;
-        cursor: pointer;
-        &:hover {
-          text-decoration: underline;
-          text-decoration-color: #86c7f8;
-        }
+        @include blue-link;
       }
     }
 
     .copyright,
     .download-image {
-      font-size: inherit;
+      font-size: 16px;
       margin-bottom: 10px;
     }
 
     .download-image {
-      @extend %text-gradient;
-      cursor: pointer;
+      .links {
+        display: flex;
+        justify-content: space-between;
+        width: 150px;
+      }
+      span,
+      a {
+        font-size: 14px;
+        @include blue-link;
+      }
     }
 
     .search-view {

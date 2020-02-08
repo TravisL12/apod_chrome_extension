@@ -31,11 +31,23 @@ function ExplanationTab({
 
       {copyright && <div className="copyright">Copyright: {copyright}</div>}
 
-      <div onClick={() => downloadImage(hdurl)} className="download-image">
-        Download High Resolution Image
+      <div className="download-image">
+        High Resolution Image{" "}
+        <div className="links">
+          <span onClick={() => downloadImage(hdurl)}>Download</span>{" "}
+          <a rel="noopener noreferrer" href={hdurl} target="_blank">
+            View
+          </a>
+        </div>
       </div>
-      <div onClick={() => downloadImage(url)} className="download-image">
-        Download Low Resolution Image
+      <div className="download-image">
+        Low Resolution Image
+        <div className="links">
+          <span onClick={() => downloadImage(url)}>Download</span>{" "}
+          <a rel="noopener noreferrer" href={url} target="_blank">
+            View
+          </a>
+        </div>
       </div>
     </div>
   );
