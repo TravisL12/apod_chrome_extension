@@ -26,7 +26,7 @@ const fetchApod = (keyword, setResults) => {
     const searches = searchHtml.querySelectorAll("p");
     const results = [];
 
-    for (let i = 0; searches.length; i++) {
+    for (let i = 0; i < searches.length; i++) {
       const search = searches[i];
       if (!search) continue;
 
@@ -34,7 +34,7 @@ const fetchApod = (keyword, setResults) => {
       if (!parse) continue;
 
       const date = parse.textContent.match(/^\s?APOD:\s(.*?)\s-/);
-      if (!date[1]) continue;
+      if (!date || !date[1]) continue;
 
       const title = parse.textContent
         .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
@@ -46,6 +46,7 @@ const fetchApod = (keyword, setResults) => {
         date: formatDate(new Date(date[1]))
       });
     }
+    console.log(results);
 
     ga({ category: "Search", action: "request", label: keyword });
     cachedResults[keyword] = results;
