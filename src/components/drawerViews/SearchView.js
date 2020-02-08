@@ -10,7 +10,6 @@ import { formatDate } from "../../utilities/dateUtility";
 import { SunLoader } from "../LoadingSpinner";
 import ga from "../../utilities/ga";
 
-const MAX_CELESTIAL_DISPLAYED = 20;
 const cachedResults = {};
 
 const fetchApod = (keyword, setResults) => {
@@ -27,7 +26,7 @@ const fetchApod = (keyword, setResults) => {
     const searches = searchHtml.querySelectorAll("p");
     const results = [];
 
-    for (let i = 0; i < MAX_CELESTIAL_DISPLAYED; i++) {
+    for (let i = 0; searches.length; i++) {
       const search = searches[i];
       if (!search) continue;
 

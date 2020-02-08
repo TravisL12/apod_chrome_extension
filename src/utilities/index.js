@@ -58,17 +58,18 @@ export function getImageDimensions(loadedImage) {
 
   const { width, height } = loadedImage;
   const { innerWidth, innerHeight } = window;
-
-  const widthGTwindow = width > innerWidth;
-  const heightGTwindow = height > innerHeight;
   const aspectRatio = width / height;
 
-  if (widthGTwindow || heightGTwindow) {
+  const widthGtWindow = width > innerWidth;
+  const heightGtWindow = height > innerHeight;
+
+  const widthRatioMax = width / innerWidth > 0.5;
+  const heightRatioMax = height / innerHeight > 0.5;
+
+  if (widthGtWindow || heightGtWindow) {
     showFadedBackground = true;
     backgroundSize = aspectRatio >= 1.3 ? "cover" : "contain";
-  }
-
-  if (width / innerWidth > 0.5 || height / innerHeight > 0.5) {
+  } else if (widthRatioMax || heightRatioMax) {
     showFadedBackground = true;
   }
 
