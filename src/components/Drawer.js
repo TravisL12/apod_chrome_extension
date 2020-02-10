@@ -6,7 +6,7 @@ import ExplanationView from "./drawerViews/ExplanationView";
 import FavoritesView from "./drawerViews/FavoritesView";
 import SearchView from "./drawerViews/SearchView";
 import { findCelestialObjects, KEY_MAP } from "../utilities";
-import HistoryView from "./drawerViews/HistoryView";
+// import HistoryView from "./drawerViews/HistoryView";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -23,12 +23,7 @@ function Tab({ name, onClickHandler, isActive }) {
   );
 }
 
-export default function Drawer({
-  response,
-  favorites,
-  specificDate,
-  historyHelper
-}) {
+export default function Drawer({ response, favorites, specificDate }) {
   const [isOpen, setIsOpen] = useState(false);
   const [openTabName, setOpenTabName] = useState(false);
   const [searchKeyword, setSearchKeyword] = useState(null);
@@ -63,13 +58,6 @@ export default function Drawer({
     favorites: (
       <FavoritesView
         favorites={favorites}
-        closeDrawer={closeDrawer}
-        specificDate={specificDate}
-      />
-    ),
-    history: (
-      <HistoryView
-        historyHelper={historyHelper}
         closeDrawer={closeDrawer}
         specificDate={specificDate}
       />

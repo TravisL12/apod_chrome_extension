@@ -1,0 +1,43 @@
+.history {
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+  padding: 15px;
+  overflow-x: scroll;
+}
+
+.history__thumb-border + .history__thumb-border {
+  margin-left: 10px;
+}
+
+.history__thumb-border {
+  background-color: white;
+  min-width: 40px;
+  height: 30px;
+  padding: 1px;
+  transition: 0.25s ease-in-out all;
+
+  &.active-date {
+    background-color: yellow;
+  }
+
+  &:hover {
+    height: 65px;
+    padding: 2px;
+  }
+}
+
+.history__thumb {
+  background: black;
+  display: flex;
+  justify-content: center;
+  padding: 1px;
+  box-sizing: border-box;
+  height: 100%;
+
+  img {
+    max-height: 100%;
+  }
+}

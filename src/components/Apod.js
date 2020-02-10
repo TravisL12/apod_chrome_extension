@@ -20,6 +20,7 @@ import {
 import HistoryHelper from "../utilities/history";
 import Preload from "../utilities/preload-utility";
 import ga from "../utilities/ga";
+import HistoryRow from "./HistoryRow";
 
 const MAX_ERROR_TRIES = 3;
 const ERROR_MESSAGE = "NASA APOD Error: Please reload or try Again Later";
@@ -294,7 +295,11 @@ class Apod extends Component {
             response={response}
             favorites={favorites}
             specificDate={this.specificDate}
+          />
+          <HistoryRow
             historyHelper={historyHelper}
+            specificDate={this.specificDate}
+            activeResponse={response}
           />
         </div>
       </GlobalHotKeys>
