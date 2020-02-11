@@ -1,4 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+
+import blackSpinner from "../ajax-loader-black.gif";
+
+function ImageLoader({ url }) {
+  const [image, setImage] = useState(blackSpinner);
+  const thumbImage = new Image();
+  thumbImage.src = url;
+  thumbImage.onload = () => {
+    setImage(url);
+  };
+
+  return (
+    <div className="history__thumb">
+      <img alt="APOD Thumb" src={image} />
+    </div>
+  );
+}
 
 export default function HistoryRow({
   historyHelper,
@@ -9,9 +26,7 @@ export default function HistoryRow({
 
   return (
     <div className={`history ${responses.length ? "show" : ""}`}>
-      {responses.map(response => {
-        const { date, url } = response;
-
+      {responses.map(({ date, url }) => {
         return (
           <div
             className={`history__thumb-border ${
@@ -23,9 +38,7 @@ export default function HistoryRow({
               specificDate(date);
             }}
           >
-            <div className="history__thumb">
-              <img alt="Thumb" src={url} />
-            </div>
+            <ImageLoader url={url} />
           </div>
         );
       })}
