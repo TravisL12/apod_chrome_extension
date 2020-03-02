@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -90,7 +92,9 @@ function SearchView({ specificDate, closeDrawer, setSearchKeyword, keyword }) {
           onChange={event => setSearchKeyword(event.target.value)}
         />
         <button type="submit">
-          <span role="image">&#x1F50E;</span>
+          <span role="img" aria-labelledby="Magnifying glass icon">
+            &#x1F50E;
+          </span>
         </button>
       </form>
       {!results ? (
