@@ -1,5 +1,3 @@
-/* eslint-disable jsx-a11y/accessible-emoji */
-/* eslint-disable jsx-a11y/aria-role */
 /* eslint-disable react-hooks/exhaustive-deps */
 
 import React, { useState, useEffect } from "react";
@@ -8,7 +6,6 @@ import axios from "axios";
 import ViewItem from "./ViewItem";
 import { formatDate } from "../../utilities/dateUtility";
 import { SunLoader } from "../LoadingSpinner";
-import ga from "../../utilities/ga";
 
 const cachedResults = {};
 
@@ -57,7 +54,6 @@ const fetchApod = (keyword, setResults) => {
       });
     }
 
-    ga({ category: "Search", action: "request", label: keyword });
     cachedResults[keyword.toLowerCase()] = results;
     setResults(results);
   });
@@ -96,7 +92,9 @@ function SearchView({ specificDate, closeDrawer, setSearchKeyword, keyword }) {
           onChange={event => setSearchKeyword(event.target.value)}
         />
         <button type="submit">
-          <span role="image">&#x1F50E;</span>
+          <span role="img" aria-labelledby="Magnifying glass icon">
+            &#x1F50E;
+          </span>
         </button>
       </form>
       {!results ? (
