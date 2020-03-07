@@ -19,7 +19,6 @@ import {
 } from "../utilities/dateUtility";
 import HistoryHelper from "../utilities/history";
 import Preload from "../utilities/preload-utility";
-import ga from "../utilities/ga";
 import HistoryRow from "./HistoryRow";
 
 const MAX_ERROR_TRIES = 3;
@@ -204,7 +203,6 @@ class Apod extends Component {
 
     loadedImage.onload = () => {
       clearTimeout(timeout);
-      ga({ category: "APOD", action: "viewed", label: response.date });
       this.setState({
         response,
         isImageHD,
@@ -231,27 +229,21 @@ class Apod extends Component {
 
     const handlers = {
       TODAY: () => {
-        ga({ category: "Button", action: "clicked", label: "current" });
         this.current();
       },
       RANDOM_DAY: () => {
-        ga({ category: "Button", action: "clicked", label: "random" });
         this.random();
       },
       PREVIOUS_DAY: () => {
-        ga({ category: "Button", action: "clicked", label: "previous" });
         this.previous();
       },
       NEXT_DAY: () => {
-        ga({ category: "Button", action: "clicked", label: "next" });
         this.next();
       },
       PREVIOUS_HISTORY: () => {
-        ga({ category: "Button", action: "clicked", label: "historyPrevious" });
         this.recallHistory();
       },
       NEXT_HISTORY: () => {
-        ga({ category: "Button", action: "clicked", label: "historyNext" });
         this.recallHistory(true);
       }
     };

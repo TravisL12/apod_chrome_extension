@@ -5,9 +5,7 @@ import { number, shape, bool, string, objectOf } from "prop-types";
 
 import * as serviceWorker from "./serviceWorker";
 import Apod from "./components/Apod";
-import ga from "./utilities/ga";
 import "./styles/style.scss";
-import { manifest } from "./utilities";
 import { today } from "./utilities/dateUtility";
 
 export default class App extends Component {
@@ -130,11 +128,6 @@ chrome.storage.sync.get(
     "isTodayLimitOn"
   ],
   options => {
-    ga({
-      type: "pageview",
-      category: `v${manifest.version}`,
-      page: "apod-by-trav"
-    });
     ReactDOM.render(<App {...options} />, document.getElementById("root"));
   }
 );
