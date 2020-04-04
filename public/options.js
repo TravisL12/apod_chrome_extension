@@ -8,23 +8,26 @@ const defaultOptions = {
   apodType: "random",
   hiResOnly: false,
   showTopSites: true,
+  showHistoryRow: true,
   isTodayLimitOn: false,
-  todayLimit: 5
+  todayLimit: 5,
 };
 const optionsForm = {
   chooseApod: optionsEl["choose-apod"],
   highResOnly: optionsEl["high-res-only"],
   showTopSites: optionsEl["show-top-sites"],
+  showHistoryRow: optionsEl["show-history-row"],
   isTodayLimitOn: optionsEl["show-today-limit"],
-  todayCountInput: optionsEl["today-count-input"]
+  todayCountInput: optionsEl["today-count-input"],
 };
 
 const syncGetOptions = [
   "apodType",
   "hiResOnly",
   "showTopSites",
+  "showHistoryRow",
   "isTodayLimitOn",
-  "todayLimit"
+  "todayLimit",
 ];
 
 function storageSync(fn) {
@@ -65,6 +68,10 @@ class ApodOptions {
     saveOption({ showTopSites: optionsForm.showTopSites.checked });
   }
 
+  saveHistoryRowToggle() {
+    saveOption({ showHistoryRow: optionsForm.showHistoryRow.checked });
+  }
+
   saveTodayCountInput() {
     const todayLimit = parseInt(optionsForm.todayCountInput.value);
     saveOption({ todayLimit });
@@ -84,13 +91,21 @@ class ApodOptions {
     this.createListener(optionsForm.chooseApod[1], this.saveApodType);
     this.createListener(optionsForm.highResOnly, this.saveHiResOnly);
     this.createListener(optionsForm.showTopSites, this.saveTopSitesToggle);
+    this.createListener(optionsForm.showHistoryRow, this.saveHistoryRowToggle);
     this.createListener(optionsForm.todayCountInput, this.saveTodayCountInput);
     this.createListener(optionsForm.isTodayLimitOn, this.saveIsTodayLimitOn);
   }
 
   setDefaultValues() {
     storageSync(
-      ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
+      ({
+        apodType,
+        hiResOnly,
+        showTopSites,
+        showHistoryRow,
+        isTodayLimitOn,
+        todayLimit,
+      }) => {
         const options = {};
 
         if (!apodType) {
@@ -101,6 +116,9 @@ class ApodOptions {
         }
         if (showTopSites === undefined) {
           options.showTopSites = defaultOptions.showTopSites;
+        }
+        if (showHistoryRow === undefined) {
+          options.showHistoryRow = defaultOptions.showHistoryRow;
         }
         if (isTodayLimitOn === undefined) {
           options.isTodayLimitOn = defaultOptions.isTodayLimitOn;
@@ -116,10 +134,18 @@ class ApodOptions {
 
   loadOptions() {
     storageSync(
-      ({ apodType, hiResOnly, showTopSites, isTodayLimitOn, todayLimit }) => {
+      ({
+        apodType,
+        hiResOnly,
+        showTopSites,
+        showHistoryRow,
+        isTodayLimitOn,
+        todayLimit,
+      }) => {
         optionsEl[apodType].checked = true;
         optionsForm.highResOnly.checked = hiResOnly;
         optionsForm.showTopSites.checked = showTopSites;
+        optionsForm.showHistoryRow.checked = showHistoryRow;
         optionsForm.isTodayLimitOn.checked = isTodayLimitOn;
         optionsForm.todayCountInput.value = todayLimit;
         optionsForm.todayCountInput.disabled = !isTodayLimitOn;

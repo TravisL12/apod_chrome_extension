@@ -1,6 +1,7 @@
 @import "../../node_modules/flatpickr/dist/themes/dark.css";
 @import "variables";
 @import "drawer";
+@import "history_row";
 @import "apod_loading_sun";
 @import "apod_loading_moon";
 
@@ -16,14 +17,6 @@ body {
   @include sun-loader;
   @include moon-loader;
   @import "apod_loading_cube";
-}
-
-.spin-loader {
-  width: 16px;
-  height: 16px;
-  background: url("../ajax-loader-black.gif");
-  background-size: contain;
-  background-repeat: no-repeat;
 }
 
 .load-title {

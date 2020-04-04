@@ -4,8 +4,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 
 import ViewItem from "./ViewItem";
-import { formatDate } from "../../utilities/dateUtility";
 import { SunLoader } from "../LoadingSpinner";
+import { APOD_SEARCH_URL } from "../../utilities";
 
 const cachedResults = {};
 
@@ -22,40 +22,14 @@ const fetchApod = (keyword, setResults) => {
     return;
   }
 
-  axios({
-    method: "POST",
-    url: "https://apod.nasa.gov/cgi-bin/apod/apod_search",
-    headers: { "content-type": "application/x-www-form-urlencoded" },
-    data: `tquery=${keyword}`
-  }).then(({ data }) => {
-    const domParse = new DOMParser();
-    const searchHtml = domParse.parseFromString(data, "text/html");
-    const searches = searchHtml.querySelectorAll("p");
-    const results = [];
+  const params = {
+    search_query: keyword,
+    number: 50,
+  };
 
-    for (let i = 0; i < searches.length; i++) {
-      const search = searches[i];
-      if (!search) continue;
-
-      const parse = search.querySelectorAll("a")[1];
-      if (!parse) continue;
-
-      const date = parse.textContent.match(/^\s?APOD:\s(.*?)\s-/);
-      if (!date || !date[1]) continue;
-
-      const title = parse.textContent
-        .replace(/(APOD:\s.*\s-)|(\r\n|\n|\r)/gm, "")
-        .trim();
-
-      results.push({
-        title,
-        url: parse.href,
-        date: formatDate(new Date(date[1]))
-      });
-    }
-
-    cachedResults[keyword.toLowerCase()] = results;
-    setResults(results);
+  axios.get(APOD_SEARCH_URL, { params }).then(({ data }) => {
+    cachedResults[keyword.toLowerCase()] = data;
+    setResults(data);
   });
 };
 
@@ -80,7 +54,7 @@ function SearchView({ specificDate, closeDrawer, setSearchKeyword, keyword }) {
   return (
     <div className="search-view">
       <form
-        onSubmit={event => {
+        onSubmit={(event) => {
           event.preventDefault();
           fetchApod(keyword, setResults);
         }}
@@ -89,7 +63,7 @@ function SearchView({ specificDate, closeDrawer, setSearchKeyword, keyword }) {
           type="text"
           value={keyword}
           placeholder={"Search the Heavens!"}
-          onChange={event => setSearchKeyword(event.target.value)}
+          onChange={({ target }) => setSearchKeyword(target.value)}
         />
         <button type="submit">
           <span role="img" aria-labelledby="Magnifying glass icon">
