@@ -1,9 +1,7 @@
 /*global chrome*/
 import axios from "axios";
 import { APOD_API_URL, randomizer } from "./index";
-import { subtractDates, today } from "./dateUtility";
 
-const CURRENT_DATE_RANGE = 5;
 const PRELOAD_VALUE = 10;
 const RELOAD_THRESHOLD = 3;
 
@@ -17,7 +15,6 @@ export default class Preload {
       if (preloadResponse) {
         this.dates.push(preloadResponse);
       }
-      this.getDateRangeImages();
       this.getImages();
     });
   }
@@ -26,31 +23,6 @@ export default class Preload {
     if (this.loadingCount > 0) {
       this.loadingCount -= 1;
     }
-  };
-
-  // Preload APODs from today to {CURRENT_DATE_RANGE } days ago
-  // This doesn't need to be in the this.dates array since these dates
-  // don't need to be specifically navigated to.
-  getDateRangeImages = (end_date = today()) => {
-    const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
-    const params = {
-      start_date,
-      end_date,
-      image_thumbnail_size: 450,
-      absolute_thumbnail_url: true,
-    };
-    axios
-      .get(APOD_API_URL, { params })
-      .then(({ data }) => {
-        data.forEach((response) => {
-          const { hdurl, url, media_type } = response;
-          if (media_type === "image") {
-            const loadedImage = new Image();
-            loadedImage.src = hdurl || url;
-          }
-        });
-      })
-      .catch((err) => err);
   };
 
   getImages = (count = PRELOAD_VALUE) => {
