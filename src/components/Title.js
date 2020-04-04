@@ -5,16 +5,15 @@ import {
   prettyDateFormat,
   isToday,
   today,
-  MIN_APOD_DATE
+  MIN_APOD_DATE,
 } from "../utilities/dateUtility";
-import { apodSourceLink } from "../utilities";
 
 function Title({
-  response: { title, date },
+  response: { title, date, apod_site },
   isImageHD,
   dateNavigation,
   specificDate,
-  isFavorite
+  isFavorite,
 }) {
   const {
     previous,
@@ -22,7 +21,7 @@ function Title({
     current,
     random,
     forceHighDef,
-    saveFavorite
+    saveFavorite,
   } = dateNavigation;
 
   return (
@@ -35,7 +34,7 @@ function Title({
               wrap: true,
               static: true,
               minDate: MIN_APOD_DATE,
-              maxDate: today()
+              maxDate: today(),
             }}
             onChange={(date, dateStr) => {
               specificDate(dateStr);
@@ -61,11 +60,7 @@ function Title({
           <li onClick={saveFavorite}>Save</li>
         )}
         <li className="apod-link">
-          <a
-            href={apodSourceLink(date)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={apod_site} target="_blank" rel="noopener noreferrer">
             APOD
           </a>
         </li>

@@ -2,12 +2,12 @@ import React from "react";
 import { downloadImage } from "../../utilities";
 
 function ExplanationTab({
-  response: { title, explanation, hdurl, url, copyright },
+  response: { title, description, hdurl, url, copyright },
   celestialObjects,
-  openSearchView
+  openSearchView,
 }) {
   const re = new RegExp(`(${celestialObjects.join("|")})`, "gi");
-  const explanationSplit = explanation.split(re);
+  const explanationSplit = description.split(re);
 
   return (
     <div className="explanation-tab">

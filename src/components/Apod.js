@@ -9,13 +9,13 @@ import Drawer from "./Drawer";
 import Title from "./Title";
 import TopSites from "./TopSites";
 import { TitleLoader } from "./LoadingSpinner";
-import { thumbSourceLink, KEY_MAP, APOD_API_URL, API_KEY } from "../utilities";
+import { KEY_MAP, APOD_API_URL } from "../utilities";
 import {
   adjacentDate,
   isToday,
   today,
   randomDate,
-  MIN_APOD_DATE
+  MIN_APOD_DATE,
 } from "../utilities/dateUtility";
 import HistoryHelper from "../utilities/history";
 import Preload from "../utilities/preload-utility";
@@ -34,14 +34,14 @@ class Apod extends Component {
     showTodayOptions: shape({
       count: number,
       limit: number,
-      isLimitOn: bool
+      isLimitOn: bool,
     }),
     favorites: objectOf(
       shape({
         url: string,
-        title: string
+        title: string,
       })
-    )
+    ),
   };
 
   state = {
@@ -50,14 +50,14 @@ class Apod extends Component {
     isLoading: true,
     isImageHD: false,
     hasLoadingError: false,
-    videoUrl: undefined
+    videoUrl: undefined,
   };
 
   componentDidMount() {
     const bypassLoadCount = true;
     const {
       selection,
-      showTodayOptions: { count, limit, isLimitOn }
+      showTodayOptions: { count, limit, isLimitOn },
     } = this.props;
 
     const chooseRandom =
@@ -74,7 +74,7 @@ class Apod extends Component {
     this.setState({ isLoading: true, response: undefined });
   };
 
-  specificDate = date => {
+  specificDate = (date) => {
     this.getImage(date);
   };
 
@@ -120,7 +120,11 @@ class Apod extends Component {
 
   getImage = (date, errorCount = 0) => {
     this.setLoading();
-    const params = { date, api_key: API_KEY };
+    const params = {
+      date,
+      image_thumbnail_size: 450,
+      absolute_thumbnail_url: true,
+    };
     axios.get(APOD_API_URL, { params }).then(
       ({ data }) => this.loadApod(data),
       () => this.errorApod(errorCount)
@@ -139,7 +143,7 @@ class Apod extends Component {
 
   saveFavorite = () => {
     const { favorites } = this.props;
-    const { date, title } = this.state.response;
+    const { date, title, image_thumbnail } = this.state.response;
 
     if (!favorites || !favorites[date]) {
       chrome.storage.sync.set({
@@ -147,14 +151,14 @@ class Apod extends Component {
           ...favorites,
           [date]: {
             title,
-            imgUrl: thumbSourceLink(date)
-          }
-        }
+            imgUrl: image_thumbnail,
+          },
+        },
       });
     }
   };
 
-  loadApod = response => {
+  loadApod = (response) => {
     const { isHighRes } = this.props;
     historyHelper.add(response);
     if (response.media_type === "video") {
@@ -164,7 +168,7 @@ class Apod extends Component {
           response,
           videoUrl,
           apodImage: undefined,
-          isLoading: false
+          isLoading: false,
         });
       } catch (err) {
         console.log(err);
@@ -175,7 +179,7 @@ class Apod extends Component {
     }
   };
 
-  errorApod = errorCount => {
+  errorApod = (errorCount) => {
     if (errorCount >= MAX_ERROR_TRIES) {
       this.setState({ hasLoadingError: true });
     } else {
@@ -206,7 +210,7 @@ class Apod extends Component {
         response,
         isImageHD,
         isLoading: false,
-        apodImage: loadedImage
+        apodImage: loadedImage,
       });
     };
 
@@ -223,7 +227,7 @@ class Apod extends Component {
       isImageHD,
       isLoading,
       hasLoadingError,
-      videoUrl
+      videoUrl,
     } = this.state;
 
     const handlers = {
@@ -244,7 +248,7 @@ class Apod extends Component {
       },
       NEXT_HISTORY: () => {
         this.recallHistory(true);
-      }
+      },
     };
 
     const dateNavigation = {
@@ -253,11 +257,11 @@ class Apod extends Component {
       current: this.current,
       random: this.random,
       forceHighDef: this.forceHighDef,
-      saveFavorite: this.saveFavorite
+      saveFavorite: this.saveFavorite,
     };
 
     const headerStyle = {
-      justifyContent: showTopSites ? "space-between" : "flex-end"
+      justifyContent: showTopSites ? "space-between" : "flex-end",
     };
 
     return (

@@ -1,6 +1,6 @@
 /*global chrome*/
 import axios from "axios";
-import { API_KEY, APOD_API_URL, randomizer } from "./index";
+import { APOD_API_URL, randomizer } from "./index";
 import { subtractDates, today } from "./dateUtility";
 
 const CURRENT_DATE_RANGE = 10;
@@ -33,11 +33,11 @@ export default class Preload {
   // don't need to be specifically navigated to.
   getDateRangeImages = (end_date = today()) => {
     const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
-    const params = { start_date, end_date, api_key: API_KEY };
+    const params = { start_date, end_date };
     axios
       .get(APOD_API_URL, { params })
       .then(({ data }) => {
-        data.forEach(response => {
+        data.forEach((response) => {
           const { hdurl, url, media_type } = response;
           if (media_type === "image") {
             const loadedImage = new Image();
@@ -45,32 +45,32 @@ export default class Preload {
           }
         });
       })
-      .catch(err => err);
+      .catch((err) => err);
   };
 
   getImages = (count = PRELOAD_VALUE) => {
     if (this.randomRequestPending) return;
     this.randomRequestPending = true;
-    const params = { count, api_key: API_KEY };
+    const params = { count };
     axios
       .get(APOD_API_URL, { params })
-      .then(response => {
+      .then((response) => {
         this.randomRequestPending = false;
         this.processResponse(response);
       })
-      .catch(err => err);
+      .catch((err) => err);
   };
 
   processResponse = ({ data }) => {
-    data.forEach(response => {
+    data.forEach((response) => {
       this.loadingCount += 1;
-      !this.dates.find(date => date === response.date)
+      !this.dates.find((date) => date === response.date)
         ? this.load(response)
         : this.decreaseLoadCount();
     });
   };
 
-  load = response => {
+  load = (response) => {
     const { hdurl, url, media_type } = response;
 
     if (media_type === "video") {
@@ -91,9 +91,9 @@ export default class Preload {
     loadedImage.onerror = this.decreaseLoadCount;
   };
 
-  addImage = response => {
+  addImage = (response) => {
     chrome.storage.sync.set({
-      preloadResponse: response
+      preloadResponse: response,
     });
     this.dates.push(response);
     this.decreaseLoadCount();
