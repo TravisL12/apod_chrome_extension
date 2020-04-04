@@ -3,9 +3,9 @@ import axios from "axios";
 import { APOD_API_URL, randomizer } from "./index";
 import { subtractDates, today } from "./dateUtility";
 
-const CURRENT_DATE_RANGE = 10;
-const PRELOAD_VALUE = 15;
-const RELOAD_THRESHOLD = 5;
+const CURRENT_DATE_RANGE = 5;
+const PRELOAD_VALUE = 10;
+const RELOAD_THRESHOLD = 3;
 
 export default class Preload {
   constructor() {
@@ -33,7 +33,12 @@ export default class Preload {
   // don't need to be specifically navigated to.
   getDateRangeImages = (end_date = today()) => {
     const start_date = subtractDates(CURRENT_DATE_RANGE, end_date);
-    const params = { start_date, end_date };
+    const params = {
+      start_date,
+      end_date,
+      image_thumbnail_size: 450,
+      absolute_thumbnail_url: true,
+    };
     axios
       .get(APOD_API_URL, { params })
       .then(({ data }) => {
@@ -51,7 +56,11 @@ export default class Preload {
   getImages = (count = PRELOAD_VALUE) => {
     if (this.randomRequestPending) return;
     this.randomRequestPending = true;
-    const params = { count };
+    const params = {
+      count,
+      image_thumbnail_size: 450,
+      absolute_thumbnail_url: true,
+    };
     axios
       .get(APOD_API_URL, { params })
       .then((response) => {
