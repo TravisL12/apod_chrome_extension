@@ -30,11 +30,5 @@
     "newtab": "index.html"
   },
 
-  "permissions": [
-    "topSites",
-    "storage",
-    "https://api.nasa.gov/*",
-    "https://apod.nasa.gov/cgi-bin/apod/apod_search",
-    "https://www.google-analytics.com/collect"
-  ]
+  "permissions": ["topSites", "storage", "https://apodapi.herokuapp.com/*"]
 }
