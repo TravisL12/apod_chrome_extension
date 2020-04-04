@@ -5,16 +5,15 @@ import {
   prettyDateFormat,
   isToday,
   today,
-  MIN_APOD_DATE
+  MIN_APOD_DATE,
 } from "../utilities/dateUtility";
-import { apodSourceLink } from "../utilities";
 
 function Title({
-  response: { title, date },
+  response: { title, date, apod_site },
   isImageHD,
   dateNavigation,
   specificDate,
-  isFavorite
+  isFavorite,
 }) {
   const {
     previous,
@@ -22,8 +21,20 @@ function Title({
     current,
     random,
     forceHighDef,
-    saveFavorite
+    saveFavorite,
   } = dateNavigation;
+
+  const todayLink = !isToday(date) && <li onClick={current}>Today</li>;
+  const highDefLink = !isImageHD && <li onClick={forceHighDef}>Force HD</li>;
+  const nextLink = !isToday(date) && <li onClick={next}>Next</li>;
+  const previousLink = date !== MIN_APOD_DATE && (
+    <li onClick={previous}>Previous</li>
+  );
+  const favoriteLink = isFavorite ? (
+    <li className="favorite">Favorite!</li>
+  ) : (
+    <li onClick={saveFavorite}>Save</li>
+  );
 
   return (
     <div className="title-container">
@@ -35,7 +46,7 @@ function Title({
               wrap: true,
               static: true,
               minDate: MIN_APOD_DATE,
-              maxDate: today()
+              maxDate: today(),
             }}
             onChange={(date, dateStr) => {
               specificDate(dateStr);
@@ -51,25 +62,17 @@ function Title({
       </div>
 
       <ul className="nav-buttons">
-        {!isToday(date) && <li onClick={current}>Today</li>}
+        {todayLink}
         <li onClick={random}>Random</li>
-        {date !== MIN_APOD_DATE && <li onClick={previous}>Previous</li>}
-        {!isToday(date) && <li onClick={next}>Next</li>}
-        {isFavorite ? (
-          <li className="favorite">Favorite!</li>
-        ) : (
-          <li onClick={saveFavorite}>Save</li>
-        )}
+        {previousLink}
+        {nextLink}
+        {favoriteLink}
         <li className="apod-link">
-          <a
-            href={apodSourceLink(date)}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <a href={apod_site} target="_blank" rel="noopener noreferrer">
             APOD
           </a>
         </li>
-        {!isImageHD && <li onClick={forceHighDef}>Force HD</li>}
+        {highDefLink}
       </ul>
     </div>
   );

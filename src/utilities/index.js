@@ -3,8 +3,9 @@ import download from "downloadjs";
 import { keys } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
-export const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
-export const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
+const APOD_URL = "https://apodapi.herokuapp.com";
+export const APOD_API_URL = `${APOD_URL}/api/`;
+export const APOD_SEARCH_URL = `${APOD_URL}/search/`;
 export const manifest = chrome.runtime.getManifest();
 export const KEY_MAP = {
   RANDOM_DAY: "r",
@@ -17,7 +18,7 @@ export const KEY_MAP = {
   SEARCH_TAB: "s",
   CLOSE_DRAWER: "esc",
   PREVIOUS_HISTORY: "ArrowLeft",
-  NEXT_HISTORY: "ArrowRight"
+  NEXT_HISTORY: "ArrowRight",
 };
 
 export function downloadImage(url) {
@@ -47,11 +48,6 @@ export function thumbSourceLink(date) {
   return `https://apod.nasa.gov/apod/calendar/S_${linkDateFormat(date)}.jpg`;
 }
 
-export function apodSourceLink(date) {
-  if (!date) return;
-  return `https://apod.nasa.gov/apod/ap${linkDateFormat(date)}.html`;
-}
-
 export function getImageDimensions(loadedImage) {
   let showFadedBackground = false;
   let backgroundSize = "auto";
@@ -79,7 +75,7 @@ export function getImageDimensions(loadedImage) {
 export function findCelestialObjects(explanation) {
   const celestialObjects = keys(celestialDictionary).reduce(
     (result, category) => {
-      const match = celestialDictionary[category].filter(constellation => {
+      const match = celestialDictionary[category].filter((constellation) => {
         const re = new RegExp(`\\b${constellation}\\b`, "gi");
         return explanation.match(re);
       });

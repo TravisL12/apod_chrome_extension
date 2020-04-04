@@ -6,7 +6,6 @@ import ExplanationView from "./drawerViews/ExplanationView";
 import FavoritesView from "./drawerViews/FavoritesView";
 import SearchView from "./drawerViews/SearchView";
 import { findCelestialObjects, KEY_MAP } from "../utilities";
-// import HistoryView from "./drawerViews/HistoryView";
 
 const MAX_CELESTIAL_MATCHES = 5;
 
@@ -37,10 +36,10 @@ export default function Drawer({ response, favorites, specificDate }) {
   }
 
   const celestialObjects = keys(
-    countBy(findCelestialObjects(response.explanation))
+    countBy(findCelestialObjects(response.description))
   )
     .slice(0, MAX_CELESTIAL_MATCHES)
-    .map(match => match.toLowerCase());
+    .map((match) => match.toLowerCase());
 
   const openSearchView = (keyword = searchKeyword) => {
     setSearchKeyword(keyword);
@@ -69,10 +68,10 @@ export default function Drawer({ response, favorites, specificDate }) {
         specificDate={specificDate}
         setSearchKeyword={setSearchKeyword}
       />
-    )
+    ),
   };
 
-  const updateDrawer = tabName => {
+  const updateDrawer = (tabName) => {
     if ((isOpen && tabName === openTabName) || !response) {
       setIsOpen(false);
     } else {
@@ -96,8 +95,8 @@ export default function Drawer({ response, favorites, specificDate }) {
       SEARCH_TAB: () => {
         updateDrawer("search");
       },
-      CLOSE_DRAWER: closeDrawer
-    }
+      CLOSE_DRAWER: closeDrawer,
+    },
   };
 
   return (
