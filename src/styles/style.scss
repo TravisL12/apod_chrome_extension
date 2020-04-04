@@ -19,14 +19,6 @@ body {
   @import "apod_loading_cube";
 }
 
-.spin-loader {
-  width: 16px;
-  height: 16px;
-  background: url("../ajax-loader-black.gif");
-  background-size: contain;
-  background-repeat: no-repeat;
-}
-
 .load-title {
   position: relative;
   height: 100vh;

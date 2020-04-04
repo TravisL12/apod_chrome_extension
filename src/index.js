@@ -14,15 +14,16 @@ export default class App extends Component {
     apodFavorites: objectOf(
       shape({
         url: string,
-        title: string
+        title: string,
       })
     ),
     hiResOnly: bool,
     showTopSites: bool,
+    showHistoryRow: bool,
     currentDate: string,
     todayCount: number,
     todayLimit: number,
-    isTodayLimitOn: bool
+    isTodayLimitOn: bool,
   };
 
   static defaultProps = {
@@ -30,18 +31,19 @@ export default class App extends Component {
     apodFavorites: {},
     hiResOnly: false,
     showTopSites: true,
+    showHistoryRow: true,
     todayCount: 0,
     todayLimit: 5,
-    isTodayLimitOn: false
+    isTodayLimitOn: false,
   };
 
   state = {
     ...this.props,
-    isLoading: !this.props.currentDate || this.props.currentDate !== today()
+    isLoading: !this.props.currentDate || this.props.currentDate !== today(),
   };
 
   componentDidMount() {
-    this.updateCurrentDate().then(updateCurrentDateOptions => {
+    this.updateCurrentDate().then((updateCurrentDateOptions) => {
       if (updateCurrentDateOptions) {
         this.setState({ ...updateCurrentDateOptions, isLoading: false });
       }
@@ -50,7 +52,7 @@ export default class App extends Component {
   }
 
   setChromeListener() {
-    chrome.storage.onChanged.addListener(changes => {
+    chrome.storage.onChanged.addListener((changes) => {
       const updatedSettings = Object.keys(changes).reduce((result, setting) => {
         result[setting] = changes[setting].newValue;
         return result;
@@ -63,11 +65,11 @@ export default class App extends Component {
   // Setup a promise to wait for chrome storage to sync the updated date
   // this feels heavy handed
   updateCurrentDate() {
-    return new Promise(resolve => {
+    return new Promise((resolve) => {
       if (this.state.isLoading) {
         const updateCurrentDateOptions = {
           currentDate: today(),
-          todayCount: 0
+          todayCount: 0,
         };
 
         chrome.storage.sync.set(updateCurrentDateOptions, () => {
@@ -85,11 +87,12 @@ export default class App extends Component {
       apodFavorites: favorites,
       hiResOnly: isHighRes,
       showTopSites,
+      showHistoryRow,
       currentDate,
       todayCount: count,
       todayLimit: limit,
       isTodayLimitOn: isLimitOn,
-      isLoading
+      isLoading,
     } = this.state;
 
     if (isLoading) {
@@ -99,7 +102,7 @@ export default class App extends Component {
     const showTodayOptions = {
       count,
       limit,
-      isLimitOn
+      isLimitOn,
     };
 
     return (
@@ -108,6 +111,7 @@ export default class App extends Component {
         favorites={favorites}
         isHighRes={isHighRes}
         showTopSites={showTopSites}
+        showHistoryRow={showHistoryRow}
         currentDate={currentDate}
         showTodayOptions={showTodayOptions}
       />
@@ -122,12 +126,13 @@ chrome.storage.sync.get(
     "hiResOnly",
     "apodFavorites",
     "showTopSites",
+    "showHistoryRow",
     "currentDate",
     "todayCount",
     "todayLimit",
-    "isTodayLimitOn"
+    "isTodayLimitOn",
   ],
-  options => {
+  (options) => {
     ReactDOM.render(<App {...options} />, document.getElementById("root"));
   }
 );

@@ -13,20 +13,31 @@
 }
 
 .history__thumb-border {
-  background-color: white;
+  background-color: $black;
   min-width: 40px;
   height: 30px;
-  padding: 1px;
   transition: 0.15s ease-in-out all;
+  padding: 1px;
   cursor: pointer;
 
   &.active-date {
-    background-color: yellow;
+    background-color: $light-gray;
   }
 
   &:hover {
     height: 65px;
-    padding: 2px;
+  }
+}
+
+@keyframes LoadingAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
   }
 }
 
@@ -37,6 +48,13 @@
   padding: 1px;
   box-sizing: border-box;
   height: 100%;
+
+  &.loading {
+    background: linear-gradient(54deg, #1f2e4e, #003a50);
+    background-size: 400% 400%;
+
+    animation: LoadingAnimation 5s ease infinite;
+  }
 
   img {
     max-height: 100%;

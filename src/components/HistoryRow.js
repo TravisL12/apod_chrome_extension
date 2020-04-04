@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
-import blackSpinner from "../ajax-loader-black.gif";
-
 function ImageLoader({ url }) {
-  const [image, setImage] = useState(blackSpinner);
+  const [image, setImage] = useState(undefined);
   const thumbImage = new Image();
   thumbImage.src = url;
   thumbImage.onload = () => {
     setImage(url);
   };
 
-  return (
-    <div className="history__thumb">
+  return !image ? (
+    <div className="history__thumb loading" />
+  ) : (
+    <div className={"history__thumb"}>
       <img alt="APOD Thumb" src={image} />
     </div>
   );
@@ -20,7 +20,7 @@ function ImageLoader({ url }) {
 export default function HistoryRow({
   historyHelper,
   specificDate,
-  activeResponse
+  activeResponse,
 }) {
   const { responses } = historyHelper;
 

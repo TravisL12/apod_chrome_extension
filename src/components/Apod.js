@@ -32,6 +32,7 @@ class Apod extends Component {
     selection: string,
     isHighRes: bool,
     showTopSites: bool,
+    showHistoryRow: bool,
     showTodayOptions: shape({
       count: number,
       limit: number,
@@ -221,7 +222,7 @@ class Apod extends Component {
   };
 
   render() {
-    const { favorites, showTopSites } = this.props;
+    const { favorites, showTopSites, showHistoryRow } = this.props;
     const {
       response,
       apodImage,
@@ -292,11 +293,13 @@ class Apod extends Component {
             favorites={favorites}
             specificDate={this.specificDate}
           />
-          <HistoryRow
-            historyHelper={historyHelper}
-            specificDate={this.specificDate}
-            activeResponse={response}
-          />
+          {showHistoryRow && (
+            <HistoryRow
+              historyHelper={historyHelper}
+              specificDate={this.specificDate}
+              activeResponse={response}
+            />
+          )}
         </div>
       </GlobalHotKeys>
     );
