@@ -3,7 +3,9 @@ import download from "downloadjs";
 import { keys } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
-export const APOD_API_URL = "https://apodapi.herokuapp.com/api/";
+const APOD_URL = "https://apodapi.herokuapp.com";
+export const APOD_API_URL = `${APOD_URL}/api/`;
+export const APOD_SEARCH_URL = `${APOD_URL}/search/`;
 export const manifest = chrome.runtime.getManifest();
 export const KEY_MAP = {
   RANDOM_DAY: "r",
