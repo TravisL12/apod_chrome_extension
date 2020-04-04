@@ -13,15 +13,16 @@
 }
 
 .history__thumb-border {
-  background-color: $black;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
   min-width: 40px;
   height: 30px;
   transition: 0.15s ease-in-out all;
-  padding: 1px;
   cursor: pointer;
 
   &.active-date {
-    background-color: $light-gray;
+    border-color: $light-gray;
   }
 
   &:hover {
@@ -42,7 +43,7 @@
 }
 
 .history__thumb {
-  background: black;
+  background: $black;
   display: flex;
   justify-content: center;
   padding: 1px;
@@ -50,10 +51,10 @@
   height: 100%;
 
   &.loading {
-    background: linear-gradient(54deg, #1f2e4e, #003a50);
+    background: linear-gradient(54deg, #253a69, transparent);
     background-size: 400% 400%;
 
-    animation: LoadingAnimation 5s ease infinite;
+    animation: LoadingAnimation 3s ease infinite;
   }
 
   img {
