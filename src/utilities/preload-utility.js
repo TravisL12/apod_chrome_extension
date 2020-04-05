@@ -63,10 +63,8 @@ export default class Preload {
     loadedImage.src = hdurl || url;
 
     loadedImage.onload = () => {
-      const { width, height } = loadedImage;
-      width >= 1200 || height >= 900 // these dimensions are arbitrary
-        ? this.addImage(response)
-        : this.decreaseLoadCount();
+      const { width } = loadedImage;
+      width >= 800 ? this.addImage(response) : this.decreaseLoadCount();
     };
 
     loadedImage.onerror = this.decreaseLoadCount;

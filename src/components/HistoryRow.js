@@ -21,7 +21,7 @@ function HistoryRow({ historyHelper, specificDate, activeResponse }) {
   const { responses } = historyHelper;
 
   return (
-    <div className={`history ${responses.length ? "show" : ""}`}>
+    <div className="history">
       {responses.map(({ date, url }) => {
         return (
           <div

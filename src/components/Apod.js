@@ -283,11 +283,7 @@ class Apod extends Component {
           </div>
           {hasLoadingError && <div class="apod__error">{ERROR_MESSAGE}</div>}
           <TitleLoader isLoading={isLoading} />
-          <ApodDisplay
-            videoUrl={videoUrl}
-            isLoading={isLoading}
-            loadedImage={apodImage}
-          />
+          <ApodDisplay videoUrl={videoUrl} loadedImage={apodImage} />
           <Drawer
             response={response}
             favorites={favorites}
