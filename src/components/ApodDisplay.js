@@ -1,7 +1,7 @@
-import React from "react";
+import React, { memo } from "react";
 import { getImageDimensions } from "../utilities";
 
-function Image({ loadedImage }) {
+const Image = memo(({ loadedImage }) => {
   const backgroundImage = `url(${loadedImage.src})`;
   const { showFadedBackground, backgroundSize } = getImageDimensions(
     loadedImage
@@ -18,9 +18,9 @@ function Image({ loadedImage }) {
       />
     </div>
   );
-}
+});
 
-function Video({ url }) {
+const Video = memo(({ url }) => {
   return (
     <div className="apod-body">
       <div className="apod__image">
@@ -34,9 +34,9 @@ function Video({ url }) {
       </div>
     </div>
   );
-}
+});
 
-export default function ApodDisplay({ videoUrl, loadedImage }) {
+function ApodDisplay({ videoUrl, loadedImage }) {
   if (loadedImage) {
     return <Image loadedImage={loadedImage} />;
   } else if (videoUrl) {
@@ -45,3 +45,5 @@ export default function ApodDisplay({ videoUrl, loadedImage }) {
 
   return null;
 }
+
+export default memo(ApodDisplay);

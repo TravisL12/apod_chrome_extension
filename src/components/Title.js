@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import Flatpickr from "react-flatpickr";
 import {
   actualDate,
@@ -78,4 +78,4 @@ function Title({
   );
 }
 
-export default Title;
+export default memo(Title);

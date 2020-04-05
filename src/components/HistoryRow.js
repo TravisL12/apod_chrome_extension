@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, memo } from "react";
 
-function ImageLoader({ url }) {
+const ImageLoader = memo(({ url }) => {
   const [image, setImage] = useState(undefined);
   const thumbImage = new Image();
   thumbImage.src = url;
-  thumbImage.onload = () => {
+  thumbImage.onload = useCallback(() => {
     setImage(url);
-  };
+  }, [url]);
 
   return !image ? (
     <div className="history__thumb loading" />
@@ -15,13 +15,9 @@ function ImageLoader({ url }) {
       <img alt="APOD Thumb" src={image} />
     </div>
   );
-}
+});
 
-export default function HistoryRow({
-  historyHelper,
-  specificDate,
-  activeResponse,
-}) {
+function HistoryRow({ historyHelper, specificDate, activeResponse }) {
   const { responses } = historyHelper;
 
   return (
@@ -45,3 +41,5 @@ export default function HistoryRow({
     </div>
   );
 }
+
+export default memo(HistoryRow);

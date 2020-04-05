@@ -1,11 +1,11 @@
 /*global chrome*/
-import React, { useState, useEffect } from "react";
+import React, { memo, useState, useEffect } from "react";
 
 function TopSites() {
   const [sites, setSites] = useState([]);
 
   useEffect(() => {
-    chrome.topSites.get(data => {
+    chrome.topSites.get((data) => {
       setSites(data);
     });
   }, []);
@@ -28,4 +28,4 @@ function TopSites() {
   );
 }
 
-export default TopSites;
+export default memo(TopSites);
