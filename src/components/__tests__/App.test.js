@@ -1,4 +1,3 @@
-/*global chrome*/
 import React from "react";
 import { shallow } from "enzyme";
 import App from "../../index";
@@ -14,10 +13,11 @@ const props = {
   apodFavorites: {},
   hiResOnly: false,
   showTopSites: true,
+  showHistoryRow: true,
   currentDate: undefined,
   todayCount: 0,
   todayLimit: 0,
-  isTodayLimitOn: false
+  isTodayLimitOn: false,
 };
 
 describe("App Component", () => {

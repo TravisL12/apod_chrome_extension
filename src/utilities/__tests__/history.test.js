@@ -1,4 +1,3 @@
-/*global chrome*/
 import History from "../history";
 
 const mockResponse = {
@@ -8,7 +7,7 @@ const mockResponse = {
   media_type: "image",
   service_version: "v1",
   title: "Aurigids from 47,000 Feet",
-  url: "https://apod.nasa.gov/apod/image/0709/AurigidVaubaillon720.jpg"
+  url: "https://apod.nasa.gov/apod/image/0709/AurigidVaubaillon720.jpg",
 };
 
 const mockResponse2 = { ...mockResponse, date: "2015-10-12" };

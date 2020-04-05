@@ -1,4 +1,3 @@
-/*global chrome*/
 import axios from "axios";
 import mockResponses from "../../../fixtures/mockResponses";
 import Preload from "../preload-utility";

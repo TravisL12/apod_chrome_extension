@@ -1,4 +1,3 @@
-/*global chrome*/
 import React from "react";
 import { shallow } from "enzyme";
 import Apod from "../Apod";
@@ -17,8 +16,8 @@ describe("Apod Component", () => {
     showTodayOptions: {
       count: 0,
       limit: 0,
-      isLimitOn: false
-    }
+      isLimitOn: false,
+    },
   };
 
   it("renders component", () => {
@@ -56,7 +55,7 @@ describe("Apod Component", () => {
     const showTodayOptions = {
       count: 0,
       limit: 5,
-      isLimitOn: true
+      isLimitOn: true,
     };
     const component = shallow(
       <Apod {...props} showTodayOptions={showTodayOptions} />
@@ -71,7 +70,7 @@ describe("Apod Component", () => {
     const showTodayOptions = {
       count: 6,
       limit: 5,
-      isLimitOn: true
+      isLimitOn: true,
     };
     const component = shallow(
       <Apod {...props} showTodayOptions={showTodayOptions} />
