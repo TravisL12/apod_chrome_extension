@@ -1,3 +1,15 @@
+@keyframes LoadingAnimation {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 .history {
   position: absolute;
   bottom: 0;
@@ -9,8 +21,35 @@
   overflow-x: scroll;
 }
 
-.history__thumb-border + .history__thumb-border {
+.history__thumb + .history__thumb {
   margin-left: 10px;
+}
+
+.history__thumb {
+  display: flex;
+  justify-content: center;
+
+  span {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    color: $light-gray;
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    display: block;
+    transition: 0.15s ease-in-out all;
+  }
+  &:hover {
+    span {
+      opacity: 1;
+    }
+    .history__thumb-border {
+      height: 65px;
+    }
+  }
 }
 
 .history__thumb-border {
@@ -25,25 +64,9 @@
   &.active-date {
     border-color: $light-gray;
   }
-
-  &:hover {
-    height: 65px;
-  }
 }
 
-@keyframes LoadingAnimation {
-  0% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
-  }
-  100% {
-    background-position: 0% 50%;
-  }
-}
-
-.history__thumb {
+.history__thumb-image {
   background: $black;
   display: flex;
   justify-content: center;
