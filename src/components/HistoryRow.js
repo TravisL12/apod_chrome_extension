@@ -9,9 +9,9 @@ const ImageLoader = memo(({ url }) => {
   }, [url]);
 
   return !image ? (
-    <div className="history__thumb loading" />
+    <div className="history__thumb-image loading" />
   ) : (
-    <div className={"history__thumb"}>
+    <div className={"history__thumb-image"}>
       <img alt="APOD Thumb" src={image} />
     </div>
   );
@@ -22,19 +22,22 @@ function HistoryRow({ historyHelper, specificDate, activeResponse }) {
 
   return (
     <div className="history">
-      {responses.map(({ date, url }) => {
+      {responses.map(({ title, date, url }) => {
         return (
-          <div
-            className={`history__thumb-border ${
-              activeResponse && activeResponse.date === date
-                ? "active-date"
-                : ""
-            }`}
-            onClick={() => {
-              specificDate(date);
-            }}
-          >
-            <ImageLoader url={url} />
+          <div className="history__thumb">
+            <span className="history__thumb-title">{title}</span>
+            <div
+              className={`history__thumb-border ${
+                activeResponse && activeResponse.date === date
+                  ? "active-date"
+                  : ""
+              }`}
+              onClick={() => {
+                specificDate(date);
+              }}
+            >
+              <ImageLoader url={url} />
+            </div>
           </div>
         );
       })}
