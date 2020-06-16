@@ -89,9 +89,6 @@ export default function Drawer({ response, favorites, specificDate }) {
       FAVORITES_TAB: () => {
         updateDrawer("favorites");
       },
-      HISTORY_TAB: () => {
-        updateDrawer("history");
-      },
       SEARCH_TAB: () => {
         updateDrawer("search");
       },

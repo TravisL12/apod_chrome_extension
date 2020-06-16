@@ -14,7 +14,6 @@ export const KEY_MAP = {
   NEXT_DAY: "k",
   EXPLANATION_TAB: "e",
   FAVORITES_TAB: "f",
-  HISTORY_TAB: "h",
   SEARCH_TAB: "s",
   CLOSE_DRAWER: "esc",
   PREVIOUS_HISTORY: "ArrowLeft",
