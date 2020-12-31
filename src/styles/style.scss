@@ -27,7 +27,7 @@ body {
   .title-container {
     @include helvetica-neue-light;
     position: absolute;
-    left: 15px; // same dimension as history row's left padding
+    left: $title-padding;
     bottom: 50px;
 
     .loader {

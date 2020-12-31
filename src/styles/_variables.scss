@@ -4,6 +4,9 @@ $light-gray: rgba(#c7c7c7, 0.8);
 $highlight-blue: rgb(117, 221, 255);
 $explanation-title-width: 250px;
 
+// shared by .history `left-padding` & .title-container `left`
+$title-padding: 15px;
+
 @mixin helvetica-neue-light($weight: 300) {
   font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue",
     Helvetica, Arial, "Lucida Grande", sans-serif;

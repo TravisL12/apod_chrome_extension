@@ -56,22 +56,6 @@ class ApodOptions {
     el.addEventListener("change", fn.bind(this));
   }
 
-  saveApodType() {
-    saveOption({ apodType: optionsForm.chooseApod.value });
-  }
-
-  saveHiResOnly() {
-    saveOption({ hiResOnly: optionsForm.highResOnly.checked });
-  }
-
-  saveTopSitesToggle() {
-    saveOption({ showTopSites: optionsForm.showTopSites.checked });
-  }
-
-  saveHistoryRowToggle() {
-    saveOption({ showHistoryRow: optionsForm.showHistoryRow.checked });
-  }
-
   saveTodayCountInput() {
     const todayLimit = parseInt(optionsForm.todayCountInput.value);
     saveOption({ todayLimit });
@@ -87,11 +71,26 @@ class ApodOptions {
   }
 
   setListeners() {
-    this.createListener(optionsForm.chooseApod[0], this.saveApodType);
-    this.createListener(optionsForm.chooseApod[1], this.saveApodType);
-    this.createListener(optionsForm.highResOnly, this.saveHiResOnly);
-    this.createListener(optionsForm.showTopSites, this.saveTopSitesToggle);
-    this.createListener(optionsForm.showHistoryRow, this.saveHistoryRowToggle);
+    this.createListener(
+      optionsForm.chooseApod[0],
+      saveOption({ apodType: optionsForm.chooseApod.value })
+    );
+    this.createListener(
+      optionsForm.chooseApod[1],
+      saveOption({ apodType: optionsForm.chooseApod.value })
+    );
+    this.createListener(
+      optionsForm.highResOnly,
+      saveOption({ hiResOnly: optionsForm.highResOnly.checked })
+    );
+    this.createListener(
+      optionsForm.showTopSites,
+      saveOption({ showTopSites: optionsForm.showTopSites.checked })
+    );
+    this.createListener(
+      optionsForm.showHistoryRow,
+      saveOption({ showHistoryRow: optionsForm.showHistoryRow.checked })
+    );
     this.createListener(optionsForm.todayCountInput, this.saveTodayCountInput);
     this.createListener(optionsForm.isTodayLimitOn, this.saveIsTodayLimitOn);
   }

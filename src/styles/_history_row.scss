@@ -1,3 +1,5 @@
+@import "variables";
+
 @keyframes LoadingAnimation {
   0% {
     background-position: 0% 50%;
@@ -17,7 +19,7 @@
   align-items: flex-end;
   flex-wrap: wrap;
   width: 100%;
-  padding: 15px;
+  padding: $title-padding;
   overflow-x: scroll;
 }
 
