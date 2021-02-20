@@ -1,0 +1,54 @@
+.calendar {
+  --day-size: 50px;
+
+  padding: 5px;
+  background: #ffd8d8;
+  display: inline-block;
+
+  .title {
+    text-align: right;
+    font-size: 24px;
+    margin-bottom: 5px;
+  }
+
+  .dow-container {
+    display: flex;
+    gap: 3px;
+    margin-bottom: 5px;
+  }
+  .dow-container .dow {
+    width: var(--day-size);
+    text-align: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(7, var(--day-size));
+    grid-auto-rows: var(--day-size);
+    grid-gap: 3px;
+  }
+  .day {
+    position: relative;
+    background: rgb(194, 240, 255, 0.75);
+    transition: 0.1s linear background;
+  }
+  .day:hover {
+    background: pink;
+  }
+
+  .day input {
+    opacity: 0;
+    position: absolute;
+  }
+
+  .day label {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+  }
+  .day input:checked + label {
+    background: lightgreen;
+  }
+}

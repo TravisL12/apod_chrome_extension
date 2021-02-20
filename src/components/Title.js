@@ -1,12 +1,13 @@
-import React, { memo } from "react";
-import Flatpickr from "react-flatpickr";
+import React, { memo } from 'react';
+import Flatpickr from 'react-flatpickr';
+import DatePicker from './DatePicker';
 import {
   actualDate,
   prettyDateFormat,
   isToday,
   today,
   MIN_APOD_DATE,
-} from "../utilities/dateUtility";
+} from '../utilities/dateUtility';
 
 function Title({
   response: { title, date, apod_site },
@@ -52,13 +53,13 @@ function Title({
               specificDate(dateStr);
             }}
           >
-            <input type="text" data-input style={{ display: "none" }} />
+            <input type="text" data-input style={{ display: 'none' }} />
             <h2 data-toggle>{prettyDateFormat(date)}</h2>
           </Flatpickr>
         </div>
 
         <h1>{title}</h1>
-        <span className="img-quality">{isImageHD ? "HD" : "SD"}</span>
+        <span className="img-quality">{isImageHD ? 'HD' : 'SD'}</span>
       </div>
 
       <ul className="nav-buttons">

@@ -1,9 +1,10 @@
-@import "../../node_modules/flatpickr/dist/themes/dark.css";
-@import "variables";
-@import "drawer";
-@import "history_row";
-@import "apod_loading_sun";
-@import "apod_loading_moon";
+@import '../../node_modules/flatpickr/dist/themes/dark.css';
+@import 'variables';
+@import 'drawer';
+@import 'history_row';
+@import 'apod_loading_sun';
+@import 'apod_loading_moon';
+@import 'date_picker';
 
 body {
   background: $black; /* Old browsers */
@@ -16,7 +17,7 @@ body {
 .apod__loading {
   @include sun-loader;
   @include moon-loader;
-  @import "apod_loading_cube";
+  @import 'apod_loading_cube';
 }
 
 .load-title {
@@ -128,7 +129,7 @@ body {
         }
 
         &:after {
-          content: "\25be";
+          content: '\25be';
           color: inherit;
           margin-left: 3px;
           vertical-align: 1px;

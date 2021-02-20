@@ -1,5 +1,5 @@
-import React, { memo } from "react";
-import { getImageDimensions } from "../utilities";
+import React, { memo } from 'react';
+import { getImageDimensions } from '../utilities';
 
 const Image = memo(({ loadedImage }) => {
   const backgroundImage = `url(${loadedImage.src})`;

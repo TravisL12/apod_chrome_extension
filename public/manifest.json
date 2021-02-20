@@ -3,7 +3,7 @@
 
   "name": "Astronomy Picture of the Day APOD by The Trav",
   "short_name": "APOD by The Trav",
-  "description": "Displays the Astronomy Picture of the Day (APOD) and allows you to review similar images of planets, stars, galaxies and nebulas",
+  "description": "Displays the Astronomy Picture of the Day (APOD). View images of stars, galaxies and nebulas faster than any extension available.",
   "version": "3.5.4",
 
   "browser_action": {
