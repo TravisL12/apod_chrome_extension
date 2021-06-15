@@ -25,7 +25,9 @@ function HistoryRow({ historyHelper, specificDate, activeResponse }) {
       {responses.map(({ title, date, url }) => {
         return (
           <div className="history__thumb">
-            <span className="history__thumb-title">{title}</span>
+            <div className="history__thumb-title">
+              <span>{title}</span>
+            </div>
             <div
               className={`history__thumb-border ${
                 activeResponse && activeResponse.date === date
