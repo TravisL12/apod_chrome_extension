@@ -1,4 +1,4 @@
-import React, { useState, useCallback, memo } from 'react';
+import React, { useState, useCallback, memo } from "react";
 
 const ImageLoader = memo(({ url }) => {
   const [image, setImage] = useState(undefined);
@@ -11,7 +11,7 @@ const ImageLoader = memo(({ url }) => {
   return !image ? (
     <div className="history__thumb-image loading" />
   ) : (
-    <div className={'history__thumb-image'}>
+    <div className={"history__thumb-image"}>
       <img alt="APOD Thumb" src={image} />
     </div>
   );
@@ -31,8 +31,8 @@ function HistoryRow({ historyHelper, specificDate, activeResponse }) {
             <div
               className={`history__thumb-border ${
                 activeResponse && activeResponse.date === date
-                  ? 'active-date'
-                  : ''
+                  ? "active-date"
+                  : ""
               }`}
               onClick={() => {
                 specificDate(date);
