@@ -1,4 +1,4 @@
-@import "variables";
+@import 'variables';
 
 @keyframes LoadingAnimation {
   0% {
@@ -19,19 +19,17 @@
   align-items: flex-end;
   flex-wrap: wrap;
   width: 100%;
+  box-sizing: border-box;
   padding: $title-padding;
-  overflow-x: scroll;
-}
-
-.history__thumb + .history__thumb {
-  margin-left: 10px;
+  gap: 5px 10px;
 }
 
 .history__thumb {
+  position: relative;
   display: flex;
   justify-content: center;
 
-  span {
+  .history__thumb-title {
     opacity: 0;
     position: absolute;
     top: 0;
@@ -41,15 +39,21 @@
     overflow: hidden;
     text-overflow: ellipsis;
     text-align: center;
-    display: block;
     transition: 0.15s ease-in-out all;
   }
+
   &:hover {
-    span {
+    z-index: 5;
+    .history__thumb-title {
       opacity: 1;
+      transform: translateY(-30px);
+      span {
+        background: $black;
+        padding: 5px;
+      }
     }
-    .history__thumb-border {
-      height: 65px;
+    .history__thumb-image {
+      transform: scale(2);
     }
   }
 }
@@ -75,6 +79,7 @@
   padding: 1px;
   box-sizing: border-box;
   height: 100%;
+  transition: 0.15s ease-in-out transform;
 
   &.loading {
     background: linear-gradient(54deg, #253a69, transparent);
