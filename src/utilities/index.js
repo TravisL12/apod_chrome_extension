@@ -3,9 +3,12 @@ import download from "downloadjs";
 import { keys } from "lodash";
 import celestialDictionary from "../CelestialDictionary";
 
-const APOD_URL = "https://apodapi.herokuapp.com";
-export const APOD_API_URL = `${APOD_URL}/api/`;
-export const APOD_SEARCH_URL = `${APOD_URL}/search/`;
+// const APOD_URL = "https://apodapi.herokuapp.com";
+export const APOD_API_URL = "https://api.nasa.gov/planetary/apod";
+export const API_KEY = "hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447";
+
+// export const APOD_API_URL = `${APOD_URL}/api/`;
+export const APOD_SEARCH_URL = `${APOD_API_URL}/search/`;
 export const manifest = chrome.runtime.getManifest();
 export const KEY_MAP = {
   RANDOM_DAY: "r",
