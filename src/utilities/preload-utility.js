@@ -1,6 +1,6 @@
 /*global chrome*/
 import axios from "axios";
-import { APOD_API_URL, randomizer } from "./index";
+import { API_KEY, APOD_API_URL, randomizer } from "./index";
 
 const PRELOAD_VALUE = 10;
 const RELOAD_THRESHOLD = 3;
@@ -30,8 +30,7 @@ export default class Preload {
     this.randomRequestPending = true;
     const params = {
       count,
-      image_thumbnail_size: 450,
-      absolute_thumbnail_url: true,
+      api_key: API_KEY,
     };
     axios
       .get(APOD_API_URL, { params })

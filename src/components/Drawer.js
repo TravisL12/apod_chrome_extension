@@ -36,7 +36,7 @@ export default function Drawer({ response, favorites, specificDate }) {
   }
 
   const celestialObjects = keys(
-    countBy(findCelestialObjects(response.description))
+    countBy(findCelestialObjects(response.explanation))
   )
     .slice(0, MAX_CELESTIAL_MATCHES)
     .map((match) => match.toLowerCase());
@@ -61,14 +61,14 @@ export default function Drawer({ response, favorites, specificDate }) {
         specificDate={specificDate}
       />
     ),
-    search: (
-      <SearchView
-        keyword={searchKeyword}
-        closeDrawer={closeDrawer}
-        specificDate={specificDate}
-        setSearchKeyword={setSearchKeyword}
-      />
-    ),
+    // search: (
+    //   <SearchView
+    //     keyword={searchKeyword}
+    //     closeDrawer={closeDrawer}
+    //     specificDate={specificDate}
+    //     setSearchKeyword={setSearchKeyword}
+    //   />
+    // ),
   };
 
   const updateDrawer = (tabName) => {

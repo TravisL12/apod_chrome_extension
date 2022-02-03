@@ -4,7 +4,7 @@
   "name": "Astronomy Picture of the Day APOD by The Trav",
   "short_name": "APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) and allows you to review similar images of planets, stars, galaxies and nebulas",
-  "version": "3.5.5",
+  "version": "3.6",
 
   "browser_action": {
     "default_icon": "sun_icon.png",
@@ -30,5 +30,10 @@
     "newtab": "index.html"
   },
 
-  "permissions": ["topSites", "storage", "https://apodapi.herokuapp.com/*"]
+  "permissions": [
+    "topSites",
+    "storage",
+    "https://api.nasa.gov/*",
+    "https://apod.nasa.gov/cgi-bin/apod/apod_search"
+  ]
 }

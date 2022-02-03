@@ -9,7 +9,7 @@ import Drawer from "./Drawer";
 import Title from "./Title";
 import TopSites from "./TopSites";
 import { TitleLoader } from "./LoadingSpinner";
-import { KEY_MAP, APOD_API_URL } from "../utilities";
+import { KEY_MAP, APOD_API_URL, API_KEY } from "../utilities";
 import {
   adjacentDate,
   isToday,
@@ -124,8 +124,7 @@ class Apod extends Component {
     this.setLoading();
     const params = {
       date,
-      image_thumbnail_size: 450,
-      absolute_thumbnail_url: true,
+      api_key: API_KEY,
     };
     axios.get(APOD_API_URL, { params }).then(
       ({ data }) => this.loadApod(data),
