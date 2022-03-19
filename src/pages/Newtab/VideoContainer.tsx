@@ -1,13 +1,13 @@
 import React from 'react';
 
-const VideoContainer = ({ url }) => {
+const VideoContainer = ({ url }: { url: any }) => {
   return (
     <iframe
       title="APOD Video"
       width="960"
       height="540"
       src={url.href}
-      frameborder="0"
+      frameBorder="0"
     ></iframe>
   );
 };
