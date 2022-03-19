@@ -1,7 +1,8 @@
 import { API_KEY, APOD_API_URL } from '../constants';
 import axios from 'axios';
+import { TFetchOptions } from '../pages/types';
 
-export const fetchImage = async (options: { count?: number } = {}) => {
+export const fetchImage = async (options: TFetchOptions = {}) => {
   const params = {
     api_key: API_KEY,
     ...options,

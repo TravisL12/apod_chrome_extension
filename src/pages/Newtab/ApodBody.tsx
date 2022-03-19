@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { fetchImage } from '../../utilities';
-import { TApodResponse } from '../types';
+import { TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
 import { SApodContainer, SMediaContainer, SApodImage } from './styles';
 import VideoContainer from './VideoContainer';
@@ -8,7 +8,7 @@ import VideoContainer from './VideoContainer';
 const ApodBody = () => {
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
 
-  const getImage = async (options?: { count?: number }) => {
+  const getImage = async (options?: TFetchOptions) => {
     const response = await fetchImage(options);
     console.log(response);
     setApodReponse(response);
@@ -16,6 +16,7 @@ const ApodBody = () => {
 
   const fetchToday = () => getImage();
   const fetchRandom = () => getImage({ count: 1 });
+  const fetchVideoTest = () => getImage({ date: '2012-07-17' });
 
   useEffect(() => {
     fetchRandom();
@@ -32,10 +33,11 @@ const ApodBody = () => {
     { label: 'Previous', clickHandler: () => {} }, // handlePrevious,
     { label: 'Save', clickHandler: () => {} }, // handleSaveFavorite,
     { label: 'Random', clickHandler: fetchRandom },
+    { label: 'Video Test', clickHandler: fetchVideoTest },
   ];
 
   const mediaUrl = apodResponse?.url;
-  // 2012-7-17 is video apod need to adjust z-index to click start
+
   return (
     <SApodContainer>
       <Header response={apodResponse} navigationButtons={navigationButtons} />

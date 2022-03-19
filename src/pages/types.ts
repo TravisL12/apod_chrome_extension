@@ -13,3 +13,8 @@ export type TTopSite = {
   url: string;
   title: string;
 };
+
+export type TFetchOptions = {
+  count?: number;
+  date?: any;
+};
