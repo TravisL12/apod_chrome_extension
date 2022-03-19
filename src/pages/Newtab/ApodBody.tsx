@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { fetchImage } from '../../utilities';
+import { adjacentDate, fetchImage } from '../../utilities';
 import { TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
 import { SApodContainer, SMediaContainer, SApodImage } from './styles';
@@ -17,6 +17,16 @@ const ApodBody = () => {
   const fetchToday = () => getImage();
   const fetchRandom = () => getImage({ count: 1 });
   const fetchVideoTest = () => getImage({ date: '2012-07-17' });
+  const fetchPreviousDate = () => {
+    if (apodResponse?.date) {
+      getImage({ date: adjacentDate(apodResponse?.date, -1) });
+    }
+  };
+  const fetchNextDate = () => {
+    if (apodResponse?.date) {
+      getImage({ date: adjacentDate(apodResponse?.date, 1) });
+    }
+  };
 
   useEffect(() => {
     fetchRandom();
@@ -29,8 +39,8 @@ const ApodBody = () => {
   const navigationButtons = [
     { label: 'Today', clickHandler: fetchToday },
     { label: 'Force HD', clickHandler: () => {} }, // handleForceHighDef,
-    { label: 'Next', clickHandler: () => {} }, // handleNext,
-    { label: 'Previous', clickHandler: () => {} }, // handlePrevious,
+    { label: 'Previous', clickHandler: fetchPreviousDate },
+    { label: 'Next', clickHandler: fetchNextDate },
     { label: 'Save', clickHandler: () => {} }, // handleSaveFavorite,
     { label: 'Random', clickHandler: fetchRandom },
     { label: 'Video Test', clickHandler: fetchVideoTest },
