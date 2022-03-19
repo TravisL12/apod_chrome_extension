@@ -1,28 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { fetchImage } from '../../utilities';
-import { SApodContainer, SApodImage } from './styles';
+import Header from './Header';
+import { SApodContainer, SMediaContainer, SApodImage } from './styles';
 
 const ApodBody = () => {
-  const [imageUrl, setImageUrl] = useState();
-  const [videoUrl, setVideoUrl] = useState();
+  const [apodResponse, setApodReponse] = useState();
 
   const getImage = async () => {
     const response = await fetchImage();
-    if (response.media_type === 'video') {
-      setVideoUrl(response.url); // v3 uses `new URL(reponse.url)` ???
-    } else {
-      setImageUrl(response.url);
-    }
+    setApodReponse(response);
   };
 
   useEffect(() => {
     getImage();
   }, [fetchImage]);
 
+  if (!apodResponse) {
+    return <SApodContainer>Loading...</SApodContainer>;
+  }
+
+  const imageUrl = apodResponse?.url;
+
   return (
     <SApodContainer>
-      {imageUrl && <SApodImage src={imageUrl} />}
-      {videoUrl && <SApodImage src={videoUrl} />}
+      <Header response={apodResponse} />
+      <SMediaContainer>
+        {imageUrl && <SApodImage src={imageUrl} />}
+      </SMediaContainer>
     </SApodContainer>
   );
 };
