@@ -8,6 +8,7 @@ const ApodBody = () => {
 
   const getImage = async () => {
     const response = await fetchImage();
+    console.log(response);
     setApodReponse(response);
   };
 
@@ -19,13 +20,17 @@ const ApodBody = () => {
     return <SApodContainer>Loading...</SApodContainer>;
   }
 
-  const imageUrl = apodResponse?.url;
+  const mediaUrl = apodResponse?.url;
 
   return (
     <SApodContainer>
       <Header response={apodResponse} />
       <SMediaContainer>
-        {imageUrl && <SApodImage src={imageUrl} />}
+        {apodResponse.media_type === 'video' ? (
+          <VideoContainer url={new URL(mediaUrl)} />
+        ) : (
+          <SApodImage src={mediaUrl} />
+        )}
       </SMediaContainer>
     </SApodContainer>
   );
