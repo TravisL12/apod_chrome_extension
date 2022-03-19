@@ -1,9 +1,9 @@
 import React from 'react';
 import { render } from 'react-dom';
 
-import Newtab from './Newtab';
+import ApodBody from './ApodBody';
 import './index.css';
 
-render(<Newtab />, window.document.querySelector('#app-container'));
+render(<ApodBody />, window.document.querySelector('#app-container'));
 
 if (module.hot) module.hot.accept();
