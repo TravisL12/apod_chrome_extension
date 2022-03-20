@@ -1,6 +1,7 @@
 import React from 'react';
+import { prettyDateFormat } from '../../utilities';
 import { TApodResponse } from '../types';
-import { SHeader, SNavigationButtons } from './styles';
+import { SHeader, SNavigationButtons, STitleContainer, STitle } from './styles';
 import TopSites from './TopSites';
 
 type THeaderProps = {
@@ -14,11 +15,11 @@ const Header: React.FC<THeaderProps> = ({ response, navigationButtons }) => {
       <div>
         <TopSites />
       </div>
-      <div>
-        <div>
-          <h3>{response.date}</h3>
+      <STitleContainer>
+        <STitle>
+          <h2>{prettyDateFormat(response.date)}</h2>
           <h1>{response.title}</h1>
-        </div>
+        </STitle>
         <SNavigationButtons>
           {navigationButtons.map((button) => {
             return (
@@ -28,7 +29,7 @@ const Header: React.FC<THeaderProps> = ({ response, navigationButtons }) => {
             );
           })}
         </SNavigationButtons>
-      </div>
+      </STitleContainer>
     </SHeader>
   );
 };

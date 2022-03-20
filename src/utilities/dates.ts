@@ -13,3 +13,11 @@ export function adjacentDate(dateString: string, direction: number): string {
 
   return formatDate(latest);
 }
+
+export const prettyDateFormat = (date: string): string => {
+  return new Date(date).toLocaleDateString('en', {
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+  });
+};

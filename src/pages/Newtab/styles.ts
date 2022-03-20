@@ -37,6 +37,32 @@ export const SVideoContainer = styled.div`
   top: 0;
 `;
 
+export const SNavigationButtons = styled.div`
+  display: flex;
+  gap: 15px;
+  opacity: 0.3;
+  transition: 0.2s ease-out opacity;
+  color: ${lightGray};
+
+  span {
+    cursor: pointer;
+
+    &.current,
+    &.favorite {
+      color: ${highlightBlue};
+      font-weight: 600;
+    }
+    &.apod-link a {
+      color: inherit;
+      text-decoration: none;
+    }
+    &.hover,
+    &:hover {
+      color: white;
+    }
+  }
+`;
+
 export const SHeader = styled.div`
   display: flex;
   justify-content: space-between;
@@ -46,12 +72,28 @@ export const SHeader = styled.div`
   color: white;
 `;
 
-export const SNavigationButtons = styled.div`
-  display: flex;
-  gap: 10px;
+export const STitleContainer = styled.div`
+  padding: 10px 20px;
+  transition: 0.2s linear background-color;
+  border-radius: 3px;
 
-  span {
-    cursor: pointer;
+  &:hover {
+    background-color: rgba(0, 0, 0, 0.8);
+
+    ${SNavigationButtons} {
+      opacity: 1;
+    }
+  }
+`;
+
+export const STitle = styled.div`
+  h1 {
+    font-size: 24px;
+    font-weight: 300;
+  }
+  h2 {
+    color: ${lightGray};
+    font-weight: 300;
   }
 `;
 
