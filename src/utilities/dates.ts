@@ -3,12 +3,14 @@ const formatDate = (date: Date) => {
 };
 
 export function adjacentDate(dateString: string, direction: number): string {
+  console.log(dateString, 'dateString');
+
   const adjDate = new Date(dateString);
 
   const latest = new Date(
     adjDate.getFullYear(),
     adjDate.getMonth(),
-    adjDate.getDate() + direction + 1 // hmm
+    adjDate.getDate() + direction
   );
 
   return formatDate(latest);

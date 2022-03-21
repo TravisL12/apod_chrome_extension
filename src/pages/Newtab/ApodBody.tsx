@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { adjacentDate, fetchImage } from '../../utilities';
 import { TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
@@ -8,11 +8,22 @@ import VideoContainer from './VideoContainer';
 const ApodBody = () => {
   const [isHighDef, setIsHighDef] = useState<boolean>(false);
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
+  const isLoadingRef = useRef(true);
+
+  const setLoading = (isSet: boolean = false) => {
+    isLoadingRef.current = isSet;
+  };
 
   const getImage = async (options?: TFetchOptions) => {
     const response = await fetchImage(options);
-    console.log(response);
-    setApodReponse(response);
+    const img = new Image();
+    img.src = isHighDef ? response?.hdurl : response?.url;
+
+    // Preload the image first
+    img.onload = () => {
+      setLoading(false);
+      setApodReponse(response);
+    };
   };
 
   const fetchToday = () => getImage();
@@ -34,7 +45,7 @@ const ApodBody = () => {
     fetchRandom();
   }, []);
 
-  if (!apodResponse) {
+  if (isLoadingRef.current || !apodResponse) {
     return (
       <SApodContainer>
         <SMediaContainer>
