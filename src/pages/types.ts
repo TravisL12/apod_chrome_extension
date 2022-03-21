@@ -7,6 +7,7 @@ export type TApodResponse = {
   service_version: string;
   title: string;
   url: string;
+  loadedImage: HTMLImageElement;
 };
 
 export type TTopSite = {

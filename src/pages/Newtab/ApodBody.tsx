@@ -2,11 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { adjacentDate, fetchImage } from '../../utilities';
 import { TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
-import { SApodContainer, SMediaContainer, SApodImage } from './styles';
+import ImageContainer from './ImageContainer';
+import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
 const ApodBody = () => {
-  const [isHighDef, setIsHighDef] = useState<boolean>(false);
+  const [isHighDef, setIsHighDef] = useState<boolean>(true);
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
   const isLoadingRef = useRef(true);
 
@@ -22,7 +23,7 @@ const ApodBody = () => {
     // Preload the image first
     img.onload = () => {
       setLoading(false);
-      setApodReponse(response);
+      setApodReponse({ ...response, loadedImage: img });
     };
   };
 
@@ -72,9 +73,7 @@ const ApodBody = () => {
         {apodResponse.media_type === 'video' ? (
           <VideoContainer url={new URL(apodResponse?.url)} />
         ) : (
-          <SApodImage
-            src={isHighDef ? apodResponse?.hdurl : apodResponse?.url}
-          />
+          <ImageContainer loadedImage={apodResponse.loadedImage} />
         )}
       </SMediaContainer>
     </SApodContainer>

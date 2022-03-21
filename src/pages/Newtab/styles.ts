@@ -6,12 +6,16 @@ const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
 const explanationTitleWidth = '250px';
 
+const flexCenter = `
+display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 export const SApodContainer = styled.div``;
 
 export const SMediaContainer = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenter}
   background: ${black};
 
   position: absolute;
@@ -22,16 +26,32 @@ export const SMediaContainer = styled.div`
   height: 100vh;
 `;
 
-export const SApodImage = styled.img`
-  max-height: 100%;
-  max-width: 100%;
+type TApodImage = {
+  imageUrl: string;
+  backgroundSize?: string;
+};
+export const SApodImage = styled.div`
+  ${flexCenter}
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-image: ${(props: TApodImage) => props.imageUrl};
+  background-size: ${(props: TApodImage) => props.backgroundSize};
+`;
+
+export const SApodBackgroundImage = styled(SApodImage)`
+  opacity: 0.3;
+  background-position: 50%;
+  background-size: cover;
 `;
 
 export const SVideoContainer = styled.div`
   position: absolute;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  ${flexCenter}
   width: 100%;
   height: 100%;
   top: 0;
@@ -103,9 +123,7 @@ export const STopSites = styled.div`
   padding-top: 10px;
 
   span {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    ${flexCenter}
     cursor: pointer;
 
     a {
