@@ -59,10 +59,20 @@ export const SVideoContainer = styled.div`
 
 export const SNavigationButtons = styled.div`
   display: flex;
+  justify-content: flex-end;
   gap: 15px;
   opacity: 0.3;
   transition: 0.2s ease-out opacity;
+  font-size: 14px;
   color: ${lightGray};
+
+  span a {
+    color: ${lightGray};
+    text-decoration: none;
+    &:hover {
+      color: white;
+    }
+  }
 
   span {
     cursor: pointer;

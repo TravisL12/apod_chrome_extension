@@ -1,3 +1,6 @@
+import { MIN_APOD_DATE } from '../constants';
+import { zeroPad } from './utilities';
+
 const formatDate = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
@@ -20,4 +23,24 @@ export const prettyDateFormat = (date: string): string => {
     month: 'long',
     day: 'numeric',
   });
+};
+
+// https://apod.nasa.gov/apod/ap220321.html (generate `220321`)
+export const linkDateFormat = (date: string) => {
+  const dateStr = date.split('-');
+  return `${dateStr[0].slice(-2)}${zeroPad(dateStr[1])}${zeroPad(dateStr[2])}`;
+};
+
+export const isDateToday = (date: string): boolean => {
+  const isGreater = new Date(date) > new Date();
+  return formatDate(new Date()) === date || isGreater;
+};
+
+export const isFirstApodDate = (date?: string): boolean => {
+  if (!date) {
+    return false;
+  }
+
+  const isLess = new Date(date) < new Date();
+  return MIN_APOD_DATE === date || isLess;
 };

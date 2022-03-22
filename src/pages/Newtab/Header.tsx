@@ -1,12 +1,12 @@
 import React from 'react';
 import { prettyDateFormat } from '../../utilities';
-import { TApodResponse } from '../types';
+import { TApodResponse, TNavigationButton } from '../types';
 import { SHeader, SNavigationButtons, STitleContainer, STitle } from './styles';
 import TopSites from './TopSites';
 
 type THeaderProps = {
   response: TApodResponse;
-  navigationButtons: { label: string; clickHandler: () => void }[];
+  navigationButtons: TNavigationButton[];
 };
 
 const Header: React.FC<THeaderProps> = ({ response, navigationButtons }) => {
@@ -21,13 +21,24 @@ const Header: React.FC<THeaderProps> = ({ response, navigationButtons }) => {
           <h1>{response.title}</h1>
         </STitle>
         <SNavigationButtons>
-          {navigationButtons.map((button) => {
+          {navigationButtons.map((navItem) => {
             return (
-              <span key={button.label} onClick={button.clickHandler}>
-                {button.label}
-              </span>
+              !navItem.isHidden && (
+                <span key={navItem.label} onClick={navItem.clickHandler}>
+                  {navItem.label}
+                </span>
+              )
             );
           })}
+          <span>
+            <a
+              href={response.apodUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              APOD
+            </a>
+          </span>
         </SNavigationButtons>
       </STitleContainer>
     </SHeader>

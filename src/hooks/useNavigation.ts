@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
-import { TUseNavigationProps } from '../pages/types';
-import { adjacentDate } from '../utilities';
+import { TNavigationButton, TUseNavigationProps } from '../pages/types';
+import { adjacentDate, isFirstApodDate } from '../utilities';
 
 const RANDOM_DAY = 'r';
 const TODAY = 't';
@@ -42,13 +42,21 @@ export const useNavigation = ({
   useKeyboardShortcut([PREVIOUS_DAY], fetchPreviousDate);
   useKeyboardShortcut([NEXT_DAY], fetchNextDate);
 
-  const navigationButtons = [
-    { label: 'Today', clickHandler: fetchToday },
-    { label: 'Force HD', clickHandler: forceHighDef },
-    { label: 'Previous', clickHandler: fetchPreviousDate },
-    { label: 'Next', clickHandler: fetchNextDate },
-    { label: 'Save', clickHandler: () => {} }, // handleSaveFavorite,
-    { label: 'Random', clickHandler: fetchRandom },
+  const navigationButtons: TNavigationButton[] = [
+    { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
+    { label: 'Random', clickHandler: fetchRandom, isHidden: false },
+    {
+      label: 'Previous',
+      clickHandler: fetchPreviousDate,
+      isHidden: isFirstApodDate(response?.date),
+    },
+    {
+      label: 'Next',
+      clickHandler: fetchNextDate,
+      isHidden: !!response?.isToday,
+    },
+    { label: 'Save', clickHandler: () => {}, isHidden: false }, // handleSaveFavorite,
+    { label: 'Force HD', clickHandler: forceHighDef, isHidden: false },
   ];
 
   useEffect(() => {

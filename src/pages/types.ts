@@ -12,6 +12,8 @@ export type TApodResponse = {
   title: string;
   url: string;
   loadedImage: HTMLImageElement;
+  apodUrl: string;
+  isToday: boolean;
 };
 
 export type TUseNavigationProps = {
@@ -28,4 +30,10 @@ export type TTopSite = {
 export type TFetchOptions = {
   count?: number;
   date?: any;
+};
+
+export type TNavigationButton = {
+  label: string;
+  clickHandler: () => void;
+  isHidden: boolean;
 };

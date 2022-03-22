@@ -16,7 +16,6 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     forceHighDef: boolean = false
   ) => {
     const img = new Image();
-
     img.src = isHighDef || forceHighDef ? response?.hdurl : response?.url;
 
     // Preload the image first
