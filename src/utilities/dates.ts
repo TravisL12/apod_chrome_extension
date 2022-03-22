@@ -41,6 +41,6 @@ export const isFirstApodDate = (date?: string): boolean => {
     return false;
   }
 
-  const isLess = new Date(date) < new Date();
+  const isLess = new Date(date) < new Date(MIN_APOD_DATE);
   return MIN_APOD_DATE === date || isLess;
 };

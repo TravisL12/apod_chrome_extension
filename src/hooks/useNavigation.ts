@@ -57,6 +57,11 @@ export const useNavigation = ({
     },
     { label: 'Save', clickHandler: () => {}, isHidden: false }, // handleSaveFavorite,
     { label: 'Force HD', clickHandler: forceHighDef, isHidden: false },
+    {
+      label: 'Test video',
+      clickHandler: () => fetchApod({ date: '2012-07-17' }),
+      isHidden: false,
+    },
   ];
 
   useEffect(() => {

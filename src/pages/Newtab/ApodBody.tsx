@@ -37,21 +37,17 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     loadImage,
   });
 
-  if (isLoading || !apodResponse) {
-    return (
-      <SApodContainer>
-        <SMediaContainer>
-          <h1 style={{ color: 'white' }}>Loading...</h1>
-        </SMediaContainer>
-      </SApodContainer>
-    );
-  }
-
   return (
     <SApodContainer>
-      <Header response={apodResponse} navigationButtons={navigationButtons} />
+      <Header
+        isLoading={isLoading}
+        response={apodResponse}
+        navigationButtons={navigationButtons}
+      />
       <SMediaContainer>
-        {apodResponse.media_type === 'video' ? (
+        {!apodResponse || isLoading ? (
+          <h1 style={{ color: 'white' }}>Loading...</h1>
+        ) : apodResponse.media_type === 'video' ? (
           <VideoContainer url={new URL(apodResponse?.url)} />
         ) : (
           <ImageContainer loadedImage={apodResponse.loadedImage} />
