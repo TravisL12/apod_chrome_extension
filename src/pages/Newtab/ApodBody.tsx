@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { DELAY_FOR_HD_LOAD } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
@@ -16,10 +17,17 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     forceHighDef: boolean = false
   ) => {
     const img = new Image();
-    img.src = isHighDef || forceHighDef ? response?.hdurl : response?.url;
+    img.src = response?.hdurl;
+
+    const timeout = setTimeout(() => {
+      if (!img.complete && !forceHighDef && !isHighDef) {
+        img.src = response?.url;
+      }
+    }, DELAY_FOR_HD_LOAD);
 
     // Preload the image first
     img.onload = () => {
+      clearTimeout(timeout);
       setIsLoading(false);
       setApodReponse({ ...response, loadedImage: img });
     };
