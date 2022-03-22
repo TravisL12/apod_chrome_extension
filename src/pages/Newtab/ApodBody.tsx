@@ -1,23 +1,23 @@
 import React, { useState } from 'react';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
-import { TApodResponse, TFetchOptions } from '../types';
+import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-const ApodBody = () => {
+const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
-  const [isHighDef, setIsHighDef] = useState<boolean>(false);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
-  const getImage = async (options?: TFetchOptions) => {
-    setIsLoading(true);
-    const response = await fetchImage(options);
-
+  const loadImage = (
+    response: TApodResponse,
+    forceHighDef: boolean = false
+  ) => {
     const img = new Image();
-    img.src = isHighDef ? response?.hdurl : response?.url;
+
+    img.src = isHighDef || forceHighDef ? response?.hdurl : response?.url;
 
     // Preload the image first
     img.onload = () => {
@@ -26,10 +26,16 @@ const ApodBody = () => {
     };
   };
 
+  const fetchApod = async (options?: TFetchOptions) => {
+    setIsLoading(true);
+    const response = await fetchImage(options);
+    loadImage(response);
+  };
+
   const { navigationButtons } = useNavigation({
     response: apodResponse,
-    getImage,
-    setIsHighDef,
+    fetchApod,
+    loadImage,
   });
 
   if (isLoading || !apodResponse) {

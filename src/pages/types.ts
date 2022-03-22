@@ -1,3 +1,7 @@
+export type TApodBodyProps = {
+  isHighDef?: boolean; // will be passed in by preferences
+};
+
 export type TApodResponse = {
   copyright: string;
   date: string;
@@ -8,6 +12,12 @@ export type TApodResponse = {
   title: string;
   url: string;
   loadedImage: HTMLImageElement;
+};
+
+export type TUseNavigationProps = {
+  response?: TApodResponse;
+  fetchApod: (options?: TFetchOptions) => void;
+  loadImage: (response: TApodResponse, forceHighDef?: boolean) => void;
 };
 
 export type TTopSite = {
