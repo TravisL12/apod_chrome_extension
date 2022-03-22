@@ -6307,6 +6307,11 @@ uri-js@^4.2.2:
   dependencies:
     punycode "^2.1.0"
 
+use-keyboard-shortcut@^1.1.4:
+  version "1.1.4"
+  resolved "https://registry.yarnpkg.com/use-keyboard-shortcut/-/use-keyboard-shortcut-1.1.4.tgz#05cd39082b2d3ec4780396e17720cee31c863e19"
+  integrity sha512-diFzhVWYkoR9WdHGOxp1EWVr2YUaiQC3vdlT1FbdK25UfPcTb3wlVqgSzvEBdrXh0cg1FW3PCBKzNGMGpslMqg==
+
 util-deprecate@^1.0.1, util-deprecate@^1.0.2, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
