@@ -1,6 +1,7 @@
 import React from 'react';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
+import CalendarPicker from './CalendarPicker/Calendar';
 import { SHeader, SNavigationButtons, STitleContainer, STitle } from './styles';
 import TopSites from './TopSites';
 
@@ -8,12 +9,14 @@ type THeaderProps = {
   response?: TApodResponse;
   navigationButtons: TNavigationButton[];
   isLoading?: boolean;
+  goToApodDate: (date: string) => void;
 };
 
 const Header: React.FC<THeaderProps> = ({
   response,
   navigationButtons,
   isLoading,
+  goToApodDate,
 }) => {
   return (
     <SHeader>
@@ -23,7 +26,9 @@ const Header: React.FC<THeaderProps> = ({
       {response && !isLoading && (
         <STitleContainer>
           <STitle>
-            <h2>{prettyDateFormat(response.date)}</h2>
+            <CalendarPicker startDate={response.date} onChange={goToApodDate}>
+              <h2>{prettyDateFormat(response.date)}</h2>
+            </CalendarPicker>
             <h1>{response.title}</h1>
           </STitle>
           <SNavigationButtons>

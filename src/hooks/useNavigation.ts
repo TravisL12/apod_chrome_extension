@@ -37,6 +37,10 @@ export const useNavigation = ({
     }
   };
 
+  const goToApodDate = (date: string) => {
+    fetchApod({ date });
+  };
+
   useKeyboardShortcut([RANDOM_DAY], fetchRandom);
   useKeyboardShortcut([TODAY], fetchToday);
   useKeyboardShortcut([PREVIOUS_DAY], fetchPreviousDate);
@@ -68,5 +72,5 @@ export const useNavigation = ({
     fetchRandom();
   }, []);
 
-  return { navigationButtons };
+  return { navigationButtons, goToApodDate };
 };

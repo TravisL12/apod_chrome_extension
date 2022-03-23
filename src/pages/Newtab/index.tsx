@@ -6,4 +6,4 @@ import './index.css';
 
 render(<ApodBody />, window.document.querySelector('#app-container'));
 
-if (module.hot) module.hot.accept();
+// if (module.hot) module.hot.accept();

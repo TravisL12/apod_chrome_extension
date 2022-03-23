@@ -16,7 +16,19 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     response: TApodResponse,
     forceHighDef: boolean = false
   ) => {
+    if (response.media_type === 'other') {
+      console.log(response, 'OTHER REPSONSE');
+      fetchApod({ count: 1 });
+      return;
+    }
+
     const img = new Image();
+    if (response.media_type === 'video') {
+      setIsLoading(false);
+      setApodReponse({ ...response, loadedImage: img });
+      return;
+    }
+
     img.src = response?.hdurl;
 
     const timeout = setTimeout(() => {
@@ -39,7 +51,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     loadImage(response);
   };
 
-  const { navigationButtons } = useNavigation({
+  const { navigationButtons, goToApodDate } = useNavigation({
     response: apodResponse,
     fetchApod,
     loadImage,
@@ -51,6 +63,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
         isLoading={isLoading}
         response={apodResponse}
         navigationButtons={navigationButtons}
+        goToApodDate={goToApodDate}
       />
       <SMediaContainer>
         {!apodResponse || isLoading ? (

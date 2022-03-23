@@ -103,6 +103,7 @@ export const SHeader = styled.div`
 `;
 
 export const STitleContainer = styled.div`
+  position: relative;
   padding: 10px 20px;
   transition: 0.2s linear background-color;
   border-radius: 3px;
