@@ -1,5 +1,5 @@
 :root {
-  --day-size: 50px;
+  --day-size: 40px;
   --day-color: lightblue;
   --day-hover-color: rgba(0, 0, 0, 0.3);
   --day-checked-color: #80cbc4;
@@ -72,8 +72,7 @@ body {
 .day {
   position: relative;
   transition: 0.05s linear background;
-  border-radius: 50%;
-  margin: 8px;
+  margin: 4px;
 }
 .day.prev {
   color: gray;

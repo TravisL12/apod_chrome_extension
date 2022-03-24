@@ -11,18 +11,19 @@ import './index.css';
 
 type TCalendarPickerProps = {
   startDate?: string;
+  isOpen: boolean;
+  setIsOpen: (value: boolean) => void;
   onChange: (value: string) => void;
 };
 
 const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   startDate,
   onChange,
+  isOpen,
+  setIsOpen,
   children,
 }) => {
-  const [isOpen, setIsOpen] = useState(!children);
-  const id = useMemo(() => Math.round(Math.random() * 1000), []);
   const dateProp = useMemo(() => {
-    console.log(startDate, 'startDate???');
     if (!startDate) {
       return new Date();
     }
@@ -44,12 +45,17 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const { totalDays, firstDay, prevMonthTotalDays, nextMonthTotalDays } =
     createDate(selectedYear, selectedMonth);
 
-  const setDate = useCallback(() => {
+  const updateDays = () => {
     const newDays = buildNumberArray(totalDays);
     setDays(newDays);
-  }, [totalDays]);
+  };
 
-  useEffect(() => setDate(), [dateProp, isOpen]);
+  useEffect(() => {
+    setSelectedYear(dateProp.getFullYear());
+    setSelectedMonth(dateProp.getMonth());
+    setSelectedDay(dateProp.getDate());
+    updateDays();
+  }, [dateProp, isOpen]);
 
   const changeMonth = (change: any) => {
     const isJanuary = selectedMonth === 0;
@@ -74,7 +80,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
     if (name === 'years') {
       setSelectedYear(value);
     }
-    setDate();
+    updateDays();
   };
 
   const daysBefore = buildNumberArray(prevMonthTotalDays).slice(
@@ -88,20 +94,9 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
     setIsOpen(!isOpen);
   };
 
-  const childrenWithProps = React.Children.map(children, (child) => {
-    if (React.isValidElement(child)) {
-      const props = {
-        key: 'key',
-        onClick: toggleOpen,
-      };
-      return React.cloneElement(child, props);
-    }
-    return child;
-  });
-
   return (
     <div className="calendar-container">
-      {childrenWithProps}
+      {children}
       {isOpen && (
         <div className="calendar">
           <div className="title">
@@ -152,20 +147,21 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
             {days.map((day) => {
               const style = day === 0 ? { gridColumnStart: firstDay + 1 } : {};
               return (
-                <form key={`${id}-${day}`} style={style} className="day">
+                <form key={`id-${day}`} style={style} className="day">
                   <input
                     onChange={() => {
                       setSelectedDay(day + 1);
                       onChange(
-                        `${selectedYear}-${selectedMonth + 1}-${day + 1}`
+                        `${+selectedYear}-${+selectedMonth + 1}-${+day + 1}`
                       );
+                      setIsOpen(false);
                     }}
                     checked={selectedDay - 1 === day}
-                    id={`${id}-${day}`}
+                    id={`id-${day}`}
                     type="radio"
                     name="dates"
                   />
-                  <label htmlFor={`${id}-${day}`}>{day + 1}</label>
+                  <label htmlFor={`id-${day}`}>{day + 1}</label>
                 </form>
               );
             })}

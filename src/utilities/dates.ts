@@ -18,7 +18,7 @@ export function adjacentDate(dateString: string, direction: number): string {
 }
 
 export const prettyDateFormat = (date: string): string => {
-  return new Date(date).toLocaleDateString('en', {
+  return new Date(date.replace('-', '/')).toLocaleDateString('en', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',

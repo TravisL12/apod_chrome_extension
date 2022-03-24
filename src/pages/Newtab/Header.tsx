@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
 import CalendarPicker from './CalendarPicker/Calendar';
@@ -18,6 +18,7 @@ const Header: React.FC<THeaderProps> = ({
   isLoading,
   goToApodDate,
 }) => {
+  const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   return (
     <SHeader>
       <div>
@@ -26,8 +27,15 @@ const Header: React.FC<THeaderProps> = ({
       {response && !isLoading && (
         <STitleContainer>
           <STitle>
-            <CalendarPicker startDate={response.date} onChange={goToApodDate}>
-              <h2>{prettyDateFormat(response.date)}</h2>
+            <CalendarPicker
+              startDate={response.date}
+              onChange={goToApodDate}
+              isOpen={isCalendarOpen}
+              setIsOpen={setIsCalendarOpen}
+            >
+              <h2 onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+                {prettyDateFormat(response.date)}
+              </h2>
             </CalendarPicker>
             <h1>{response.title}</h1>
           </STitle>
