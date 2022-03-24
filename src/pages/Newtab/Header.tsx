@@ -7,7 +7,7 @@ import {
   SNavigationButtons,
   STitleContainer,
   STitle,
-  STitleInner,
+  STitleImageQuality,
 } from './styles';
 import TopSites from './TopSites';
 
@@ -43,10 +43,8 @@ const Header: React.FC<THeaderProps> = ({
                 {prettyDateFormat(response.date)}
               </h2>
             </CalendarPicker>
-            <STitleInner>
-              <h1>{response.title}</h1>
-              {response.isImageHd && <span>HD</span>}
-            </STitleInner>
+            <h1>{response.title}</h1>
+            {response.isImageHd && <STitleImageQuality>HD</STitleImageQuality>}
           </STitle>
           <SNavigationButtons>
             {navigationButtons.map((navItem) => {

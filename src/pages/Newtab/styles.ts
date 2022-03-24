@@ -102,6 +102,14 @@ export const SHeader = styled.div`
   color: white;
 `;
 
+export const STitleImageQuality = styled.span`
+  margin-left: 10px;
+  opacity: 0.3;
+  font-size: 14px;
+  color: ${lightGray};
+  margin-bottom: 2px;
+`;
+
 export const STitleContainer = styled.div`
   position: relative;
   padding: 10px 20px;
@@ -111,7 +119,8 @@ export const STitleContainer = styled.div`
   &:hover {
     background-color: rgba(0, 0, 0, 0.8);
 
-    ${SNavigationButtons} {
+    ${SNavigationButtons},
+    ${STitleImageQuality} {
       opacity: 1;
     }
   }
@@ -126,19 +135,6 @@ export const STitle = styled.div`
   h2 {
     color: ${lightGray};
     font-weight: 300;
-  }
-`;
-
-export const STitleInner = styled.div`
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-
-  span {
-    font-size: 14px;
-    color: #757575;
-    margin-bottom: 2px;
   }
 `;
 

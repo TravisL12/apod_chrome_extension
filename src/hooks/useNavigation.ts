@@ -52,7 +52,7 @@ export const useNavigation = ({
     {
       label: 'Force HD',
       clickHandler: forceHighDef,
-      isHidden: !!options?.hiResOnly,
+      isHidden: !!options?.hiResOnly || !!response?.isImageHd,
     },
   ];
 
