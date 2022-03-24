@@ -35,6 +35,7 @@ export type TUseNavigationProps = {
   response?: TApodResponse;
   fetchApod: (options?: TFetchOptions) => void;
   loadImage: (response: TApodResponse, forceHighDef?: boolean) => void;
+  options: TAppOptions;
 };
 
 export type TTopSite = {

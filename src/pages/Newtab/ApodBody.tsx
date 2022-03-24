@@ -8,10 +8,8 @@ import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-const ApodBody: React.FC<TAppOptions> = (props) => {
-  console.log(props, 'props');
-
-  const { hiResOnly } = props;
+const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
+  const { hiResOnly } = options;
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -58,6 +56,7 @@ const ApodBody: React.FC<TAppOptions> = (props) => {
     response: apodResponse,
     fetchApod,
     loadImage,
+    options,
   });
 
   return (

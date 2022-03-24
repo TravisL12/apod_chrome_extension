@@ -1,12 +1,8 @@
 import { useEffect } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
+import { TODAY, KEY_MAP } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import { adjacentDate, isFirstApodDate } from '../utilities';
-
-const RANDOM_DAY = 'r';
-const TODAY = 't';
-const PREVIOUS_DAY = 'j';
-const NEXT_DAY = 'k';
 
 // we'll get there
 // const EXPLANATION_TAB = 'e';
@@ -20,6 +16,7 @@ export const useNavigation = ({
   response,
   fetchApod,
   loadImage,
+  options,
 }: TUseNavigationProps) => {
   const fetchToday = () => fetchApod();
   const fetchRandom = () => fetchApod({ count: 1 });
@@ -41,10 +38,10 @@ export const useNavigation = ({
     fetchApod({ date });
   };
 
-  useKeyboardShortcut([RANDOM_DAY], fetchRandom);
-  useKeyboardShortcut([TODAY], fetchToday);
-  useKeyboardShortcut([PREVIOUS_DAY], fetchPreviousDate);
-  useKeyboardShortcut([NEXT_DAY], fetchNextDate);
+  useKeyboardShortcut([KEY_MAP.RANDOM_DAY], fetchRandom);
+  useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
+  useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
+  useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
 
   const navigationButtons: TNavigationButton[] = [
     { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
@@ -64,7 +61,7 @@ export const useNavigation = ({
   ];
 
   useEffect(() => {
-    fetchRandom();
+    options.apodType === TODAY ? fetchToday() : fetchRandom();
   }, []);
 
   return { navigationButtons, goToApodDate };
