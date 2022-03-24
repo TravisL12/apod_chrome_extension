@@ -10,7 +10,7 @@ import {
 import './index.css';
 
 type TCalendarPickerProps = {
-  startDate?: string;
+  startDate: Date;
   isOpen: boolean;
   setIsOpen: (value: boolean) => void;
   onChange: (value: string) => void;
@@ -23,23 +23,13 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   setIsOpen,
   children,
 }) => {
-  const dateProp = useMemo(() => {
-    if (!startDate) {
-      return new Date();
-    }
-    if (typeof startDate === 'string') {
-      return new Date(startDate);
-    }
-    return startDate;
-  }, [startDate]);
-
   const [selectedMonth, setSelectedMonth] = useState<number>(
-    dateProp.getMonth()
+    startDate.getMonth()
   );
   const [selectedYear, setSelectedYear] = useState<number>(
-    dateProp.getFullYear()
+    startDate.getFullYear()
   );
-  const [selectedDay, setSelectedDay] = useState<number>(dateProp.getDate());
+  const [selectedDay, setSelectedDay] = useState<number>(startDate.getDate());
   const [days, setDays] = useState<number[]>([]);
 
   const { totalDays, firstDay, prevMonthTotalDays, nextMonthTotalDays } =
@@ -51,11 +41,11 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   };
 
   useEffect(() => {
-    setSelectedYear(dateProp.getFullYear());
-    setSelectedMonth(dateProp.getMonth());
-    setSelectedDay(dateProp.getDate());
+    setSelectedYear(startDate.getFullYear());
+    setSelectedMonth(startDate.getMonth());
+    setSelectedDay(startDate.getDate());
     updateDays();
-  }, [dateProp, isOpen]);
+  }, [startDate, isOpen]);
 
   const changeMonth = (change: any) => {
     const isJanuary = selectedMonth === 0;
@@ -86,13 +76,8 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const daysBefore = buildNumberArray(prevMonthTotalDays).slice(
     prevMonthTotalDays - firstDay
   );
-
   const endDow = totalDays + firstDay;
   const daysAfter = endDow <= 35 ? 35 - endDow : 42 - endDow;
-
-  const toggleOpen = () => {
-    setIsOpen(!isOpen);
-  };
 
   return (
     <div className="calendar-container">

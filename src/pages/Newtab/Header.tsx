@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
-import CalendarPicker from './CalendarPicker/Calendar';
+import CalendarPicker from './CalendarPicker';
 import { SHeader, SNavigationButtons, STitleContainer, STitle } from './styles';
 import TopSites from './TopSites';
 
@@ -28,7 +28,7 @@ const Header: React.FC<THeaderProps> = ({
         <STitleContainer>
           <STitle>
             <CalendarPicker
-              startDate={response.date}
+              startDate={new Date(response.date)}
               onChange={goToApodDate}
               isOpen={isCalendarOpen}
               setIsOpen={setIsCalendarOpen}
