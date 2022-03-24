@@ -1,3 +1,18 @@
+export type TAppOptions = {
+  apodType?: string;
+  apodFavorites?: {
+    url?: string;
+    title?: string;
+  };
+  hiResOnly?: boolean;
+  showTopSites?: boolean;
+  showHistoryRow?: boolean;
+  currentDate?: string;
+  todayCount?: number;
+  todayLimit?: number;
+  isTodayLimitOn?: boolean;
+};
+
 export type TApodBodyProps = {
   isHighDef?: boolean; // will be passed in by preferences
 };

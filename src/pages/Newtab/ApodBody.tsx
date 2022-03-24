@@ -2,13 +2,16 @@ import React, { useState } from 'react';
 import { DELAY_FOR_HD_LOAD } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
-import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
+import { TApodResponse, TAppOptions, TFetchOptions } from '../types';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
+const ApodBody: React.FC<TAppOptions> = (props) => {
+  console.log(props, 'props');
+
+  const { hiResOnly } = props;
   const [apodResponse, setApodReponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -32,7 +35,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ isHighDef }) => {
     img.src = response?.hdurl;
 
     const timeout = setTimeout(() => {
-      if (!img.complete && !forceHighDef && !isHighDef) {
+      if (!img.complete && !forceHighDef && !hiResOnly) {
         img.src = response?.url;
       }
     }, DELAY_FOR_HD_LOAD);
