@@ -2,15 +2,15 @@ import React, { useState } from 'react';
 import { DELAY_FOR_HD_LOAD } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
-import { TApodResponse, TAppOptions, TFetchOptions } from '../types';
+import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
+const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly } = options;
-  const [apodResponse, setApodReponse] = useState<TApodResponse>();
+  const [apodResponse, setApodResponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const loadImage = (
@@ -26,23 +26,24 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     const img = new Image();
     if (response.media_type === 'video') {
       setIsLoading(false);
-      setApodReponse({ ...response, loadedImage: img });
+      setApodResponse({ ...response, loadedImage: img });
       return;
     }
 
+    let isImageHd: boolean = true;
     img.src = response?.hdurl;
 
     const timeout = setTimeout(() => {
       if (!img.complete && !forceHighDef && !hiResOnly) {
+        isImageHd = false;
         img.src = response?.url;
       }
     }, DELAY_FOR_HD_LOAD);
 
-    // Preload the image first
     img.onload = () => {
       clearTimeout(timeout);
       setIsLoading(false);
-      setApodReponse({ ...response, loadedImage: img });
+      setApodResponse({ ...response, loadedImage: img, isImageHd });
     };
   };
 

@@ -1,9 +1,11 @@
+type TFavorites = {
+  url?: string;
+  title?: string;
+};
+
 export type TAppOptions = {
   apodType?: string;
-  apodFavorites?: {
-    url?: string;
-    title?: string;
-  };
+  apodFavorites?: TFavorites;
   hiResOnly?: boolean;
   showTopSites?: boolean;
   showHistoryRow?: boolean;
@@ -11,10 +13,6 @@ export type TAppOptions = {
   todayCount?: number;
   todayLimit?: number;
   isTodayLimitOn?: boolean;
-};
-
-export type TApodBodyProps = {
-  isHighDef?: boolean; // will be passed in by preferences
 };
 
 export type TApodResponse = {
@@ -29,12 +27,17 @@ export type TApodResponse = {
   loadedImage: HTMLImageElement;
   apodUrl: string;
   isToday: boolean;
+  isImageHd?: boolean;
 };
 
 export type TUseNavigationProps = {
   response?: TApodResponse;
   fetchApod: (options?: TFetchOptions) => void;
   loadImage: (response: TApodResponse, forceHighDef?: boolean) => void;
+  options: TAppOptions;
+};
+
+export type TApodBodyProps = {
   options: TAppOptions;
 };
 

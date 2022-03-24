@@ -4,14 +4,6 @@ import { TODAY, KEY_MAP } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import { adjacentDate, isFirstApodDate } from '../utilities';
 
-// we'll get there
-// const EXPLANATION_TAB = 'e';
-// const FAVORITES_TAB = 'f';
-// const SEARCH_TAB = 's';
-// const CLOSE_DRAWER = 'esc';
-// const PREVIOUS_HISTORY = 'ArrowLeft';
-// const NEXT_HISTORY = 'ArrowRight';
-
 export const useNavigation = ({
   response,
   fetchApod,
@@ -57,8 +49,18 @@ export const useNavigation = ({
       isHidden: !!response?.isToday,
     },
     { label: 'Save', clickHandler: () => {}, isHidden: false }, // handleSaveFavorite,
-    { label: 'Force HD', clickHandler: forceHighDef, isHidden: false },
+    {
+      label: 'Force HD',
+      clickHandler: forceHighDef,
+      isHidden: !!options?.hiResOnly,
+    },
   ];
+
+  useEffect(() => {
+    if (options.hiResOnly) {
+      forceHighDef();
+    }
+  }, [options.hiResOnly]);
 
   useEffect(() => {
     options.apodType === TODAY ? fetchToday() : fetchRandom();

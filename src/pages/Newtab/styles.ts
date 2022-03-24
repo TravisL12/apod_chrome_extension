@@ -7,7 +7,7 @@ const highlightBlue = 'rgb(117, 221, 255)';
 const explanationTitleWidth = '250px';
 
 const flexCenter = `
-display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
 `;
@@ -119,12 +119,26 @@ export const STitleContainer = styled.div`
 
 export const STitle = styled.div`
   h1 {
+    display: inline-block;
     font-size: 24px;
     font-weight: 300;
   }
   h2 {
     color: ${lightGray};
     font-weight: 300;
+  }
+`;
+
+export const STitleInner = styled.div`
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+
+  span {
+    font-size: 14px;
+    color: #757575;
+    margin-bottom: 2px;
   }
 `;
 

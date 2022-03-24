@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
 import CalendarPicker from './CalendarPicker';
-import { SHeader, SNavigationButtons, STitleContainer, STitle } from './styles';
+import {
+  SHeader,
+  SNavigationButtons,
+  STitleContainer,
+  STitle,
+  STitleInner,
+} from './styles';
 import TopSites from './TopSites';
 
 type THeaderProps = {
@@ -37,7 +43,10 @@ const Header: React.FC<THeaderProps> = ({
                 {prettyDateFormat(response.date)}
               </h2>
             </CalendarPicker>
-            <h1>{response.title}</h1>
+            <STitleInner>
+              <h1>{response.title}</h1>
+              {response.isImageHd && <span>HD</span>}
+            </STitleInner>
           </STitle>
           <SNavigationButtons>
             {navigationButtons.map((navItem) => {
