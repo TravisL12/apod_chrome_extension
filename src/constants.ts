@@ -7,16 +7,26 @@ export const DELAY_FOR_HD_LOAD = 1500;
 export const TODAY = 'today';
 export const RANDOM_APOD = 'random';
 
+export const APOD_TYPE = 'apodType';
+export const HI_RES_ONLY = 'hiResOnly';
+export const APOD_FAVORITES = 'apodFavorites';
+export const SHOW_TOP_SITES = 'showTopSites';
+export const SHOW_HISTORY_ROW = 'showHistoryRow';
+export const CURRENT_DATE = 'currentDate';
+export const TODAY_COUNT = 'todayCount';
+export const TODAY_LIMIT = 'todayLimit';
+export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
+
 export const APOD_OPTIONS = [
-  'apodType',
-  'hiResOnly',
-  'apodFavorites',
-  'showTopSites',
-  'showHistoryRow',
-  'currentDate',
-  'todayCount',
-  'todayLimit',
-  'isTodayLimitOn',
+  APOD_TYPE,
+  HI_RES_ONLY,
+  APOD_FAVORITES,
+  SHOW_TOP_SITES,
+  SHOW_HISTORY_ROW,
+  CURRENT_DATE,
+  TODAY_COUNT,
+  TODAY_LIMIT,
+  IS_TODAY_LIMIT_ON,
 ];
 
 export const KEY_MAP = {
@@ -31,4 +41,15 @@ export const KEY_MAP = {
   CLOSE_DRAWER: 'esc',
   PREVIOUS_HISTORY: 'ArrowLeft',
   NEXT_HISTORY: 'ArrowRight',
+};
+
+export const DEFAULT_OPTIONS = {
+  apodType: RANDOM_APOD,
+  apodFavorites: {},
+  hiResOnly: false,
+  showTopSites: true,
+  showHistoryRow: true,
+  todayCount: 0,
+  todayLimit: 5,
+  isTodayLimitOn: false,
 };

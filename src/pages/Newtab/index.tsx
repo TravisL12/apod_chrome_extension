@@ -1,22 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { APOD_OPTIONS, RANDOM_APOD } from '../../constants';
+import { APOD_OPTIONS, DEFAULT_OPTIONS } from '../../constants';
 import { getChrome, onChangeChrome } from '../../utilities';
 import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
 import './index.css';
-
-const defaultOptions = {
-  apodType: RANDOM_APOD,
-  apodFavorites: {},
-  hiResOnly: false,
-  showTopSites: true,
-  showHistoryRow: true,
-  todayCount: 0,
-  todayLimit: 5,
-  isTodayLimitOn: false,
-};
 
 const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
   const [apodOptions, setApodOptions] = useState<TAppOptions>();
@@ -34,7 +23,7 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
       setApodOptions(updatedSettings);
     });
 
-    const syncedOptions = Object.assign({}, defaultOptions, options);
+    const syncedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
     setApodOptions(syncedOptions);
   }, []);
 
