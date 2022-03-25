@@ -1,19 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import './Popup.css';
+import './index.css';
 import {
   APOD_TYPE,
-  HI_RES_ONLY,
   APOD_FAVORITES,
-  SHOW_TOP_SITES,
-  SHOW_HISTORY_ROW,
   CURRENT_DATE,
   TODAY_COUNT,
   TODAY_LIMIT,
+  HI_RES_ONLY,
+  SHOW_TOP_SITES,
+  SHOW_HISTORY_ROW,
   IS_TODAY_LIMIT_ON,
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
+import { SOption, SPopupContainer, SOptionsContainer } from './styles';
 
 const optionsConfig = [
   {
@@ -67,12 +68,12 @@ const Popup = () => {
   }
 
   return (
-    <div>
+    <SPopupContainer>
       <h3>Options</h3>
-      <div>
+      <SOptionsContainer>
         {optionsConfig.map((option) => {
           return (
-            <div key={option.id} className="option">
+            <SOption key={option.id} className="option">
               <div className="info">
                 <label htmlFor={option.id}>{option.label}</label>
                 <div className="sub-info">{option.description}</div>
@@ -85,11 +86,11 @@ const Popup = () => {
                   checked={popupOptions[option.id]}
                 />
               </div>
-            </div>
+            </SOption>
           );
         })}
-      </div>
-    </div>
+      </SOptionsContainer>
+    </SPopupContainer>
   );
 };
 
