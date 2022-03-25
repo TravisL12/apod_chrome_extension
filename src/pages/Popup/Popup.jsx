@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './index.css';
 import {
-  APOD_TYPE,
+  IS_TODAY_APOD,
   APOD_FAVORITES,
   CURRENT_DATE,
   TODAY_COUNT,
@@ -14,9 +14,21 @@ import {
   APOD_OPTIONS,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
-import { SOption, SPopupContainer, SOptionsContainer } from './styles';
+import {
+  SOption,
+  SPopupContainer,
+  SOptionsContainer,
+  SAboutApod,
+  SAboutLinks,
+} from './styles';
 
 const optionsConfig = [
+  {
+    id: IS_TODAY_APOD,
+    label: "Show Today's APOD",
+    description: `Will load the current APOD, otherwise will show a random APOD.`,
+    type: 'checkbox',
+  },
   {
     id: HI_RES_ONLY,
     label: 'High Resolution Images Only',
@@ -90,6 +102,33 @@ const Popup = () => {
           );
         })}
       </SOptionsContainer>
+      <SAboutApod>
+        <p>
+          APOD By The Trav <span id="version"></span>
+        </p>
+        <SAboutLinks>
+          <div>
+            <a target="_blank" href="https://www.redundantrobot.com">
+              RedundantRobot
+            </a>
+          </div>
+          <div>
+            <a target="_blank" href="https://www.github.com/travisl12">
+              Github
+            </a>
+          </div>
+          <div>
+            <a target="_blank" href="https://www.twitter.com/travisl12">
+              Twitter
+            </a>
+          </div>
+          <div>
+            <a target="_blank" href="https://codepen.io/TravisL12">
+              CodePen
+            </a>
+          </div>
+        </SAboutLinks>
+      </SAboutApod>
     </SPopupContainer>
   );
 };

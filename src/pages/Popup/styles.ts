@@ -28,3 +28,10 @@ export const SOption = styled.div`
     color: #444;
   }
 `;
+
+export const SAboutApod = styled.div``;
+
+export const SAboutLinks = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;

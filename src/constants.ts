@@ -8,6 +8,7 @@ export const TODAY = 'today';
 export const RANDOM_APOD = 'random';
 
 export const APOD_TYPE = 'apodType';
+export const IS_TODAY_APOD = 'isTodayApod';
 export const HI_RES_ONLY = 'hiResOnly';
 export const APOD_FAVORITES = 'apodFavorites';
 export const SHOW_TOP_SITES = 'showTopSites';
@@ -19,6 +20,7 @@ export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
 
 export const APOD_OPTIONS = [
   APOD_TYPE,
+  IS_TODAY_APOD,
   HI_RES_ONLY,
   APOD_FAVORITES,
   SHOW_TOP_SITES,
@@ -44,12 +46,12 @@ export const KEY_MAP = {
 };
 
 export const DEFAULT_OPTIONS = {
-  apodType: RANDOM_APOD,
-  apodFavorites: {},
-  hiResOnly: false,
-  showTopSites: true,
-  showHistoryRow: true,
-  todayCount: 0,
-  todayLimit: 5,
-  isTodayLimitOn: false,
+  [IS_TODAY_APOD]: false,
+  [APOD_FAVORITES]: {},
+  [HI_RES_ONLY]: false,
+  [SHOW_TOP_SITES]: true,
+  [SHOW_HISTORY_ROW]: true,
+  [TODAY_COUNT]: 0,
+  [TODAY_LIMIT]: 5,
+  [IS_TODAY_LIMIT_ON]: false,
 };

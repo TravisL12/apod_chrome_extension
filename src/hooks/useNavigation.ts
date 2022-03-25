@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
-import { TODAY, KEY_MAP } from '../constants';
+import { TODAY, KEY_MAP, IS_TODAY_APOD, HI_RES_ONLY } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import { adjacentDate, isFirstApodDate } from '../utilities';
 
@@ -52,18 +52,18 @@ export const useNavigation = ({
     {
       label: 'Force HD',
       clickHandler: forceHighDef,
-      isHidden: !!options?.hiResOnly || !!response?.isImageHd,
+      isHidden: !!options?.[HI_RES_ONLY] || !!response?.isImageHd,
     },
   ];
 
   useEffect(() => {
-    if (options.hiResOnly) {
+    if (options[HI_RES_ONLY]) {
       forceHighDef();
     }
-  }, [options.hiResOnly]);
+  }, [options[HI_RES_ONLY]]);
 
   useEffect(() => {
-    options.apodType === TODAY ? fetchToday() : fetchRandom();
+    options[IS_TODAY_APOD] ? fetchToday() : fetchRandom();
   }, []);
 
   return { navigationButtons, goToApodDate };

@@ -5,6 +5,7 @@ type TFavorites = {
 
 export type TAppOptions = {
   apodType?: string;
+  isTodayApod?: boolean;
   apodFavorites?: TFavorites;
   hiResOnly?: boolean;
   showTopSites?: boolean;
