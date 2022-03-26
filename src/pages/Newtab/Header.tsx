@@ -15,6 +15,7 @@ type THeaderProps = {
   response?: TApodResponse;
   navigationButtons: TNavigationButton[];
   isLoading?: boolean;
+  showTopSites?: boolean;
   goToApodDate: (date: string) => void;
 };
 
@@ -22,14 +23,13 @@ const Header: React.FC<THeaderProps> = ({
   response,
   navigationButtons,
   isLoading,
+  showTopSites,
   goToApodDate,
 }) => {
   const [isCalendarOpen, setIsCalendarOpen] = useState<boolean>(false);
   return (
     <SHeader>
-      <div>
-        <TopSites />
-      </div>
+      <div>{showTopSites && <TopSites />}</div>
       {response && !isLoading && (
         <STitleContainer>
           <STitle>

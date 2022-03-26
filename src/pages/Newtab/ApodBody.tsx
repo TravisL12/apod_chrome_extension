@@ -9,7 +9,7 @@ import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
-  const { hiResOnly } = options;
+  const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
@@ -67,6 +67,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         response={apodResponse}
         navigationButtons={navigationButtons}
         goToApodDate={goToApodDate}
+        showTopSites={showTopSites}
       />
       <SMediaContainer>
         {!apodResponse || isLoading ? (
