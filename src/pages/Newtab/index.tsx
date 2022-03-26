@@ -12,15 +12,16 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
 
   useEffect(() => {
     onChangeChrome((changes) => {
-      const updatedSettings = Object.keys(changes).reduce(
-        (result: any, setting: any) => {
-          result[setting] = changes[setting].newValue;
-          return result;
-        },
-        { ...apodOptions }
-      );
-
-      setApodOptions(updatedSettings);
+      getChrome(APOD_OPTIONS, (options) => {
+        const updatedSettings = Object.keys(changes).reduce(
+          (result: any, setting: any) => {
+            result[setting] = changes[setting].newValue;
+            return result;
+          },
+          { ...options }
+        );
+        setApodOptions(updatedSettings);
+      });
     });
 
     const syncedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
@@ -38,5 +39,3 @@ getChrome(APOD_OPTIONS, (options) => {
     window.document.querySelector('#app-container')
   );
 });
-
-// if (module.hot) module.hot.accept();

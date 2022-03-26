@@ -36,8 +36,6 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
 
   const navigationButtons: TNavigationButton[] = [
-    { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
-    { label: 'Random', clickHandler: fetchRandom, isHidden: false },
     {
       label: 'Previous',
       clickHandler: fetchPreviousDate,
@@ -48,6 +46,8 @@ export const useNavigation = ({
       clickHandler: fetchNextDate,
       isHidden: !!response?.isToday,
     },
+    { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
+    { label: 'Random', clickHandler: fetchRandom, isHidden: false },
     { label: 'Save', clickHandler: () => {}, isHidden: false }, // handleSaveFavorite,
     {
       label: 'Force HD',

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
 
 const black = '#111111';
-const gray = 'rgba(51,51,51, 0.8)';
-const lightGray = 'rgba(199,199,199, 0.8)';
+export const gray = 'rgba(51,51,51, 0.8)';
+export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
 const explanationTitleWidth = '250px';
 
@@ -103,8 +103,8 @@ export const SHeader = styled.div`
 `;
 
 export const STitleImageQuality = styled.span`
-  margin-left: 10px;
   opacity: 0.3;
+  align-self: flex-end;
   font-size: 14px;
   color: ${lightGray};
   margin-bottom: 2px;
@@ -136,6 +136,12 @@ export const STitle = styled.div`
     color: ${lightGray};
     font-weight: 300;
   }
+`;
+
+export const STitleItem = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
 `;
 
 export const STopSites = styled.div`

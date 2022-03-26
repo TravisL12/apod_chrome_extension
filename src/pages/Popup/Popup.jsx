@@ -78,7 +78,6 @@ const Popup = () => {
   if (!popupOptions) {
     return null;
   }
-
   return (
     <SPopupContainer>
       <h3>Options</h3>
