@@ -10,6 +10,7 @@ import {
   STitleImageQuality,
   STitleItem,
   lightGray,
+  SArrowContainer,
 } from './styles';
 import TopSites from './TopSites';
 
@@ -26,18 +27,15 @@ const ArrowSvg: React.FC<{
   size: number;
   isFlipped?: boolean;
 }> = ({ onClick, size = 15, isFlipped }) => {
-  const style = {
-    cursor: 'pointer',
-    transform: `rotate(${isFlipped ? '180deg' : '0'})`,
-  };
-
   return (
-    <svg onClick={onClick} width={size} height={size * 2} style={style}>
-      <path
-        fill={lightGray}
-        d={`M0,${size} L${size},${size * 2} L${size},0z`}
-      />
-    </svg>
+    <SArrowContainer onClick={onClick} size={size} isFlipped={isFlipped}>
+      <svg width={size} height={size * 2}>
+        <path
+          fill={lightGray}
+          d={`M0,${size} L${size},${size * 2} L${size},0z`}
+        />
+      </svg>
+    </SArrowContainer>
   );
 };
 
@@ -59,7 +57,7 @@ const Header: React.FC<THeaderProps> = ({
           <STitle>
             <STitleItem>
               {!prevNav.isHidden && (
-                <ArrowSvg size={10} onClick={prevNav.clickHandler} />
+                <ArrowSvg size={8} onClick={prevNav.clickHandler} />
               )}
               <CalendarPicker
                 startDate={new Date(response.date)}
@@ -74,7 +72,7 @@ const Header: React.FC<THeaderProps> = ({
               {!nextNav.isHidden && (
                 <ArrowSvg
                   isFlipped={true}
-                  size={10}
+                  size={8}
                   onClick={nextNav.clickHandler}
                 />
               )}

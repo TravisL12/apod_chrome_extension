@@ -140,8 +140,9 @@ export const STitle = styled.div`
 
 export const STitleItem = styled.div`
   display: flex;
+  align-items: center;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 6px;
 `;
 
 export const STopSites = styled.div`
@@ -170,4 +171,12 @@ export const STopSites = styled.div`
       }
     }
   }
+`;
+
+export const SArrowContainer = styled.div`
+  cursor: pointer;
+  padding: 0 5px;
+  height: ${(props: { size: number; isFlipped?: boolean }) => props.size * 2}px;
+  transform: ${(props: { size: number; isFlipped?: boolean }) =>
+    `rotate(${props.isFlipped ? '180deg' : '0'})`};
 `;
