@@ -5,13 +5,14 @@ import { fetchImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
-import { SApodContainer, SMediaContainer } from './styles';
+import { SApodContainer, SExplanationBody, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
 
   const loadImage = (
     response: TApodResponse,
@@ -49,8 +50,13 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
   const fetchApod = async (options?: TFetchOptions) => {
     setIsLoading(true);
+    setIsExplanationOpen(false);
     const response = await fetchImage(options);
     loadImage(response);
+  };
+
+  const handleOpenExplanation = () => {
+    setIsExplanationOpen(!isExplanationOpen);
   };
 
   const { navigationButtons, goToApodDate } = useNavigation({
@@ -58,6 +64,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     fetchApod,
     loadImage,
     options,
+    toggleExplanation: handleOpenExplanation,
   });
 
   return (
@@ -78,6 +85,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
           <ImageContainer loadedImage={apodResponse.loadedImage} />
         )}
       </SMediaContainer>
+      {isExplanationOpen && (
+        <SExplanationBody>{apodResponse?.explanation}</SExplanationBody>
+      )}
     </SApodContainer>
   );
 };

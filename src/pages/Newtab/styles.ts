@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { keyframes } from 'styled-components';
 
 const black = '#111111';
 export const gray = 'rgba(51,51,51, 0.8)';
@@ -12,7 +12,19 @@ const flexCenter = `
   align-items: center;
 `;
 
-export const SApodContainer = styled.div``;
+export const SExplanationBody = styled.div`
+  background: black;
+  color: white;
+  width: 40%;
+  align-self: flex-end;
+  padding: 8px;
+  font-size: 14px;
+`;
+
+export const SApodContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
 
 export const SMediaContainer = styled.div`
   ${flexCenter}

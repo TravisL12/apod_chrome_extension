@@ -57,7 +57,7 @@ const Header: React.FC<THeaderProps> = ({
           <STitle>
             <STitleItem>
               {!prevNav.isHidden && (
-                <ArrowSvg size={8} onClick={prevNav.clickHandler} />
+                <ArrowSvg size={7} onClick={prevNav.clickHandler} />
               )}
               <CalendarPicker
                 startDate={new Date(response.date)}
@@ -72,7 +72,7 @@ const Header: React.FC<THeaderProps> = ({
               {!nextNav.isHidden && (
                 <ArrowSvg
                   isFlipped={true}
-                  size={8}
+                  size={7}
                   onClick={nextNav.clickHandler}
                 />
               )}

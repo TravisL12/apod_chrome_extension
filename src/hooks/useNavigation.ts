@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
-import { TODAY, KEY_MAP, IS_TODAY_APOD, HI_RES_ONLY } from '../constants';
+import { KEY_MAP, IS_TODAY_APOD, HI_RES_ONLY } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import { adjacentDate, isFirstApodDate } from '../utilities';
 
@@ -9,6 +9,7 @@ export const useNavigation = ({
   fetchApod,
   loadImage,
   options,
+  toggleExplanation,
 }: TUseNavigationProps) => {
   const fetchToday = () => fetchApod();
   const fetchRandom = () => fetchApod({ count: 1 });
@@ -34,6 +35,7 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
   useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
   useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
+  useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], toggleExplanation);
 
   const navigationButtons: TNavigationButton[] = [
     {
@@ -48,11 +50,16 @@ export const useNavigation = ({
     },
     { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
     { label: 'Random', clickHandler: fetchRandom, isHidden: false },
-    { label: 'Save', clickHandler: () => {}, isHidden: false }, // handleSaveFavorite,
+    { label: 'Save', clickHandler: () => {}, isHidden: false },
     {
       label: 'Force HD',
       clickHandler: forceHighDef,
       isHidden: !!options?.[HI_RES_ONLY] || !!response?.isImageHd,
+    },
+    {
+      label: 'Explanation',
+      clickHandler: toggleExplanation,
+      isHidden: false,
     },
   ];
 
