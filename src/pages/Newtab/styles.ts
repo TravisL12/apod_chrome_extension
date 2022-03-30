@@ -19,6 +19,12 @@ export const SExplanationBody = styled.div`
   align-self: flex-end;
   padding: 8px;
   font-size: 14px;
+  transition: 0.4s transform ease-out;
+
+  transform: ${(props: { isOpen?: boolean }) =>
+    props.isOpen
+      ? 'transform: translate3d(1px, 0px, 0px)'
+      : 'translate3d(40%, 0px, 0px)'};
 `;
 
 export const SApodContainer = styled.div`

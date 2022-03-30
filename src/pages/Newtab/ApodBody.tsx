@@ -85,9 +85,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
           <ImageContainer loadedImage={apodResponse.loadedImage} />
         )}
       </SMediaContainer>
-      {isExplanationOpen && (
-        <SExplanationBody>{apodResponse?.explanation}</SExplanationBody>
-      )}
+      <SExplanationBody isOpen={isExplanationOpen}>
+        {apodResponse?.explanation}
+      </SExplanationBody>
     </SApodContainer>
   );
 };
