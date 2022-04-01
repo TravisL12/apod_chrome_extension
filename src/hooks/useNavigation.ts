@@ -56,11 +56,6 @@ export const useNavigation = ({
       clickHandler: forceHighDef,
       isHidden: !!options?.[HI_RES_ONLY] || !!response?.isImageHd,
     },
-    {
-      label: 'Explanation',
-      clickHandler: toggleExplanation,
-      isHidden: false,
-    },
   ];
 
   useEffect(() => {

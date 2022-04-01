@@ -3,9 +3,10 @@ import { DELAY_FOR_HD_LOAD } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
+import Drawer from './Drawer';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
-import { SApodContainer, SExplanationBody, SMediaContainer } from './styles';
+import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
@@ -85,9 +86,11 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
           <ImageContainer loadedImage={apodResponse.loadedImage} />
         )}
       </SMediaContainer>
-      <SExplanationBody isOpen={isExplanationOpen}>
-        {apodResponse?.explanation}
-      </SExplanationBody>
+      <Drawer
+        isOpen={isExplanationOpen}
+        response={apodResponse}
+        toggleExplanation={handleOpenExplanation}
+      />
     </SApodContainer>
   );
 };

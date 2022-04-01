@@ -1,4 +1,4 @@
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 
 const black = '#111111';
 export const gray = 'rgba(51,51,51, 0.8)';
@@ -6,16 +6,36 @@ export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
 const explanationTitleWidth = '250px';
 
+const apodButton = `
+  background-color: ${gray};
+  color: ${lightGray};
+  transition: 0.1s linear background-color;
+
+  &.hover,
+  &:hover {
+    background-color: ${lightGray};
+  }
+}
+`;
 const flexCenter = `
-  display: flex;
+display: flex;
   justify-content: center;
   align-items: center;
-`;
+  `;
 
-export const SExplanationBody = styled.div`
+const drawerTopOffset = '100px';
+const drawerWidth = '400px';
+export const SDrawerBody = styled.div`
+  position: absolute;
+  z-index: 1000;
+  top: ${drawerTopOffset};
+  right: 0;
+  max-height: 800px;
+  height: calc(100vh - 2 * ${drawerTopOffset});
+  width: ${drawerWidth};
+  box-shadow: inset 0 0 0 0.5px ${lightGray};
   background: black;
   color: white;
-  width: 40%;
   align-self: flex-end;
   padding: 8px;
   font-size: 14px;
@@ -24,7 +44,33 @@ export const SExplanationBody = styled.div`
   transform: ${(props: { isOpen?: boolean }) =>
     props.isOpen
       ? 'transform: translate3d(1px, 0px, 0px)'
-      : 'translate3d(40%, 0px, 0px)'};
+      : `translate3d(${drawerWidth}, 0px, 0px)`};
+`;
+
+export const SDrawerTabContainer = styled.div`
+  position: absolute;
+  top: 465px;
+  left: 0;
+  display: flex;
+  flex-direction: row-reverse;
+  gap: 2px;
+  height: 35px;
+  width: 500px;
+  box-sizing: border-box;
+  transform: rotate(-90deg);
+  transform-origin: left bottom;
+`;
+
+export const SDrawerTab = styled.div`
+  ${flexCenter}
+  ${apodButton}
+  font-size: 12px;
+  width: 104px;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 `;
 
 export const SApodContainer = styled.div`
