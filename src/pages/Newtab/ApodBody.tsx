@@ -24,19 +24,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     response: TApodResponse,
     forceHighDef: boolean = false
   ) => {
-    if (response.media_type === 'other') {
-      console.log(response, 'OTHER REPSONSE');
-      fetchApod({ count: 1 });
-      return;
-    }
-
     const img = new Image();
-    if (response.media_type === 'video') {
-      setIsLoading(false);
-      setApodResponse({ ...response, loadedImage: img });
-      return;
-    }
-
     let isImageHd: boolean = true;
     img.src = response?.hdurl;
 
@@ -69,12 +57,24 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       return;
     }
 
+    if (response.media_type === 'other') {
+      console.log(response, 'OTHER REPSONSE');
+      fetchApod({ count: 1 });
+      return;
+    }
+
+    if (response.media_type === 'video') {
+      setIsLoading(false);
+      setApodResponse({ ...response });
+      return;
+    }
+
     loadImage(response);
   };
 
-  const handleToggleDrawer = (option: string | null) => {
-    const canClose = drawerDisplay === option || !option;
-    setDrawerDisplay(canClose ? null : option);
+  const handleToggleDrawer = (drawerOption: string | null) => {
+    const canClose = drawerDisplay === drawerOption || !drawerOption;
+    setDrawerDisplay(canClose ? null : drawerOption);
   };
 
   const { navigationButtons, goToApodDate } = useNavigation({

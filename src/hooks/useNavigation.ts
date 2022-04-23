@@ -47,6 +47,7 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.FAVORITES_TAB], () =>
     toggleDrawer(DRAWER_FAVORITES)
   );
+  useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
 
   const navigationButtons: TNavigationButton[] = [
     {
@@ -65,7 +66,10 @@ export const useNavigation = ({
     {
       label: 'Force HD',
       clickHandler: forceHighDef,
-      isHidden: !!options?.[HI_RES_ONLY] || !!response?.isImageHd,
+      isHidden:
+        !!options?.[HI_RES_ONLY] ||
+        !!response?.isImageHd ||
+        response?.media_type !== 'image',
     },
   ];
 

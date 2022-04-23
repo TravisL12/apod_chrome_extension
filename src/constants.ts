@@ -45,9 +45,9 @@ export const KEY_MAP = {
   NEXT_DAY: 'k',
   EXPLANATION_TAB: 'e',
   FAVORITES_TAB: 'f',
+  CLOSE_DRAWER: 'escape',
   // not used yet
   SEARCH_TAB: 's',
-  CLOSE_DRAWER: 'esc',
   PREVIOUS_HISTORY: 'ArrowLeft',
   NEXT_HISTORY: 'ArrowRight',
 };
