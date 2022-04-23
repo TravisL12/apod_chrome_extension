@@ -22,6 +22,9 @@ export const TODAY_COUNT = 'todayCount';
 export const TODAY_LIMIT = 'todayLimit';
 export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
 
+export const DRAWER_EXPLANATION = 'explanation';
+export const DRAWER_FAVORITES = 'favorites';
+
 export const APOD_OPTIONS = [
   APOD_TYPE,
   IS_TODAY_APOD,
@@ -40,9 +43,9 @@ export const KEY_MAP = {
   TODAY: 't',
   PREVIOUS_DAY: 'j',
   NEXT_DAY: 'k',
-  // not used yet
   EXPLANATION_TAB: 'e',
   FAVORITES_TAB: 'f',
+  // not used yet
   SEARCH_TAB: 's',
   CLOSE_DRAWER: 'esc',
   PREVIOUS_HISTORY: 'ArrowLeft',

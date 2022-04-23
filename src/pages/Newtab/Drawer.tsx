@@ -1,25 +1,31 @@
 import React from 'react';
 import { SDrawerBody, SDrawerTab, SDrawerTabContainer } from './styles';
-import { TApodResponse } from '../types';
+import { TApodResponse, TUseNavigationProps } from '../types';
+import { DRAWER_EXPLANATION, DRAWER_FAVORITES } from '../../constants';
 
 type TDrawerProps = {
-  isOpen: boolean;
+  drawerDisplay: string | null;
   response?: TApodResponse;
-  toggleExplanation: () => void;
+  toggleDrawer: TUseNavigationProps['toggleDrawer'];
 };
 
 const Drawer: React.FC<TDrawerProps> = ({
-  isOpen,
+  drawerDisplay,
   response,
-  toggleExplanation,
+  toggleDrawer,
 }) => {
   return (
-    <SDrawerBody isOpen={isOpen}>
+    <SDrawerBody isOpen={!!drawerDisplay}>
       <SDrawerTabContainer>
-        <SDrawerTab onClick={toggleExplanation}>Explanation</SDrawerTab>
-        <SDrawerTab>Favorites</SDrawerTab>
+        <SDrawerTab onClick={() => toggleDrawer(DRAWER_EXPLANATION)}>
+          Explanation
+        </SDrawerTab>
+        <SDrawerTab onClick={() => toggleDrawer(DRAWER_FAVORITES)}>
+          Favorites
+        </SDrawerTab>
       </SDrawerTabContainer>
-      {response?.explanation}
+      {drawerDisplay === DRAWER_EXPLANATION && response?.explanation}
+      {drawerDisplay === DRAWER_FAVORITES && 'Favorites!'}
     </SDrawerBody>
   );
 };

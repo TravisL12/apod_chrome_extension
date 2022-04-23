@@ -36,7 +36,7 @@ export type TUseNavigationProps = {
   fetchApod: (options?: TFetchOptions) => void;
   loadImage: (response: TApodResponse, forceHighDef?: boolean) => void;
   options: TAppOptions;
-  toggleExplanation: () => void;
+  toggleDrawer: (drawerOption: string | null) => void;
 };
 
 export type TApodBodyProps = {

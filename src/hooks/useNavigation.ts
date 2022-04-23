@@ -1,15 +1,21 @@
 import { useEffect } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
-import { KEY_MAP, IS_TODAY_APOD, HI_RES_ONLY } from '../constants';
+import {
+  KEY_MAP,
+  IS_TODAY_APOD,
+  HI_RES_ONLY,
+  DRAWER_EXPLANATION,
+  DRAWER_FAVORITES,
+} from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import { adjacentDate, isFirstApodDate } from '../utilities';
 
 export const useNavigation = ({
   response,
+  options,
   fetchApod,
   loadImage,
-  options,
-  toggleExplanation,
+  toggleDrawer,
 }: TUseNavigationProps) => {
   const fetchToday = () => fetchApod();
   const fetchRandom = () => fetchApod({ count: 1 });
@@ -35,7 +41,12 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
   useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
   useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
-  useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], toggleExplanation);
+  useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], () =>
+    toggleDrawer(DRAWER_EXPLANATION)
+  );
+  useKeyboardShortcut([KEY_MAP.FAVORITES_TAB], () =>
+    toggleDrawer(DRAWER_FAVORITES)
+  );
 
   const navigationButtons: TNavigationButton[] = [
     {
