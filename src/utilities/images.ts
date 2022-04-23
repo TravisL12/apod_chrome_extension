@@ -18,8 +18,9 @@ export const fetchImage = async (options: TFetchOptions = {}) => {
     data.isToday = isDateToday(data.date);
 
     return data;
-  } catch (err) {
-    console.error(err);
+  } catch (error) {
+    console.error(error);
+    return { error };
   }
 };
 

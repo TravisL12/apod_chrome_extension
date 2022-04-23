@@ -17,11 +17,12 @@ const apodButton = `
   }
 }
 `;
+
 const flexCenter = `
-display: flex;
+  display: flex;
   justify-content: center;
   align-items: center;
-  `;
+`;
 
 const drawerTopOffset = '100px';
 const drawerWidth = '400px';

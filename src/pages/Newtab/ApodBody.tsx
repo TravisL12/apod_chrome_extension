@@ -1,5 +1,9 @@
 import React, { useState } from 'react';
-import { DELAY_FOR_HD_LOAD } from '../../constants';
+import {
+  DELAY_FOR_HD_LOAD,
+  ERROR_MESSAGE,
+  MAX_ERROR_TRIES,
+} from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
 import { fetchImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
@@ -13,6 +17,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
   const [isExplanationOpen, setIsExplanationOpen] = useState<boolean>(false);
 
   const loadImage = (
@@ -49,10 +54,21 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     };
   };
 
-  const fetchApod = async (options?: TFetchOptions) => {
+  const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
     setIsLoading(true);
     setIsExplanationOpen(false);
     const response = await fetchImage(options);
+
+    if (response.error) {
+      if (errorCount >= MAX_ERROR_TRIES) {
+        setIsLoading(false);
+        setHasErrorLoading(true);
+      } else {
+        fetchApod(options, errorCount + 1);
+      }
+      return;
+    }
+
     loadImage(response);
   };
 
@@ -68,6 +84,22 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     toggleExplanation: handleOpenExplanation,
   });
 
+  const renderBody = () => {
+    if (hasErrorLoading) {
+      return <h1 style={{ color: 'white' }}>{ERROR_MESSAGE}</h1>;
+    }
+
+    if (!apodResponse || isLoading) {
+      return <h1 style={{ color: 'white' }}>Loading...</h1>;
+    }
+
+    return apodResponse.media_type === 'video' ? (
+      <VideoContainer url={new URL(apodResponse?.url)} />
+    ) : (
+      <ImageContainer loadedImage={apodResponse.loadedImage} />
+    );
+  };
+
   return (
     <SApodContainer>
       <Header
@@ -77,15 +109,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         goToApodDate={goToApodDate}
         showTopSites={showTopSites}
       />
-      <SMediaContainer>
-        {!apodResponse || isLoading ? (
-          <h1 style={{ color: 'white' }}>Loading...</h1>
-        ) : apodResponse.media_type === 'video' ? (
-          <VideoContainer url={new URL(apodResponse?.url)} />
-        ) : (
-          <ImageContainer loadedImage={apodResponse.loadedImage} />
-        )}
-      </SMediaContainer>
+      <SMediaContainer>{renderBody()}</SMediaContainer>
       <Drawer
         isOpen={isExplanationOpen}
         response={apodResponse}
