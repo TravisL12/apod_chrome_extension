@@ -6,13 +6,21 @@ import {
   HI_RES_ONLY,
   DRAWER_EXPLANATION,
   DRAWER_FAVORITES,
+  IS_TODAY_LIMIT_ON,
+  TODAY_COUNT,
+  TODAY_LIMIT,
 } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
-import { adjacentDate, isFirstApodDate } from '../utilities';
+import {
+  adjacentDate,
+  isEmpty,
+  isFirstApodDate,
+  setChrome,
+} from '../utilities';
 
 export const useNavigation = ({
   response,
-  options,
+  options = {},
   fetchApod,
   loadImage,
   toggleDrawer,
@@ -80,7 +88,19 @@ export const useNavigation = ({
   }, [options[HI_RES_ONLY]]);
 
   useEffect(() => {
-    options[IS_TODAY_APOD] ? fetchToday() : fetchRandom();
+    let showToday = options[IS_TODAY_APOD];
+
+    if (options[IS_TODAY_LIMIT_ON] && showToday) {
+      // @ts-expect-error
+      showToday = options[TODAY_COUNT] < options[TODAY_LIMIT];
+      // @ts-expect-error
+      setChrome({ [TODAY_COUNT]: options[TODAY_COUNT] + 1 });
+    } else {
+      // reset count if `IS_TODAY_LIMIT_ON` is toggled
+      setChrome({ [TODAY_COUNT]: 0 });
+    }
+
+    showToday ? fetchToday() : fetchRandom();
   }, []);
 
   return { navigationButtons, goToApodDate };
