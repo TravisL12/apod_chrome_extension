@@ -3,6 +3,7 @@ export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 
 export const MIN_APOD_DATE = '1995-6-16';
 export const DELAY_FOR_HD_LOAD = 1500;
+export const HISTORY_LIMIT = 100;
 
 export const MAX_ERROR_TRIES = 3;
 export const ERROR_MESSAGE =
@@ -12,6 +13,7 @@ export const TODAY = 'today';
 export const RANDOM_APOD = 'random';
 
 export const APOD_TYPE = 'apodType';
+export const APOD_HISTORY = 'apodHistory';
 export const IS_TODAY_APOD = 'isTodayApod';
 export const HI_RES_ONLY = 'hiResOnly';
 export const APOD_FAVORITES = 'apodFavorites';

@@ -1,17 +1,42 @@
 import React, { useState } from 'react';
 import {
+  APOD_HISTORY,
   DELAY_FOR_HD_LOAD,
   ERROR_MESSAGE,
+  HISTORY_LIMIT,
   MAX_ERROR_TRIES,
 } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
-import { fetchImage } from '../../utilities';
+import { fetchImage, getLocalChrome, setLocalChrome } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
+
+/**
+ *
+ * TO DO!
+ * - HISTORY
+ *   - use local storage
+ * - Save favorites
+ */
+
+const saveToHistory = (response?: TApodResponse) => {
+  getLocalChrome([APOD_HISTORY], (options) => {
+    const prevHistory = options?.[APOD_HISTORY] || [];
+    const respNoExplanation = { ...response };
+    delete respNoExplanation.explanation;
+    const newHistory = [...prevHistory, respNoExplanation].slice(
+      -HISTORY_LIMIT
+    );
+
+    setLocalChrome({
+      [APOD_HISTORY]: newHistory,
+    });
+  });
+};
 
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
@@ -62,6 +87,8 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       fetchApod({ count: 1 });
       return;
     }
+
+    saveToHistory(response);
 
     if (response.media_type === 'video') {
       setIsLoading(false);
