@@ -1,3 +1,6 @@
+import { APOD_HISTORY, HISTORY_LIMIT } from '../constants';
+import { TApodResponse } from '../pages/types';
+
 export const getChrome = (options: any, callback: (params?: any) => void) => {
   chrome.storage.sync.get(options, callback);
 };
@@ -23,4 +26,19 @@ export const setLocalChrome = (
   callback?: (params?: any) => void
 ) => {
   chrome.storage.local.set(options, callback);
+};
+
+export const saveToHistory = (response?: TApodResponse) => {
+  getLocalChrome([APOD_HISTORY], (options) => {
+    const prevHistory = options?.[APOD_HISTORY] || [];
+    const respNoExplanation = { ...response };
+    delete respNoExplanation.explanation;
+    const newHistory = [...prevHistory, respNoExplanation].slice(
+      -HISTORY_LIMIT
+    );
+
+    setLocalChrome({
+      [APOD_HISTORY]: newHistory,
+    });
+  });
 };

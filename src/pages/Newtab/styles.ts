@@ -26,7 +26,7 @@ const flexCenter = `
 
 const drawerTopOffset = '100px';
 const drawerWidth = '400px';
-export const SDrawerBody = styled.div`
+export const SDrawerContainer = styled.div`
   position: absolute;
   z-index: 1000;
   top: ${drawerTopOffset};
@@ -38,7 +38,6 @@ export const SDrawerBody = styled.div`
   background: black;
   color: white;
   align-self: flex-end;
-  padding: 8px;
   font-size: 14px;
   transition: 0.4s transform ease-out;
 
@@ -46,6 +45,12 @@ export const SDrawerBody = styled.div`
     props.isOpen
       ? 'transform: translate3d(1px, 0px, 0px)'
       : `translate3d(${drawerWidth}, 0px, 0px)`};
+`;
+
+export const SDrawerBody = styled.div`
+  padding: 8px;
+  height: 100%;
+  overflow: auto;
 `;
 
 export const SDrawerTabContainer = styled.div`

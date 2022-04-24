@@ -26,6 +26,7 @@ export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
 
 export const DRAWER_EXPLANATION = 'explanation';
 export const DRAWER_FAVORITES = 'favorites';
+export const DRAWER_HISTORY = 'history';
 
 export const APOD_OPTIONS = [
   APOD_TYPE,
@@ -47,6 +48,7 @@ export const KEY_MAP = {
   NEXT_DAY: 'k',
   EXPLANATION_TAB: 'e',
   FAVORITES_TAB: 'f',
+  HISTORY_TAB: 'h',
   CLOSE_DRAWER: 'escape',
   // not used yet
   SEARCH_TAB: 's',

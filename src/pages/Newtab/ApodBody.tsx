@@ -1,13 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   APOD_HISTORY,
   DELAY_FOR_HD_LOAD,
   ERROR_MESSAGE,
-  HISTORY_LIMIT,
   MAX_ERROR_TRIES,
 } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
-import { fetchImage, getLocalChrome, setLocalChrome } from '../../utilities';
+import { fetchImage, getLocalChrome, saveToHistory } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
@@ -23,27 +22,19 @@ import VideoContainer from './VideoContainer';
  * - Save favorites
  */
 
-const saveToHistory = (response?: TApodResponse) => {
-  getLocalChrome([APOD_HISTORY], (options) => {
-    const prevHistory = options?.[APOD_HISTORY] || [];
-    const respNoExplanation = { ...response };
-    delete respNoExplanation.explanation;
-    const newHistory = [...prevHistory, respNoExplanation].slice(
-      -HISTORY_LIMIT
-    );
-
-    setLocalChrome({
-      [APOD_HISTORY]: newHistory,
-    });
-  });
-};
-
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
+  const [viewHistory, setViewHistory] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
   const [drawerDisplay, setDrawerDisplay] = useState<string | null>(null);
+
+  useEffect(() => {
+    getLocalChrome([APOD_HISTORY], (options) => {
+      setViewHistory(options[APOD_HISTORY]);
+    });
+  }, []);
 
   const loadImage = (
     response: TApodResponse,
@@ -142,6 +133,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         drawerDisplay={drawerDisplay}
         response={apodResponse}
         toggleDrawer={handleToggleDrawer}
+        viewHistory={viewHistory}
       />
     </SApodContainer>
   );

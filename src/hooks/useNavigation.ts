@@ -9,14 +9,10 @@ import {
   IS_TODAY_LIMIT_ON,
   TODAY_COUNT,
   TODAY_LIMIT,
+  DRAWER_HISTORY,
 } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
-import {
-  adjacentDate,
-  isEmpty,
-  isFirstApodDate,
-  setChrome,
-} from '../utilities';
+import { adjacentDate, isFirstApodDate, setChrome } from '../utilities';
 
 export const useNavigation = ({
   response,
@@ -54,6 +50,9 @@ export const useNavigation = ({
   );
   useKeyboardShortcut([KEY_MAP.FAVORITES_TAB], () =>
     toggleDrawer(DRAWER_FAVORITES)
+  );
+  useKeyboardShortcut([KEY_MAP.HISTORY_TAB], () =>
+    toggleDrawer(DRAWER_HISTORY)
   );
   useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
 
