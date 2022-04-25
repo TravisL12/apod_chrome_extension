@@ -134,6 +134,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         response={apodResponse}
         toggleDrawer={handleToggleDrawer}
         viewHistory={viewHistory}
+        goToApodDate={goToApodDate}
       />
     </SApodContainer>
   );

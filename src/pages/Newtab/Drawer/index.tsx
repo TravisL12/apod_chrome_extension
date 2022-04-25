@@ -20,13 +20,15 @@ type TDrawerProps = {
   response?: TApodResponse;
   viewHistory: any;
   toggleDrawer: TUseNavigationProps['toggleDrawer'];
+  goToApodDate: (date: string) => void;
 };
 
 const Drawer: React.FC<TDrawerProps> = ({
   drawerDisplay,
   response,
-  toggleDrawer,
   viewHistory,
+  toggleDrawer,
+  goToApodDate,
 }) => {
   return (
     <SDrawerContainer isOpen={!!drawerDisplay}>
@@ -47,7 +49,7 @@ const Drawer: React.FC<TDrawerProps> = ({
         )}
         {drawerDisplay === DRAWER_FAVORITES && <Favorites />}
         {drawerDisplay === DRAWER_HISTORY && (
-          <History viewHistory={viewHistory} />
+          <History viewHistory={viewHistory} goToApodDate={goToApodDate} />
         )}
       </SDrawerBody>
     </SDrawerContainer>
