@@ -1,4 +1,5 @@
 import React from 'react';
+import { SHistoryContainer, SHistoryItem } from '../../styles';
 
 const History: React.FC<{
   viewHistory?: any;
@@ -7,23 +8,20 @@ const History: React.FC<{
   return (
     <div>
       <h1>History</h1>
-      <div>
-        {viewHistory.reverse().map((item: any) => {
+      <SHistoryContainer>
+        {viewHistory.reverse().map((item: any, idx: number) => {
           return (
-            <div
-              key={item.date}
-              style={{
-                background: 'gray',
-                padding: '10px',
-                marginBottom: '10px',
-              }}
+            <SHistoryItem
+              key={`${item.date}-${idx}`}
               onClick={() => {
                 goToApodDate(item.date);
               }}
             >
-              <div>{item.title}</div>
+              <div className="title">
+                <p>{item.title}</p>
+              </div>
               {item.media_type === 'image' ? (
-                <div style={{ width: '100%', height: '200px' }}>
+                <div className="media">
                   <img
                     src={item.url}
                     style={{ maxWidth: '100%', maxHeight: '100%' }}
@@ -32,10 +30,10 @@ const History: React.FC<{
               ) : (
                 <div>Video</div>
               )}
-            </div>
+            </SHistoryItem>
           );
         })}
-      </div>
+      </SHistoryContainer>
     </div>
   );
 };

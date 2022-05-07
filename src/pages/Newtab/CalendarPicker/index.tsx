@@ -7,7 +7,7 @@ import {
   MONTHS,
   buildNumberArray,
 } from './calendarHelpers';
-import './index.css';
+import { SCalendarContainer } from './styles';
 
 type TCalendarPickerProps = {
   startDate: Date;
@@ -80,7 +80,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const daysAfter = endDow <= 35 ? 35 - endDow : 42 - endDow;
 
   return (
-    <div className="calendar-container">
+    <SCalendarContainer>
       {children}
       {isOpen && (
         <div className="calendar">
@@ -160,7 +160,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
           </div>
         </div>
       )}
-    </div>
+    </SCalendarContainer>
   );
 };
 

@@ -29,6 +29,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
   const [drawerDisplay, setDrawerDisplay] = useState<string | null>(null);
+  const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     getLocalChrome([APOD_HISTORY], (options) => {
@@ -60,7 +61,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
   const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
     setIsLoading(true);
-    setDrawerDisplay(null);
+    setDrawerIsOpen(false);
     const response = await fetchImage(options);
 
     if (response.error) {
@@ -91,8 +92,13 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   };
 
   const handleToggleDrawer = (drawerOption: string | null) => {
-    const canClose = drawerDisplay === drawerOption || !drawerOption;
-    setDrawerDisplay(canClose ? null : drawerOption);
+    const canClose = drawerDisplay === drawerOption && drawerIsOpen;
+    if (canClose) {
+      setDrawerIsOpen(false);
+    } else {
+      setDrawerIsOpen(true);
+      setDrawerDisplay(drawerOption);
+    }
   };
 
   const { navigationButtons, goToApodDate } = useNavigation({
@@ -131,6 +137,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       <SMediaContainer>{renderBody()}</SMediaContainer>
       <Drawer
         drawerDisplay={drawerDisplay}
+        isOpen={drawerIsOpen}
         response={apodResponse}
         toggleDrawer={handleToggleDrawer}
         viewHistory={viewHistory}

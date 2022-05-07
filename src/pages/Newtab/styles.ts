@@ -1,4 +1,9 @@
 import styled from 'styled-components';
+import {
+  DRAWER_EXPLANATION,
+  DRAWER_FAVORITES,
+  DRAWER_HISTORY,
+} from '../../constants';
 
 const black = '#111111';
 export const gray = 'rgba(51,51,51, 0.8)';
@@ -25,15 +30,29 @@ const flexCenter = `
 `;
 
 const drawerTopOffset = '100px';
-const drawerWidth = '400px';
-export const SDrawerContainer = styled.div`
+const defaultWidth = '400px';
+const drawerWidths: { [key: string]: string } = {
+  [DRAWER_EXPLANATION]: defaultWidth,
+  [DRAWER_FAVORITES]: defaultWidth,
+  [DRAWER_HISTORY]: '800px',
+  default: defaultWidth,
+};
+
+export const SDrawerContainer = styled.div(
+  (props: { isOpen: boolean; drawerDisplay: string | null }) => {
+    const { isOpen, drawerDisplay } = props;
+
+    const width = drawerDisplay
+      ? drawerWidths[drawerDisplay]
+      : drawerWidths.default;
+    return `
   position: absolute;
   z-index: 1000;
   top: ${drawerTopOffset};
   right: 0;
   max-height: 800px;
   height: calc(100vh - 2 * ${drawerTopOffset});
-  width: ${drawerWidth};
+  width: ${width};
   box-shadow: inset 0 0 0 0.5px ${lightGray};
   background: black;
   color: white;
@@ -41,11 +60,14 @@ export const SDrawerContainer = styled.div`
   font-size: 14px;
   transition: 0.4s transform ease-out;
 
-  transform: ${(props: { isOpen?: boolean }) =>
-    props.isOpen
+  transform: ${
+    isOpen
       ? 'transform: translate3d(1px, 0px, 0px)'
-      : `translate3d(${drawerWidth}, 0px, 0px)`};
+      : `translate3d(${width}, 0px, 0px)`
+  };
 `;
+  }
+);
 
 export const SDrawerBody = styled.div`
   padding: 8px;
@@ -249,4 +271,36 @@ export const SArrowContainer = styled.div`
   height: ${(props: { size: number; isFlipped?: boolean }) => props.size * 2}px;
   transform: ${(props: { size: number; isFlipped?: boolean }) =>
     `rotate(${props.isFlipped ? '180deg' : '0'})`};
+`;
+
+export const SHistoryContainer = styled.div`
+  display: grid;
+  gap: 25px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 200px;
+`;
+
+export const SHistoryItem = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  .title {
+    width: 100%;
+    position: absolute;
+    padding: 4px;
+    top: 0;
+
+    p {
+      background: black;
+      padding: 2px;
+      margin: 0;
+    }
+  }
+
+  .media {
+    text-align: center;
+    overflow: hidden;
+    width: 100%;
+  }
 `;

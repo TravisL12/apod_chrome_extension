@@ -17,6 +17,7 @@ import History from './Tabs/History';
 
 type TDrawerProps = {
   drawerDisplay: string | null;
+  isOpen: boolean;
   response?: TApodResponse;
   viewHistory: any;
   toggleDrawer: TUseNavigationProps['toggleDrawer'];
@@ -25,13 +26,14 @@ type TDrawerProps = {
 
 const Drawer: React.FC<TDrawerProps> = ({
   drawerDisplay,
+  isOpen,
   response,
   viewHistory,
   toggleDrawer,
   goToApodDate,
 }) => {
   return (
-    <SDrawerContainer isOpen={!!drawerDisplay}>
+    <SDrawerContainer drawerDisplay={drawerDisplay} isOpen={isOpen}>
       <SDrawerTabContainer>
         <SDrawerTab onClick={() => toggleDrawer(DRAWER_EXPLANATION)}>
           Explanation
