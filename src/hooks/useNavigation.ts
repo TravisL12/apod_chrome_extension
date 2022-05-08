@@ -28,7 +28,7 @@ export const useNavigation = ({
   toggleDrawer,
 }: TUseNavigationProps) => {
   const fetchToday = () => fetchApod();
-  const fetchRandom = () => fetchApod({ count: 1 });
+  const fetchRandom = () => fetchApod({ random: true });
   const forceHighDef = () => {
     if (response) loadImage(response, true);
   };

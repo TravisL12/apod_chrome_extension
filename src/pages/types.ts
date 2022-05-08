@@ -64,7 +64,7 @@ export type TTopSite = {
 };
 
 export type TFetchOptions = {
-  count?: number;
+  random?: boolean;
   date?: any;
 };
 

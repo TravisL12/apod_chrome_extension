@@ -11,3 +11,7 @@ export function isEmpty(obj: any[] | { [key: string]: any }) {
 
   return Object.keys(obj).length === 0;
 }
+
+export function randomizer(max: number = 1, min: number = 0) {
+  return Math.round(Math.random() * (max - min) + min);
+}

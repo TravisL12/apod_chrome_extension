@@ -7,7 +7,7 @@ import {
   MAX_ERROR_TRIES,
 } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
-import { fetchImage } from '../../utilities';
+import { fetchImage, fetchRandomImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
@@ -55,7 +55,13 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
     setIsLoading(true);
 
-    const response = await fetchImage(options);
+    let response;
+
+    if (options?.random) {
+      response = await fetchRandomImage();
+    } else {
+      response = await fetchImage(options);
+    }
 
     if (response.error) {
       if (errorCount >= MAX_ERROR_TRIES) {
@@ -69,7 +75,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
     if (response.media_type === 'other') {
       console.log(response, 'OTHER REPSONSE');
-      fetchApod({ count: 1 });
+      fetchApod({ random: true });
       return;
     }
 
