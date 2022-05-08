@@ -24,12 +24,6 @@
     "url": "https://apod.nasa.gov/apod/image/0511/sunflame_soho.jpg",
     "title": "A Solar Prominence from SOHO"
   },
-  "2006-04-16": {
-    "title": "A Solar Prominence from SOHO"
-  },
-  "2008-05-11": {
-    "title": "Retrograde Mars"
-  },
   "2010-11-02": {
     "date": "2010-11-02",
     "url": "https://apod.nasa.gov/apod/image/1011/spicules_nso.jpg",
@@ -79,9 +73,6 @@
     "date": "2013-08-12",
     "url": "https://apod.nasa.gov/apod/image/1308/phas_jpl_960.jpg",
     "title": "Orbits of Potentially Hazardous Asteroids"
-  },
-  "2013-10-21": {
-    "title": "Saturn from Above"
   },
   "2013-5-29": {
     "date": "2013-5-29",
@@ -203,9 +194,6 @@
     "url": "https://apod.nasa.gov/apod/calendar/S_190110.jpg",
     "title": "Vela Supernova Remnant Mosaic"
   },
-  "2019-01-13": {
-    "title": "Tycho's Supernova Remnant in X-ray"
-  },
   "2019-01-30": {
     "date": "2019-01-30",
     "url": "https://apod.nasa.gov/apod/image/1901/AmEclipseWide_Lefaudeux_1080.jpg",
@@ -270,8 +258,5 @@
     "date": "2021-01-24",
     "url": "https://apod.nasa.gov/apod/image/2101/ngc2841_hstColombari_960.jpg",
     "title": "Massive Nearby Spiral Galaxy NGC 2841"
-  },
-  "2022-02-27": {
-    "title": "Earthrise 1: Historic Image Remastered"
   }
 }

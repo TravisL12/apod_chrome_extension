@@ -30,10 +30,13 @@ const GridImage: React.FC<{
           goToDate(item.date);
         }}
       >
-        <img src={item.url} style={{ maxWidth: '100%', maxHeight: '100%' }} />
+        <img
+          src={item.url || item.imgUrl}
+          style={{ maxWidth: '100%', maxHeight: '100%' }}
+        />
       </div>
       {removeItem && (
-        <div>
+        <div className="remove-item">
           <button onClick={() => removeItem(item.date)}>Remove</button>
         </div>
       )}

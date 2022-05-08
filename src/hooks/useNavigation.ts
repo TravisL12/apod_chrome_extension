@@ -63,8 +63,7 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
 
   const isFavorite: boolean = response?.date
-    ? // @ts-expect-error
-      !!options?.[APOD_FAVORITES]?.[response?.date]
+    ? !!options?.[APOD_FAVORITES]?.[response?.date]
     : false;
   const navigationButtons: TNavigationButton[] = [
     {

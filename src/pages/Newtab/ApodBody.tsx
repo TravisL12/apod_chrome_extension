@@ -31,13 +31,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    getLocalChrome([APOD_HISTORY], (options) => {
-      setViewHistory(options[APOD_HISTORY]);
-    });
-    getChrome([APOD_FAVORITES], (options) => {
-      setViewFavorites(options[APOD_FAVORITES]);
-    });
-  }, [apodResponse]);
+    setViewHistory(options?.[APOD_HISTORY]);
+    setViewFavorites(options?.[APOD_FAVORITES]);
+  }, [options]);
 
   const loadImage = (
     response: TApodResponse,

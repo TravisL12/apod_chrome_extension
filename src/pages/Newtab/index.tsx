@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { APOD_OPTIONS, DEFAULT_OPTIONS } from '../../constants';
-import { getChrome, onChangeChrome } from '../../utilities';
+import { APOD_HISTORY, APOD_OPTIONS, DEFAULT_OPTIONS } from '../../constants';
+import { getChrome, getLocalChrome, onChangeChrome } from '../../utilities';
 import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
@@ -13,14 +13,16 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
   useEffect(() => {
     onChangeChrome((changes) => {
       getChrome(APOD_OPTIONS, (options) => {
-        const updatedSettings = Object.keys(changes).reduce(
-          (result: any, setting: any) => {
-            result[setting] = changes[setting].newValue;
-            return result;
-          },
-          { ...options }
-        );
-        setApodOptions(updatedSettings);
+        getLocalChrome([APOD_HISTORY], (historyOptions) => {
+          const updatedSettings = Object.keys(changes).reduce(
+            (result: any, setting: any) => {
+              result[setting] = changes[setting].newValue;
+              return result;
+            },
+            { ...options, [APOD_HISTORY]: historyOptions?.[APOD_HISTORY] }
+          );
+          setApodOptions(updatedSettings);
+        });
       });
     });
 

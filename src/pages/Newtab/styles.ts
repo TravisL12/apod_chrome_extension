@@ -287,9 +287,28 @@ export const SHistoryItem = styled.div`
   cursor: pointer;
   padding: 6px;
   flex-direction: column;
+  border: 3px solid transparent;
 
   &:hover {
-    background: ${gray};
+    border-color: ${gray};
+  }
+
+  .remove-item {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+
+    button {
+      background: none;
+      color: ${lightGray};
+      border: none;
+      cursor: pointer;
+
+      &:hover {
+        background: ${lightBlack};
+        text-decoration: underline;
+      }
+    }
   }
 
   .title {
