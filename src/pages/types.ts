@@ -74,3 +74,18 @@ export type TNavigationButton = {
   isFavorite?: boolean;
   clickHandler: () => void;
 };
+
+export type THistoryItem = {
+  date: string;
+  title: string;
+  mediaType: string;
+  url: string;
+  dateAdded: number;
+};
+
+export type TFavoriteItem = {
+  date: string;
+  title: string;
+  url?: string;
+  imgUrl?: string;
+};

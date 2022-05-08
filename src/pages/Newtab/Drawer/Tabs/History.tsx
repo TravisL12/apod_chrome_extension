@@ -1,16 +1,17 @@
 import React from 'react';
-import { SHistoryContainer } from '../../styles';
+import { THistoryItem } from '../../../types';
+import { SGridImageContainer } from '../../styles';
 import GridImage from './GridImage';
 
 const History: React.FC<{
-  viewHistory?: any;
+  viewHistory?: THistoryItem[];
   goToApodDate: (date: string) => void;
 }> = ({ viewHistory, goToApodDate }) => {
   return (
     <>
       <h1>History</h1>
-      <SHistoryContainer>
-        {viewHistory.map((item: any, idx: number) => {
+      <SGridImageContainer>
+        {viewHistory?.map((item: any, idx: number) => {
           return (
             <GridImage
               key={`${item.date}-${idx}`}
@@ -19,7 +20,7 @@ const History: React.FC<{
             />
           );
         })}
-      </SHistoryContainer>
+      </SGridImageContainer>
     </>
   );
 };

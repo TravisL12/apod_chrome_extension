@@ -1,5 +1,5 @@
 import { APOD_FAVORITES, APOD_HISTORY, HISTORY_LIMIT } from '../constants';
-import { TApodResponse } from '../pages/types';
+import { TApodResponse, TFavoriteItem, THistoryItem } from '../pages/types';
 
 export const getChrome = (options: any, callback: (params?: any) => void) => {
   chrome.storage.sync.get(options, callback);
@@ -28,18 +28,25 @@ export const setLocalChrome = (
   chrome.storage.local.set(options, callback);
 };
 
-export const saveToHistory = (response?: TApodResponse) => {
+export const saveToHistory = (response: TApodResponse) => {
   getLocalChrome([APOD_HISTORY], (options) => {
-    const prevHistory = options?.[APOD_HISTORY] || [];
-    const respNoExplanation = {
-      date: response?.date,
-      title: response?.title,
-      mediaType: response?.media_type,
-      url: response?.url,
+    const prevHistory: THistoryItem[] = options?.[APOD_HISTORY] || [];
+
+    const doesExist = prevHistory.find((hist) => hist.date === response.date);
+    if (doesExist) {
+      return;
+    }
+
+    const respNoExplanation: THistoryItem = {
+      date: response.date,
+      title: response.title,
+      mediaType: response.media_type,
+      url: response.url,
       dateAdded: new Date().getTime(),
     };
-    const newHistory = [...prevHistory, respNoExplanation]
-      .slice(-HISTORY_LIMIT)
+
+    const newHistory = [respNoExplanation, ...prevHistory]
+      .slice(0, HISTORY_LIMIT)
       .sort((a, b) => b.dateAdded - a.dateAdded);
 
     setLocalChrome({
@@ -64,14 +71,15 @@ export const saveFavorite = (response?: TApodResponse) => {
   }
 
   getChrome([APOD_FAVORITES], (options) => {
-    const prevFavorites = options?.[APOD_FAVORITES] || {};
+    const prevFavorites: { [date: string]: TFavoriteItem } =
+      options?.[APOD_FAVORITES] || {};
 
     if (prevFavorites[response.date]) {
       removeFavorite(response.date);
       return;
     }
 
-    const newItem = {
+    const newItem: TFavoriteItem = {
       date: response.date,
       title: response.title,
       url: response.url,

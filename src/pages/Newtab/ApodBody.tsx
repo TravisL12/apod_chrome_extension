@@ -18,7 +18,7 @@ import VideoContainer from './VideoContainer';
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
   const [drawerDisplay, setDrawerDisplay] = useState<string | null>(null);
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
@@ -49,8 +49,11 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   };
 
   const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
+    if (isLoading) {
+      return;
+    }
+
     setIsLoading(true);
-    setDrawerIsOpen(false);
     if (apodResponse) {
       saveToHistory(apodResponse);
     }

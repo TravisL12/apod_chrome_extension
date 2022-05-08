@@ -60,7 +60,7 @@ export const SDrawerContainer = styled.div(
   color: white;
   align-self: flex-end;
   font-size: 14px;
-  transition: 0.4s transform ease-out;
+  transition: 0.4s transform ease-out, 0.4s width ease-out;
 
   transform: ${
     isOpen ? 'translate3d(1px, 0px, 0px)' : `translate3d(${width}, 0px, 0px)`
@@ -274,7 +274,7 @@ export const SArrowContainer = styled.div`
     `rotate(${props.isFlipped ? '180deg' : '0'})`};
 `;
 
-export const SHistoryContainer = styled.div`
+export const SGridImageContainer = styled.div`
   display: grid;
   gap: 18px;
   grid-template-columns: repeat(3, 1fr);

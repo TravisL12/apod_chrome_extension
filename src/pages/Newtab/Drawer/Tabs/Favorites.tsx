@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { removeFavorite } from '../../../../utilities';
-import { SHistoryContainer } from '../../styles';
+import { SGridImageContainer } from '../../styles';
 import GridImage from './GridImage';
 
 const Favorites: React.FC<{
@@ -16,7 +16,7 @@ const Favorites: React.FC<{
   return (
     <>
       <h1>Favorites</h1>
-      <SHistoryContainer>
+      <SGridImageContainer>
         {sortedFavorites.length === 0 ? (
           <h3>You haven't saved any favorites!</h3>
         ) : (
@@ -31,7 +31,7 @@ const Favorites: React.FC<{
             );
           })
         )}
-      </SHistoryContainer>
+      </SGridImageContainer>
     </>
   );
 };
