@@ -19,7 +19,8 @@ const GridImage: React.FC<{
           <p className="title__date">{prettyDateFormat(item.date)}</p>
           <p>
             <strong>
-              {item.title} {item.mediaType !== 'image' && '(Video)'}
+              {item.title}{' '}
+              {item.mediaType && item.mediaType !== 'image' && '(Video)'}
             </strong>
           </p>
         </div>

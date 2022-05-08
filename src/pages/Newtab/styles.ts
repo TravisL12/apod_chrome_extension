@@ -10,7 +10,6 @@ export const lightBlack = 'rgba(0,0,0, 0.6)';
 export const gray = 'rgba(51,51,51, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
-const explanationTitleWidth = '250px';
 
 const apodButton = `
   background-color: ${gray};
@@ -31,7 +30,7 @@ const flexCenter = `
 `;
 
 const drawerTopOffset = '100px';
-const defaultWidth = '400px';
+const defaultWidth = '500px';
 const wideWidth = '800px';
 export const drawerWidths: { [key: string]: string } = {
   [DRAWER_EXPLANATION]: defaultWidth,
