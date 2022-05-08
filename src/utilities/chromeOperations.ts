@@ -55,7 +55,11 @@ export const saveFavorite = (response?: TApodResponse) => {
 
   getChrome([APOD_FAVORITES], (options) => {
     const prevFavorites = options?.[APOD_FAVORITES] || {};
-    const newFavorites = { ...prevFavorites, [response.date]: response };
+    const newItem = {
+      date: response.date,
+      title: response.title,
+    };
+    const newFavorites = { ...prevFavorites, [response.date]: newItem };
     setChrome({
       [APOD_FAVORITES]: newFavorites,
     });

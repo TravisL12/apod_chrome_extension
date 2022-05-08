@@ -31,10 +31,11 @@ const flexCenter = `
 
 const drawerTopOffset = '100px';
 const defaultWidth = '400px';
+const wideWidth = '800px';
 const drawerWidths: { [key: string]: string } = {
   [DRAWER_EXPLANATION]: defaultWidth,
-  [DRAWER_FAVORITES]: defaultWidth,
-  [DRAWER_HISTORY]: '800px',
+  [DRAWER_FAVORITES]: wideWidth,
+  [DRAWER_HISTORY]: wideWidth,
   default: defaultWidth,
 };
 
