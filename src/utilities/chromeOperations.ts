@@ -31,11 +31,15 @@ export const setLocalChrome = (
 export const saveToHistory = (response?: TApodResponse) => {
   getLocalChrome([APOD_HISTORY], (options) => {
     const prevHistory = options?.[APOD_HISTORY] || [];
-    const respNoExplanation = { ...response };
-    delete respNoExplanation.explanation;
-    const newHistory = [...prevHistory, respNoExplanation].slice(
-      -HISTORY_LIMIT
-    );
+    const respNoExplanation = {
+      date: response?.date,
+      title: response?.title,
+      url: response?.url,
+      dateAdded: new Date().getTime(),
+    };
+    const newHistory = [...prevHistory, respNoExplanation]
+      .slice(-HISTORY_LIMIT)
+      .sort((a, b) => b.dateAdded - a.dateAdded);
 
     setLocalChrome({
       [APOD_HISTORY]: newHistory,

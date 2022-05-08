@@ -17,8 +17,6 @@ import VideoContainer from './VideoContainer';
 /**
  *
  * TO DO!
- * - HISTORY
- *   - use local storage
  * - Save favorites
  */
 

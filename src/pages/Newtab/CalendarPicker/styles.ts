@@ -1,13 +1,11 @@
 import styled from 'styled-components';
 
 export const SCalendarContainer = styled.div`
-  :root {
-    --day-size: 40px;
-    --day-color: lightblue;
-    --day-hover-color: rgba(0, 0, 0, 0.3);
-    --day-checked-color: #80cbc4;
-    --calendar-color: rgb(63 68 88);
-  }
+  --day-size: 40px;
+  --day-color: lightblue;
+  --day-hover-color: rgba(0, 0, 0, 0.3);
+  --day-checked-color: #80cbc4;
+  --calendar-color: rgb(63 68 88);
 
   body {
     font-family: Helvetica;

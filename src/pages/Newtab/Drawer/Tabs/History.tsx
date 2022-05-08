@@ -9,7 +9,7 @@ const History: React.FC<{
     <div>
       <h1>History</h1>
       <SHistoryContainer>
-        {viewHistory.reverse().map((item: any, idx: number) => {
+        {viewHistory.map((item: any, idx: number) => {
           return (
             <SHistoryItem
               key={`${item.date}-${idx}`}
@@ -18,18 +18,16 @@ const History: React.FC<{
               }}
             >
               <div className="title">
-                <p>{item.title}</p>
+                <p>
+                  {item.title} {item.media_type !== 'image' && '(Video)'}
+                </p>
               </div>
-              {item.media_type === 'image' ? (
-                <div className="media">
-                  <img
-                    src={item.url}
-                    style={{ maxWidth: '100%', maxHeight: '100%' }}
-                  />
-                </div>
-              ) : (
-                <div>Video</div>
-              )}
+              <div className="media">
+                <img
+                  src={item.url}
+                  style={{ maxWidth: '100%', maxHeight: '100%' }}
+                />
+              </div>
             </SHistoryItem>
           );
         })}

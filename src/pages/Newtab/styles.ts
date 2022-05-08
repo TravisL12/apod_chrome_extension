@@ -61,9 +61,7 @@ export const SDrawerContainer = styled.div(
   transition: 0.4s transform ease-out;
 
   transform: ${
-    isOpen
-      ? 'transform: translate3d(1px, 0px, 0px)'
-      : `translate3d(${width}, 0px, 0px)`
+    isOpen ? 'translate3d(1px, 0px, 0px)' : `translate3d(${width}, 0px, 0px)`
   };
 `;
   }
