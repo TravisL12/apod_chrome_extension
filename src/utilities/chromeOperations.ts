@@ -1,4 +1,4 @@
-import { APOD_HISTORY, HISTORY_LIMIT } from '../constants';
+import { APOD_FAVORITES, APOD_HISTORY, HISTORY_LIMIT } from '../constants';
 import { TApodResponse } from '../pages/types';
 
 export const getChrome = (options: any, callback: (params?: any) => void) => {
@@ -44,6 +44,20 @@ export const saveToHistory = (response?: TApodResponse) => {
 
     setLocalChrome({
       [APOD_HISTORY]: newHistory,
+    });
+  });
+};
+
+export const saveFavorite = (response?: TApodResponse) => {
+  if (!response) {
+    return;
+  }
+
+  getChrome([APOD_FAVORITES], (options) => {
+    const prevFavorites = options?.[APOD_FAVORITES] || {};
+    const newFavorites = { ...prevFavorites, [response.date]: response };
+    setChrome({
+      [APOD_FAVORITES]: newFavorites,
     });
   });
 };

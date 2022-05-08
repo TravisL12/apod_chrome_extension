@@ -12,7 +12,12 @@ import {
   DRAWER_HISTORY,
 } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
-import { adjacentDate, isFirstApodDate, setChrome } from '../utilities';
+import {
+  adjacentDate,
+  isFirstApodDate,
+  saveFavorite,
+  setChrome,
+} from '../utilities';
 
 export const useNavigation = ({
   response,
@@ -69,7 +74,11 @@ export const useNavigation = ({
     },
     { label: 'Today', clickHandler: fetchToday, isHidden: !!response?.isToday },
     { label: 'Random', clickHandler: fetchRandom, isHidden: false },
-    { label: 'Save', clickHandler: () => {}, isHidden: false },
+    {
+      label: 'Save',
+      clickHandler: () => saveFavorite(response),
+      isHidden: false,
+    },
     {
       label: 'Force HD',
       clickHandler: forceHighDef,
