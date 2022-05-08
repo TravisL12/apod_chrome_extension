@@ -47,7 +47,7 @@ const Drawer: React.FC<TDrawerProps> = ({
       </SDrawerTabContainer>
       <SDrawerBody>
         {drawerDisplay === DRAWER_EXPLANATION && (
-          <Explanation explanation={response?.explanation} />
+          <Explanation response={response} />
         )}
         {drawerDisplay === DRAWER_FAVORITES && <Favorites />}
         {drawerDisplay === DRAWER_HISTORY && (

@@ -33,7 +33,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     getLocalChrome([APOD_HISTORY], (options) => {
       setViewHistory(options[APOD_HISTORY]);
     });
-  }, []);
+  }, [apodResponse]);
 
   const loadImage = (
     response: TApodResponse,
