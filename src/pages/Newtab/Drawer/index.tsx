@@ -47,7 +47,7 @@ const Drawer: React.FC<TDrawerProps> = ({
           History
         </SDrawerTab>
       </SDrawerTabContainer>
-      <SDrawerBody>
+      <SDrawerBody drawerDisplay={drawerDisplay}>
         {drawerDisplay === DRAWER_EXPLANATION && (
           <Explanation response={response} />
         )}

@@ -33,7 +33,7 @@ const flexCenter = `
 const drawerTopOffset = '100px';
 const defaultWidth = '400px';
 const wideWidth = '800px';
-const drawerWidths: { [key: string]: string } = {
+export const drawerWidths: { [key: string]: string } = {
   [DRAWER_EXPLANATION]: defaultWidth,
   [DRAWER_FAVORITES]: wideWidth,
   [DRAWER_HISTORY]: wideWidth,
@@ -74,6 +74,10 @@ export const SDrawerBody = styled.div`
   flex-direction: column;
   padding: 8px;
   height: 100%;
+  width: ${(props: { drawerDisplay: string | null }) =>
+    props.drawerDisplay
+      ? drawerWidths[props.drawerDisplay]
+      : drawerWidths.default};
 `;
 
 export const SDrawerTabContainer = styled.div`

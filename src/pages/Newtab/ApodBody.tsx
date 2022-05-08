@@ -7,7 +7,7 @@ import {
   MAX_ERROR_TRIES,
 } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
-import { fetchImage, saveToHistory } from '../../utilities';
+import { fetchImage } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
@@ -54,9 +54,6 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     }
 
     setIsLoading(true);
-    if (apodResponse) {
-      saveToHistory(apodResponse);
-    }
 
     const response = await fetchImage(options);
 

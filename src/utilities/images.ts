@@ -2,6 +2,7 @@ import { API_KEY, APOD_API_URL } from '../constants';
 import axios from 'axios';
 import { TFetchOptions } from '../pages/types';
 import { isDateToday, linkDateFormat } from './dates';
+import { saveToHistory } from './chromeOperations';
 
 export const fetchImage = async (options: TFetchOptions = {}) => {
   const params = {
@@ -16,6 +17,7 @@ export const fetchImage = async (options: TFetchOptions = {}) => {
     )}.html`;
     data.date = data.date.replace('-0', '-');
     data.isToday = isDateToday(data.date);
+    saveToHistory(data);
 
     return data;
   } catch (error) {
