@@ -19,7 +19,7 @@ const History: React.FC<{
             >
               <div className="title">
                 <p>
-                  {item.title} {item.media_type !== 'image' && '(Video)'}
+                  {item.title} {item.mediaType !== 'image' && '(Video)'}
                 </p>
               </div>
               <div className="media">

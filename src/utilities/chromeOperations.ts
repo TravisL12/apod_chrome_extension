@@ -34,6 +34,7 @@ export const saveToHistory = (response?: TApodResponse) => {
     const respNoExplanation = {
       date: response?.date,
       title: response?.title,
+      mediaType: response?.media_type,
       url: response?.url,
       dateAdded: new Date().getTime(),
     };
