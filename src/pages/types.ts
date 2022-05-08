@@ -1,19 +1,32 @@
+import {
+  APOD_TYPE,
+  IS_TODAY_APOD,
+  HI_RES_ONLY,
+  APOD_FAVORITES,
+  SHOW_TOP_SITES,
+  SHOW_HISTORY_ROW,
+  CURRENT_DATE,
+  TODAY_COUNT,
+  TODAY_LIMIT,
+  IS_TODAY_LIMIT_ON,
+} from '../constants';
+
 type TFavorites = {
   url?: string;
   title?: string;
 };
 
 export type TAppOptions = {
-  apodType?: string;
-  isTodayApod?: boolean;
-  apodFavorites?: TFavorites;
-  hiResOnly?: boolean;
-  showTopSites?: boolean;
-  showHistoryRow?: boolean;
-  currentDate?: string;
-  todayCount?: number;
-  todayLimit?: number;
-  isTodayLimitOn?: boolean;
+  [APOD_TYPE]?: string;
+  [IS_TODAY_APOD]?: boolean;
+  [HI_RES_ONLY]?: TFavorites;
+  [APOD_FAVORITES]?: boolean;
+  [SHOW_TOP_SITES]?: boolean;
+  [SHOW_HISTORY_ROW]?: boolean;
+  [CURRENT_DATE]?: string;
+  [TODAY_COUNT]?: number;
+  [TODAY_LIMIT]?: number;
+  [IS_TODAY_LIMIT_ON]?: boolean;
 };
 
 export type TApodResponse = {
@@ -55,6 +68,7 @@ export type TFetchOptions = {
 
 export type TNavigationButton = {
   label: string;
-  clickHandler: () => void;
   isHidden: boolean;
+  isFavorite?: boolean;
+  clickHandler: () => void;
 };

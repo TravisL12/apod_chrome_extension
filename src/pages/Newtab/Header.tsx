@@ -89,7 +89,7 @@ const Header: React.FC<THeaderProps> = ({
               return (
                 !navItem.isHidden && (
                   <span key={navItem.label} onClick={navItem.clickHandler}>
-                    {navItem.label}
+                    {navItem.isFavorite ? 'Favorite!' : navItem.label}
                   </span>
                 )
               );

@@ -10,6 +10,7 @@ import {
   TODAY_COUNT,
   TODAY_LIMIT,
   DRAWER_HISTORY,
+  APOD_FAVORITES,
 } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import {
@@ -61,6 +62,10 @@ export const useNavigation = ({
   );
   useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
 
+  const isFavorite: boolean = response?.date
+    ? // @ts-expect-error
+      !!options?.[APOD_FAVORITES]?.[response?.date]
+    : false;
   const navigationButtons: TNavigationButton[] = [
     {
       label: 'Previous',
@@ -78,6 +83,7 @@ export const useNavigation = ({
       label: 'Save',
       clickHandler: () => saveFavorite(response),
       isHidden: false,
+      isFavorite,
     },
     {
       label: 'Force HD',

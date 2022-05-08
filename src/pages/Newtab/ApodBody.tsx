@@ -20,12 +20,6 @@ import ImageContainer from './ImageContainer';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-/**
- *
- * TO DO!
- * - Save favorites
- */
-
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
@@ -113,9 +107,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
   const { navigationButtons, goToApodDate } = useNavigation({
     response: apodResponse,
+    options,
     fetchApod,
     loadImage,
-    options,
     toggleDrawer: handleToggleDrawer,
   });
 

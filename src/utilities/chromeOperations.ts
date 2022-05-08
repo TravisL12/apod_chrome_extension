@@ -48,6 +48,16 @@ export const saveToHistory = (response?: TApodResponse) => {
   });
 };
 
+export const removeFavorite = (date: string) => {
+  getChrome([APOD_FAVORITES], (options) => {
+    const prevFavorites = options?.[APOD_FAVORITES] || {};
+    delete prevFavorites[date];
+    setChrome({
+      [APOD_FAVORITES]: prevFavorites,
+    });
+  });
+};
+
 export const saveFavorite = (response?: TApodResponse) => {
   if (!response) {
     return;
@@ -55,9 +65,16 @@ export const saveFavorite = (response?: TApodResponse) => {
 
   getChrome([APOD_FAVORITES], (options) => {
     const prevFavorites = options?.[APOD_FAVORITES] || {};
+
+    if (prevFavorites[response.date]) {
+      removeFavorite(response.date);
+      return;
+    }
+
     const newItem = {
       date: response.date,
       title: response.title,
+      url: response.url,
     };
     const newFavorites = { ...prevFavorites, [response.date]: newItem };
     setChrome({
