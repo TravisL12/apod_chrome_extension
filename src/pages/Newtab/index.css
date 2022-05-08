@@ -19,6 +19,7 @@ code {
 }
 
 h1,
-h2 {
+h2,
+p {
   margin: 0;
 }

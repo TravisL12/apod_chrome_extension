@@ -6,6 +6,7 @@ import {
 } from '../../constants';
 
 const black = '#111111';
+export const lightBlack = 'rgba(0,0,0, 0.6)';
 export const gray = 'rgba(51,51,51, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
@@ -274,7 +275,7 @@ export const SArrowContainer = styled.div`
 
 export const SHistoryContainer = styled.div`
   display: grid;
-  gap: 25px;
+  gap: 18px;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 200px;
 `;
@@ -282,7 +283,14 @@ export const SHistoryContainer = styled.div`
 export const SHistoryItem = styled.div`
   position: relative;
   display: flex;
+  justify-content: center;
+  cursor: pointer;
+  padding: 6px;
   flex-direction: column;
+
+  &:hover {
+    background: ${gray};
+  }
 
   .title {
     width: 100%;
@@ -290,10 +298,12 @@ export const SHistoryItem = styled.div`
     padding: 4px;
     top: 0;
 
-    p {
-      background: black;
+    .title__inner {
+      background: ${lightBlack};
       padding: 2px;
-      margin: 0;
+    }
+    .title__date {
+      font-size: 12px;
     }
   }
 

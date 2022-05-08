@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
-import { SHistoryContainer, SHistoryItem } from '../../styles';
+import { SHistoryContainer } from '../../styles';
+import GridImage from './GridImage';
 
 const Favorites: React.FC<{
   viewFavorites: { [key: string]: { date: string } };
@@ -20,24 +21,11 @@ const Favorites: React.FC<{
         ) : (
           sortedFavorites.map((item: any, idx: number) => {
             return (
-              <SHistoryItem
+              <GridImage
                 key={`${item.date}-${idx}`}
-                onClick={() => {
-                  goToApodDate(item.date);
-                }}
-              >
-                <div className="title">
-                  <p>
-                    {item.title} {item.mediaType !== 'image' && '(Video)'}
-                  </p>
-                </div>
-                <div className="media">
-                  <img
-                    src={item.url}
-                    style={{ maxWidth: '100%', maxHeight: '100%' }}
-                  />
-                </div>
-              </SHistoryItem>
+                handleClick={goToApodDate}
+                item={item}
+              />
             );
           })
         )}
