@@ -5,14 +5,16 @@ import { SHistoryItem } from '../../styles';
 const GridImage: React.FC<{
   item: any;
   goToDate: (date: string) => void;
-}> = ({ item, goToDate }) => {
+  removeItem?: (date: string) => void;
+}> = ({ item, removeItem, goToDate }) => {
   return (
-    <SHistoryItem
-      onClick={() => {
-        goToDate(item.date);
-      }}
-    >
-      <div className="title">
+    <SHistoryItem>
+      <div
+        className="title"
+        onClick={() => {
+          goToDate(item.date);
+        }}
+      >
         <div className="title__inner">
           <p className="title__date">{prettyDateFormat(item.date)}</p>
           <p>
@@ -22,9 +24,19 @@ const GridImage: React.FC<{
           </p>
         </div>
       </div>
-      <div className="media">
+      <div
+        className="media"
+        onClick={() => {
+          goToDate(item.date);
+        }}
+      >
         <img src={item.url} style={{ maxWidth: '100%', maxHeight: '100%' }} />
       </div>
+      {removeItem && (
+        <div>
+          <button onClick={() => removeItem(item.date)}>Remove</button>
+        </div>
+      )}
     </SHistoryItem>
   );
 };

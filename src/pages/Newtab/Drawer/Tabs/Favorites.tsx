@@ -1,4 +1,5 @@
 import React, { useMemo } from 'react';
+import { removeFavorite } from '../../../../utilities';
 import { SHistoryContainer } from '../../styles';
 import GridImage from './GridImage';
 
@@ -24,6 +25,7 @@ const Favorites: React.FC<{
               <GridImage
                 key={`${item.date}-${idx}`}
                 goToDate={goToApodDate}
+                removeItem={removeFavorite}
                 item={item}
               />
             );
