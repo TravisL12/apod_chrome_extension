@@ -60,6 +60,10 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
     setIsLoading(true);
     setDrawerIsOpen(false);
+    if (apodResponse) {
+      saveToHistory(apodResponse);
+    }
+
     const response = await fetchImage(options);
 
     if (response.error) {
@@ -77,8 +81,6 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       fetchApod({ count: 1 });
       return;
     }
-
-    saveToHistory(response);
 
     if (response.media_type === 'video') {
       setIsLoading(false);
