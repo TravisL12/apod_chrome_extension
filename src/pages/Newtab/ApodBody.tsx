@@ -7,12 +7,7 @@ import {
   MAX_ERROR_TRIES,
 } from '../../constants';
 import { useNavigation } from '../../hooks/useNavigation';
-import {
-  fetchImage,
-  getChrome,
-  getLocalChrome,
-  saveToHistory,
-} from '../../utilities';
+import { fetchImage, saveToHistory } from '../../utilities';
 import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
@@ -23,17 +18,13 @@ import VideoContainer from './VideoContainer';
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
   const { hiResOnly, showTopSites } = options;
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
-  const [viewHistory, setViewHistory] = useState([]);
-  const [viewFavorites, setViewFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
   const [drawerDisplay, setDrawerDisplay] = useState<string | null>(null);
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
 
-  useEffect(() => {
-    setViewHistory(options?.[APOD_HISTORY]);
-    setViewFavorites(options?.[APOD_FAVORITES]);
-  }, [options]);
+  const viewHistory = options?.[APOD_HISTORY];
+  const viewFavorites = options?.[APOD_FAVORITES];
 
   const loadImage = (
     response: TApodResponse,

@@ -70,9 +70,10 @@ export const SDrawerContainer = styled.div(
 );
 
 export const SDrawerBody = styled.div`
+  display: flex;
+  flex-direction: column;
   padding: 8px;
   height: 100%;
-  overflow: auto;
 `;
 
 export const SDrawerTabContainer = styled.div`
@@ -278,6 +279,8 @@ export const SHistoryContainer = styled.div`
   gap: 18px;
   grid-template-columns: repeat(3, 1fr);
   grid-auto-rows: 200px;
+  flex: 1;
+  overflow: auto;
 `;
 
 export const SHistoryItem = styled.div`

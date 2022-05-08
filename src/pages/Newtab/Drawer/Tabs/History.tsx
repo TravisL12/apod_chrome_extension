@@ -7,7 +7,7 @@ const History: React.FC<{
   goToApodDate: (date: string) => void;
 }> = ({ viewHistory, goToApodDate }) => {
   return (
-    <div>
+    <>
       <h1>History</h1>
       <SHistoryContainer>
         {viewHistory.map((item: any, idx: number) => {
@@ -20,7 +20,7 @@ const History: React.FC<{
           );
         })}
       </SHistoryContainer>
-    </div>
+    </>
   );
 };
 

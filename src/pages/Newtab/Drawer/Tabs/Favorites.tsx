@@ -14,7 +14,7 @@ const Favorites: React.FC<{
   }, [viewFavorites]);
 
   return (
-    <div>
+    <>
       <h1>Favorites</h1>
       <SHistoryContainer>
         {sortedFavorites.length === 0 ? (
@@ -32,7 +32,7 @@ const Favorites: React.FC<{
           })
         )}
       </SHistoryContainer>
-    </div>
+    </>
   );
 };
 
