@@ -23,7 +23,7 @@ const Favorites: React.FC<{
             return (
               <GridImage
                 key={`${item.date}-${idx}`}
-                handleClick={goToApodDate}
+                goToDate={goToApodDate}
                 item={item}
               />
             );

@@ -65,7 +65,10 @@ const Header: React.FC<THeaderProps> = ({
                 isOpen={isCalendarOpen}
                 setIsOpen={setIsCalendarOpen}
               >
-                <h2 onClick={() => setIsCalendarOpen(!isCalendarOpen)}>
+                <h2
+                  onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                  style={{ cursor: 'pointer' }}
+                >
                   {prettyDateFormat(response.date)}
                 </h2>
               </CalendarPicker>

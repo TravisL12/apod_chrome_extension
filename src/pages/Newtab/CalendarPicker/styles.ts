@@ -7,22 +7,7 @@ export const SCalendarContainer = styled.div`
   --day-checked-color: #80cbc4;
   --calendar-color: rgb(63 68 88);
 
-  body {
-    font-family: Helvetica;
-    background: black;
-  }
-
-  .app {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    height: 100vh;
-    width: 100%;
-  }
-
-  .calendar-container {
-    position: relative;
-  }
+  position: relative;
 
   .calendar {
     position: absolute;

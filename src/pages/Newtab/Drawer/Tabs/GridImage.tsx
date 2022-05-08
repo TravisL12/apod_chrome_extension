@@ -4,12 +4,12 @@ import { SHistoryItem } from '../../styles';
 
 const GridImage: React.FC<{
   item: any;
-  handleClick: (date: string) => void;
-}> = ({ item, handleClick }) => {
+  goToDate: (date: string) => void;
+}> = ({ item, goToDate }) => {
   return (
     <SHistoryItem
       onClick={() => {
-        handleClick(item.date);
+        goToDate(item.date);
       }}
     >
       <div className="title">
