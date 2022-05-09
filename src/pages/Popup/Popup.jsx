@@ -2,13 +2,8 @@ import React, { useState, useEffect } from 'react';
 import './index.css';
 import {
   IS_TODAY_APOD,
-  APOD_FAVORITES,
-  CURRENT_DATE,
-  TODAY_COUNT,
-  TODAY_LIMIT,
   HI_RES_ONLY,
   SHOW_TOP_SITES,
-  SHOW_HISTORY_ROW,
   IS_TODAY_LIMIT_ON,
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
@@ -39,12 +34,6 @@ const optionsConfig = [
     id: SHOW_TOP_SITES,
     label: 'Show Top Sites',
     description: `This will show/hide the Top Site icons.`,
-    type: 'checkbox',
-  },
-  {
-    id: SHOW_HISTORY_ROW,
-    label: 'Show History',
-    description: `This will show/hide the history row at the bottom of the page.`,
     type: 'checkbox',
   },
   {

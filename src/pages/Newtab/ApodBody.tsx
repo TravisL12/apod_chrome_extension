@@ -53,6 +53,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       return;
     }
 
+    setDrawerIsOpen(false);
     setIsLoading(true);
 
     let response: TApodResponse;
