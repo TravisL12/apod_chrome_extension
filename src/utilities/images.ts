@@ -3,6 +3,7 @@ import {
   APOD_API_URL,
   RANDOM_APODS,
   RANDOM_FETCH_COUNT,
+  RELOAD_RANDOM_LIMIT,
 } from '../constants';
 import axios from 'axios';
 import { TApodResponse, TFetchOptions } from '../pages/types';
@@ -13,6 +14,22 @@ import {
   setLocalChrome,
 } from './chromeOperations';
 
+const reloadCache = async () => {
+  const params = {
+    api_key: API_KEY,
+    count: RANDOM_FETCH_COUNT,
+  };
+  const resp = await axios.get(APOD_API_URL, { params });
+  const images = resp.data.map((item: TApodResponse) =>
+    transformResponse(item)
+  );
+
+  getLocalChrome([RANDOM_APODS], (options) => {
+    const cache = options[RANDOM_APODS];
+    setLocalChrome({ [RANDOM_APODS]: [...cache, ...images] });
+  });
+};
+
 const randomCache = (): Promise<TApodResponse> => {
   return new Promise((resolve) => {
     getLocalChrome([RANDOM_APODS], (options) => {
@@ -22,6 +39,10 @@ const randomCache = (): Promise<TApodResponse> => {
 
       if (item) {
         saveToHistory(item);
+
+        if (cache.length < RELOAD_RANDOM_LIMIT) {
+          reloadCache();
+        }
       }
 
       resolve(item);

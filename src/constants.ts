@@ -4,7 +4,8 @@ export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 export const MIN_APOD_DATE = '1995-6-16';
 export const DELAY_FOR_HD_LOAD = 1500;
 export const HISTORY_LIMIT = 100;
-export const RANDOM_FETCH_COUNT = 20;
+export const RANDOM_FETCH_COUNT = 10;
+export const RELOAD_RANDOM_LIMIT = 3;
 
 export const MAX_ERROR_TRIES = 3;
 export const ERROR_MESSAGE =
