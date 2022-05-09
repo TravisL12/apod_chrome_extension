@@ -6,7 +6,7 @@ import {
 } from '../../constants';
 
 const black = '#111111';
-export const lightBlack = 'rgba(0,0,0, 0.6)';
+export const lightBlack = 'rgba(0,0,0, 0.5)';
 export const gray = 'rgba(51,51,51, 0.8)';
 export const activeGray = 'rgba(80,80,80, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
@@ -108,16 +108,18 @@ export const SApodContainer = styled.div`
   flex-direction: column;
 `;
 
-export const SMediaContainer = styled.div`
+export const SCenterWrapper = styled.div`
   ${flexCenter}
-  background: ${black};
-
   position: absolute;
-  z-index: -1; // put it behind everything else
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
+`;
+
+export const SMediaContainer = styled(SCenterWrapper)`
+  background: ${black};
+  z-index: -1; // put it behind everything else
 `;
 
 type TApodImage = {
@@ -284,12 +286,11 @@ export const SGridImageContainer = styled.div`
   overflow: auto;
 `;
 
-export const SHistoryItem = styled.div`
+export const SGridItem = styled.div`
   position: relative;
   display: flex;
   justify-content: center;
   cursor: pointer;
-  padding: 6px;
   flex-direction: column;
   border: 3px solid transparent;
 
@@ -319,6 +320,7 @@ export const SHistoryItem = styled.div`
     width: 100%;
     position: absolute;
     padding: 4px;
+    padding-top: 0;
     top: 0;
 
     .title__inner {
@@ -333,6 +335,7 @@ export const SHistoryItem = styled.div`
   .media {
     text-align: center;
     overflow: hidden;
+    padding: 4px;
     width: 100%;
   }
 `;

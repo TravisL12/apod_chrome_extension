@@ -5,7 +5,7 @@ const Explanation: React.FC<{ response?: TApodResponse }> = ({ response }) => {
   return (
     <>
       <h2>{response?.title}</h2>
-      <div>{response?.explanation}</div>
+      <div style={{ fontSize: '16px' }}>{response?.explanation}</div>
     </>
   );
 };

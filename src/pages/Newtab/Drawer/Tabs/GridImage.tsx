@@ -1,14 +1,15 @@
 import React from 'react';
 import { prettyDateFormat } from '../../../../utilities';
-import { SHistoryItem } from '../../styles';
+import { TFavoriteItem, THistoryItem } from '../../../types';
+import { SGridItem } from '../../styles';
 
 const GridImage: React.FC<{
-  item: any;
+  item: TFavoriteItem & THistoryItem;
   goToDate: (date: string) => void;
   removeItem?: (date: string) => void;
 }> = ({ item, removeItem, goToDate }) => {
   return (
-    <SHistoryItem>
+    <SGridItem>
       <div
         className="title"
         onClick={() => {
@@ -41,7 +42,7 @@ const GridImage: React.FC<{
           <button onClick={() => removeItem(item.date)}>Remove</button>
         </div>
       )}
-    </SHistoryItem>
+    </SGridItem>
   );
 };
 
