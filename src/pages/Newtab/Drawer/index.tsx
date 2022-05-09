@@ -21,7 +21,7 @@ import Favorites from './Tabs/Favorites';
 import History from './Tabs/History';
 
 type TDrawerProps = {
-  drawerDisplay: string;
+  drawerDisplay: string | null;
   isOpen: boolean;
   response?: TApodResponse;
   viewHistory: THistoryItem[];
