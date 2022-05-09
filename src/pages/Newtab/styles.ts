@@ -8,20 +8,9 @@ import {
 const black = '#111111';
 export const lightBlack = 'rgba(0,0,0, 0.6)';
 export const gray = 'rgba(51,51,51, 0.8)';
+export const activeGray = 'rgba(80,80,80, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
-
-const apodButton = `
-  background-color: ${gray};
-  color: ${lightGray};
-  transition: 0.1s linear background-color;
-
-  &.hover,
-  &:hover {
-    background-color: ${lightGray};
-  }
-}
-`;
 
 const flexCenter = `
   display: flex;
@@ -95,7 +84,11 @@ export const SDrawerTabContainer = styled.div`
 
 export const SDrawerTab = styled.div`
   ${flexCenter}
-  ${apodButton}
+  background-color: ${(props: { isActive: boolean }) =>
+    props.isActive ? activeGray : gray};
+  color: ${(props: { isActive: boolean }) =>
+    props.isActive ? 'white' : lightGray};
+  transition: 0.1s linear background-color;
   font-size: 12px;
   width: 104px;
   height: 100%;
@@ -103,6 +96,11 @@ export const SDrawerTab = styled.div`
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+
+  &.hover,
+  &:hover {
+    background-color: ${lightGray};
+  }
 `;
 
 export const SApodContainer = styled.div`

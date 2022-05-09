@@ -42,13 +42,22 @@ const Drawer: React.FC<TDrawerProps> = ({
   return (
     <SDrawerContainer drawerDisplay={drawerDisplay} isOpen={isOpen}>
       <SDrawerTabContainer>
-        <SDrawerTab onClick={() => toggleDrawer(DRAWER_EXPLANATION)}>
+        <SDrawerTab
+          isActive={isOpen && drawerDisplay === DRAWER_EXPLANATION}
+          onClick={() => toggleDrawer(DRAWER_EXPLANATION)}
+        >
           Explanation
         </SDrawerTab>
-        <SDrawerTab onClick={() => toggleDrawer(DRAWER_FAVORITES)}>
+        <SDrawerTab
+          isActive={isOpen && drawerDisplay === DRAWER_FAVORITES}
+          onClick={() => toggleDrawer(DRAWER_FAVORITES)}
+        >
           Favorites
         </SDrawerTab>
-        <SDrawerTab onClick={() => toggleDrawer(DRAWER_HISTORY)}>
+        <SDrawerTab
+          isActive={isOpen && drawerDisplay === DRAWER_HISTORY}
+          onClick={() => toggleDrawer(DRAWER_HISTORY)}
+        >
           History
         </SDrawerTab>
       </SDrawerTabContainer>
