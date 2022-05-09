@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
 import {
   KEY_MAP,
@@ -11,6 +11,7 @@ import {
   TODAY_LIMIT,
   DRAWER_HISTORY,
   APOD_FAVORITES,
+  APOD_HISTORY,
 } from '../constants';
 import { TNavigationButton, TUseNavigationProps } from '../pages/types';
 import {
@@ -27,6 +28,8 @@ export const useNavigation = ({
   loadImage,
   toggleDrawer,
 }: TUseNavigationProps) => {
+  const [historyIndex, setHistoryIndex] = useState<number>(0);
+
   const fetchToday = () => fetchApod();
   const fetchRandom = () => fetchApod({ random: true });
   const forceHighDef = () => {
@@ -43,6 +46,19 @@ export const useNavigation = ({
     }
   };
 
+  const fetchPreviousHistory = () => {
+    if (historyIndex <= 0) {
+      return;
+    }
+    setHistoryIndex(historyIndex - 1);
+  };
+  const fetchNextHistory = () => {
+    if (historyIndex === options?.[APOD_HISTORY].length - 1) {
+      return;
+    }
+    setHistoryIndex(historyIndex + 1);
+  };
+
   const goToApodDate = (date: string) => {
     fetchApod({ date });
   };
@@ -51,6 +67,8 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
   useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
   useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
+  useKeyboardShortcut([KEY_MAP.PREVIOUS_HISTORY], fetchPreviousHistory);
+  useKeyboardShortcut([KEY_MAP.NEXT_HISTORY], fetchNextHistory);
   useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], () =>
     toggleDrawer(DRAWER_EXPLANATION)
   );
@@ -93,6 +111,13 @@ export const useNavigation = ({
         response?.media_type !== 'image',
     },
   ];
+
+  useEffect(() => {
+    const historyResponse = options?.[APOD_HISTORY]?.[historyIndex];
+    if (historyResponse) {
+      fetchApod({ date: historyResponse.date });
+    }
+  }, [historyIndex]);
 
   useEffect(() => {
     if (options[HI_RES_ONLY]) {

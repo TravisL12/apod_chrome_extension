@@ -55,8 +55,8 @@ export const KEY_MAP = {
   CLOSE_DRAWER: 'escape',
   // not used yet
   SEARCH_TAB: 's',
-  PREVIOUS_HISTORY: 'ArrowLeft',
-  NEXT_HISTORY: 'ArrowRight',
+  PREVIOUS_HISTORY: 'ArrowRight',
+  NEXT_HISTORY: 'ArrowLeft',
 };
 
 export const DEFAULT_OPTIONS = {
