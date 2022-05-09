@@ -44,6 +44,7 @@ export type TApodResponse = {
   apodUrl: string;
   isToday: boolean;
   isImageHd?: boolean;
+  error?: any;
 };
 
 export type TUseNavigationProps = {

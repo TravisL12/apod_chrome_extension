@@ -1,6 +1,6 @@
 import { API_KEY, APOD_API_URL, RANDOM_APODS } from '../constants';
 import axios from 'axios';
-import { TFetchOptions } from '../pages/types';
+import { TApodResponse, TFetchOptions } from '../pages/types';
 import { isDateToday, linkDateFormat } from './dates';
 import {
   getLocalChrome,
@@ -9,19 +9,32 @@ import {
 } from './chromeOperations';
 import { randomizer } from './utilities';
 
-const randomCache = () => {
+const randomCache = (): Promise<TApodResponse> => {
   return new Promise((resolve) => {
     getLocalChrome([RANDOM_APODS], (options) => {
-      const cache = [...options[RANDOM_APODS]];
+      const cache = [...(options[RANDOM_APODS] || [])];
       const randomIdx = randomizer(cache.length - 1);
       const item = cache.splice(randomIdx, 1)[0];
       setLocalChrome({ [RANDOM_APODS]: cache });
+
+      if (item) {
+        saveToHistory(item);
+      }
+
       resolve(item);
     });
   });
 };
 
-export const fetchRandomImage = async () => {
+const transformResponse = (data: TApodResponse) => {
+  data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
+    data.date
+  )}.html`;
+  data.date = data.date.replace('-0', '-');
+  data.isToday = isDateToday(data.date);
+  return data;
+};
+export const fetchRandomImage = async (): Promise<TApodResponse> => {
   const params = {
     api_key: API_KEY,
     count: 10,
@@ -35,15 +48,9 @@ export const fetchRandomImage = async () => {
 
     // Otherwise fetch
     const resp = await axios.get(APOD_API_URL, { params });
-    const images = resp.data.map((item: any) => {
-      const data = item;
-      data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
-        data.date
-      )}.html`;
-      data.date = data.date.replace('-0', '-');
-      data.isToday = isDateToday(data.date);
-      return data;
-    });
+    const images = resp.data.map((item: TApodResponse) =>
+      transformResponse(item)
+    );
 
     return new Promise((resolve) => {
       setLocalChrome({ [RANDOM_APODS]: images }, async () => {
@@ -53,28 +60,26 @@ export const fetchRandomImage = async () => {
     });
   } catch (error) {
     console.error(error);
+    // @ts-expect-error
     return { error };
   }
 };
 
-export const fetchImage = async (options: TFetchOptions = {}) => {
+export const fetchImage = async (
+  options: TFetchOptions = {}
+): Promise<TApodResponse> => {
   const params = {
     api_key: API_KEY,
     ...options,
   };
   try {
     const resp = await axios.get(APOD_API_URL, { params });
-    const data = resp.data[0] || resp.data;
-    data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
-      data.date
-    )}.html`;
-    data.date = data.date.replace('-0', '-');
-    data.isToday = isDateToday(data.date);
+    const data = transformResponse(resp.data);
     saveToHistory(data);
-
     return data;
   } catch (error) {
     console.error(error);
+    // @ts-expect-error
     return { error };
   }
 };

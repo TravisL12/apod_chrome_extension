@@ -55,7 +55,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
 
     setIsLoading(true);
 
-    let response;
+    let response: TApodResponse;
 
     if (options?.random) {
       response = await fetchRandomImage();
