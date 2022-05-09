@@ -12,6 +12,7 @@ import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
+import Loading from './Loading';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
@@ -112,8 +113,8 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       return <h1 style={{ color: 'white' }}>{ERROR_MESSAGE}</h1>;
     }
 
-    if (!apodResponse || isLoading) {
-      return <h1 style={{ color: 'white' }}>Loading...</h1>;
+    if (!apodResponse) {
+      return <Loading />;
     }
 
     return apodResponse.media_type === 'video' ? (
@@ -132,6 +133,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         goToApodDate={goToApodDate}
         showTopSites={showTopSites}
       />
+      {apodResponse && isLoading && <Loading />}
       <SMediaContainer>{renderBody}</SMediaContainer>
       <Drawer
         drawerDisplay={drawerDisplay}
