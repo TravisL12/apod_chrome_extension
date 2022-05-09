@@ -35,6 +35,11 @@ const preloadImage = (url: string) => {
 };
 
 const transformResponse = (data: TApodResponse) => {
+  // Some URL's are cutoff and start with `//www.youtube...`
+  if (/^\/\//.test(data.url)) {
+    data.url = `https:${data.url}`;
+  }
+
   if (data.media_type === 'image') {
     preloadImage(data.url);
     preloadImage(data.hdurl);
