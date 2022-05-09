@@ -17,6 +17,8 @@ import {
   SAboutLinks,
 } from './styles';
 
+const manifest = chrome.runtime.getManifest();
+
 const optionsConfig = [
   {
     id: IS_TODAY_APOD,
@@ -92,7 +94,7 @@ const Popup = () => {
       </SOptionsContainer>
       <SAboutApod>
         <p>
-          APOD By The Trav <span id="version"></span>
+          APOD By The Trav <span id="version">v{manifest.version}</span>
         </p>
         <SAboutLinks>
           <div>
