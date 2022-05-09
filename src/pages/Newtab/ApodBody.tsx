@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useCallback, useMemo, useState } from 'react';
 import {
   APOD_FAVORITES,
   APOD_HISTORY,
@@ -106,7 +106,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     toggleDrawer: handleToggleDrawer,
   });
 
-  const renderBody = () => {
+  const renderBody = useMemo(() => {
     if (hasErrorLoading) {
       return <h1 style={{ color: 'white' }}>{ERROR_MESSAGE}</h1>;
     }
@@ -120,7 +120,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     ) : (
       <ImageContainer loadedImage={apodResponse.loadedImage} />
     );
-  };
+  }, [hasErrorLoading, apodResponse, isLoading]);
 
   return (
     <SApodContainer>
@@ -131,7 +131,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         goToApodDate={goToApodDate}
         showTopSites={showTopSites}
       />
-      <SMediaContainer>{renderBody()}</SMediaContainer>
+      <SMediaContainer>{renderBody}</SMediaContainer>
       <Drawer
         drawerDisplay={drawerDisplay}
         isOpen={drawerIsOpen}

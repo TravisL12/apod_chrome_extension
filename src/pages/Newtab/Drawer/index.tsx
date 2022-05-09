@@ -5,7 +5,12 @@ import {
   SDrawerTab,
   SDrawerTabContainer,
 } from '../styles';
-import { TApodResponse, TUseNavigationProps } from '../../types';
+import {
+  TApodResponse,
+  TFavoriteItem,
+  THistoryItem,
+  TUseNavigationProps,
+} from '../../types';
 import {
   DRAWER_EXPLANATION,
   DRAWER_FAVORITES,
@@ -16,11 +21,11 @@ import Favorites from './Tabs/Favorites';
 import History from './Tabs/History';
 
 type TDrawerProps = {
-  drawerDisplay: string | null;
+  drawerDisplay: string;
   isOpen: boolean;
   response?: TApodResponse;
-  viewHistory: any;
-  viewFavorites: any;
+  viewHistory: THistoryItem[];
+  viewFavorites: { [date: string]: TFavoriteItem };
   toggleDrawer: TUseNavigationProps['toggleDrawer'];
   goToApodDate: (date: string) => void;
 };
