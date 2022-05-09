@@ -1,4 +1,9 @@
-import { API_KEY, APOD_API_URL, RANDOM_APODS } from '../constants';
+import {
+  API_KEY,
+  APOD_API_URL,
+  RANDOM_APODS,
+  RANDOM_FETCH_COUNT,
+} from '../constants';
 import axios from 'axios';
 import { TApodResponse, TFetchOptions } from '../pages/types';
 import { isDateToday, linkDateFormat } from './dates';
@@ -7,14 +12,12 @@ import {
   saveToHistory,
   setLocalChrome,
 } from './chromeOperations';
-import { randomizer } from './utilities';
 
 const randomCache = (): Promise<TApodResponse> => {
   return new Promise((resolve) => {
     getLocalChrome([RANDOM_APODS], (options) => {
       const cache = [...(options[RANDOM_APODS] || [])];
-      const randomIdx = randomizer(cache.length - 1);
-      const item = cache.splice(randomIdx, 1)[0];
+      const item = cache.pop();
       setLocalChrome({ [RANDOM_APODS]: cache });
 
       if (item) {
@@ -26,7 +29,16 @@ const randomCache = (): Promise<TApodResponse> => {
   });
 };
 
+const preloadImage = (url: string) => {
+  const img = new Image();
+  img.src = url;
+};
+
 const transformResponse = (data: TApodResponse) => {
+  if (data.media_type === 'image') {
+    preloadImage(data.url);
+    preloadImage(data.hdurl);
+  }
   data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
     data.date
   )}.html`;
@@ -37,7 +49,7 @@ const transformResponse = (data: TApodResponse) => {
 export const fetchRandomImage = async (): Promise<TApodResponse> => {
   const params = {
     api_key: API_KEY,
-    count: 10,
+    count: RANDOM_FETCH_COUNT,
   };
   try {
     // Look in cache
