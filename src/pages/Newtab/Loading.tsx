@@ -8,10 +8,10 @@ import Fader from './Fader';
 const SLoadingContainer = styled.div`
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 5px;
 
   h1 {
-    font-size: 80px;
+    font-size: 60px;
     font-weight: 100;
     background: linear-gradient(
       to bottom,
@@ -25,8 +25,8 @@ const SLoadingContainer = styled.div`
 `;
 
 const SImageContainer = styled.div`
-  width: 125px;
-  height: 125px;
+  width: 80px;
+  height: 80px;
 
   img {
     max-width: 100%;
@@ -43,7 +43,7 @@ const Loading: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         </SImageContainer>
 
         <div>
-          <h1 style={{ color: 'white' }}>APOD</h1>;
+          <h1>APOD</h1>
         </div>
       </SLoadingContainer>
     </Fader>

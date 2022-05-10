@@ -134,9 +134,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         showTopSites={showTopSites}
       />
       {apodResponse && (
-        <SCenterWrapper>
+        <div style={{ position: 'absolute', left: '20px', bottom: '20px' }}>
           <Loading isLoading={isLoading} />
-        </SCenterWrapper>
+        </div>
       )}
       <SMediaContainer>{renderBody}</SMediaContainer>
       <Drawer
