@@ -1,10 +1,12 @@
 import React from 'react';
-import icon from '../../assets/img/sun_loader.webp';
+
+// @ts-expect-error
+import sunLogo from '../../assets/img/sun_loader.gif';
 
 const Loading: React.FC = () => {
   return (
     <div style={{ display: 'flex' }}>
-      <img src={icon} />
+      <img src={sunLogo} />
       <h1 style={{ color: 'white' }}>Loading...</h1>;
     </div>
   );
