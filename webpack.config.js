@@ -27,6 +27,7 @@ var fileExtensions = [
   'ttf',
   'woff',
   'woff2',
+  'webp',
 ];
 
 if (fileSystem.existsSync(secretsPath)) {
