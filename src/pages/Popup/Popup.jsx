@@ -7,6 +7,7 @@ import {
   IS_TODAY_LIMIT_ON,
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
+  TODAY_LIMIT_COUNT,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
 import {
@@ -41,7 +42,7 @@ const optionsConfig = [
   {
     id: IS_TODAY_LIMIT_ON,
     label: 'Switch from Today to Random',
-    description: `Show today's APOD up to this limit and then show random APOD's.`,
+    description: `Show today's APOD ${TODAY_LIMIT_COUNT} times and then will switch to random APOD's.`,
     type: 'checkbox',
   },
 ];

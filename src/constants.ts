@@ -6,6 +6,7 @@ export const DELAY_FOR_HD_LOAD = 1500;
 export const HISTORY_LIMIT = 100;
 export const RANDOM_FETCH_COUNT = 10;
 export const RELOAD_RANDOM_LIMIT = 3;
+export const TODAY_LIMIT_COUNT = 5;
 
 export const MAX_ERROR_TRIES = 3;
 export const ERROR_MESSAGE =
@@ -66,6 +67,6 @@ export const DEFAULT_OPTIONS = {
   [SHOW_TOP_SITES]: true,
   [SHOW_HISTORY_ROW]: true,
   [TODAY_COUNT]: 0,
-  [TODAY_LIMIT]: 5,
+  [TODAY_LIMIT]: TODAY_LIMIT_COUNT,
   [IS_TODAY_LIMIT_ON]: false,
 };

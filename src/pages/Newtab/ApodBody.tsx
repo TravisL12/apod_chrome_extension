@@ -114,7 +114,7 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
     }
 
     if (!apodResponse) {
-      return <Loading />;
+      return <Loading isLoading={isLoading} />;
     }
 
     return apodResponse.media_type === 'video' ? (
@@ -133,9 +133,9 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         goToApodDate={goToApodDate}
         showTopSites={showTopSites}
       />
-      {apodResponse && isLoading && (
+      {apodResponse && (
         <SCenterWrapper>
-          <Loading />
+          <Loading isLoading={isLoading} />
         </SCenterWrapper>
       )}
       <SMediaContainer>{renderBody}</SMediaContainer>

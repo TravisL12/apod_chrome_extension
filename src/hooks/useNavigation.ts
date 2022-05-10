@@ -13,7 +13,12 @@ import {
   APOD_FAVORITES,
   APOD_HISTORY,
 } from '../constants';
-import { TNavigationButton, TUseNavigationProps } from '../pages/types';
+import {
+  TFetchOptions,
+  THistoryItem,
+  TNavigationButton,
+  TUseNavigationProps,
+} from '../pages/types';
 import {
   adjacentDate,
   isFirstApodDate,
@@ -30,36 +35,53 @@ export const useNavigation = ({
 }: TUseNavigationProps) => {
   const [historyIndex, setHistoryIndex] = useState<number>(0);
 
-  const fetchToday = () => fetchApod();
-  const fetchRandom = () => fetchApod({ random: true });
+  const fetchResetHistory = (options?: TFetchOptions) => {
+    setHistoryIndex(0);
+    fetchApod(options);
+  };
+
+  const fetchToday = () => fetchResetHistory();
+  const fetchRandom = () => fetchResetHistory({ random: true });
   const forceHighDef = () => {
-    if (response) loadImage(response, true);
+    if (response) {
+      loadImage(response, true);
+    }
   };
   const fetchPreviousDate = () => {
     if (response?.date) {
-      fetchApod({ date: adjacentDate(response?.date, -1) });
+      fetchResetHistory({ date: adjacentDate(response?.date, -1) });
     }
   };
   const fetchNextDate = () => {
     if (response?.date) {
-      fetchApod({ date: adjacentDate(response?.date, 1) });
+      fetchResetHistory({ date: adjacentDate(response?.date, 1) });
     }
   };
 
-  const fetchPreviousHistory = () => {
-    if (historyIndex <= 0) {
+  const fetchHistory = (direction: number) => {
+    const isTooLow = direction < 0 && historyIndex <= 0;
+    const isTooHigh =
+      direction > 0 && historyIndex === options?.[APOD_HISTORY].length - 1;
+
+    if (isTooLow || isTooHigh) {
       return;
     }
-    setHistoryIndex(historyIndex - 1);
-  };
-  const fetchNextHistory = () => {
-    if (historyIndex === options?.[APOD_HISTORY].length - 1) {
-      return;
+
+    const historyResponse = options?.[APOD_HISTORY]?.[historyIndex + direction];
+    if (historyResponse) {
+      fetchApod({ date: historyResponse.date });
+      setHistoryIndex(historyIndex + direction);
     }
-    setHistoryIndex(historyIndex + 1);
   };
 
   const goToApodDate = (date: string) => {
+    const findHistoryIndex = options?.[APOD_HISTORY].findIndex(
+      (h: THistoryItem) => h.date === date
+    );
+    if (findHistoryIndex) {
+      setHistoryIndex(findHistoryIndex);
+    }
+
     fetchApod({ date });
   };
 
@@ -67,8 +89,9 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
   useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
   useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
-  useKeyboardShortcut([KEY_MAP.PREVIOUS_HISTORY], fetchPreviousHistory);
-  useKeyboardShortcut([KEY_MAP.NEXT_HISTORY], fetchNextHistory);
+  useKeyboardShortcut([KEY_MAP.PREVIOUS_HISTORY], () => fetchHistory(-1));
+  useKeyboardShortcut([KEY_MAP.NEXT_HISTORY], () => fetchHistory(1));
+  useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
   useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], () =>
     toggleDrawer(DRAWER_EXPLANATION)
   );
@@ -78,7 +101,6 @@ export const useNavigation = ({
   useKeyboardShortcut([KEY_MAP.HISTORY_TAB], () =>
     toggleDrawer(DRAWER_HISTORY)
   );
-  useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
 
   const isFavorite: boolean = response?.date
     ? !!options?.[APOD_FAVORITES]?.[response?.date]
@@ -111,13 +133,6 @@ export const useNavigation = ({
         response?.media_type !== 'image',
     },
   ];
-
-  useEffect(() => {
-    const historyResponse = options?.[APOD_HISTORY]?.[historyIndex];
-    if (historyResponse) {
-      fetchApod({ date: historyResponse.date });
-    }
-  }, [historyIndex]);
 
   useEffect(() => {
     if (options[HI_RES_ONLY]) {

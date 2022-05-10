@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 // @ts-expect-error
 import sunLogo from '../../assets/img/sun_loader.gif';
+import Fader from './Fader';
 
 const SLoadingContainer = styled.div`
   display: flex;
@@ -33,17 +34,19 @@ const SImageContainer = styled.div`
   }
 `;
 
-const Loading: React.FC = () => {
+const Loading: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
   return (
-    <SLoadingContainer>
-      <SImageContainer>
-        <img src={sunLogo} />
-      </SImageContainer>
+    <Fader isVisible={isLoading}>
+      <SLoadingContainer>
+        <SImageContainer>
+          <img src={sunLogo} />
+        </SImageContainer>
 
-      <div>
-        <h1 style={{ color: 'white' }}>APOD</h1>;
-      </div>
-    </SLoadingContainer>
+        <div>
+          <h1 style={{ color: 'white' }}>APOD</h1>;
+        </div>
+      </SLoadingContainer>
+    </Fader>
   );
 };
 
