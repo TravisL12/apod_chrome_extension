@@ -3,6 +3,7 @@ import { removeFavorite, thumbSourceLink } from '../../../../utilities';
 import { TFavoriteItem } from '../../../types';
 import { SGridImageContainer } from '../../styles';
 import GridImage from './GridImage';
+import GridHeader, { useSearch } from './GridHeader';
 
 // Some favorites were bookmarked from the previous API used
 const extractHerokuImageUrl = (imgUrl?: string) => {
@@ -33,14 +34,16 @@ const Favorites: React.FC<{
     });
   }, [viewFavorites]);
 
+  const { keyword, setKeyword, filteredItems } = useSearch(sortedFavorites);
+
   return (
     <>
-      <h1>Favorites</h1>
+      <GridHeader title={'Favorites'} keyword={keyword} onChange={setKeyword} />
       <SGridImageContainer>
         {sortedFavorites.length === 0 ? (
           <h3>You haven't saved any favorites!</h3>
         ) : (
-          sortedFavorites.map((item: any, idx: number) => {
+          filteredItems.map((item: any, idx: number) => {
             return (
               <GridImage
                 key={`${item.date}-${idx}`}

@@ -297,6 +297,14 @@ export const SGridImageContainer = styled.div`
   overflow: auto;
 `;
 
+export const SGridTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 10px;
+`;
+
 export const SGridItem = styled.div`
   position: relative;
   display: flex;
