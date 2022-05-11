@@ -85,8 +85,19 @@ export const saveFavorite = (response?: TApodResponse) => {
       url: response.url,
     };
     const newFavorites = { ...prevFavorites, [response.date]: newItem };
-    setChrome({
-      [APOD_FAVORITES]: newFavorites,
-    });
+    console.log(Object.values(newFavorites).length, 'count?');
+
+    setChrome(
+      {
+        [APOD_FAVORITES]: newFavorites,
+      },
+      () => {
+        if (chrome.runtime.lastError) {
+          alert(
+            'Saving failed: you have reached the limit of favorites that can be saved.'
+          );
+        }
+      }
+    );
   });
 };

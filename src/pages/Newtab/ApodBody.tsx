@@ -13,7 +13,7 @@ import Drawer from './Drawer';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
 import Loading from './Loading';
-import { SApodContainer, SCenterWrapper, SMediaContainer } from './styles';
+import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
 const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
