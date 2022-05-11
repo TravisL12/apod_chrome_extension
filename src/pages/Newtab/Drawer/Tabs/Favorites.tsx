@@ -1,14 +1,34 @@
 import React, { useMemo } from 'react';
-import { removeFavorite } from '../../../../utilities';
+import { removeFavorite, thumbSourceLink } from '../../../../utilities';
+import { TFavoriteItem } from '../../../types';
 import { SGridImageContainer } from '../../styles';
 import GridImage from './GridImage';
 
+// Some favorites were bookmarked from the previous API used
+const extractHerokuImageUrl = (imgUrl?: string) => {
+  if (imgUrl) {
+    const searchStr = imgUrl.replace('apodapi.herokuapp.com/image/', '');
+    return new URLSearchParams(searchStr).get('image');
+  }
+  return false;
+};
+
+const convertV3Favorite = (favorite: TFavoriteItem, dateKey: string) => {
+  const imgUrl = extractHerokuImageUrl(favorite.imgUrl);
+  const url = favorite.url || imgUrl || thumbSourceLink(dateKey);
+  return { ...favorite, url, date: dateKey };
+};
+
 const Favorites: React.FC<{
-  viewFavorites: { [key: string]: { date: string } };
+  viewFavorites: { [key: string]: TFavoriteItem };
   goToApodDate: (date: string) => void;
 }> = ({ viewFavorites = {}, goToApodDate }) => {
   const sortedFavorites = useMemo(() => {
-    return Object.values(viewFavorites).sort((a, b) => {
+    const adjFav = Object.keys(viewFavorites).map((dateKey) => {
+      return convertV3Favorite(viewFavorites[dateKey], dateKey);
+    });
+
+    return adjFav.sort((a, b) => {
       return b.date > a.date ? 1 : -1;
     });
   }, [viewFavorites]);
