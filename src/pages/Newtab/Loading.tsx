@@ -10,9 +10,8 @@ const SLoadingContainer = styled.div`
   align-items: center;
   gap: 5px;
 
-  h1 {
-    font-size: 60px;
-    font-weight: 100;
+  h1,
+  h2 {
     background: linear-gradient(
       to bottom,
       #ffffff 0%,
@@ -43,7 +42,7 @@ const Loading: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
         </SImageContainer>
 
         <div>
-          <h1>APOD</h1>
+          <h1 style={{ fontWeight: 400, fontSize: '60px' }}>APOD</h1>
         </div>
       </SLoadingContainer>
     </Fader>

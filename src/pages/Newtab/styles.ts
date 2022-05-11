@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import {
   DRAWER_EXPLANATION,
   DRAWER_FAVORITES,
@@ -11,6 +11,16 @@ export const gray = 'rgba(51,51,51, 0.8)';
 export const activeGray = 'rgba(80,80,80, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
+
+// @ts-expect-error
+import Montserrat from '../../assets/fonts/Montserrat-VariableFont_wght.ttf';
+
+export const FontStyles = createGlobalStyle`
+  @font-face {
+    font-family: 'Montserrat';
+    src: url(${Montserrat}) format('ttf');
+  }
+`;
 
 const flexCenter = `
   display: flex;
@@ -104,6 +114,7 @@ export const SDrawerTab = styled.div`
 `;
 
 export const SApodContainer = styled.div`
+  font-family: 'Montserrat', sans-serif;
   display: flex;
   flex-direction: column;
 `;

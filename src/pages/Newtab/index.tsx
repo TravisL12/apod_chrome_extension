@@ -6,6 +6,7 @@ import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
 import './index.css';
+import { FontStyles } from './styles';
 
 const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
   const [apodOptions, setApodOptions] = useState<TAppOptions>();
@@ -37,7 +38,11 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
 
 getChrome(APOD_OPTIONS, (options) => {
   render(
-    <App options={options} />,
+    <>
+      <FontStyles />
+      <App options={options} />
+    </>,
+
     window.document.querySelector('#app-container')
   );
 });
