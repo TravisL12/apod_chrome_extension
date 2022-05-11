@@ -14,7 +14,7 @@ export const useSearch = (items: { title: string }[] = []) => {
     return items.filter((item: { title: string }) => {
       return item.title.toLowerCase().includes(keyword.toLowerCase());
     });
-  }, [keyword]);
+  }, [keyword, items]);
 
   return { keyword, setKeyword, filteredItems };
 };
