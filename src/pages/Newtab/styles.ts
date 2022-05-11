@@ -305,6 +305,17 @@ export const SGridTitle = styled.div`
   margin-bottom: 10px;
 `;
 
+export const SGridTextInput = styled.input`
+  padding: 5px;
+  height: 100%;
+  font-size: 18px;
+  border: 1px solid ${lightGray};
+  border-radius: 3px;
+  background: rgba(115, 115, 115, 0.35);
+  font-weight: 100;
+  color: ${lightGray};
+`;
+
 export const SGridItem = styled.div`
   position: relative;
   display: flex;

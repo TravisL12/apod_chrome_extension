@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { SGridTitle } from '../../styles';
+import { SGridTextInput, SGridTitle } from '../../styles';
 
 type TSearchGridProps = {
   title: string;
@@ -32,11 +32,7 @@ const SearchGrid: React.FC<TSearchGridProps> = ({
     <SGridTitle>
       <h1>{title}</h1>
       <div>
-        <label style={{ marginRight: '8px' }} htmlFor="search-favorites">
-          Search
-        </label>
-        <input
-          id="search-favorites"
+        <SGridTextInput
           value={keyword}
           onChange={handleChange}
           type="text"
