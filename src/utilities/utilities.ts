@@ -15,3 +15,8 @@ export function isEmpty(obj: any[] | { [key: string]: any }) {
 export function randomizer(max: number = 1, min: number = 0) {
   return Math.round(Math.random() * (max - min) + min);
 }
+
+export function titleCase(text: string) {
+  if (!text) return text;
+  return text[0].toUpperCase() + text.slice(1);
+}

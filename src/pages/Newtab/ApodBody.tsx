@@ -1,14 +1,8 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import {
-  APOD_FAVORITES,
-  APOD_HISTORY,
-  DELAY_FOR_HD_LOAD,
-  ERROR_MESSAGE,
-  MAX_ERROR_TRIES,
-} from '../../constants';
+import { ERROR_MESSAGE } from '../../constants';
+import useFetchApod from '../../hooks/useFetchApod';
 import { useNavigation } from '../../hooks/useNavigation';
-import { fetchImage, fetchRandomImage } from '../../utilities';
-import { TApodBodyProps, TApodResponse, TFetchOptions } from '../types';
+import { TAppOptions } from '../types';
 import Drawer from './Drawer';
 import Header from './Header';
 import ImageContainer from './ImageContainer';
@@ -16,79 +10,10 @@ import Loading from './Loading';
 import { SApodContainer, SMediaContainer } from './styles';
 import VideoContainer from './VideoContainer';
 
-const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
-  const { hiResOnly, showTopSites } = options;
-  const [apodResponse, setApodResponse] = useState<TApodResponse>();
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
+const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
   const [drawerDisplay, setDrawerDisplay] = useState<string | null>(null);
   const [drawerIsOpen, setDrawerIsOpen] = useState<boolean>(false);
-
-  const viewHistory = options?.[APOD_HISTORY];
-  const viewFavorites = options?.[APOD_FAVORITES];
-
-  const loadImage = (
-    response: TApodResponse,
-    forceHighDef: boolean = false
-  ) => {
-    const img = new Image();
-    let isImageHd: boolean = true;
-    img.src = response?.hdurl;
-
-    const timeout = setTimeout(() => {
-      if (!img.complete && !forceHighDef && !hiResOnly) {
-        isImageHd = false;
-        img.src = response?.url;
-      }
-    }, DELAY_FOR_HD_LOAD);
-
-    img.onload = () => {
-      clearTimeout(timeout);
-      setIsLoading(false);
-      setApodResponse({ ...response, loadedImage: img, isImageHd });
-    };
-  };
-
-  const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
-    if (isLoading) {
-      return;
-    }
-
-    setDrawerIsOpen(false);
-    setIsLoading(true);
-
-    let response: TApodResponse;
-
-    if (options?.random) {
-      response = await fetchRandomImage();
-    } else {
-      response = await fetchImage(options);
-    }
-
-    if (response.error) {
-      if (errorCount >= MAX_ERROR_TRIES) {
-        setIsLoading(false);
-        setHasErrorLoading(true);
-      } else {
-        fetchApod(options, errorCount + 1);
-      }
-      return;
-    }
-
-    if (response.media_type === 'other') {
-      console.log(response, 'OTHER REPSONSE');
-      fetchApod({ random: true });
-      return;
-    }
-
-    if (response.media_type === 'video') {
-      setIsLoading(false);
-      setApodResponse({ ...response });
-      return;
-    }
-
-    loadImage(response);
-  };
+  const { hiResOnly, showTopSites, apodHistory, apodFavorites } = options;
 
   const handleToggleDrawer = (drawerOption: string | null) => {
     const canClose = drawerDisplay === drawerOption && drawerIsOpen;
@@ -99,6 +24,12 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
       setDrawerDisplay(drawerOption);
     }
   };
+
+  const { apodResponse, isLoading, hasErrorLoading, loadImage, fetchApod } =
+    useFetchApod({
+      hiResOnly,
+      setDrawerIsOpen,
+    });
 
   const { navigationButtons, goToApodDate } = useNavigation({
     response: apodResponse,
@@ -144,8 +75,8 @@ const ApodBody: React.FC<TApodBodyProps> = ({ options }) => {
         isOpen={drawerIsOpen}
         response={apodResponse}
         toggleDrawer={handleToggleDrawer}
-        viewHistory={viewHistory}
-        viewFavorites={viewFavorites}
+        viewHistory={apodHistory}
+        viewFavorites={apodFavorites}
         goToApodDate={goToApodDate}
       />
     </SApodContainer>

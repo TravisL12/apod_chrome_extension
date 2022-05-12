@@ -1,5 +1,10 @@
 import { APOD_FAVORITES, APOD_HISTORY, HISTORY_LIMIT } from '../constants';
-import { TApodResponse, TFavoriteItem, THistoryItem } from '../pages/types';
+import {
+  TApodResponse,
+  TFavoriteItem,
+  TFavorites,
+  THistoryItem,
+} from '../pages/types';
 
 export const getChrome = (options: any, callback: (params?: any) => void) => {
   chrome.storage.sync.get(options, callback);
@@ -71,8 +76,7 @@ export const saveFavorite = (response?: TApodResponse) => {
   }
 
   getChrome([APOD_FAVORITES], (options) => {
-    const prevFavorites: { [date: string]: TFavoriteItem } =
-      options?.[APOD_FAVORITES] || {};
+    const prevFavorites: TFavorites = options?.[APOD_FAVORITES] || {};
 
     if (prevFavorites[response.date]) {
       removeFavorite(response.date);
