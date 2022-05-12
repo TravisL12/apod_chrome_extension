@@ -11,6 +11,7 @@ import {
   TFavorites,
   THistoryItem,
 } from '../pages/types';
+import { getToday } from './dates';
 
 export const getChrome = (
   options: (keyof TAppOptions)[],
@@ -59,7 +60,7 @@ export const saveToHistory = (response: TApodResponse) => {
       title: response.title,
       mediaType: response.media_type,
       url: response.url,
-      dateAdded: new Date().getTime(),
+      dateAdded: getToday().getTime(),
     };
 
     const newHistory = [respNoExplanation, ...prevHistory]

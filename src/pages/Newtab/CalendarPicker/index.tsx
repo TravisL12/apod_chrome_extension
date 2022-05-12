@@ -1,4 +1,9 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import {
+  MIN_APOD_DAY,
+  MIN_APOD_MONTH,
+  MIN_APOD_YEAR,
+} from '../../../constants';
 import {
   createDate,
   months,
@@ -6,7 +11,8 @@ import {
   YEARS,
   MONTHS,
   buildNumberArray,
-} from './calendarHelpers';
+  getToday,
+} from '../../../utilities';
 import { SCalendarContainer } from './styles';
 
 type TCalendarPickerProps = {
@@ -23,6 +29,8 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   setIsOpen,
   children,
 }) => {
+  const today = getToday();
+
   const [selectedMonth, setSelectedMonth] = useState<number>(
     startDate.getMonth()
   );
@@ -38,6 +46,28 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const updateDays = () => {
     const newDays = buildNumberArray(totalDays);
     setDays(newDays);
+  };
+
+  const isNotValidMonth = (monthIdx: number) => {
+    const invalidMinDate =
+      selectedYear <= MIN_APOD_YEAR && monthIdx < MIN_APOD_MONTH;
+
+    const invalidMaxDate =
+      selectedYear >= today.getFullYear() && monthIdx > selectedMonth;
+    return invalidMinDate || invalidMaxDate;
+  };
+
+  const isNotValidDay = (dayIdx: number) => {
+    const invalidMinDate =
+      selectedYear <= MIN_APOD_YEAR &&
+      today.getMonth() <= MIN_APOD_MONTH &&
+      dayIdx < MIN_APOD_DAY;
+
+    const invalidMaxDate =
+      selectedYear >= today.getFullYear() &&
+      today.getMonth() >= selectedMonth &&
+      dayIdx > today.getDate();
+    return invalidMinDate || invalidMaxDate;
   };
 
   useEffect(() => {
@@ -79,6 +109,9 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const endDow = totalDays + firstDay;
   const daysAfter = endDow <= 35 ? 35 - endDow : 42 - endDow;
 
+  const prevMonthBtnDisabled = isNotValidMonth(selectedMonth - 1);
+  const nextMonthBtnDisabled = isNotValidMonth(selectedMonth + 1);
+
   return (
     <SCalendarContainer>
       {children}
@@ -87,6 +120,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
           <div className="title">
             <button
               className="month-btn"
+              disabled={prevMonthBtnDisabled}
               onClick={() => {
                 changeMonth(-1);
               }}
@@ -94,21 +128,30 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
               &lt;
             </button>
             <select value={selectedMonth} name={MONTHS} onChange={changeDate}>
-              {months.map((month, idx) => (
-                <option key={month} value={idx}>
-                  {month}
-                </option>
-              ))}
+              {months.map((month, idx) => {
+                return (
+                  <option
+                    key={month}
+                    value={idx}
+                    disabled={isNotValidMonth(idx)}
+                  >
+                    {month}
+                  </option>
+                );
+              })}
             </select>
             <input
               type="number"
               value={selectedYear}
               step="1"
               name={YEARS}
+              min={MIN_APOD_YEAR}
+              max={today.getFullYear()}
               onChange={changeDate}
             />
             <button
               className="month-btn"
+              disabled={nextMonthBtnDisabled}
               onClick={() => {
                 changeMonth(1);
               }}
@@ -141,6 +184,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
                       );
                       setIsOpen(false);
                     }}
+                    disabled={isNotValidDay(day + 1)}
                     checked={selectedDay - 1 === day}
                     id={`id-${day}`}
                     type="radio"

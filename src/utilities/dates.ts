@@ -32,8 +32,8 @@ export const linkDateFormat = (date: string) => {
 };
 
 export const isDateToday = (date: string): boolean => {
-  const isGreater = new Date(date) > new Date();
-  return formatDate(new Date()) === date || isGreater;
+  const isGreater = new Date(date) > getToday();
+  return formatDate(getToday()) === date || isGreater;
 };
 
 export const isFirstApodDate = (date?: string): boolean => {
@@ -43,4 +43,8 @@ export const isFirstApodDate = (date?: string): boolean => {
 
   const isLess = new Date(date) < new Date(MIN_APOD_DATE);
   return MIN_APOD_DATE === date || isLess;
+};
+
+export const getToday = () => {
+  return new Date();
 };

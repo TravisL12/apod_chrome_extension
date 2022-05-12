@@ -3,7 +3,12 @@ import { TAppOptions } from './pages/types';
 export const APOD_API_URL = 'https://api.nasa.gov/planetary/apod';
 export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 
-export const MIN_APOD_DATE = '1995-6-16';
+export const MIN_APOD_YEAR = 1995;
+export const MIN_APOD_MONTH = 5; // 0-indexed (June)
+export const MIN_APOD_DAY = 16; // 1-indexed
+export const MIN_APOD_DATE = `${MIN_APOD_YEAR}-${
+  MIN_APOD_MONTH + 1
+}-${MIN_APOD_DAY}`;
 export const DELAY_FOR_HD_LOAD = 1500;
 export const HISTORY_LIMIT = 100;
 export const RANDOM_FETCH_COUNT = 10;
