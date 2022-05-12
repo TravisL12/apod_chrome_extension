@@ -19,7 +19,10 @@ export const getChrome = (
   chrome.storage.sync.get(options, callback);
 };
 
-export const setChrome = (options: any, callback?: (params?: any) => void) => {
+export const setChrome = (
+  options: { [key: string]: any },
+  callback?: (params?: any) => void
+) => {
   chrome.storage.sync.set(options, callback);
 };
 
@@ -36,7 +39,7 @@ export const getLocalChrome = (
 };
 
 export const setLocalChrome = (
-  options: any,
+  options: { [key: string]: any },
   callback?: (params?: any) => void
 ) => {
   chrome.storage.local.set(options, callback);

@@ -14,6 +14,7 @@ import {
   setLocalChrome,
 } from './chromeOperations';
 
+let isReloadingCache = false;
 const reloadCache = async () => {
   const params = {
     api_key: API_KEY,
@@ -26,7 +27,8 @@ const reloadCache = async () => {
 
   getLocalChrome([RANDOM_APODS], (options) => {
     const cache = options[RANDOM_APODS];
-    setLocalChrome({ [RANDOM_APODS]: [...cache, ...images] });
+    setLocalChrome({ [RANDOM_APODS]: [...images, ...cache] });
+    isReloadingCache = false;
   });
 };
 
@@ -40,7 +42,8 @@ const randomCache = (): Promise<TApodResponse> => {
       if (item) {
         saveToHistory(item);
 
-        if (cache.length < RELOAD_RANDOM_LIMIT) {
+        if (cache.length < RELOAD_RANDOM_LIMIT && !isReloadingCache) {
+          isReloadingCache = true;
           reloadCache();
         }
       }
@@ -50,9 +53,10 @@ const randomCache = (): Promise<TApodResponse> => {
   });
 };
 
-const preloadImage = (url: string) => {
+export const preloadImage = (url: string) => {
   const img = new Image();
   img.src = url;
+  return img;
 };
 
 const transformResponse = (data: TApodResponse) => {

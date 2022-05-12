@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { DELAY_FOR_HD_LOAD, MAX_ERROR_TRIES } from '../constants';
 import { TApodResponse, TFetchOptions } from '../pages/types';
-import { fetchImage, fetchRandomImage } from '../utilities';
+import { fetchImage, fetchRandomImage, preloadImage } from '../utilities';
 
 type TFetchApodParams = {
   hiResOnly: boolean | undefined;
@@ -17,9 +17,9 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
     response: TApodResponse,
     forceHighDef: boolean = false
   ) => {
-    const img = new Image();
+    setIsLoading(true); // when forcing to HD
+    const img = preloadImage(response?.hdurl);
     let isImageHd: boolean = true;
-    img.src = response?.hdurl;
 
     const timeout = setTimeout(() => {
       if (!img.complete && !forceHighDef && !hiResOnly) {
