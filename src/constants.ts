@@ -1,3 +1,5 @@
+import { TAppOptions } from './pages/types';
+
 export const APOD_API_URL = 'https://api.nasa.gov/planetary/apod';
 export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 
@@ -31,7 +33,7 @@ export const DRAWER_EXPLANATION = 'explanation';
 export const DRAWER_FAVORITES = 'favorites';
 export const DRAWER_HISTORY = 'history';
 
-export const APOD_OPTIONS = [
+export const APOD_OPTIONS: (keyof TAppOptions)[] = [
   APOD_FAVORITES,
   APOD_TYPE,
   CURRENT_DATE,

@@ -9,6 +9,7 @@ import {
   TODAY_LIMIT,
   IS_TODAY_LIMIT_ON,
   APOD_HISTORY,
+  RANDOM_APODS,
 } from '../constants';
 
 export type THistoryItem = {
@@ -39,6 +40,7 @@ export type TAppOptions = {
   [SHOW_TOP_SITES]?: boolean;
   [TODAY_COUNT]: number;
   [TODAY_LIMIT]: number;
+  [RANDOM_APODS]?: number;
 };
 
 export type TApodResponse = {

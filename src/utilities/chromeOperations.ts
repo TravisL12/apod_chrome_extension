@@ -1,12 +1,21 @@
-import { APOD_FAVORITES, APOD_HISTORY, HISTORY_LIMIT } from '../constants';
+import {
+  APOD_OPTIONS,
+  APOD_FAVORITES,
+  APOD_HISTORY,
+  HISTORY_LIMIT,
+} from '../constants';
 import {
   TApodResponse,
+  TAppOptions,
   TFavoriteItem,
   TFavorites,
   THistoryItem,
 } from '../pages/types';
 
-export const getChrome = (options: any, callback: (params?: any) => void) => {
+export const getChrome = (
+  options: (keyof TAppOptions)[],
+  callback: (params?: any) => void
+) => {
   chrome.storage.sync.get(options, callback);
 };
 
@@ -20,7 +29,7 @@ export const onChangeChrome = (callback: (params?: any) => void) => {
 
 // LOCAL STORAGE
 export const getLocalChrome = (
-  options: any,
+  options: (keyof TAppOptions)[],
   callback: (params?: any) => void
 ) => {
   chrome.storage.local.get(options, callback);

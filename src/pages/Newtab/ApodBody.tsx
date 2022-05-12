@@ -1,4 +1,4 @@
-import React, { useCallback, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { ERROR_MESSAGE } from '../../constants';
 import useFetchApod from '../../hooks/useFetchApod';
 import { useNavigation } from '../../hooks/useNavigation';
@@ -49,7 +49,7 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     }
 
     return apodResponse.media_type === 'video' ? (
-      <VideoContainer url={new URL(apodResponse?.url)} />
+      <VideoContainer url={apodResponse?.url} />
     ) : (
       <ImageContainer loadedImage={apodResponse.loadedImage} />
     );
