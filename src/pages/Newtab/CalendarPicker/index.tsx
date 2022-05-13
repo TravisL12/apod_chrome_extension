@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   createDate,
   months,
@@ -8,6 +8,7 @@ import {
   buildNumberArray,
   buildMaxMinDate,
 } from '../../../utilities';
+import { ArrowSvg } from '../ArrowSvg';
 import { SCalendarContainer } from './styles';
 
 type TCalendarPickerProps = {
@@ -56,7 +57,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
 
   const isNotValidMonth = (monthIdx: number) => {
     const invalidMaxDate = maximumDate
-      ? selectedYear >= maximumDate.year && monthIdx > selectedMonth
+      ? selectedYear >= maximumDate.year && monthIdx > maximumDate.month
       : false;
 
     return hasValidMinimumMonth(monthIdx) || invalidMaxDate;
@@ -128,15 +129,13 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
       {isOpen && (
         <div className="calendar">
           <div className="title">
-            <button
-              className="month-btn"
+            <ArrowSvg
+              size={7}
               disabled={prevMonthBtnDisabled}
               onClick={() => {
                 changeMonth(-1);
               }}
-            >
-              &lt;
-            </button>
+            />
             <select value={selectedMonth} name={MONTHS} onChange={changeDate}>
               {months.map((month, idx) => {
                 return (
@@ -159,15 +158,14 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
               max={maximumDate?.year}
               onChange={changeDate}
             />
-            <button
-              className="month-btn"
+            <ArrowSvg
+              pointRight={true}
+              size={7}
               disabled={nextMonthBtnDisabled}
               onClick={() => {
                 changeMonth(1);
               }}
-            >
-              &gt;
-            </button>
+            />
           </div>
           <div className="dow-container">
             {daysOfWeek.map((dow) => (

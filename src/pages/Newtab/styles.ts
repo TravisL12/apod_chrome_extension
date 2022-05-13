@@ -283,9 +283,10 @@ export const STopSites = styled.div`
 export const SArrowContainer = styled.div`
   cursor: pointer;
   padding: 0 5px;
-  height: ${(props: { size: number; isFlipped?: boolean }) => props.size * 2}px;
-  transform: ${(props: { size: number; isFlipped?: boolean }) =>
-    `rotate(${props.isFlipped ? '180deg' : '0'})`};
+  height: ${(props: { size: number; pointRight?: boolean }) =>
+    props.size * 2}px;
+  transform: ${(props: { size: number; pointRight?: boolean }) =>
+    `rotate(${props.pointRight ? '180deg' : '0'})`};
 `;
 
 export const SGridImageContainer = styled.div`

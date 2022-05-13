@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { MIN_APOD_DATE } from '../../constants';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
+import { ArrowSvg } from './ArrowSvg';
 import CalendarPicker from './CalendarPicker';
 import {
   SHeader,
@@ -10,8 +11,6 @@ import {
   STitle,
   STitleImageQuality,
   STitleItem,
-  lightGray,
-  SArrowContainer,
 } from './styles';
 import TopSites from './TopSites';
 
@@ -21,23 +20,6 @@ type THeaderProps = {
   isLoading?: boolean;
   showTopSites?: boolean;
   goToApodDate: (date: string) => void;
-};
-
-const ArrowSvg: React.FC<{
-  onClick: () => void;
-  size: number;
-  isFlipped?: boolean;
-}> = ({ onClick, size = 15, isFlipped }) => {
-  return (
-    <SArrowContainer onClick={onClick} size={size} isFlipped={isFlipped}>
-      <svg width={size} height={size * 2}>
-        <path
-          fill={lightGray}
-          d={`M0,${size} L${size},${size * 2} L${size},0z`}
-        />
-      </svg>
-    </SArrowContainer>
-  );
 };
 
 const Header: React.FC<THeaderProps> = ({
@@ -77,7 +59,7 @@ const Header: React.FC<THeaderProps> = ({
               </CalendarPicker>
               {!nextNav.isHidden && (
                 <ArrowSvg
-                  isFlipped={true}
+                  pointRight={true}
                   size={7}
                   onClick={nextNav.clickHandler}
                 />
