@@ -1,0 +1,15 @@
+.mars-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.marsImg {
+  display: inline-block;
+  width: 200px;
+  height: 200px;
+}
+
+.marsImg img {
+  max-width: 100%;
+  max-height: 100%;
+}
