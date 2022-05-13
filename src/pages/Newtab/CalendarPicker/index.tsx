@@ -6,7 +6,7 @@ import {
   YEARS,
   MONTHS,
   buildNumberArray,
-  getToday,
+  buildMaxMinDate,
 } from '../../../utilities';
 import { SCalendarContainer } from './styles';
 
@@ -28,8 +28,6 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   onChange,
   setIsOpen,
 }) => {
-  const today = getToday();
-
   const [selectedMonth, setSelectedMonth] = useState<number>(
     startDate.getMonth()
   );
@@ -39,32 +37,6 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const [selectedDay, setSelectedDay] = useState<number>(startDate.getDate());
   const [days, setDays] = useState<number[]>([]);
 
-  const minimumDate = useMemo(() => {
-    if (!minDate) {
-      return null;
-    }
-    const date = minDate instanceof Date ? minDate : new Date(minDate);
-
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-    };
-  }, [minDate]);
-
-  const maximumDate = useMemo(() => {
-    if (!maxDate) {
-      return null;
-    }
-    const date = maxDate instanceof Date ? maxDate : new Date(maxDate);
-
-    return {
-      year: date.getFullYear(),
-      month: date.getMonth(),
-      day: date.getDate(),
-    };
-  }, [maxDate]);
-
   const { totalDays, firstDay, prevMonthTotalDays, nextMonthTotalDays } =
     createDate(selectedYear, selectedMonth);
 
@@ -73,40 +45,39 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
     setDays(newDays);
   };
 
-  const isNotValidMonth = (monthIdx: number) => {
-    const invalidMinDate = minimumDate
-      ? selectedYear <= minimumDate.year && monthIdx < minimumDate.month
-      : false;
+  const minimumDate = buildMaxMinDate(minDate);
+  const maximumDate = buildMaxMinDate(maxDate);
 
+  const hasValidMinimumMonth = (num: number) => {
+    return minimumDate
+      ? selectedYear <= minimumDate.year && num < minimumDate.month
+      : false;
+  };
+
+  const isNotValidMonth = (monthIdx: number) => {
     const invalidMaxDate = maximumDate
       ? selectedYear >= maximumDate.year && monthIdx > selectedMonth
       : false;
 
-    return invalidMinDate || invalidMaxDate;
+    return hasValidMinimumMonth(monthIdx) || invalidMaxDate;
   };
 
   const isNotValidDay = (dayIdx: number) => {
-    const invalidMinMonth =
-      minimumDate &&
-      selectedYear <= minimumDate.year &&
-      selectedMonth < minimumDate.month;
-
-    const invalideMinDay =
+    const invalidMinDate =
       minimumDate &&
       selectedYear <= minimumDate.year &&
       selectedMonth <= minimumDate.month &&
       dayIdx < minimumDate.day;
-
-    const invalidMinDate = minimumDate
-      ? invalidMinMonth || invalideMinDay
-      : false;
 
     const invalidMaxDate = maximumDate
       ? selectedYear >= maximumDate.year &&
         selectedMonth >= maximumDate.month &&
         dayIdx > maximumDate.day
       : false;
-    return invalidMinDate || invalidMaxDate;
+
+    return (
+      hasValidMinimumMonth(selectedMonth) || invalidMinDate || invalidMaxDate
+    );
   };
 
   useEffect(() => {

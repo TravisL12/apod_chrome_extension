@@ -1,6 +1,19 @@
 export const YEARS = 'years';
 export const MONTHS = 'months';
 
+export const buildMaxMinDate = (dateValue?: string | Date) => {
+  if (!dateValue) {
+    return null;
+  }
+  const date = dateValue instanceof Date ? dateValue : new Date(dateValue);
+
+  return {
+    year: date.getFullYear(),
+    month: date.getMonth(),
+    day: date.getDate(),
+  };
+};
+
 export const createDate = (year: number, month: number) => {
   const firstDay = new Date(year, month).getDay(); // 0-index day of week (0 - 6)
   const prevMonthTotalDays = new Date(year, month, 0).getDate();
