@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   createDate,
   months,
@@ -6,22 +6,28 @@ import {
   YEARS,
   MONTHS,
   buildNumberArray,
-} from './calendarHelpers';
+  buildMaxMinDate,
+} from '../../../utilities';
+import { ArrowSvg } from '../ArrowSvg';
 import { SCalendarContainer } from './styles';
 
 type TCalendarPickerProps = {
   startDate: Date;
   isOpen: boolean;
+  minDate?: string | Date;
+  maxDate?: string | Date;
   setIsOpen: (value: boolean) => void;
   onChange: (value: string) => void;
 };
 
 const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   startDate,
-  onChange,
   isOpen,
-  setIsOpen,
+  minDate,
+  maxDate,
   children,
+  onChange,
+  setIsOpen,
 }) => {
   const [selectedMonth, setSelectedMonth] = useState<number>(
     startDate.getMonth()
@@ -38,6 +44,41 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const updateDays = () => {
     const newDays = buildNumberArray(totalDays);
     setDays(newDays);
+  };
+
+  const minimumDate = buildMaxMinDate(minDate);
+  const maximumDate = buildMaxMinDate(maxDate);
+
+  const hasValidMinimumMonth = (num: number) => {
+    return minimumDate
+      ? selectedYear <= minimumDate.year && num < minimumDate.month
+      : false;
+  };
+
+  const isNotValidMonth = (monthIdx: number) => {
+    const invalidMaxDate = maximumDate
+      ? selectedYear >= maximumDate.year && monthIdx > maximumDate.month
+      : false;
+
+    return hasValidMinimumMonth(monthIdx) || invalidMaxDate;
+  };
+
+  const isNotValidDay = (dayIdx: number) => {
+    const invalidMinDate =
+      minimumDate &&
+      selectedYear <= minimumDate.year &&
+      selectedMonth <= minimumDate.month &&
+      dayIdx < minimumDate.day;
+
+    const invalidMaxDate = maximumDate
+      ? selectedYear >= maximumDate.year &&
+        selectedMonth >= maximumDate.month &&
+        dayIdx > maximumDate.day
+      : false;
+
+    return (
+      hasValidMinimumMonth(selectedMonth) || invalidMinDate || invalidMaxDate
+    );
   };
 
   useEffect(() => {
@@ -79,42 +120,52 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const endDow = totalDays + firstDay;
   const daysAfter = endDow <= 35 ? 35 - endDow : 42 - endDow;
 
+  const prevMonthBtnDisabled = isNotValidMonth(selectedMonth - 1);
+  const nextMonthBtnDisabled = isNotValidMonth(selectedMonth + 1);
+
   return (
     <SCalendarContainer>
       {children}
       {isOpen && (
         <div className="calendar">
           <div className="title">
-            <button
-              className="month-btn"
+            <ArrowSvg
+              size={7}
+              disabled={prevMonthBtnDisabled}
               onClick={() => {
                 changeMonth(-1);
               }}
-            >
-              &lt;
-            </button>
+            />
             <select value={selectedMonth} name={MONTHS} onChange={changeDate}>
-              {months.map((month, idx) => (
-                <option key={month} value={idx}>
-                  {month}
-                </option>
-              ))}
+              {months.map((month, idx) => {
+                return (
+                  <option
+                    key={month}
+                    value={idx}
+                    disabled={isNotValidMonth(idx)}
+                  >
+                    {month}
+                  </option>
+                );
+              })}
             </select>
             <input
               type="number"
               value={selectedYear}
               step="1"
               name={YEARS}
+              min={minimumDate?.year}
+              max={maximumDate?.year}
               onChange={changeDate}
             />
-            <button
-              className="month-btn"
+            <ArrowSvg
+              pointRight={true}
+              size={7}
+              disabled={nextMonthBtnDisabled}
               onClick={() => {
                 changeMonth(1);
               }}
-            >
-              &gt;
-            </button>
+            />
           </div>
           <div className="dow-container">
             {daysOfWeek.map((dow) => (
@@ -141,6 +192,7 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
                       );
                       setIsOpen(false);
                     }}
+                    disabled={isNotValidDay(day + 1)}
                     checked={selectedDay - 1 === day}
                     id={`id-${day}`}
                     type="radio"

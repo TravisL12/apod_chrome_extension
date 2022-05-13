@@ -4,31 +4,43 @@ import {
   HI_RES_ONLY,
   APOD_FAVORITES,
   SHOW_TOP_SITES,
-  SHOW_HISTORY_ROW,
   CURRENT_DATE,
   TODAY_COUNT,
   TODAY_LIMIT,
   IS_TODAY_LIMIT_ON,
   APOD_HISTORY,
+  RANDOM_APODS,
 } from '../constants';
 
-type TFavorites = {
-  url?: string;
-  title?: string;
+export type THistoryItem = {
+  date: string;
+  title: string;
+  mediaType: string;
+  url: string;
+  dateAdded: number;
 };
 
+export type TFavoriteItem = {
+  date: string;
+  title: string;
+  url?: string;
+  imgUrl?: string;
+};
+
+export type TFavorites = { [date: string]: TFavoriteItem };
+
 export type TAppOptions = {
+  [APOD_FAVORITES]: TFavorites;
+  [APOD_HISTORY]: THistoryItem[];
   [APOD_TYPE]?: string;
-  [IS_TODAY_APOD]?: boolean;
-  [HI_RES_ONLY]?: TFavorites;
-  [APOD_FAVORITES]?: any;
-  [SHOW_TOP_SITES]?: boolean;
-  [SHOW_HISTORY_ROW]?: boolean;
   [CURRENT_DATE]?: string;
-  [TODAY_COUNT]?: number;
-  [TODAY_LIMIT]?: number;
-  [IS_TODAY_LIMIT_ON]?: boolean;
-  [APOD_HISTORY]?: any;
+  [HI_RES_ONLY]?: boolean;
+  [IS_TODAY_APOD]: boolean;
+  [IS_TODAY_LIMIT_ON]: boolean;
+  [SHOW_TOP_SITES]?: boolean;
+  [TODAY_COUNT]: number;
+  [TODAY_LIMIT]: number;
+  [RANDOM_APODS]?: number;
 };
 
 export type TApodResponse = {
@@ -55,10 +67,6 @@ export type TUseNavigationProps = {
   toggleDrawer: (drawerOption: string | null) => void;
 };
 
-export type TApodBodyProps = {
-  options: TAppOptions;
-};
-
 export type TTopSite = {
   url: string;
   title: string;
@@ -76,17 +84,12 @@ export type TNavigationButton = {
   clickHandler: () => void;
 };
 
-export type THistoryItem = {
-  date: string;
-  title: string;
-  mediaType: string;
-  url: string;
-  dateAdded: number;
-};
-
-export type TFavoriteItem = {
-  date: string;
-  title: string;
-  url?: string;
-  imgUrl?: string;
+export type TDrawerProps = {
+  drawerDisplay: string | null;
+  isOpen: boolean;
+  response?: TApodResponse;
+  viewHistory: THistoryItem[];
+  viewFavorites: TFavorites;
+  toggleDrawer: TUseNavigationProps['toggleDrawer'];
+  goToApodDate: (date: string) => void;
 };

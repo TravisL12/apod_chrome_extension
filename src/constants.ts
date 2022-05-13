@@ -1,7 +1,9 @@
+import { TAppOptions } from './pages/types';
+
 export const APOD_API_URL = 'https://api.nasa.gov/planetary/apod';
 export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 
-export const MIN_APOD_DATE = '1995-6-16';
+export const MIN_APOD_DATE = `1995-6-16`;
 export const DELAY_FOR_HD_LOAD = 1500;
 export const HISTORY_LIMIT = 100;
 export const RANDOM_FETCH_COUNT = 10;
@@ -21,7 +23,6 @@ export const IS_TODAY_APOD = 'isTodayApod';
 export const HI_RES_ONLY = 'hiResOnly';
 export const APOD_FAVORITES = 'apodFavorites';
 export const SHOW_TOP_SITES = 'showTopSites';
-export const SHOW_HISTORY_ROW = 'showHistoryRow';
 export const CURRENT_DATE = 'currentDate';
 export const TODAY_COUNT = 'todayCount';
 export const TODAY_LIMIT = 'todayLimit';
@@ -32,17 +33,16 @@ export const DRAWER_EXPLANATION = 'explanation';
 export const DRAWER_FAVORITES = 'favorites';
 export const DRAWER_HISTORY = 'history';
 
-export const APOD_OPTIONS = [
-  APOD_TYPE,
-  IS_TODAY_APOD,
-  HI_RES_ONLY,
+export const APOD_OPTIONS: (keyof TAppOptions)[] = [
   APOD_FAVORITES,
-  SHOW_TOP_SITES,
-  SHOW_HISTORY_ROW,
+  APOD_TYPE,
   CURRENT_DATE,
+  HI_RES_ONLY,
+  IS_TODAY_APOD,
+  IS_TODAY_LIMIT_ON,
+  SHOW_TOP_SITES,
   TODAY_COUNT,
   TODAY_LIMIT,
-  IS_TODAY_LIMIT_ON,
 ];
 
 export const KEY_MAP = {
@@ -54,19 +54,17 @@ export const KEY_MAP = {
   FAVORITES_TAB: 'f',
   HISTORY_TAB: 'h',
   CLOSE_DRAWER: 'escape',
-  // not used yet
-  SEARCH_TAB: 's',
   PREVIOUS_HISTORY: 'ArrowRight',
   NEXT_HISTORY: 'ArrowLeft',
 };
 
 export const DEFAULT_OPTIONS = {
-  [IS_TODAY_APOD]: false,
   [APOD_FAVORITES]: {},
+  [APOD_HISTORY]: [],
   [HI_RES_ONLY]: false,
+  [IS_TODAY_APOD]: false,
+  [IS_TODAY_LIMIT_ON]: false,
   [SHOW_TOP_SITES]: true,
-  [SHOW_HISTORY_ROW]: true,
   [TODAY_COUNT]: 0,
   [TODAY_LIMIT]: TODAY_LIMIT_COUNT,
-  [IS_TODAY_LIMIT_ON]: false,
 };

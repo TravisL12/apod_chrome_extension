@@ -1,11 +1,29 @@
-import { APOD_FAVORITES, APOD_HISTORY, HISTORY_LIMIT } from '../constants';
-import { TApodResponse, TFavoriteItem, THistoryItem } from '../pages/types';
+import {
+  APOD_OPTIONS,
+  APOD_FAVORITES,
+  APOD_HISTORY,
+  HISTORY_LIMIT,
+} from '../constants';
+import {
+  TApodResponse,
+  TAppOptions,
+  TFavoriteItem,
+  TFavorites,
+  THistoryItem,
+} from '../pages/types';
+import { getToday } from './dates';
 
-export const getChrome = (options: any, callback: (params?: any) => void) => {
+export const getChrome = (
+  options: (keyof TAppOptions)[],
+  callback: (params?: any) => void
+) => {
   chrome.storage.sync.get(options, callback);
 };
 
-export const setChrome = (options: any, callback?: (params?: any) => void) => {
+export const setChrome = (
+  options: { [key: string]: any },
+  callback?: (params?: any) => void
+) => {
   chrome.storage.sync.set(options, callback);
 };
 
@@ -15,14 +33,14 @@ export const onChangeChrome = (callback: (params?: any) => void) => {
 
 // LOCAL STORAGE
 export const getLocalChrome = (
-  options: any,
+  options: (keyof TAppOptions)[],
   callback: (params?: any) => void
 ) => {
   chrome.storage.local.get(options, callback);
 };
 
 export const setLocalChrome = (
-  options: any,
+  options: { [key: string]: any },
   callback?: (params?: any) => void
 ) => {
   chrome.storage.local.set(options, callback);
@@ -42,7 +60,7 @@ export const saveToHistory = (response: TApodResponse) => {
       title: response.title,
       mediaType: response.media_type,
       url: response.url,
-      dateAdded: new Date().getTime(),
+      dateAdded: getToday().getTime(),
     };
 
     const newHistory = [respNoExplanation, ...prevHistory]
@@ -71,8 +89,7 @@ export const saveFavorite = (response?: TApodResponse) => {
   }
 
   getChrome([APOD_FAVORITES], (options) => {
-    const prevFavorites: { [date: string]: TFavoriteItem } =
-      options?.[APOD_FAVORITES] || {};
+    const prevFavorites: TFavorites = options?.[APOD_FAVORITES] || {};
 
     if (prevFavorites[response.date]) {
       removeFavorite(response.date);

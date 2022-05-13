@@ -23,12 +23,12 @@ export const SCalendarContainer = styled.div`
   .title {
     display: flex;
     justify-content: space-around;
+    align-items: center;
     padding: 10px 0;
   }
 
   .title select,
-  .title input,
-  .month-btn {
+  .title input {
     background: var(--calendar-color);
     border: none;
     color: inherit;
@@ -65,6 +65,9 @@ export const SCalendarContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+  .day input:disabled + label {
+    color: gray;
   }
   .day.prev:hover {
     background: none;

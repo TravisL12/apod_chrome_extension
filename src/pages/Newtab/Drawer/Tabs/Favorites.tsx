@@ -1,6 +1,6 @@
 import React, { useMemo } from 'react';
 import { removeFavorite, thumbSourceLink } from '../../../../utilities';
-import { TFavoriteItem } from '../../../types';
+import { TFavoriteItem, TFavorites } from '../../../types';
 import { SGridImageContainer } from '../../styles';
 import GridImage from './GridImage';
 import GridHeader, { useSearch } from './GridHeader';
@@ -21,7 +21,7 @@ const convertV3Favorite = (favorite: TFavoriteItem, dateKey: string) => {
 };
 
 const Favorites: React.FC<{
-  viewFavorites: { [key: string]: TFavoriteItem };
+  viewFavorites: TFavorites;
   goToApodDate: (date: string) => void;
 }> = ({ viewFavorites = {}, goToApodDate }) => {
   const sortedFavorites = useMemo(() => {
