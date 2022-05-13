@@ -48,12 +48,12 @@ export const useNavigation = ({
     }
   };
   const fetchPreviousDate = () => {
-    if (response?.date) {
+    if (response?.date && !isFirstApodDate(response?.date)) {
       fetchResetHistory({ date: adjacentDate(response?.date, -1) });
     }
   };
   const fetchNextDate = () => {
-    if (response?.date) {
+    if (response?.date && !!!response?.isToday) {
       fetchResetHistory({ date: adjacentDate(response?.date, 1) });
     }
   };
