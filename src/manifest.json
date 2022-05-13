@@ -30,5 +30,6 @@
       "matches": []
     }
   ],
-  "permissions": ["topSites", "storage", "https://api.nasa.gov/*"]
+  "host_permissions": ["https://api.nasa.gov/*"],
+  "permissions": ["topSites", "storage"]
 }
