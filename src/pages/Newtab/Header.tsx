@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { MIN_APOD_DATE } from '../../constants';
 import { prettyDateFormat } from '../../utilities';
 import { TApodResponse, TNavigationButton } from '../types';
 import CalendarPicker from './CalendarPicker';
@@ -64,6 +65,8 @@ const Header: React.FC<THeaderProps> = ({
                 onChange={goToApodDate}
                 isOpen={isCalendarOpen}
                 setIsOpen={setIsCalendarOpen}
+                minDate={MIN_APOD_DATE}
+                maxDate={new Date()}
               >
                 <h2
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}

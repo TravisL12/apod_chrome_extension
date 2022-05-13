@@ -66,6 +66,9 @@ export const SCalendarContainer = styled.div`
     justify-content: center;
     align-items: center;
   }
+  .day input:disabled + label {
+    color: gray;
+  }
   .day.prev:hover {
     background: none;
   }

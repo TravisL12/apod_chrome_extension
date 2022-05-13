@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import {
-  MIN_APOD_DAY,
-  MIN_APOD_MONTH,
-  MIN_APOD_YEAR,
-} from '../../../constants';
+import React, { useEffect, useMemo, useState } from 'react';
 import {
   createDate,
   months,
@@ -18,16 +13,20 @@ import { SCalendarContainer } from './styles';
 type TCalendarPickerProps = {
   startDate: Date;
   isOpen: boolean;
+  minDate?: string | Date;
+  maxDate?: string | Date;
   setIsOpen: (value: boolean) => void;
   onChange: (value: string) => void;
 };
 
 const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   startDate,
-  onChange,
   isOpen,
-  setIsOpen,
+  minDate,
+  maxDate,
   children,
+  onChange,
+  setIsOpen,
 }) => {
   const today = getToday();
 
@@ -40,6 +39,32 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   const [selectedDay, setSelectedDay] = useState<number>(startDate.getDate());
   const [days, setDays] = useState<number[]>([]);
 
+  const minimumDate = useMemo(() => {
+    if (!minDate) {
+      return null;
+    }
+    const date = minDate instanceof Date ? minDate : new Date(minDate);
+
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDate(),
+    };
+  }, [minDate]);
+
+  const maximumDate = useMemo(() => {
+    if (!maxDate) {
+      return null;
+    }
+    const date = maxDate instanceof Date ? maxDate : new Date(maxDate);
+
+    return {
+      year: date.getFullYear(),
+      month: date.getMonth(),
+      day: date.getDate(),
+    };
+  }, [maxDate]);
+
   const { totalDays, firstDay, prevMonthTotalDays, nextMonthTotalDays } =
     createDate(selectedYear, selectedMonth);
 
@@ -49,24 +74,38 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
   };
 
   const isNotValidMonth = (monthIdx: number) => {
-    const invalidMinDate =
-      selectedYear <= MIN_APOD_YEAR && monthIdx < MIN_APOD_MONTH;
+    const invalidMinDate = minimumDate
+      ? selectedYear <= minimumDate.year && monthIdx < minimumDate.month
+      : false;
 
-    const invalidMaxDate =
-      selectedYear >= today.getFullYear() && monthIdx > selectedMonth;
+    const invalidMaxDate = maximumDate
+      ? selectedYear >= maximumDate.year && monthIdx > selectedMonth
+      : false;
+
     return invalidMinDate || invalidMaxDate;
   };
 
   const isNotValidDay = (dayIdx: number) => {
-    const invalidMinDate =
-      selectedYear <= MIN_APOD_YEAR &&
-      today.getMonth() <= MIN_APOD_MONTH &&
-      dayIdx < MIN_APOD_DAY;
+    const invalidMinMonth =
+      minimumDate &&
+      selectedYear <= minimumDate.year &&
+      selectedMonth < minimumDate.month;
 
-    const invalidMaxDate =
-      selectedYear >= today.getFullYear() &&
-      today.getMonth() >= selectedMonth &&
-      dayIdx > today.getDate();
+    const invalideMinDay =
+      minimumDate &&
+      selectedYear <= minimumDate.year &&
+      selectedMonth <= minimumDate.month &&
+      dayIdx < minimumDate.day;
+
+    const invalidMinDate = minimumDate
+      ? invalidMinMonth || invalideMinDay
+      : false;
+
+    const invalidMaxDate = maximumDate
+      ? selectedYear >= maximumDate.year &&
+        selectedMonth >= maximumDate.month &&
+        dayIdx > maximumDate.day
+      : false;
     return invalidMinDate || invalidMaxDate;
   };
 
@@ -145,8 +184,8 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
               value={selectedYear}
               step="1"
               name={YEARS}
-              min={MIN_APOD_YEAR}
-              max={today.getFullYear()}
+              min={minimumDate?.year}
+              max={maximumDate?.year}
               onChange={changeDate}
             />
             <button

@@ -48,15 +48,11 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
       : await fetchImage(options);
 
     if (response.error) {
-      if (errorCount >= MAX_ERROR_TRIES) {
-        setIsLoading(false);
-        setHasErrorLoading(true);
-      } else {
-        fetchApod(options, errorCount + 1);
-      }
+      setIsLoading(false);
+      setHasErrorLoading(true);
       return;
     }
-
+    setHasErrorLoading(false);
     if (response.media_type === 'other') {
       console.log(response, 'OTHER REPSONSE');
       fetchApod({ random: true });
