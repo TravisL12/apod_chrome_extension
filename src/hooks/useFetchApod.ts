@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { DELAY_FOR_HD_LOAD, MAX_ERROR_TRIES } from '../constants';
+import { DELAY_FOR_HD_LOAD, ERROR_MESSAGE } from '../constants';
 import { TApodResponse, TFetchOptions } from '../pages/types';
 import { fetchImage, fetchRandomImage, preloadImage } from '../utilities';
 
@@ -11,7 +11,7 @@ type TFetchApodParams = {
 const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
   const [apodResponse, setApodResponse] = useState<TApodResponse>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [hasErrorLoading, setHasErrorLoading] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<boolean>(false);
 
   const loadImage = (
     response: TApodResponse,
@@ -35,7 +35,7 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
     };
   };
 
-  const fetchApod = async (options?: TFetchOptions, errorCount: number = 0) => {
+  const fetchApod = async (options?: TFetchOptions) => {
     if (isLoading) {
       return;
     }
@@ -48,11 +48,14 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
       : await fetchImage(options);
 
     if (response.error) {
+      const errMsg = response.error.response.data.msg || ERROR_MESSAGE;
       setIsLoading(false);
-      setHasErrorLoading(true);
+      // @ts-expect-error
+      setApodResponse({ date: options?.date, errorMessage: errMsg });
       return;
     }
-    setHasErrorLoading(false);
+    setErrorMessage(false);
+
     if (response.media_type === 'other') {
       console.log(response, 'OTHER REPSONSE');
       fetchApod({ random: true });
@@ -68,7 +71,7 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
     loadImage(response);
   };
 
-  return { apodResponse, isLoading, hasErrorLoading, loadImage, fetchApod };
+  return { apodResponse, isLoading, errorMessage, loadImage, fetchApod };
 };
 
 export default useFetchApod;

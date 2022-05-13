@@ -57,6 +57,7 @@ export type TApodResponse = {
   isToday: boolean;
   isImageHd?: boolean;
   error?: any;
+  errorMessage?: string;
 };
 
 export type TUseNavigationProps = {

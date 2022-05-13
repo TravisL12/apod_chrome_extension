@@ -101,18 +101,17 @@ export const fetchRandomImage = async (): Promise<TApodResponse> => {
       });
     });
   } catch (error) {
-    console.error(error);
     // @ts-expect-error
     return { error };
   }
 };
 
 export const fetchImage = async (
-  options: TFetchOptions = {}
+  fetchOptions: TFetchOptions = {}
 ): Promise<TApodResponse> => {
   const params = {
     api_key: API_KEY,
-    ...options,
+    ...fetchOptions,
   };
   try {
     const resp = await axios.get(APOD_API_URL, { params });
@@ -120,7 +119,6 @@ export const fetchImage = async (
     saveToHistory(data);
     return data;
   } catch (error) {
-    console.error(error);
     // @ts-expect-error
     return { error };
   }

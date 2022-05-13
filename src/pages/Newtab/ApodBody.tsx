@@ -25,7 +25,7 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     }
   };
 
-  const { apodResponse, isLoading, hasErrorLoading, loadImage, fetchApod } =
+  const { apodResponse, isLoading, errorMessage, loadImage, fetchApod } =
     useFetchApod({
       hiResOnly,
       setDrawerIsOpen,
@@ -40,12 +40,12 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
   });
 
   const renderBody = useMemo(() => {
-    if (hasErrorLoading) {
-      return <h1 style={{ color: 'white' }}>{ERROR_MESSAGE}</h1>;
-    }
-
     if (!apodResponse) {
       return <Loading isLoading={isLoading} />;
+    }
+
+    if (apodResponse.errorMessage) {
+      return <h1 style={{ color: 'white' }}>{apodResponse.errorMessage}</h1>;
     }
 
     return apodResponse.media_type === 'video' ? (
@@ -53,7 +53,7 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     ) : (
       <ImageContainer loadedImage={apodResponse.loadedImage} />
     );
-  }, [hasErrorLoading, apodResponse, isLoading]);
+  }, [errorMessage, apodResponse, isLoading]);
 
   return (
     <SApodContainer>

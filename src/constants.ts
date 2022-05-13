@@ -10,7 +10,6 @@ export const RANDOM_FETCH_COUNT = 10;
 export const RELOAD_RANDOM_LIMIT = 3;
 export const TODAY_LIMIT_COUNT = 5;
 
-export const MAX_ERROR_TRIES = 3;
 export const ERROR_MESSAGE =
   'NASA APOD Error: Please reload or try Again Later';
 
@@ -35,6 +34,7 @@ export const DRAWER_HISTORY = 'history';
 
 export const APOD_OPTIONS: (keyof TAppOptions)[] = [
   APOD_FAVORITES,
+  APOD_HISTORY,
   APOD_TYPE,
   CURRENT_DATE,
   HI_RES_ONLY,

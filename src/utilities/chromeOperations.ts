@@ -46,6 +46,15 @@ export const setLocalChrome = (
   chrome.storage.local.set(options, callback);
 };
 
+// Combine sync and local storages
+export const getAllChrome = (cb: (options: any) => void) => {
+  getChrome(APOD_OPTIONS, (options) => {
+    getLocalChrome([APOD_HISTORY], (localOptions) => {
+      cb({ ...options, ...localOptions });
+    });
+  });
+};
+
 export const saveToHistory = (response: TApodResponse) => {
   getLocalChrome([APOD_HISTORY], (options) => {
     const prevHistory: THistoryItem[] = options?.[APOD_HISTORY] || [];
