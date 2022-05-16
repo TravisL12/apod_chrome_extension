@@ -1,6 +1,6 @@
 <img src="src/assets/img/icon-128.png" width="64"/>
 
-# APOD
+## Astronomy Picture of the Day (APOD) Extension by Travis Lawrence!
 
 Sun image:
 
@@ -8,152 +8,78 @@ Sun image:
 - [Generate gif](https://gifrun.com/youtube/?v=l3QQQu7QLoM)
 - [Made transparent](https://onlinegiftools.com/create-transparent-gif)
 
-# Chrome Extension Boilerplate with React 17 and Webpack 5
+I really love space and astronomy pictures and for about 10 or 15 years I've had APOD as my home page! But I don't specifically see my homepage that much anymore and I've been missing out on my APOD fix.
 
-[![npm](https://img.shields.io/npm/v/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
-[![npm-download](https://img.shields.io/npm/dw/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
-[![npm](https://img.shields.io/npm/dm/chrome-extension-boilerplate-react)](https://www.npmjs.com/package/chrome-extension-boilerplate-react)
+So what did I do??? I built an extension to show me an APOD on every new tab I open!
 
-[![dependencies Status](https://david-dm.org/lxieyang/chrome-extension-boilerplate-react/status.svg)](https://david-dm.org/lxieyang/chrome-extension-boilerplate-react)
-[![devDependencies Status](https://david-dm.org/lxieyang/chrome-extension-boilerplate-react/dev-status.svg)](https://david-dm.org/lxieyang/chrome-extension-boilerplate-react?type=dev)
+[Get the plug-in for Chrome!](https://chrome.google.com/webstore/detail/apod-by-the-trav/aedpginojmhafbemcoelnppdcmlfjcdj)
 
-## Announcements
+[Get the plug-in for Firefox!](https://addons.mozilla.org/en-US/firefox/addon/apod-by-the-trav/)
 
-- **_This boilerplate adopts [Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/)!_** For V2 users, please check out the [manifest-v2](https://github.com/lxieyang/chrome-extension-boilerplate-react/tree/manifest-v2) branch, or use version [3.x](https://www.npmjs.com/package/chrome-extension-boilerplate-react/v/3.3.0).
-  - Check out the [Manifest V3 Migration Guide](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-migration/).
-- Recently added [devtools](https://developer.chrome.com/docs/extensions/mv3/devtools/) Support! Thanks [GeekaholicLin](https://github.com/lxieyang/chrome-extension-boilerplate-react/issues/17)!
-- Recently updated from **[React](https://reactjs.org)** ~~16~~ to **17**!
-- Recently updated from **[Webpack Dev Server](https://webpack.js.org/configuration/dev-server/)** ~~3.x~~ to **4.x** and **[Webpack](https://webpack.js.org/)** ~~4~~ to **5**!
-- Recently added [TypeScript](https://www.typescriptlang.org/) Support!
+This extension might seem like a lot of work for such a simple purpose. This is not by accident, I set out to build the best APOD viewing extension that I could think of and if you think there's something that could be added to make this better I can't wait to hear from you!
 
-## Features
+## APOD By The Trav Features
 
-This is a basic Chrome Extensions boilerplate to help you write modular and modern Javascript code, load CSS easily and [automatic reload the browser on code changes](https://webpack.github.io/docs/webpack-dev-server.html#automatic-refresh).
+Your New Tab page will now be the Astronomy Picture of the Day (APOD)! Your top sites are shown in the top left of the page to maintain some usefulness from the default new tab screen.
 
-This boilerplate is updated with:
+- Save your favorite APOD's for viewing again with the "Save Favorites" button at the bottom right.
+- Click the date in the title bar to display a `date selector`.
 
-- [Chrome Extension Manifest V3](https://developer.chrome.com/docs/extensions/mv3/intro/mv3-overview/)
-- [React 17](https://reactjs.org)
-- [Webpack 5](https://webpack.js.org/)
-- [Webpack Dev Server 4](https://webpack.js.org/configuration/dev-server/)
-- [React Hot Loader](https://github.com/gaearon/react-hot-loader)
-- [eslint-config-react-app](https://www.npmjs.com/package/eslint-config-react-app)
-- [Prettier](https://prettier.io/)
-- [TypeScript](https://www.typescriptlang.org/)
+##### APOD Options
 
-This boilerplate is heavily inspired by and adapted from [https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate), with additional support for React 17 features, Webpack 5, and Webpack Dev Server 4.
+- Use the options in the Chrome menu bar to set `Today` or a `Random` APOD on new tab.
+- High definition photos only. Each APOD has a standard-res and hi-res image, initially the hi-res image is attempted to be shown but if the file size is too large (takes too long to download) it'll default to the standard resolution image. This setting will force high resolution photos only.
+- Toggle showing your Top sites, or hide them to focus on the space pics.
+- Toggle showing your viewing history bar which is shown at the bottom of the page.
+- Enable the ability to see `Todays` APOD a certain number of times before a `random` photo is selected. This allows you to see the most recent APOD a few times and then move onto some new pictures (thanks [Hambly](https://github.com/hambly)!).
 
-Please open up an issue to nudge me to keep the npm packages up-to-date. FYI, it takes time to make different packages with different versions work together nicely.
+##### Navigation shortcuts:
 
-## Installing and Running
+- Random APOD - `r`
+- Today's APOD - `t`
+- Previous Day APOD - `j`
+- Next Day APOD - `k`
 
-### Procedures:
+##### Tab Shortcuts:
 
-1. Check if your [Node.js](https://nodejs.org/) version is >= **14**.
-2. Clone this repository.
-3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
-4. Change the name of your extension on `src/manifest.json`.
-5. Run `npm install` to install the dependencies.
-6. Run `npm start`
-7. Load your extension on Chrome following:
-   1. Access `chrome://extensions/`
-   2. Check `Developer mode`
-   3. Click on `Load unpacked extension`
-   4. Select the `build` folder.
-8. Happy hacking.
+- Toggle Explanation - `e`
+- Toggle Favorites - `f`
+- Toggle Search - `s`
 
-## Structure
+##### History Navigation (previously viewed APOD's):
 
-All your extension's code must be placed in the `src` folder.
+- Previous History - `left-arrow`
+- Next History - `right-arrow`
 
-The boilerplate is already prepared to have a popup, an options page, a background page, and a new tab page (which replaces the new tab page of your browser). But feel free to customize these.
+## Development
 
-## TypeScript
+If you want to fork, develop and build this extension locally then follow these steps:
 
-This boilerplate now supports TypeScript! The `Options` Page is implemented using TypeScript. Please refer to `src/pages/Options/` for example usages.
+- Fork/Download the repository and using the terminal navigate to the directory.
 
-## Webpack auto-reload and HRM
+- Build the dependencies by running `yarn` or `npm install` ([Yarn is recommended](https://yarnpkg.com/en/)).
 
-To make your workflow much more efficient this boilerplate uses the [webpack server](https://webpack.github.io/docs/webpack-dev-server.html) to development (started with `npm start`) with auto reload feature that reloads the browser automatically every time that you save some file in your editor.
+- For active development you must re-build the extension after changes are made using `yarn build`.
 
-You can run the dev mode on other port if you want. Just specify the env var `port` like this:
+- Add the unpacked extension in Chrome (after running `yarn watch` or `yarn build`). Do this by opening up the Chrome preferences:
+  - On the left sidebar click `extensions` (or just navigate directly to `chrome://extensions/`).
+  - Make sure `Developer mode` is activated in the top right of the page.
+  - Select `Load Unpacked` at the top left of the page, navigate to the `build` folder inside the project directory. Go open a new tab in Chrome and you'll now be running the development version.
+- Again, you must re-run `yarn build` after every save of the files for them to show up.
 
-```
-$ PORT=6002 npm run start
-```
+## Reviewer notes
 
-## Content Scripts
+#### Firefox validation warnings
 
-Although this boilerplate uses the webpack dev server, it's also prepared to write all your bundles files on the disk at every code change, so you can point, on your extension manifest, to your bundles that you want to use as [content scripts](https://developer.chrome.com/extensions/content_scripts), but you need to exclude these entry points from hot reloading [(why?)](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/issues/4#issuecomment-261788690). To do so you need to expose which entry points are content scripts on the `webpack.config.js` using the `chromeExtensionBoilerplate -> notHotReload` config. Look the example below.
+- Firefox has issued a warning for the use of `innerHTML` which is performed one time to avoid more widespread use. This single use
+  is done inside a wrapper element and has been reviewed to avoid becoming an injection vector.
 
-Let's say that you want use the `myContentScript` entry point as content script, so on your `webpack.config.js` you will configure the entry point and exclude it from hot reloading, like this:
+#### Dependencies
 
-```js
-{
-  …
-  entry: {
-    myContentScript: "./src/js/myContentScript.js"
-  },
-  chromeExtensionBoilerplate: {
-    notHotReload: ["myContentScript"]
-  }
-  …
-}
-```
+- [axios](https://github.com/axios/axios) - This is strictly used for ajax calls to the NASA API.
 
-and on your `src/manifest.json`:
+- Additional dependencies are considered well known sources as they all pertain to the use of webpack (i.e. babel, uglifyJS, path, etc.)
 
-```json
-{
-  "content_scripts": [
-    {
-      "matches": ["https://www.google.com/*"],
-      "js": ["myContentScript.bundle.js"]
-    }
-  ]
-}
-```
+#### Service Worker tips
 
-## Intelligent Code Completion
-
-Thanks to [@hudidit](https://github.com/lxieyang/chrome-extension-boilerplate-react/issues/4)'s kind suggestions, this boilerplate supports chrome-specific intelligent code completion using [@types/chrome](https://www.npmjs.com/package/@types/chrome).
-
-## Packing
-
-After the development of your extension run the command
-
-```
-$ NODE_ENV=production npm run build
-```
-
-Now, the content of `build` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
-
-## Secrets
-
-If you are developing an extension that talks with some API you probably are using different keys for testing and production. Is a good practice you not commit your secret keys and expose to anyone that have access to the repository.
-
-To this task this boilerplate import the file `./secrets.<THE-NODE_ENV>.js` on your modules through the module named as `secrets`, so you can do things like this:
-
-_./secrets.development.js_
-
-```js
-export default { key: '123' };
-```
-
-_./src/popup.js_
-
-```js
-import secrets from 'secrets';
-ApiCall({ key: secrets.key });
-```
-
-:point_right: The files with name `secrets.*.js` already are ignored on the repository.
-
-## Resources:
-
-- [Webpack documentation](https://webpack.js.org/concepts/)
-- [Chrome Extension documentation](https://developer.chrome.com/extensions/getstarted)
-
----
-
-Michael Xieyang Liu | [Website](https://lxieyang.github.io)
+[How I got service workers working](https://dev.to/idoshamun/devtip-two-steps-for-using-workbox-in-a-chrome-extension-1ejb)
