@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { APOD_HISTORY, APOD_OPTIONS, DEFAULT_OPTIONS } from '../../constants';
-import { getAllChrome, getLocalChrome, onChangeChrome } from '../../utilities';
+import { DEFAULT_OPTIONS } from '../../constants';
+import { getAllChrome, onChangeChrome } from '../../utilities';
 import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
@@ -21,12 +21,12 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
           },
           { ...allOptions }
         );
-        setApodOptions(updatedSettings);
+
+        setApodOptions({ ...DEFAULT_OPTIONS, ...updatedSettings });
       });
     });
 
-    const syncedOptions = Object.assign({}, DEFAULT_OPTIONS, options);
-    setApodOptions(syncedOptions);
+    setApodOptions({ ...DEFAULT_OPTIONS, ...options });
   }, []);
 
   if (!apodOptions) return null; // No options, no rendering

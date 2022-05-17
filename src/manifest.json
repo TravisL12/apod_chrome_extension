@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Astronomy Picture of the Day APOD by The Trav",
   "description": "Displays the Astronomy Picture of the Day (APOD) and allows you to review similar images of planets, stars, galaxies and nebulas",
-  "options_page": "options.html",
+  "options_page": "popup.html",
   "short_name": "APOD by The Trav",
   "version": "4.1.1",
   "background": { "service_worker": "background.bundle.js" },
