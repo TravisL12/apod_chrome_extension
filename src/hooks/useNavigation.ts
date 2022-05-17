@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import useKeyboardShortcut from 'use-keyboard-shortcut';
 import {
   KEY_MAP,
@@ -24,6 +24,7 @@ import {
   isFirstApodDate,
   saveFavorite,
   setChrome,
+  trimDateString,
 } from '../utilities';
 
 export const useNavigation = ({
@@ -102,9 +103,18 @@ export const useNavigation = ({
     toggleDrawer(DRAWER_HISTORY)
   );
 
-  const isFavorite: boolean = response?.date
-    ? !!options?.[APOD_FAVORITES]?.[response?.date]
-    : false;
+  const isFavorite: boolean = useMemo(() => {
+    if (!response?.date) {
+      return false;
+    }
+
+    const favoriteDates = Object.keys(options?.[APOD_FAVORITES]).map(
+      (dateKey) => trimDateString(dateKey)
+    );
+
+    return favoriteDates.includes(response?.date);
+  }, [options, response]);
+
   const navigationButtons: TNavigationButton[] = [
     {
       label: 'Previous',

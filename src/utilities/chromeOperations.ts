@@ -111,7 +111,6 @@ export const saveFavorite = (response?: TApodResponse) => {
       url: response.url,
     };
     const newFavorites = { ...prevFavorites, [response.date]: newItem };
-    console.log(Object.values(newFavorites).length, 'count?');
 
     setChrome(
       {

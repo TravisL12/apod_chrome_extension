@@ -59,6 +59,10 @@ export const preloadImage = (url: string) => {
   return img;
 };
 
+export const trimDateString = (date: string): string => {
+  return date.replaceAll('-0', '-');
+};
+
 const transformResponse = (data: TApodResponse) => {
   // Some URL's are cutoff and start with `//www.youtube...`
   if (/^\/\//.test(data.url)) {
@@ -72,7 +76,7 @@ const transformResponse = (data: TApodResponse) => {
   data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
     data.date
   )}.html`;
-  data.date = data.date.replace('-0', '-');
+  data.date = trimDateString(data.date);
   data.isToday = isDateToday(data.date);
   return data;
 };
