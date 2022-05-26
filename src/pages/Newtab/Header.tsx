@@ -88,7 +88,7 @@ const Header: React.FC<THeaderProps> = ({
             })}
             <span>
               <a
-                href={response.apodUrl}
+                href={`https://www.redundantrobot.com/apod?${response.date}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >
