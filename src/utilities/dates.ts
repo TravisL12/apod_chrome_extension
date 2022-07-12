@@ -1,7 +1,7 @@
 import { MIN_APOD_DATE } from '../constants';
 import { zeroPad } from './utilities';
 
-const formatDate = (date: Date) => {
+export const formatDate = (date: Date) => {
   return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
 };
 
@@ -32,6 +32,10 @@ export const linkDateFormat = (date: string) => {
 };
 
 export const isDateToday = (date: string): boolean => {
+  if (!date) {
+    return false;
+  }
+
   const isGreater = new Date(date) > getToday();
   return formatDate(getToday()) === date || isGreater;
 };

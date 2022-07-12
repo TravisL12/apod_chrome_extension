@@ -155,10 +155,6 @@ export const useNavigation = ({
 
     if (options[IS_TODAY_LIMIT_ON] && showToday) {
       showToday = options[TODAY_COUNT] < options[TODAY_LIMIT];
-      setChrome({ [TODAY_COUNT]: options[TODAY_COUNT] + 1 });
-    } else {
-      // reset count if `IS_TODAY_LIMIT_ON` is toggled
-      setChrome({ [TODAY_COUNT]: 0 });
     }
 
     showToday ? fetchToday() : fetchRandom();
