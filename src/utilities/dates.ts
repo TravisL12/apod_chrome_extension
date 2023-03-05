@@ -6,7 +6,8 @@ export const formatDate = (date: Date) => {
 };
 
 export function adjacentDate(dateString: string, direction: number): string {
-  const adjDate = new Date(dateString);
+  const dateSplit = dateString.split('-');
+  const adjDate = new Date(+dateSplit[0], +dateSplit[1] - 1, +dateSplit[2]);
 
   const latest = new Date(
     adjDate.getFullYear(),
