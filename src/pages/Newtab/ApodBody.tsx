@@ -1,5 +1,4 @@
 import React, { useMemo, useState } from 'react';
-import { ERROR_MESSAGE } from '../../constants';
 import useFetchApod from '../../hooks/useFetchApod';
 import { useNavigation } from '../../hooks/useNavigation';
 import { TAppOptions } from '../types';
