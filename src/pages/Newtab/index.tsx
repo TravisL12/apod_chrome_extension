@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { DEFAULT_OPTIONS } from '../../constants';
-import { getAllChrome, onChangeChrome } from '../../utilities';
+import { CURRENT_DATE, DEFAULT_OPTIONS, TODAY_COUNT } from '../../constants';
+import {
+  formatDate,
+  getAllChrome,
+  getToday,
+  isDateToday,
+  onChangeChrome,
+  setChrome,
+} from '../../utilities';
 import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
@@ -21,6 +28,17 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
           },
           { ...allOptions }
         );
+
+        if (
+          !updatedSettings?.[CURRENT_DATE] ||
+          !isDateToday(updatedSettings?.[CURRENT_DATE])
+        ) {
+          const today = formatDate(getToday());
+          updatedSettings[CURRENT_DATE] = today;
+          updatedSettings[TODAY_COUNT] = 0;
+
+          setChrome({ [CURRENT_DATE]: today, [TODAY_COUNT]: 0 });
+        }
 
         setApodOptions({ ...DEFAULT_OPTIONS, ...updatedSettings });
       });
