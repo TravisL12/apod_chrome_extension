@@ -18,6 +18,7 @@ import {
   THistoryItem,
   TNavigationButton,
   TUseNavigationProps,
+  TAppOptions,
 } from '../pages/types';
 import {
   adjacentDate,
@@ -26,6 +27,10 @@ import {
   setChrome,
   trimDateString,
 } from '../utilities';
+
+const incrementDayCount = (options: TAppOptions) => {
+  setChrome({ [TODAY_COUNT]: options[TODAY_COUNT] + 1 });
+};
 
 export const useNavigation = ({
   response,
@@ -155,6 +160,7 @@ export const useNavigation = ({
 
     if (options[IS_TODAY_LIMIT_ON] && showToday) {
       showToday = options[TODAY_COUNT] < options[TODAY_LIMIT];
+      incrementDayCount(options);
     }
 
     showToday ? fetchToday() : fetchRandom();
