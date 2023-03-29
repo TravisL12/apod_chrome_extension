@@ -27,6 +27,11 @@ export const SOption = styled.div`
     margin-top: 4px;
     color: #444;
   }
+
+  input[type='number'] {
+    width: 50px;
+    text-align: right;
+  }
 `;
 
 export const SAboutApod = styled.div``;

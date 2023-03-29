@@ -8,6 +8,7 @@ import {
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
   TODAY_LIMIT_COUNT,
+  TODAY_LIMIT,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
 import {
@@ -42,7 +43,8 @@ const optionsConfig = [
   {
     id: IS_TODAY_LIMIT_ON,
     label: 'Switch from Today to Random',
-    description: `Show today's APOD ${TODAY_LIMIT_COUNT} times and then will switch to random APOD's.`,
+    description: `Show today's APOD multiple times and then will switch to random APOD's.
+    Use the input below to set the limit.`,
     type: 'checkbox',
   },
 ];
@@ -74,24 +76,42 @@ const Popup = () => {
     <SPopupContainer>
       <h3>Options</h3>
       <SOptionsContainer>
-        {optionsConfig.map((option) => {
-          return (
-            <SOption key={option.id} className="option">
-              <div className="info">
-                <label htmlFor={option.id}>{option.label}</label>
-                <div className="sub-info">{option.description}</div>
-              </div>
-              <div className="inputs">
-                <input
-                  onChange={handleCheckboxChange}
-                  type={option.type}
-                  id={option.id}
-                  checked={popupOptions[option.id]}
-                />
-              </div>
-            </SOption>
-          );
-        })}
+        {optionsConfig.map((option) => (
+          <SOption key={option.id}>
+            <div className="info">
+              <label htmlFor={option.id}>{option.label}</label>
+              <div className="sub-info">{option.description}</div>
+            </div>
+            <div className="inputs">
+              <input
+                onChange={handleCheckboxChange}
+                type={option.type}
+                id={option.id}
+                checked={popupOptions[option.id]}
+              />
+            </div>
+          </SOption>
+        ))}
+        <SOption>
+          <div className="info">
+            <label htmlFor={'today-count'}>Today Limit</label>
+            <div className="sub-info">
+              The APOD for today will be shown this number of times before
+              switching to random.
+            </div>
+          </div>
+          <div className="inputs">
+            <input
+              disabled={!popupOptions[IS_TODAY_LIMIT_ON]}
+              onChange={(event) => {
+                setChrome({ [TODAY_LIMIT]: +event.target.value });
+              }}
+              defaultValue={popupOptions[TODAY_LIMIT]}
+              type="number"
+              id="today-count"
+            />
+          </div>
+        </SOption>
       </SOptionsContainer>
       <SAboutApod>
         <p>
