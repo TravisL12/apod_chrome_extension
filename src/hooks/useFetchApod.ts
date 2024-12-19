@@ -57,7 +57,7 @@ const useFetchApod = ({ hiResOnly, setDrawerIsOpen }: TFetchApodParams) => {
     setErrorMessage(false);
 
     if (response.media_type === 'other') {
-      console.log(response, 'OTHER REPSONSE');
+      console.log(response, 'OTHER RESPONSE');
       fetchApod({ random: true });
       return;
     }

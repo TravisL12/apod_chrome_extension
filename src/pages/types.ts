@@ -27,7 +27,7 @@ export type TFavoriteItem = {
   imgUrl?: string;
 };
 
-export type TFavorites = { [date: string]: TFavoriteItem };
+export type TFavorites = Record<string, TFavoriteItem>;
 
 export type TAppOptions = {
   [APOD_FAVORITES]: TFavorites;
@@ -58,6 +58,8 @@ export type TApodResponse = {
   isImageHd?: boolean;
   error?: any;
   errorMessage?: string;
+  apodLink?: string;
+  thumbnailLink?: string;
 };
 
 export type TUseNavigationProps = {

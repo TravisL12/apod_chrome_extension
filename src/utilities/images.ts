@@ -1,8 +1,7 @@
 import {
-  API_KEY,
-  APOD_API_URL,
   RANDOM_APODS,
-  RANDOM_FETCH_COUNT,
+  REDUNDANT_RANDOM_URL,
+  REDUNDANT_URL,
   RELOAD_RANDOM_LIMIT,
 } from '../constants';
 import axios from 'axios';
@@ -16,11 +15,7 @@ import {
 
 let isReloadingCache = false;
 const reloadCache = async () => {
-  const params = {
-    api_key: API_KEY,
-    count: RANDOM_FETCH_COUNT,
-  };
-  const resp = await axios.get(APOD_API_URL, { params });
+  const resp = await axios.get(REDUNDANT_RANDOM_URL);
   const images = resp.data.map((item: TApodResponse) =>
     transformResponse(item)
   );
@@ -73,18 +68,14 @@ const transformResponse = (data: TApodResponse) => {
     preloadImage(data.url);
     preloadImage(data.hdurl);
   }
-  data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
-    data.date
-  )}.html`;
+  data.apodUrl =
+    data.apodLink ||
+    `https://apod.nasa.gov/apod/ap${linkDateFormat(data.date)}.html`;
   data.date = trimDateString(data.date);
   data.isToday = isDateToday(data.date);
   return data;
 };
 export const fetchRandomImage = async (): Promise<TApodResponse> => {
-  const params = {
-    api_key: API_KEY,
-    count: RANDOM_FETCH_COUNT,
-  };
   try {
     // Look in cache
     const cacheResp = await randomCache();
@@ -93,7 +84,7 @@ export const fetchRandomImage = async (): Promise<TApodResponse> => {
     }
 
     // Otherwise fetch
-    const resp = await axios.get(APOD_API_URL, { params });
+    const resp = await axios.get(REDUNDANT_RANDOM_URL);
     const images = resp.data.map((item: TApodResponse) =>
       transformResponse(item)
     );
@@ -113,12 +104,8 @@ export const fetchRandomImage = async (): Promise<TApodResponse> => {
 export const fetchImage = async (
   fetchOptions: TFetchOptions = {}
 ): Promise<TApodResponse> => {
-  const params = {
-    api_key: API_KEY,
-    ...fetchOptions,
-  };
   try {
-    const resp = await axios.get(APOD_API_URL, { params });
+    const resp = await axios.get(REDUNDANT_URL, { params: fetchOptions });
     const data = transformResponse(resp.data);
     saveToHistory(data);
     return data;
