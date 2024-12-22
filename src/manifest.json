@@ -22,6 +22,9 @@
       "matches": []
     }
   ],
-  "host_permissions": ["https://api.nasa.gov/*"],
+  "host_permissions": [
+    "https://api.nasa.gov/*",
+    "https://apod.redundantrobot.com/apod/*"
+  ],
   "permissions": ["topSites", "storage"]
 }

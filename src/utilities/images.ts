@@ -16,9 +16,15 @@ import {
 let isReloadingCache = false;
 const reloadCache = async () => {
   const resp = await axios.get(REDUNDANT_RANDOM_URL);
-  const images = resp.data.map((item: TApodResponse) =>
-    transformResponse(item)
-  );
+  const images = resp.data.map((item: TApodResponse) => {
+    const data = transformResponse(item);
+    return {
+      date: data.date,
+      title: data.title,
+      media_type: data.media_type,
+      url: data.url,
+    };
+  });
 
   getLocalChrome([RANDOM_APODS], (options) => {
     const cache = options[RANDOM_APODS];
@@ -80,19 +86,19 @@ export const fetchRandomImage = async (): Promise<TApodResponse> => {
     // Look in cache
     const cacheResp = await randomCache();
     if (cacheResp) {
-      return cacheResp;
+      const resp = await fetchImage({ date: cacheResp.date });
+      return resp;
     }
 
     // Otherwise fetch
-    const resp = await axios.get(REDUNDANT_RANDOM_URL);
-    const images = resp.data.map((item: TApodResponse) =>
-      transformResponse(item)
-    );
+    const { data } = await axios.get(REDUNDANT_RANDOM_URL);
+    const images = data.map((item: TApodResponse) => transformResponse(item));
 
     return new Promise((resolve) => {
       setLocalChrome({ [RANDOM_APODS]: images }, async () => {
         const response = await randomCache();
-        resolve(response);
+        const resp = await fetchImage({ date: response.date });
+        resolve(resp);
       });
     });
   } catch (error) {
