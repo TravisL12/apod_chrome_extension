@@ -43,8 +43,8 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
       return <Loading isLoading={isLoading} />;
     }
 
-    if (apodResponse.errorMessage) {
-      return <h1 style={{ color: 'white' }}>{apodResponse.errorMessage}</h1>;
+    if (errorMessage) {
+      return <h1 style={{ color: 'white' }}>{errorMessage}</h1>;
     }
 
     return apodResponse.media_type === 'video' ? (

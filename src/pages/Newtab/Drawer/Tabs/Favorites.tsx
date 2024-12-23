@@ -46,7 +46,7 @@ const Favorites: React.FC<{
           filteredItems.map((item: any, idx: number) => {
             return (
               <GridImage
-                key={`${item.date}-${idx}`}
+                key={`${item.date}`}
                 goToDate={goToApodDate}
                 removeItem={removeFavorite}
                 item={item}
