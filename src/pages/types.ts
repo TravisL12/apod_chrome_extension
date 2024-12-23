@@ -10,6 +10,7 @@ import {
   IS_TODAY_LIMIT_ON,
   APOD_HISTORY,
   RANDOM_APODS,
+  USER_ID,
 } from '../constants';
 
 export type THistoryItem = {
@@ -41,6 +42,7 @@ export type TAppOptions = {
   [TODAY_COUNT]: number;
   [TODAY_LIMIT]: number;
   [RANDOM_APODS]?: number;
+  [USER_ID]?: string;
 };
 
 export type TApodResponse = {

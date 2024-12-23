@@ -27,6 +27,7 @@ export const TODAY_COUNT = 'todayCount';
 export const TODAY_LIMIT = 'todayLimit';
 export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
 export const RANDOM_APODS = 'randomApods';
+export const USER_ID = 'userId';
 
 export const DRAWER_EXPLANATION = 'explanation';
 export const DRAWER_FAVORITES = 'favorites';
@@ -43,6 +44,7 @@ export const APOD_OPTIONS: (keyof TAppOptions)[] = [
   SHOW_TOP_SITES,
   TODAY_COUNT,
   TODAY_LIMIT,
+  USER_ID,
 ];
 
 export const KEY_MAP = {
