@@ -5,15 +5,15 @@ import {
   DRAWER_HISTORY,
 } from '../../constants';
 
+// @ts-expect-error
+import Montserrat from '../../assets/fonts/Montserrat-VariableFont_wght.ttf';
+
 const black = '#111111';
 export const lightBlack = 'rgba(0,0,0, 0.5)';
 export const gray = 'rgba(51,51,51, 0.8)';
 export const activeGray = 'rgba(80,80,80, 0.8)';
 export const lightGray = 'rgba(199,199,199, 0.8)';
 const highlightBlue = 'rgb(117, 221, 255)';
-
-// @ts-expect-error
-import Montserrat from '../../assets/fonts/Montserrat-VariableFont_wght.ttf';
 
 export const FontStyles = createGlobalStyle`
   @font-face {

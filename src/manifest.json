@@ -4,7 +4,7 @@
   "description": "Displays the Astronomy Picture of the Day (APOD) and allows you to review similar images of planets, stars, galaxies and nebulas",
   "options_page": "popup.html",
   "short_name": "APOD by The Trav",
-  "version": "4.1.4",
+  "version": "4.2.0",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",
@@ -22,6 +22,9 @@
       "matches": []
     }
   ],
-  "host_permissions": ["https://api.nasa.gov/*"],
+  "host_permissions": [
+    "https://api.nasa.gov/*",
+    "https://apod.redundantrobot.com/apod/*"
+  ],
   "permissions": ["topSites", "storage"]
 }

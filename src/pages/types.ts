@@ -10,6 +10,7 @@ import {
   IS_TODAY_LIMIT_ON,
   APOD_HISTORY,
   RANDOM_APODS,
+  USER_ID,
 } from '../constants';
 
 export type THistoryItem = {
@@ -27,7 +28,7 @@ export type TFavoriteItem = {
   imgUrl?: string;
 };
 
-export type TFavorites = { [date: string]: TFavoriteItem };
+export type TFavorites = Record<string, TFavoriteItem>;
 
 export type TAppOptions = {
   [APOD_FAVORITES]: TFavorites;
@@ -41,6 +42,7 @@ export type TAppOptions = {
   [TODAY_COUNT]: number;
   [TODAY_LIMIT]: number;
   [RANDOM_APODS]?: number;
+  [USER_ID]?: string;
 };
 
 export type TApodResponse = {
@@ -58,6 +60,8 @@ export type TApodResponse = {
   isImageHd?: boolean;
   error?: any;
   errorMessage?: string;
+  apodLink?: string;
+  thumbnailLink?: string;
 };
 
 export type TUseNavigationProps = {

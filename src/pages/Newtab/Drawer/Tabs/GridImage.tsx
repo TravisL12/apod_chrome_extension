@@ -33,6 +33,7 @@ const GridImage: React.FC<{
         }}
       >
         <img
+          alt={item.title}
           src={item.url || item.imgUrl}
           style={{ maxWidth: '100%', maxHeight: '100%' }}
         />

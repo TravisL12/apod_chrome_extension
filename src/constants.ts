@@ -1,7 +1,7 @@
 import { TAppOptions } from './pages/types';
 
-export const APOD_API_URL = 'https://api.nasa.gov/planetary/apod';
-export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
+export const REDUNDANT_URL = 'https://apod.redundantrobot.com/apod';
+export const REDUNDANT_RANDOM_URL = `${REDUNDANT_URL}/random`;
 
 export const MIN_APOD_DATE = `1995-6-16`;
 export const DELAY_FOR_HD_LOAD = 1500;
@@ -27,6 +27,7 @@ export const TODAY_COUNT = 'todayCount';
 export const TODAY_LIMIT = 'todayLimit';
 export const IS_TODAY_LIMIT_ON = 'isTodayLimitOn';
 export const RANDOM_APODS = 'randomApods';
+export const USER_ID = 'userId';
 
 export const DRAWER_EXPLANATION = 'explanation';
 export const DRAWER_FAVORITES = 'favorites';
@@ -43,6 +44,7 @@ export const APOD_OPTIONS: (keyof TAppOptions)[] = [
   SHOW_TOP_SITES,
   TODAY_COUNT,
   TODAY_LIMIT,
+  USER_ID,
 ];
 
 export const KEY_MAP = {

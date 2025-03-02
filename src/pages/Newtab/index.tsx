@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { CURRENT_DATE, DEFAULT_OPTIONS, TODAY_COUNT } from '../../constants';
+import {
+  CURRENT_DATE,
+  DEFAULT_OPTIONS,
+  TODAY_COUNT,
+  USER_ID,
+} from '../../constants';
 import {
   formatDate,
+  generateUUID,
   getAllChrome,
   getToday,
   isDateToday,
@@ -53,12 +59,17 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
 };
 
 getAllChrome((options) => {
+  const userId = options.userId ?? generateUUID();
+
+  if (!options[USER_ID]) {
+    setChrome({ [USER_ID]: userId });
+  }
+
   render(
     <>
       <FontStyles />
-      <App options={options} />
+      <App options={{ ...options, [USER_ID]: userId }} />
     </>,
-
     window.document.querySelector('#app-container')
   );
 });
