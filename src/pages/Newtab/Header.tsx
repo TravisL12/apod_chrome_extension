@@ -51,7 +51,19 @@ const Header: React.FC<THeaderProps> = ({
                 maxDate={new Date()}
               >
                 <h2
+                  role="button"
+                  tabIndex={0}
+                  aria-expanded={isCalendarOpen}
+                  aria-label={`Change date, currently ${prettyDateFormat(
+                    response.date
+                  )}`}
                   onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                  onKeyDown={(event) => {
+                    if (event.key === 'Enter' || event.key === ' ') {
+                      event.preventDefault();
+                      setIsCalendarOpen(!isCalendarOpen);
+                    }
+                  }}
                   style={{ cursor: 'pointer' }}
                 >
                   {prettyDateFormat(response.date)}
@@ -76,7 +88,18 @@ const Header: React.FC<THeaderProps> = ({
             {navigationButtons.slice(2).map((navItem) => {
               return (
                 !navItem.isHidden && (
-                  <span key={navItem.label} onClick={navItem.clickHandler}>
+                  <span
+                    key={navItem.label}
+                    role="button"
+                    tabIndex={0}
+                    onClick={navItem.clickHandler}
+                    onKeyDown={(event) => {
+                      if (event.key === 'Enter' || event.key === ' ') {
+                        event.preventDefault();
+                        navItem.clickHandler();
+                      }
+                    }}
+                  >
                     {navItem.isFavorite ? (
                       <strong style={{ color: 'lightblue' }}>Favorite!</strong>
                     ) : (

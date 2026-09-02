@@ -109,7 +109,12 @@ const CalendarPicker: React.FC<TCalendarPickerProps> = ({
       setSelectedMonth(+value);
     }
     if (name === 'years') {
-      setSelectedYear(value);
+      // Coerce: the raw input value is a string, which made the min/max
+      // comparisons below string-vs-number, and an empty field NaN.
+      const year = +value;
+      if (!Number.isNaN(year)) {
+        setSelectedYear(year);
+      }
     }
     updateDays();
   };

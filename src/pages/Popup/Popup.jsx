@@ -7,7 +7,6 @@ import {
   IS_TODAY_LIMIT_ON,
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
-  TODAY_LIMIT_COUNT,
   TODAY_LIMIT,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
@@ -119,22 +118,38 @@ const Popup = () => {
         </p>
         <SAboutLinks>
           <div>
-            <a target="_blank" href="https://www.redundantrobot.com">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.redundantrobot.com"
+            >
               RedundantRobot
             </a>
           </div>
           <div>
-            <a target="_blank" href="https://www.github.com/travisl12">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.github.com/travisl12"
+            >
               Github
             </a>
           </div>
           <div>
-            <a target="_blank" href="https://www.twitter.com/travisl12">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://www.twitter.com/travisl12"
+            >
               Twitter
             </a>
           </div>
           <div>
-            <a target="_blank" href="https://codepen.io/TravisL12">
+            <a
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://codepen.io/TravisL12"
+            >
               CodePen
             </a>
           </div>

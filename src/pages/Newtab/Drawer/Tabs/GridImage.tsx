@@ -32,8 +32,12 @@ const GridImage: React.FC<{
           goToDate(item.date);
         }}
       >
+        {/* These grids render up to HISTORY_LIMIT images at once, so defer
+            the ones below the fold. */}
         <img
           src={item.url || item.imgUrl}
+          alt={item.title}
+          loading="lazy"
           style={{ maxWidth: '100%', maxHeight: '100%' }}
         />
       </div>

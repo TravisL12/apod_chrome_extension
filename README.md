@@ -44,12 +44,16 @@ Your New Tab page will now be the Astronomy Picture of the Day (APOD)! Your top 
 
 - Toggle Explanation - `e`
 - Toggle Favorites - `f`
-- Toggle Search - `s`
+- Toggle History - `h`
+- Close drawer - `esc`
 
 ##### History Navigation (previously viewed APOD's):
 
-- Previous History - `left-arrow`
-- Next History - `right-arrow`
+- Previous History - `right-arrow`
+- Next History - `left-arrow`
+
+Shortcuts are suppressed while a text field is focused, so the drawer search
+boxes behave normally.
 
 ## Development
 
@@ -69,10 +73,13 @@ If you want to fork, develop and build this extension locally then follow these 
 
 ## Reviewer notes
 
-#### Firefox validation warnings
+#### Permissions
 
-- Firefox has issued a warning for the use of `innerHTML` which is performed one time to avoid more widespread use. This single use
-  is done inside a wrapper element and has been reviewed to avoid becoming an injection vector.
+- `storage` - settings, favorites and viewing history are kept on the user's own machine.
+- `topSites` - renders the top-site shortcuts in the corner of the new tab.
+- `favicon` - draws those shortcut icons from Chrome's local favicon cache, so no
+  browsing data leaves the machine.
+- `host_permissions` is limited to `https://api.nasa.gov/*`, the only network request the extension makes.
 
 #### Dependencies
 

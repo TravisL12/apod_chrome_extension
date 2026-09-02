@@ -24,11 +24,10 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     }
   };
 
-  const { apodResponse, isLoading, errorMessage, loadImage, fetchApod } =
-    useFetchApod({
-      hiResOnly,
-      setDrawerIsOpen,
-    });
+  const { apodResponse, isLoading, loadImage, fetchApod } = useFetchApod({
+    hiResOnly,
+    setDrawerIsOpen,
+  });
 
   const { navigationButtons, goToApodDate } = useNavigation({
     response: apodResponse,
@@ -52,7 +51,7 @@ const ApodBody: React.FC<{ options: TAppOptions }> = ({ options }) => {
     ) : (
       <ImageContainer loadedImage={apodResponse.loadedImage} />
     );
-  }, [errorMessage, apodResponse, isLoading]);
+  }, [apodResponse, isLoading]);
 
   return (
     <SApodContainer>

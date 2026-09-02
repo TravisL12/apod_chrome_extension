@@ -3,6 +3,7 @@ import {
   APOD_FAVORITES,
   APOD_HISTORY,
   HISTORY_LIMIT,
+  LOCAL_OPTIONS,
 } from '../constants';
 import {
   TApodResponse,
@@ -11,7 +12,6 @@ import {
   TFavorites,
   THistoryItem,
 } from '../pages/types';
-import { getToday } from './dates';
 
 export const getChrome = (
   options: (keyof TAppOptions)[],
@@ -46,11 +46,46 @@ export const setLocalChrome = (
   chrome.storage.local.set(options, callback);
 };
 
+/**
+ * Favorites used to live in `sync`, which caps each key at 8KB -- about 50
+ * saves before every further save failed. Move any leftovers into `local`
+ * (10MB) once, merging rather than overwriting so a half-synced machine
+ * cannot drop entries.
+ */
+const migrateFavorites = (done: () => void) => {
+  getChrome([APOD_FAVORITES], (syncOptions) => {
+    const syncFavorites: TFavorites = syncOptions?.[APOD_FAVORITES] || {};
+
+    if (Object.keys(syncFavorites).length === 0) {
+      done();
+      return;
+    }
+
+    getLocalChrome([APOD_FAVORITES], (localOptions) => {
+      const localFavorites: TFavorites = localOptions?.[APOD_FAVORITES] || {};
+
+      setLocalChrome(
+        { [APOD_FAVORITES]: { ...syncFavorites, ...localFavorites } },
+        () => {
+          // Only reclaim the sync quota once the local write succeeded.
+          if (chrome.runtime.lastError) {
+            done();
+            return;
+          }
+          chrome.storage.sync.remove(APOD_FAVORITES, done);
+        }
+      );
+    });
+  });
+};
+
 // Combine sync and local storages
 export const getAllChrome = (cb: (options: any) => void) => {
-  getChrome(APOD_OPTIONS, (options) => {
-    getLocalChrome([APOD_HISTORY], (localOptions) => {
-      cb({ ...options, ...localOptions });
+  migrateFavorites(() => {
+    getChrome(APOD_OPTIONS, (options) => {
+      getLocalChrome(LOCAL_OPTIONS, (localOptions) => {
+        cb({ ...options, ...localOptions });
+      });
     });
   });
 };
@@ -59,7 +94,7 @@ export const saveToHistory = (response: TApodResponse) => {
   getLocalChrome([APOD_HISTORY], (options) => {
     const prevHistory: THistoryItem[] = options?.[APOD_HISTORY] || [];
 
-    const doesExist = prevHistory.find((hist) => hist.date === response.date);
+    const doesExist = prevHistory.some((hist) => hist.date === response.date);
     if (doesExist) {
       return;
     }
@@ -69,12 +104,14 @@ export const saveToHistory = (response: TApodResponse) => {
       title: response.title,
       mediaType: response.media_type,
       url: response.url,
-      dateAdded: getToday().getTime(),
+      dateAdded: Date.now(),
     };
 
-    const newHistory = [respNoExplanation, ...prevHistory]
-      .slice(0, HISTORY_LIMIT)
-      .sort((a, b) => b.dateAdded - a.dateAdded);
+    // Already sorted newest-first, so prepending keeps the order.
+    const newHistory = [respNoExplanation, ...prevHistory].slice(
+      0,
+      HISTORY_LIMIT
+    );
 
     setLocalChrome({
       [APOD_HISTORY]: newHistory,
@@ -83,10 +120,10 @@ export const saveToHistory = (response: TApodResponse) => {
 };
 
 export const removeFavorite = (date: string) => {
-  getChrome([APOD_FAVORITES], (options) => {
-    const prevFavorites = options?.[APOD_FAVORITES] || {};
+  getLocalChrome([APOD_FAVORITES], (options) => {
+    const prevFavorites: TFavorites = options?.[APOD_FAVORITES] || {};
     delete prevFavorites[date];
-    setChrome({
+    setLocalChrome({
       [APOD_FAVORITES]: prevFavorites,
     });
   });
@@ -97,7 +134,7 @@ export const saveFavorite = (response?: TApodResponse) => {
     return;
   }
 
-  getChrome([APOD_FAVORITES], (options) => {
+  getLocalChrome([APOD_FAVORITES], (options) => {
     const prevFavorites: TFavorites = options?.[APOD_FAVORITES] || {};
 
     if (prevFavorites[response.date]) {
@@ -112,14 +149,15 @@ export const saveFavorite = (response?: TApodResponse) => {
     };
     const newFavorites = { ...prevFavorites, [response.date]: newItem };
 
-    setChrome(
+    setLocalChrome(
       {
         [APOD_FAVORITES]: newFavorites,
       },
       () => {
         if (chrome.runtime.lastError) {
-          alert(
-            'Saving failed: you have reached the limit of favorites that can be saved.'
+          console.error(
+            'APOD: saving favorite failed',
+            chrome.runtime.lastError
           );
         }
       }

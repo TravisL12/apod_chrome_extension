@@ -38,7 +38,7 @@ const Loading: React.FC<{ isLoading: boolean }> = ({ isLoading }) => {
     <Fader isVisible={isLoading}>
       <SLoadingContainer>
         <SImageContainer>
-          <img src={sunLogo} />
+          <img src={sunLogo} alt="" aria-hidden="true" />
         </SImageContainer>
 
         <div>

@@ -1,5 +1,4 @@
 import {
-  APOD_TYPE,
   IS_TODAY_APOD,
   HI_RES_ONLY,
   APOD_FAVORITES,
@@ -32,7 +31,6 @@ export type TFavorites = { [date: string]: TFavoriteItem };
 export type TAppOptions = {
   [APOD_FAVORITES]: TFavorites;
   [APOD_HISTORY]: THistoryItem[];
-  [APOD_TYPE]?: string;
   [CURRENT_DATE]?: string;
   [HI_RES_ONLY]?: boolean;
   [IS_TODAY_APOD]: boolean;
@@ -40,7 +38,7 @@ export type TAppOptions = {
   [SHOW_TOP_SITES]?: boolean;
   [TODAY_COUNT]: number;
   [TODAY_LIMIT]: number;
-  [RANDOM_APODS]?: number;
+  [RANDOM_APODS]?: TApodResponse[];
 };
 
 export type TApodResponse = {

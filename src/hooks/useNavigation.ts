@@ -32,6 +32,24 @@ const incrementDayCount = (options: TAppOptions) => {
   setChrome({ [TODAY_COUNT]: options[TODAY_COUNT] + 1 });
 };
 
+/**
+ * The single-letter shortcuts are also ordinary characters, so without this
+ * typing "history" into a drawer search box fires the h/t/r handlers.
+ */
+const whenNotTyping = (handler: () => void) => () => {
+  const el = document.activeElement as HTMLElement | null;
+  const isTyping =
+    !!el &&
+    (el.tagName === 'INPUT' ||
+      el.tagName === 'TEXTAREA' ||
+      el.tagName === 'SELECT' ||
+      el.isContentEditable);
+
+  if (!isTyping) {
+    handler();
+  }
+};
+
 export const useNavigation = ({
   response,
   options,
@@ -84,28 +102,39 @@ export const useNavigation = ({
     const findHistoryIndex = options?.[APOD_HISTORY].findIndex(
       (h: THistoryItem) => h.date === date
     );
-    if (findHistoryIndex) {
+    // `findIndex` returns -1 on a miss (truthy) and 0 for the newest entry
+    // (falsy), so a bare truthiness check got both cases backwards.
+    if (findHistoryIndex > -1) {
       setHistoryIndex(findHistoryIndex);
     }
 
     fetchApod({ date });
   };
 
-  useKeyboardShortcut([KEY_MAP.RANDOM_DAY], fetchRandom);
-  useKeyboardShortcut([KEY_MAP.TODAY], fetchToday);
-  useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], fetchPreviousDate);
-  useKeyboardShortcut([KEY_MAP.NEXT_DAY], fetchNextDate);
-  useKeyboardShortcut([KEY_MAP.PREVIOUS_HISTORY], () => fetchHistory(-1));
-  useKeyboardShortcut([KEY_MAP.NEXT_HISTORY], () => fetchHistory(1));
+  useKeyboardShortcut([KEY_MAP.RANDOM_DAY], whenNotTyping(fetchRandom));
+  useKeyboardShortcut([KEY_MAP.TODAY], whenNotTyping(fetchToday));
+  useKeyboardShortcut([KEY_MAP.PREVIOUS_DAY], whenNotTyping(fetchPreviousDate));
+  useKeyboardShortcut([KEY_MAP.NEXT_DAY], whenNotTyping(fetchNextDate));
+  useKeyboardShortcut(
+    [KEY_MAP.PREVIOUS_HISTORY],
+    whenNotTyping(() => fetchHistory(-1))
+  );
+  useKeyboardShortcut(
+    [KEY_MAP.NEXT_HISTORY],
+    whenNotTyping(() => fetchHistory(1))
+  );
   useKeyboardShortcut([KEY_MAP.CLOSE_DRAWER], () => toggleDrawer(null));
-  useKeyboardShortcut([KEY_MAP.EXPLANATION_TAB], () =>
-    toggleDrawer(DRAWER_EXPLANATION)
+  useKeyboardShortcut(
+    [KEY_MAP.EXPLANATION_TAB],
+    whenNotTyping(() => toggleDrawer(DRAWER_EXPLANATION))
   );
-  useKeyboardShortcut([KEY_MAP.FAVORITES_TAB], () =>
-    toggleDrawer(DRAWER_FAVORITES)
+  useKeyboardShortcut(
+    [KEY_MAP.FAVORITES_TAB],
+    whenNotTyping(() => toggleDrawer(DRAWER_FAVORITES))
   );
-  useKeyboardShortcut([KEY_MAP.HISTORY_TAB], () =>
-    toggleDrawer(DRAWER_HISTORY)
+  useKeyboardShortcut(
+    [KEY_MAP.HISTORY_TAB],
+    whenNotTyping(() => toggleDrawer(DRAWER_HISTORY))
   );
 
   const isFavorite: boolean = useMemo(() => {
@@ -113,7 +142,7 @@ export const useNavigation = ({
       return false;
     }
 
-    const favoriteDates = Object.keys(options?.[APOD_FAVORITES]).map(
+    const favoriteDates = Object.keys(options?.[APOD_FAVORITES] || {}).map(
       (dateKey) => trimDateString(dateKey)
     );
 

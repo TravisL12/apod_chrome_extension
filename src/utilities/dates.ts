@@ -1,4 +1,4 @@
-import { MIN_APOD_DATE } from '../constants';
+import { APOD_TIME_ZONE, MIN_APOD_DATE } from '../constants';
 import { zeroPad } from './utilities';
 
 export const formatDate = (date: Date) => {
@@ -39,8 +39,8 @@ export const isDateToday = (date: string): boolean => {
     return false;
   }
 
-  const isGreater = new Date(date) > getToday();
-  return formatDate(getToday()) === date || isGreater;
+  const today = getToday();
+  return formatDate(today) === date || new Date(date) > today;
 };
 
 export const isFirstApodDate = (date?: string): boolean => {
@@ -52,6 +52,20 @@ export const isFirstApodDate = (date?: string): boolean => {
   return MIN_APOD_DATE === date || isLess;
 };
 
-export const getToday = () => {
-  return new Date();
+/**
+ * The APOD calendar rolls over on US Eastern time. Using the viewer's local
+ * date instead means anyone east of ET sees a "today" NASA has not published
+ * yet, which renders a Next arrow that 404s.
+ */
+export const getToday = (): Date => {
+  const [month, day, year] = new Intl.DateTimeFormat('en-US', {
+    timeZone: APOD_TIME_ZONE,
+    year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+  })
+    .format(new Date())
+    .split('/');
+
+  return new Date(+year, +month - 1, +day);
 };

@@ -14,32 +14,40 @@ import {
   setLocalChrome,
 } from './chromeOperations';
 
+const randomParams = {
+  api_key: API_KEY,
+  count: RANDOM_FETCH_COUNT,
+};
+
 let isReloadingCache = false;
 const reloadCache = async () => {
-  const params = {
-    api_key: API_KEY,
-    count: RANDOM_FETCH_COUNT,
-  };
-  const resp = await axios.get(APOD_API_URL, { params });
-  const images = resp.data.map((item: TApodResponse) =>
-    transformResponse(item)
-  );
+  try {
+    const resp = await axios.get(APOD_API_URL, { params: randomParams });
+    const images = resp.data.map((item: TApodResponse) =>
+      transformResponse(item)
+    );
 
-  getLocalChrome([RANDOM_APODS], (options) => {
-    const cache = options[RANDOM_APODS];
-    setLocalChrome({ [RANDOM_APODS]: [...images, ...cache] });
+    getLocalChrome([RANDOM_APODS], (options) => {
+      const cache = options?.[RANDOM_APODS] || [];
+      setLocalChrome({ [RANDOM_APODS]: [...images, ...cache] });
+      isReloadingCache = false;
+    });
+  } catch (error) {
+    // Leaving the flag set would block every future refill for the life of
+    // the page, so the cache could drain to empty and never recover.
     isReloadingCache = false;
-  });
+    console.error('APOD: random cache refill failed', error);
+  }
 };
 
 const randomCache = (): Promise<TApodResponse> => {
   return new Promise((resolve) => {
     getLocalChrome([RANDOM_APODS], (options) => {
-      const cache = [...(options[RANDOM_APODS] || [])];
+      const cache = [...(options?.[RANDOM_APODS] || [])];
       const item = cache.pop();
-      setLocalChrome({ [RANDOM_APODS]: cache });
 
       if (item) {
+        setLocalChrome({ [RANDOM_APODS]: cache });
         saveToHistory(item);
 
         if (cache.length < RELOAD_RANDOM_LIMIT && !isReloadingCache) {
@@ -71,7 +79,11 @@ const transformResponse = (data: TApodResponse) => {
 
   if (data.media_type === 'image') {
     preloadImage(data.url);
-    preloadImage(data.hdurl);
+    // Not every entry has an hdurl; preloading `undefined` just fires a
+    // guaranteed 404.
+    if (data.hdurl) {
+      preloadImage(data.hdurl);
+    }
   }
   data.apodUrl = `https://apod.nasa.gov/apod/ap${linkDateFormat(
     data.date
@@ -81,10 +93,6 @@ const transformResponse = (data: TApodResponse) => {
   return data;
 };
 export const fetchRandomImage = async (): Promise<TApodResponse> => {
-  const params = {
-    api_key: API_KEY,
-    count: RANDOM_FETCH_COUNT,
-  };
   try {
     // Look in cache
     const cacheResp = await randomCache();
@@ -93,7 +101,7 @@ export const fetchRandomImage = async (): Promise<TApodResponse> => {
     }
 
     // Otherwise fetch
-    const resp = await axios.get(APOD_API_URL, { params });
+    const resp = await axios.get(APOD_API_URL, { params: randomParams });
     const images = resp.data.map((item: TApodResponse) =>
       transformResponse(item)
     );
