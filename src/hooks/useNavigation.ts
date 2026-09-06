@@ -22,6 +22,7 @@ import {
 } from '../pages/types';
 import {
   adjacentDate,
+  downloadApodImage,
   isFirstApodDate,
   saveFavorite,
   setChrome,
@@ -175,6 +176,12 @@ export const useNavigation = ({
         !!options?.[HI_RES_ONLY] ||
         !!response?.isImageHd ||
         response?.media_type !== 'image',
+    },
+    {
+      label: 'Download',
+      clickHandler: () => downloadApodImage(response),
+      // Nothing to save when the day's entry is a video.
+      isHidden: response?.media_type !== 'image',
     },
   ];
 

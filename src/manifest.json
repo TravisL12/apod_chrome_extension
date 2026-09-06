@@ -4,7 +4,7 @@
   "description": "Transform your new tab with NASA's Astronomy Picture of the Day. Explore HD space wallpapers, nebulae, galaxies, and cosmic history.",
   "options_page": "popup.html",
   "short_name": "APOD New Tab",
-  "version": "4.2.0",
+  "version": "4.3.0",
   "background": { "service_worker": "background.bundle.js" },
   "action": {
     "default_popup": "popup.html",
@@ -20,5 +20,6 @@
     "128": "icon-128.png"
   },
   "host_permissions": ["https://api.nasa.gov/*"],
-  "permissions": ["topSites", "storage", "favicon"]
+  "permissions": ["topSites", "storage", "favicon"],
+  "optional_permissions": ["downloads"]
 }

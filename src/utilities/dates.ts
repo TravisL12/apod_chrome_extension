@@ -28,6 +28,13 @@ export const prettyDateFormat = (date: string): string => {
   });
 };
 
+// Dates are stored unpadded (`2024-1-14`), which sorts wrong in a file
+// listing; downloaded filenames use the padded form instead.
+export const isoDateFormat = (dateString: string) => {
+  const [year, month, day] = splitDateString(dateString);
+  return `${year}-${zeroPad(month)}-${zeroPad(day)}`;
+};
+
 // https://apod.nasa.gov/apod/ap220321.html (generate `220321`)
 export const linkDateFormat = (dateString: string) => {
   const [year, month, day] = splitDateString(dateString);
