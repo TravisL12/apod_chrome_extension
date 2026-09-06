@@ -1,0 +1,8 @@
+{
+  "name": "apod-store-screenshots",
+  "private": true,
+  "description": "Generates the Chrome Web Store screenshots from the built extension.",
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}

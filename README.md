@@ -71,6 +71,26 @@ If you want to fork, develop and build this extension locally then follow these 
   - Select `Load Unpacked` at the top left of the page, navigate to the `build` folder inside the project directory. Go open a new tab in Chrome and you'll now be running the development version.
 - Again, you must re-run `yarn build` after every save of the files for them to show up.
 
+## Store screenshots
+
+The Chrome Web Store listing images in `chrome_store/screenshots` are generated
+from the real production bundle, so they never drift from the shipped UI:
+
+```
+npm run screenshots
+```
+
+This builds `build/`, serves it over http with a thin `chrome.*` shim (only
+storage, topSites and the favicon cache are stubbed), drives the real UI with
+the actual keyboard shortcuts, and composes annotated 1280x800 PNGs -- the size
+the store accepts.
+
+The APOD entries used are pinned in `chrome_store/generate/seed.json` and were
+pulled from the live NASA API. Refresh them with `npm run screenshots:seed`.
+
+The tooling needs Node 18+, while the extension build is pinned to Node 14, so
+`chrome_store/generate` carries its own `.node-version` and dependencies.
+
 ## Reviewer notes
 
 #### Permissions

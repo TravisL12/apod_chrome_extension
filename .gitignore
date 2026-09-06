@@ -24,3 +24,8 @@ deploy.sh
 
 # secrets
 secrets.*.js
+/release
+
+# Intermediate captures for the store screenshots
+.screenshot-cache/
+chrome_store/generate/node_modules/

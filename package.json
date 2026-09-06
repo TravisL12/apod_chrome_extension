@@ -12,7 +12,10 @@
     "watch": "node utils/webserver.js",
     "start": "node utils/webserver.js",
     "typecheck": "tsc --noEmit",
-    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'"
+    "prettier": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss,md}'",
+    "package": "node utils/build.js && node utils/package.js",
+    "screenshots": "node utils/build.js && ./chrome_store/generate/run.sh",
+    "screenshots:seed": "cd chrome_store/generate && ./run.sh --seed-only"
   },
   "dependencies": {
     "@hot-loader/react-dom": "^17.0.2",
