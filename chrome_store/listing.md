@@ -36,7 +36,11 @@ Transform your new tab with NASA's Astronomy Picture of the Day. Explore HD spac
 
 ## Category
 
-`Art & Design` — closest fit. (`Photos` is the other candidate.)
+Currently listed under **Just for Fun**.
+
+Worth reconsidering: someone hunting for a space or wallpaper new tab is more
+likely browsing `Art & Design` or `Photos`. Changing category resets nothing —
+ratings and install count carry over.
 
 ---
 

@@ -1,5 +1,14 @@
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
+  /* The options page opens full width, so keep the panel centered there while
+     the popup (which sizes to its content) is unaffected. */
+  display: flex;
+  justify-content: center;
+  background: #e6e8eb;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
@@ -12,8 +21,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-h3 {
-  margin: 0;
 }
