@@ -4,10 +4,19 @@ var webpack = require('webpack'),
   env = require('./utils/env'),
   CopyWebpackPlugin = require('copy-webpack-plugin'),
   HtmlWebpackPlugin = require('html-webpack-plugin'),
-  TerserPlugin = require('terser-webpack-plugin');
+  TerserPlugin = require('terser-webpack-plugin'),
+  buildManifest = require('./utils/manifest');
 var { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const ASSET_PATH = process.env.ASSET_PATH || '/';
+
+// Chrome and Firefox build to separate directories so loading one unpacked
+// does not clobber the other.
+const TARGET = env.TARGET;
+const BUILD_PATH = path.resolve(
+  __dirname,
+  TARGET === 'chrome' ? 'build' : `build-${TARGET}`
+);
 
 var alias = {
   'react-dom': '@hot-loader/react-dom',
@@ -41,14 +50,26 @@ var options = {
   entry: {
     newtab: path.join(__dirname, 'src', 'pages', 'Newtab', 'index.tsx'),
     popup: path.join(__dirname, 'src', 'pages', 'Popup', 'index.jsx'),
-    background: path.join(__dirname, 'src', 'pages', 'Background', 'index.js'),
+    // Firefox's manifest drops the background key -- it has no MV3 service
+    // worker -- so there is nothing for this bundle to be loaded by.
+    ...(TARGET === 'chrome'
+      ? {
+          background: path.join(
+            __dirname,
+            'src',
+            'pages',
+            'Background',
+            'index.js'
+          ),
+        }
+      : {}),
   },
   chromeExtensionBoilerplate: {
     notHotReload: ['background'],
   },
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'build'),
+    path: BUILD_PATH,
     clean: true,
     publicPath: ASSET_PATH,
   },
@@ -112,21 +133,21 @@ var options = {
     new CleanWebpackPlugin({ verbose: false }),
     new webpack.ProgressPlugin(),
     // expose and write the allowed env vars on the compiled bundle
-    new webpack.EnvironmentPlugin(['NODE_ENV']),
+    // TARGET is read by the app itself: the top-sites favicon source differs
+    // between the two browsers.
+    new webpack.EnvironmentPlugin({ NODE_ENV: env.NODE_ENV, TARGET: TARGET }),
     new CopyWebpackPlugin({
       patterns: [
         {
           from: 'src/manifest.json',
-          to: path.join(__dirname, 'build'),
+          to: BUILD_PATH,
           force: true,
-          transform: function (content, path) {
+          transform: function (content) {
             // generates the manifest file using the package.json informations
             return Buffer.from(
-              JSON.stringify({
-                description: process.env.npm_package_description,
-                version: process.env.npm_package_version,
-                ...JSON.parse(content.toString()),
-              })
+              JSON.stringify(
+                buildManifest(JSON.parse(content.toString()), TARGET)
+              )
             );
           },
         },
@@ -141,7 +162,7 @@ var options = {
         'icon-128.png',
       ].map((icon) => ({
         from: `src/assets/img/${icon}`,
-        to: path.join(__dirname, 'build'),
+        to: BUILD_PATH,
         force: true,
       })),
     }),

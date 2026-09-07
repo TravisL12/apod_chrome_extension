@@ -71,6 +71,30 @@ If you want to fork, develop and build this extension locally then follow these 
   - Select `Load Unpacked` at the top left of the page, navigate to the `build` folder inside the project directory. Go open a new tab in Chrome and you'll now be running the development version.
 - Again, you must re-run `yarn build` after every save of the files for them to show up.
 
+### Firefox
+
+The same source builds a Firefox add-on:
+
+```
+yarn build:firefox     # -> build-firefox/
+yarn package:firefox   # -> release/apod-firefox-<version>.zip
+```
+
+Load it with `about:debugging` -> `This Firefox` -> `Load Temporary Add-on`,
+pointing at `build-firefox/manifest.json`.
+
+`utils/manifest.js` derives the Firefox manifest from `src/manifest.json`, so
+there is only one manifest to keep up to date. It drops the `background` key
+(Firefox has no MV3 service worker, and the background script is empty), swaps
+`options_page` for `options_ui`, removes the Chrome-only `favicon` permission,
+and adds the `browser_specific_settings.gecko` id that AMO requires -- and
+without which `storage.sync` silently does nothing.
+
+The one behavioural difference is top-site icons: Chrome serves them from its
+own cache at `_favicon/`, which Firefox does not have, so the Firefox build
+asks `topSites.get({ includeFavicon: true })` for them instead and falls back
+to a letter tile for any site with no cached icon.
+
 ## Store screenshots
 
 The Chrome Web Store listing images in `chrome_store/screenshots` are generated

@@ -29,3 +29,4 @@ secrets.*.js
 # Intermediate captures for the store screenshots
 .screenshot-cache/
 chrome_store/generate/node_modules/
+/build-firefox

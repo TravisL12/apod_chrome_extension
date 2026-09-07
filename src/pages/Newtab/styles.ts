@@ -279,6 +279,21 @@ export const STopSites = styled.div`
   }
 `;
 
+/**
+ * Stands in for a missing favicon, sized to match the 16px icons beside it.
+ */
+export const STopSiteFallback = styled.span`
+  ${flexCenter}
+  width: 16px;
+  height: 16px;
+  border-radius: 3px;
+  background: ${lightGray};
+  color: #222;
+  font-size: 11px;
+  font-weight: 600;
+  line-height: 1;
+`;
+
 export const SArrowContainer = styled.div`
   cursor: pointer;
   padding: 0 5px;

@@ -69,6 +69,9 @@ export type TUseNavigationProps = {
 export type TTopSite = {
   url: string;
   title: string;
+  // Firefox only, via `topSites.get({ includeFavicon: true })`: a data URL,
+  // absent for sites it has no cached icon for.
+  favicon?: string;
 };
 
 export type TFetchOptions = {
