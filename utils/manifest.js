@@ -6,7 +6,7 @@
 // Firefox requires an explicit add-on id: AMO rejects the upload without one,
 // and -- less visibly -- `storage.sync` silently no-ops, which would drop every
 // user option this extension persists.
-const GECKO_ID = 'apod-newtab@travisl12.github.io';
+const GECKO_ID = 'travis.lawrence12@gmail.com';
 
 // MV3 in Firefox (`action`, `host_permissions`) landed in 115 ESR.
 const GECKO_MIN_VERSION = '115.0';
