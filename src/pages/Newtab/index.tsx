@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { render } from 'react-dom';
-import { CURRENT_DATE, DEFAULT_OPTIONS, TODAY_COUNT } from '../../constants';
+import {
+  CURRENT_DATE,
+  DEFAULT_OPTIONS,
+  NEWTAB_VIEW,
+  TODAY_COUNT,
+  VIEW_GRID,
+} from '../../constants';
 import {
   formatDate,
   getAllChrome,
@@ -12,6 +18,7 @@ import {
 import { TAppOptions } from '../types';
 
 import ApodBody from './ApodBody';
+import ImageGrid from './ImageGrid';
 import './index.css';
 import { FontStyles } from './styles';
 
@@ -49,6 +56,10 @@ const App: React.FC<{ options?: TAppOptions }> = ({ options }) => {
   }, []);
 
   if (!apodOptions) return null; // No options, no rendering
+
+  if (apodOptions[NEWTAB_VIEW] === VIEW_GRID) {
+    return <ImageGrid options={apodOptions} />;
+  }
 
   return <ApodBody options={apodOptions} />;
 };

@@ -9,6 +9,9 @@ import {
   IS_TODAY_LIMIT_ON,
   APOD_HISTORY,
   RANDOM_APODS,
+  NEWTAB_VIEW,
+  IMAGE_GRID_CACHE,
+  GRID_AUTO_SCROLL,
 } from '../constants';
 
 export type THistoryItem = {
@@ -28,6 +31,31 @@ export type TFavoriteItem = {
 
 export type TFavorites = { [date: string]: TFavoriteItem };
 
+export type TNewtabView = 'apod' | 'grid';
+
+/**
+ * One tile in the image grid, flattened from an images-api search result.
+ * `width`/`height` come back in the search response itself, so the masonry
+ * layout is known before a single thumbnail is requested.
+ */
+export type TNasaImage = {
+  nasaId: string;
+  title: string;
+  center?: string;
+  dateCreated?: string;
+  description?: string;
+  thumbUrl: string;
+  largeUrl: string;
+  origUrl?: string;
+  width: number;
+  height: number;
+};
+
+export type TImageGridCache = {
+  fetchedAt: number;
+  items: TNasaImage[];
+};
+
 export type TAppOptions = {
   [APOD_FAVORITES]: TFavorites;
   [APOD_HISTORY]: THistoryItem[];
@@ -39,6 +67,11 @@ export type TAppOptions = {
   [TODAY_COUNT]: number;
   [TODAY_LIMIT]: number;
   [RANDOM_APODS]?: TApodResponse[];
+  [NEWTAB_VIEW]?: TNewtabView;
+  [GRID_AUTO_SCROLL]?: boolean;
+  // Like RANDOM_APODS: typed for the storage helpers, but kept out of
+  // LOCAL_OPTIONS so `getAllChrome` does not pull it into every new tab.
+  [IMAGE_GRID_CACHE]?: TImageGridCache;
 };
 
 export type TApodResponse = {

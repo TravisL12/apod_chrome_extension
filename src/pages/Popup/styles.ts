@@ -178,3 +178,46 @@ export const SAboutLinks = styled.div`
     text-decoration: underline;
   }
 `;
+
+export const SViewChoice = styled.div`
+  border: 1px solid ${border};
+  border-radius: 2px;
+  background: ${panel};
+  padding: 10px 12px;
+  margin-bottom: 8px;
+
+  .title {
+    font-weight: 600;
+  }
+
+  .sub-info {
+    color: ${subText};
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+
+  .choices {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+`;
+
+export const SViewButton = styled.button`
+  flex: 1;
+  padding: 8px 6px;
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid
+    ${(props: { isActive: boolean }) => (props.isActive ? accent : border)};
+  background: ${(props: { isActive: boolean }) =>
+    props.isActive ? accent : panel};
+  color: ${(props: { isActive: boolean }) => (props.isActive ? '#fff' : text)};
+
+  &:hover {
+    border-color: ${accent};
+  }
+`;

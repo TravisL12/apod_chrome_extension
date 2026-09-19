@@ -8,6 +8,10 @@ import {
   DEFAULT_OPTIONS,
   APOD_OPTIONS,
   TODAY_LIMIT,
+  NEWTAB_VIEW,
+  VIEW_APOD,
+  VIEW_GRID,
+  GRID_AUTO_SCROLL,
 } from '../../constants';
 import { getChrome, setChrome } from '../../utilities';
 import sunIcon from '../../assets/img/sun_loader.gif';
@@ -20,6 +24,8 @@ import {
   SLimitRow,
   SAboutApod,
   SAboutLinks,
+  SViewChoice,
+  SViewButton,
 } from './styles';
 
 const manifest = chrome.runtime.getManifest();
@@ -35,16 +41,25 @@ const clampLimit = (raw) => {
   return Math.min(MAX_TODAY_LIMIT, Math.max(MIN_TODAY_LIMIT, parsed));
 };
 
+const viewChoices = [
+  { id: VIEW_APOD, label: 'Single APOD' },
+  { id: VIEW_GRID, label: 'Image Grid' },
+];
+
+// `apodOnly` and `gridOnly` settings have nothing to act on in the other
+// view, so they are hidden rather than left showing as no-ops.
 const optionsConfig = [
   {
     id: IS_TODAY_APOD,
     label: "Show Today's APOD",
     description: `Will load the current APOD, otherwise will show a random APOD.`,
+    apodOnly: true,
   },
   {
     id: HI_RES_ONLY,
     label: 'High Resolution Images Only',
     description: `When turned off, the standard image loads if the HD image takes too long.`,
+    apodOnly: true,
   },
   {
     id: SHOW_TOP_SITES,
@@ -55,6 +70,13 @@ const optionsConfig = [
     id: IS_TODAY_LIMIT_ON,
     label: 'Switch from Today to Random',
     description: `Show today's APOD a set number of times, then switch to random APOD's for the rest of your new tabs.`,
+    apodOnly: true,
+  },
+  {
+    id: GRID_AUTO_SCROLL,
+    label: 'Drift the Grid',
+    description: `Slowly scrolls the image grid on its own, loading more as it goes. Pauses while you scroll and picks back up when you stop.`,
+    gridOnly: true,
   },
 ];
 
@@ -92,6 +114,12 @@ const Popup = () => {
   }
 
   const isLimitOn = popupOptions[IS_TODAY_LIMIT_ON];
+  const currentView = popupOptions[NEWTAB_VIEW] || VIEW_APOD;
+  const visibleOptions = optionsConfig.filter((option) => {
+    if (option.apodOnly) return currentView === VIEW_APOD;
+    if (option.gridOnly) return currentView === VIEW_GRID;
+    return true;
+  });
 
   return (
     <SPopupContainer>
@@ -102,8 +130,28 @@ const Popup = () => {
           <div className="subtitle">v{manifest.version}</div>
         </div>
       </SHeader>
+      <SViewChoice>
+        <div className="title">New Tab View</div>
+        <div className="sub-info">
+          Show one full-screen APOD, or a grid of images from NASA's public
+          image library.
+        </div>
+        <div className="choices">
+          {viewChoices.map((choice) => (
+            <SViewButton
+              key={choice.id}
+              type="button"
+              isActive={currentView === choice.id}
+              aria-pressed={currentView === choice.id}
+              onClick={() => updateOption(NEWTAB_VIEW, choice.id)}
+            >
+              {choice.label}
+            </SViewButton>
+          ))}
+        </div>
+      </SViewChoice>
       <SOptionsContainer>
-        {optionsConfig.map((option) => (
+        {visibleOptions.map((option) => (
           <SOption key={option.id}>
             <label className="main" htmlFor={option.id}>
               <div className="info">
