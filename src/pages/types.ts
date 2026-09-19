@@ -12,6 +12,7 @@ import {
   NEWTAB_VIEW,
   IMAGE_GRID_CACHE,
   GRID_AUTO_SCROLL,
+  GRID_SEEN_IDS,
 } from '../constants';
 
 export type THistoryItem = {
@@ -69,6 +70,9 @@ export type TAppOptions = {
   [RANDOM_APODS]?: TApodResponse[];
   [NEWTAB_VIEW]?: TNewtabView;
   [GRID_AUTO_SCROLL]?: boolean;
+  // Kept out of LOCAL_OPTIONS alongside the grid cache: read on fetch only,
+  // never needed by a new tab's initial options load.
+  [GRID_SEEN_IDS]?: string[];
   // Like RANDOM_APODS: typed for the storage helpers, but kept out of
   // LOCAL_OPTIONS so `getAllChrome` does not pull it into every new tab.
   [IMAGE_GRID_CACHE]?: TImageGridCache;

@@ -1,18 +1,33 @@
 import axios from 'axios';
 import {
   GRID_CACHE_TTL,
-  GRID_MAX_PAGE,
+  GRID_PAGE_LIMIT,
   GRID_PAGE_SIZE,
-  GRID_QUERIES,
+  GRID_MAX_FETCH_ROUNDS,
+  GRID_POOL_MIN,
   GRID_POOL_SIZE,
+  GRID_QUERIES,
+  GRID_SEEN_IDS,
+  GRID_SEEN_LIMIT,
   IMAGE_GRID_CACHE,
   NASA_IMAGES_API_URL,
 } from '../constants';
 import { TImageGridCache, TNasaImage } from '../pages/types';
 import { getLocalChrome, setLocalChrome } from './chromeOperations';
 
-// How many curated subjects a single grid is mixed from.
-const QUERIES_PER_FETCH = 3;
+// How many curated subjects one round mixes. The searches run in parallel,
+// so a wide round costs roughly what a narrow one does, and drawing from
+// more subjects is what keeps a single pool from being all one thing.
+const QUERIES_PER_FETCH = 8;
+
+/**
+ * The most tiles any one subject may put into a pool.
+ *
+ * Without this a broad subject returns a full page while a narrow one returns
+ * a handful, so one subject could take half the pool -- and since the pool is
+ * cached and resampled for hours, every tab would keep showing that subject.
+ */
+const perQueryCap = Math.ceil(GRID_POOL_SIZE / QUERIES_PER_FETCH);
 
 /**
  * Kennedy Space Center's archive is launch-ground operations -- crates,
@@ -127,27 +142,61 @@ const normalizeItem = (item: TApiItem): TNasaImage | null => {
   };
 };
 
+/**
+ * Picks a page from anywhere in a subject's results.
+ *
+ * The page has to be chosen against the real result count, which is only
+ * known once something has been asked for -- hence the one-item probe. Paging
+ * blindly within the first few hundred reached about a tenth of the archive
+ * and was the main reason a refresh kept turning up the same pictures.
+ */
 const searchQuery = async (query: string): Promise<TNasaImage[]> => {
-  const params = {
-    q: query,
-    media_type: 'image',
-    page_size: GRID_PAGE_SIZE,
-    page: Math.floor(Math.random() * GRID_MAX_PAGE) + 1,
-  };
+  const baseParams = { q: query, media_type: 'image' };
 
-  const request = (requestParams: typeof params) =>
-    axios.get(NASA_IMAGES_API_URL, { params: requestParams });
+  const probe = await axios.get(NASA_IMAGES_API_URL, {
+    params: { ...baseParams, page_size: 1 },
+  });
 
-  let resp = await request(params);
-  // Shallow pools run out well before GRID_MAX_PAGE; page 1 always exists.
-  if (!resp.data?.collection?.items?.length && params.page !== 1) {
-    resp = await request({ ...params, page: 1 });
+  const totalHits: number = probe.data?.collection?.metadata?.total_hits || 0;
+  if (!totalHits) {
+    return [];
   }
+
+  const lastPage = Math.min(
+    Math.ceil(totalHits / GRID_PAGE_SIZE),
+    GRID_PAGE_LIMIT
+  );
+
+  const resp = await axios.get(NASA_IMAGES_API_URL, {
+    params: {
+      ...baseParams,
+      page_size: GRID_PAGE_SIZE,
+      page: Math.floor(Math.random() * lastPage) + 1,
+    },
+  });
 
   const items: TApiItem[] = resp.data?.collection?.items || [];
   return items
     .map(normalizeItem)
     .filter((item): item is TNasaImage => item !== null);
+};
+
+/**
+ * Ids already served recently. Held in `local` and capped, so a refresh can
+ * skip past what the viewer has just been looking at.
+ */
+const readSeenIds = (): Promise<string[]> => {
+  return new Promise((resolve) => {
+    getLocalChrome([GRID_SEEN_IDS], (options) => {
+      resolve(options?.[GRID_SEEN_IDS] || []);
+    });
+  });
+};
+
+const recordSeenIds = (previous: string[], added: string[]) => {
+  // Newest first, so the oldest ids fall off the end as the cap bites.
+  const merged = [...added, ...previous.filter((id) => !added.includes(id))];
+  setLocalChrome({ [GRID_SEEN_IDS]: merged.slice(0, GRID_SEEN_LIMIT) });
 };
 
 /**
@@ -161,37 +210,78 @@ const searchQuery = async (query: string): Promise<TNasaImage[]> => {
 export const fetchImageGrid = async (
   alreadyShown: TNasaImage[] = []
 ): Promise<TNasaImage[]> => {
-  const queries = shuffle(GRID_QUERIES).slice(0, QUERIES_PER_FETCH);
+  const previouslySeen = await readSeenIds();
 
-  const results = await Promise.all(
-    queries.map(async (query) => {
-      try {
-        return await searchQuery(query);
-      } catch (error) {
-        console.error(`APOD: image grid search failed for "${query}"`, error);
-        return [] as TNasaImage[];
-      }
-    })
-  );
-
-  const seenIds = new Set<string>(alreadyShown.map((item) => item.nasaId));
+  const seenIds = new Set<string>([
+    ...previouslySeen,
+    ...alreadyShown.map((item) => item.nasaId),
+  ]);
   const seenTitles = new Set<string>(
     alreadyShown.map((item) => (item.title || '').trim().toLowerCase())
   );
-  const merged = results.flat().filter((item) => {
-    // The same asset surfaces under more than one subject, which would tile
-    // it twice. The archive also holds the same photograph under several ids
-    // at different crops, so the title is deduped alongside the id.
-    const title = (item.title || '').trim().toLowerCase();
-    if (seenIds.has(item.nasaId) || seenTitles.has(title)) {
-      return false;
-    }
-    seenIds.add(item.nasaId);
-    seenTitles.add(title);
-    return true;
-  });
 
-  return shuffle(merged).slice(0, GRID_POOL_SIZE);
+  const untried = shuffle(GRID_QUERIES);
+  const merged: TNasaImage[] = [];
+
+  // Subjects vary from 60 to 19,000 results, and the seen-id memory thins
+  // them further, so one round can come back with less than a screenful.
+  for (
+    let round = 0;
+    round < GRID_MAX_FETCH_ROUNDS &&
+    untried.length &&
+    merged.length < GRID_POOL_MIN;
+    round++
+  ) {
+    const queries = untried.splice(0, QUERIES_PER_FETCH);
+
+    // eslint-disable-next-line no-await-in-loop
+    const results = await Promise.all(
+      queries.map(async (query) => {
+        try {
+          return await searchQuery(query);
+        } catch (error) {
+          console.error(`APOD: image grid search failed for "${query}"`, error);
+          return [] as TNasaImage[];
+        }
+      })
+    );
+
+    results.forEach((queryItems) => {
+      let taken = 0;
+      // Shuffled before capping, so a subject contributes a random slice of
+      // its page rather than always the same leading images.
+      shuffle(queryItems).forEach((item) => {
+        if (taken >= perQueryCap) {
+          return;
+        }
+        // The same asset surfaces under more than one subject, which would
+        // tile it twice. The archive also holds the same photograph under
+        // several ids at different crops, so the title is deduped too.
+        const title = (item.title || '').trim().toLowerCase();
+        if (seenIds.has(item.nasaId) || seenTitles.has(title)) {
+          return;
+        }
+        seenIds.add(item.nasaId);
+        seenTitles.add(title);
+        merged.push(item);
+        taken += 1;
+      });
+    });
+  }
+
+  const pool = shuffle(merged).slice(0, GRID_POOL_SIZE);
+
+  // Everything pooled counts as seen, not just what ends up on screen: the
+  // pool is cached and resampled across tabs, so the next fetch has to look
+  // past all of it to turn up genuinely new pictures.
+  if (pool.length) {
+    recordSeenIds(
+      previouslySeen,
+      pool.map((item) => item.nasaId)
+    );
+  }
+
+  return pool;
 };
 
 export const readGridCache = (): Promise<TImageGridCache | undefined> => {

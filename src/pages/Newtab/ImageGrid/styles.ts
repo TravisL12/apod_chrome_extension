@@ -1,6 +1,12 @@
 import styled from 'styled-components';
 import { black, gray, highlightBlue, lightBlack, lightGray } from '../styles';
 
+/**
+ * The page is a two-row column: a header row sized by its own content, and a
+ * body row that takes the remaining height and scrolls inside itself. The
+ * header is a sibling of the wall rather than something laid over it, so it
+ * never covers a tile and needs no z-index.
+ */
 export const SGridPage = styled.div`
   font-family: 'Montserrat', sans-serif;
   position: absolute;
@@ -8,7 +14,8 @@ export const SGridPage = styled.div`
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
   background: ${black};
   color: white;
 `;
@@ -19,25 +26,16 @@ export const SGridTopBar = styled.div`
   align-items: flex-start;
   gap: 20px;
   padding: 20px 24px 12px;
-  /* SGridPage is the scroll container, so the bar pins to its top and the
-     wall passes underneath -- top sites and Shuffle stay reachable however
-     far the drift has travelled. */
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  background: ${black};
+  flex-shrink: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+`;
 
-  /* Tiles would otherwise cut against a hard edge as they slide under. */
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 100%;
-    height: 24px;
-    background: linear-gradient(${black}, transparent);
-    pointer-events: none;
-  }
+export const SGridScroll = styled.div`
+  flex: 1;
+  /* Without this a flex child refuses to shrink below its content, so the
+     body would grow the page instead of scrolling within it. */
+  min-height: 0;
+  overflow-y: auto;
 `;
 
 export const SGridActions = styled.div`

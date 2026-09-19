@@ -33,6 +33,7 @@ export const RANDOM_APODS = 'randomApods';
 export const NEWTAB_VIEW = 'newtabView';
 export const IMAGE_GRID_CACHE = 'imageGridCache';
 export const GRID_AUTO_SCROLL = 'gridAutoScroll';
+export const GRID_SEEN_IDS = 'gridSeenIds';
 
 // `as const` so DEFAULT_OPTIONS keeps the literal type TNewtabView expects.
 export const VIEW_APOD = 'apod' as const;
@@ -44,53 +45,87 @@ export const GRID_BATCH_SIZE = 48;
 // every new tab, so each tab draws a different wall out of it without going
 // back to the network.
 export const GRID_POOL_SIZE = 200;
+// Small subjects and the seen-id memory both thin a pool out, and a pool
+// below this would leave the wall shorter than a screen. A fetch keeps
+// drawing fresh subjects until it clears this or runs out of rounds.
+export const GRID_POOL_MIN = 96;
+export const GRID_MAX_FETCH_ROUNDS = 2;
 // `page_size` maxes out at 100.
 export const GRID_PAGE_SIZE = 100;
-// Deep pages get thin and repetitive, and most subjects have only a few
-// hundred results, so vary within the first few only.
-export const GRID_MAX_PAGE = 4;
-// Thumbnails are re-fetched on every paint, so keep a set around for a while
-// rather than hitting the API on each new tab.
-export const GRID_CACHE_TTL = 1000 * 60 * 60 * 6;
+// The search API rejects any page past this, whatever the result count.
+export const GRID_PAGE_LIMIT = 100;
+// Thumbnails are re-fetched on every paint, so keep a set around rather than
+// hitting the API on each new tab. Kept short enough that the mix of subjects
+// rotates through the day, since every tab resamples this one pool.
+export const GRID_CACHE_TTL = 1000 * 60 * 90;
 
 // The wall appends a batch as the viewer nears the bottom. Every tile stays
 // in the DOM, so this caps how far it will grow: ~200 tiles is far more than
 // a new tab is ever scrolled through, while keeping decoded-image memory
 // bounded on a tab left open all day.
 export const GRID_MAX_TILES = 200;
+// Ids of recently pooled images, held back from the next fetch so a refresh
+// turns up genuinely new pictures rather than resampling the same corner of
+// the archive. A pool runs 100-200 ids, so this covers roughly 30 refreshes
+// before the oldest fall off and become eligible again -- and it still only
+// withholds about a tenth of the ~42k reachable universe. Stored as bare id
+// strings, so a full list is on the order of 100KB against local's 10MB.
+export const GRID_SEEN_LIMIT = 5000;
 // How close to the bottom (in viewport heights) before the next batch loads.
 // Loading a full screen early keeps the auto-scroll from reaching an edge.
 export const GRID_LOAD_MORE_THRESHOLD = 1.5;
 
 // Auto-scroll drifts at a readable pace rather than a visible crawl.
-export const AUTO_SCROLL_PIXELS_PER_SECOND = 22;
+export const AUTO_SCROLL_PIXELS_PER_SECOND = 40;
 // How long after the viewer stops interacting before the drift resumes.
-export const AUTO_SCROLL_RESUME_DELAY = 3000;
+export const AUTO_SCROLL_RESUME_DELAY = 1000;
 
 // Open-ended searches drag in org charts, press conferences and hardware on
-// test stands, so the grid only ever draws from curated subjects. These are
-// picked by subject rather than by instrument: searching an instrument by
-// name ("james webb") returns mostly mission and hardware photography.
+// test stands, so the grid only ever draws from curated subjects. Every entry
+// was measured for result count and junk rate; subjects are named rather than
+// instruments, since searching an instrument ("james webb") returns mostly
+// mission and hardware photography. Together these reach ~42k images.
 export const GRID_QUERIES = [
-  'nebula',
-  'planetary nebula',
+  'earth from space',
+  'saturn',
+  'asteroid',
+  'moon surface',
+  'mars surface',
+  'lunar surface',
+  'jupiter',
   'galaxy',
-  'spiral galaxy',
-  'galaxy cluster',
-  'star cluster',
-  'globular cluster',
-  'star forming region',
-  'supernova',
-  'supernova remnant',
-  'milky way',
-  'hubble deep field',
+  'comet',
+  'black hole',
   'hubble image',
   'aurora',
+  'saturn rings',
+  'milky way',
+  'solar eclipse',
+  'supernova',
+  'pluto',
+  'supernova remnant',
+  'chandra x-ray',
+  'enceladus',
+  'mercury surface',
+  'nebula',
+  'titan moon',
+  'deep field',
+  'neptune',
+  'spiral galaxy',
+  'spitzer infrared',
   'solar flare',
-  'saturn',
-  'jupiter',
-  'mars surface',
-  'earth from space',
+  'star forming region',
+  'star cluster',
+  'venus surface',
+  'galaxy cluster',
+  'great red spot',
+  'uranus',
+  'pulsar',
+  'hubble deep field',
+  'io volcanic',
+  'elliptical galaxy',
+  'planetary nebula',
+  'martian landscape',
 ];
 
 export const DRAWER_EXPLANATION = 'explanation';

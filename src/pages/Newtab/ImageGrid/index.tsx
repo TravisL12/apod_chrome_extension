@@ -19,6 +19,7 @@ import {
   SGridFooter,
   SGridMessage,
   SGridPage,
+  SGridScroll,
   SGridTopBar,
   SMasonry,
   SMasonryColumn,
@@ -50,7 +51,7 @@ const ImageGrid: React.FC<{ options: TAppOptions }> = ({ options }) => {
   // scrolling underneath it is motion the viewer did not ask for.
   const isAutoScrolling = !!options.gridAutoScroll && !selected && !isLoading;
 
-  const { isPaused } = useAutoScroll({
+  useAutoScroll({
     containerRef: scrollRef,
     enabled: isAutoScrolling,
   });
@@ -119,35 +120,27 @@ const ImageGrid: React.FC<{ options: TAppOptions }> = ({ options }) => {
     return <SGridMessage>No images found.</SGridMessage>;
   };
 
-  const autoScrollLabel = () => {
-    if (!options.gridAutoScroll) return null;
-    if (selected) return null;
-    return isPaused ? 'Drift paused' : 'Drifting';
-  };
-
   return (
-    <SGridPage ref={scrollRef} onScroll={handleScroll}>
+    <SGridPage>
       <SGridTopBar>
         <div>{options.showTopSites && <TopSites />}</div>
         <SGridActions>
-          {!!items.length && (
-            <span className="count">{items.length} images</span>
-          )}
-          {!!items.length && autoScrollLabel() && (
-            <span className="count">{autoScrollLabel()}</span>
-          )}
           <SGridButton onClick={refresh} disabled={isLoading}>
             {isLoading ? 'Loading…' : 'Shuffle'}
           </SGridButton>
         </SGridActions>
       </SGridTopBar>
-      {renderBody()}
-      {!!items.length && (
-        <SGridFooter>
-          {isAppending && 'Loading more…'}
-          {!isAppending && isFull && 'End of the wall — shuffle for a new set.'}
-        </SGridFooter>
-      )}
+      <SGridScroll ref={scrollRef} onScroll={handleScroll}>
+        {renderBody()}
+        {!!items.length && (
+          <SGridFooter>
+            {isAppending && 'Loading more…'}
+            {!isAppending &&
+              isFull &&
+              'End of the wall — shuffle for a new set.'}
+          </SGridFooter>
+        )}
+      </SGridScroll>
       {selected && (
         <Lightbox item={selected} onClose={() => setSelected(null)} />
       )}
