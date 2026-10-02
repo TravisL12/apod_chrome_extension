@@ -33,22 +33,39 @@ const explanationText = (html: string = '') => {
 };
 
 const FULL_RES_IMAGE = /\.(jpe?g|png|gif|webp|tiff?)(\?|$)/i;
+const STANDARD_WIDTH = 1920;
+
+// `dynamicimage` URLs are resized on request, so a standard-res copy is just
+// the same path at a smaller width. The full one can run to tens of MB.
+const standardResUrl = (hdurl: string) => {
+  if (!hdurl.includes('/dynamicimage/')) {
+    return hdurl;
+  }
+  const url = new URL(hdurl);
+  url.search = `?w=${STANDARD_WIDTH}&fit=clip`;
+  return url.toString();
+};
 
 /**
  * science.nasa.gov's `url` is the article page, not the media, and its
  * `hdurl` is a still -- or for the earliest entries a generic placeholder.
- * The real image and video sources only appear in the post's `basic_html`,
- * so read them from there and rebuild the shape the old API returned.
+ * The real image and video sources appear in the post's `basic_html`, so
+ * read them from there and rebuild the shape the old API returned.
  */
 const toApodResponse = (item: TApodBasicResponse): TApodResponse => {
   const doc = parseHtml(item.basic_html);
   const image = doc.querySelector('img');
   const video = doc.querySelector('iframe[src], video[src], video source[src]');
 
-  const imageUrl = image?.getAttribute('src') || '';
+  // Some posts leave the `<img>` out of `basic_html` entirely; for those the
+  // top-level `hdurl` is the only image source.
+  const fallbackUrl =
+    item.media_type === 'image' && !image && item.hdurl ? item.hdurl : '';
+  const imageUrl =
+    image?.getAttribute('src') || (fallbackUrl && standardResUrl(fallbackUrl));
   const videoUrl = video?.getAttribute('src') || '';
   // Clicking an APOD image opens the full-resolution file.
-  const fullUrl = image?.closest('a')?.getAttribute('href') || '';
+  const fullUrl = image?.closest('a')?.getAttribute('href') || fallbackUrl;
 
   const isVideo = item.media_type === 'video' && !!videoUrl;
   const isImage = item.media_type === 'image' && !!imageUrl;
