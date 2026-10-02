@@ -20,6 +20,19 @@ const W = 1280, H = 800;
 const SEED = JSON.parse(fs.readFileSync(path.join(__dirname, 'seed.json'), 'utf8'));
 const HERO = SEED.hero;
 
+// Seed entries back into the API's shape, media in `basic_html` as NASA sends it.
+const toBasic = (d) => ({
+  date: d.date,
+  title: d.title,
+  permalink: d.apodUrl,
+  media_type: d.media_type,
+  explanation: d.explanation,
+  copyright: d.copyright || '',
+  url: d.apodUrl,
+  hdurl: d.hdurl,
+  basic_html: `<a href="${d.hdurl}"><img src="${d.url}"></a>`,
+});
+
 const FAVES = Object.fromEntries(
   SEED.entries.slice(1, 9).map((d) => [d.date, { date: d.date, title: d.title, url: d.url, imgUrl: d.url }])
 );
@@ -152,11 +165,16 @@ const SHIM = (seed) => {
     await page.setRequestInterception(true);
     page.on('request', (req) => {
       const url = req.url();
-      if (url.startsWith('https://api.nasa.gov/planetary/apod')) {
+      // Every request -- today, a date, a random page -- gets the hero back.
+      if (url.startsWith('https://science.nasa.gov/wp-json/wp/v2/apod-basic/')) {
         return req.respond({
           status: 200, contentType: 'application/json',
-          headers: { 'Access-Control-Allow-Origin': '*' },
-          body: JSON.stringify(url.includes('count=') ? [currentHero] : currentHero),
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Expose-Headers': 'X-WP-Total',
+            'X-WP-Total': '1',
+          },
+          body: JSON.stringify([toBasic(currentHero)]),
         });
       }
       req.continue();

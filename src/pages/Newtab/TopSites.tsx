@@ -8,7 +8,7 @@ const IS_FIREFOX = process.env.TARGET === 'firefox';
  * Chrome's own favicon cache, served locally from the extension. The previous
  * `google.com/s2/favicons` endpoint sent the user's most-visited domains to a
  * third party -- over plain http -- on every new tab, which this extension's
- * `api.nasa.gov`-only permissions imply it does not do.
+ * NASA-only network access implies it does not do.
  *
  * Firefox has no `_favicon/` endpoint, so it takes the other branch below and
  * gets icons back from `topSites` itself as data URLs.

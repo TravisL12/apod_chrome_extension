@@ -1,10 +1,10 @@
 import { TAppOptions } from './pages/types';
 
-export const APOD_API_URL = 'https://api.nasa.gov/planetary/apod';
+export const APOD_API_URL =
+  'https://science.nasa.gov/wp-json/wp/v2/apod-basic/';
 // The NASA Image and Video Library: NASA-produced (public domain) mission and
 // observatory imagery. Unrelated to APOD, and it needs no API key.
 export const NASA_IMAGES_API_URL = 'https://images-api.nasa.gov/search';
-export const API_KEY = 'hPgI2kGa1jCxvfXjv6hq6hsYBQawAqvjMaZNs447';
 
 export const MIN_APOD_DATE = `1995-6-16`;
 // APOD publishes on US Eastern time, so "today" must follow that calendar.

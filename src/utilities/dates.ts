@@ -35,7 +35,7 @@ export const isoDateFormat = (dateString: string) => {
   return `${year}-${zeroPad(month)}-${zeroPad(day)}`;
 };
 
-// https://apod.nasa.gov/apod/ap220321.html (generate `220321`)
+// The archive's `YYMMDD` date key, e.g. 2022-03-21 -> `220321`
 export const linkDateFormat = (dateString: string) => {
   const [year, month, day] = splitDateString(dateString);
   return `${year.slice(-2)}${zeroPad(month)}${zeroPad(day)}`;

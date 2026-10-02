@@ -123,7 +123,8 @@ The tooling needs Node 18+, while the extension build is pinned to Node 14, so
 - `topSites` - renders the top-site shortcuts in the corner of the new tab.
 - `favicon` - draws those shortcut icons from Chrome's local favicon cache, so no
   browsing data leaves the machine.
-- `host_permissions` is limited to `https://api.nasa.gov/*`, the only network request the extension makes.
+- `host_permissions` is limited to `https://science.nasa.gov/*`, where APOD now lives, for the daily image. The image grid also
+  queries `https://images-api.nasa.gov`, which serves open CORS and so needs no host permission.
 
 #### Dependencies
 

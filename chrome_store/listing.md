@@ -115,7 +115,8 @@ PERMISSIONS
 * favicon — draws the shortcut icons from Chrome's local favicon cache, so your
   browsing data never leaves your computer.
 * downloads — optional, and only requested the first time you click Download.
-* api.nasa.gov — the only site this extension talks to, to fetch the daily image.
+* science.nasa.gov and images-api.nasa.gov — the only sites this extension talks to,
+  to fetch the daily image and the image grid.
 
 No analytics, no tracking, no account.
 ```
@@ -168,11 +169,12 @@ requested at the moment the user first clicks Download, so users who never use
 the feature are never asked for it.
 ```
 
-**Host permission — `https://api.nasa.gov/*`**
+**Host permission — `https://science.nasa.gov/*`**
 
 ```
-The extension fetches the daily image metadata from NASA's public APOD API at
-api.nasa.gov. This is the only host the extension makes requests to.
+The extension fetches the daily image metadata from NASA's public APOD feed at
+science.nasa.gov. The only other host it contacts is NASA's public Image and Video
+Library at images-api.nasa.gov, for the optional image grid view.
 ```
 
 ### Remote code
@@ -185,8 +187,9 @@ No. All code is bundled in the extension package.
 
 Check **none** of the collection categories, and affirm all three compliance
 certifications. The extension collects nothing: settings, favorites and history
-live in `chrome.storage` on the user's machine, and the only outbound request is
-to `api.nasa.gov` for the daily image.
+live in `chrome.storage` on the user's machine, and the only outbound requests
+are to `science.nasa.gov` for the daily image and `images-api.nasa.gov` for the
+image grid.
 
 ---
 

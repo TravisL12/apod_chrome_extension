@@ -84,7 +84,6 @@ export type TApodResponse = {
   explanation: string;
   hdurl: string;
   media_type: string;
-  service_version: string;
   title: string;
   url: string;
   loadedImage: HTMLImageElement;
@@ -93,6 +92,26 @@ export type TApodResponse = {
   isImageHd?: boolean;
   error?: any;
   errorMessage?: string;
+};
+
+/**
+ * One entry from science.nasa.gov's `apod-basic` endpoint. Text fields are
+ * HTML, and the media itself is only in `basic_html`.
+ */
+export type TApodBasicResponse = {
+  date: string;
+  post_id: number;
+  title: string;
+  permalink: string;
+  media_type: string | null;
+  explanation: string;
+  credit?: string;
+  copyright?: string;
+  alt?: string;
+  url: string;
+  hdurl?: string;
+  basic_html: string;
+  basic_html_url: string;
 };
 
 export type TUseNavigationProps = {
